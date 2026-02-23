@@ -98,12 +98,6 @@ abstract class RandomEventNPC(
     }
 
     override fun init() {
-        // Check if random is locked.
-        if (player.getAttribute<Boolean>(GameAttributes.RE_LOCK, false)) {
-            player.debug(colorize("%RRandom event locked."))
-            terminate()
-            return
-        }
         initialized = true
         finalized = false
         timerPaused = false

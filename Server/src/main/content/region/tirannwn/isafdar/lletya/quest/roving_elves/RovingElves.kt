@@ -3,8 +3,6 @@ package content.region.tirannwn.isafdar.lletya.quest.roving_elves
 import content.region.tirannwn.isafdar.lletya.quest.roving_elves.dialogue.ElunedDialogue
 import content.region.tirannwn.isafdar.lletya.quest.roving_elves.dialogue.IslwynDialogue
 import content.region.tirannwn.isafdar.lletya.quest.roving_elves.npc.MossGiantNPC
-import content.region.tirannwn.isafdar.lletya.quest.roving_elves.plugin.RovingElvesObstacles
-import content.region.tirannwn.isafdar.lletya.quest.roving_elves.plugin.RovingElvesPlugin
 import core.api.inInventory
 import core.api.rewardXP
 import core.api.sendItemZoomOnInterface
@@ -60,8 +58,6 @@ class RovingElves : Quest(Quests.ROVING_ELVES, 105, 104, 1, Vars.VARP_QUEST_ROVI
     }
 
     override fun newInstance(`object`: Any?): Quest {
-        definePlugin(RovingElvesPlugin())
-        definePlugin(RovingElvesObstacles())
         definePlugin(MossGiantNPC())
         definePlugin(ElunedDialogue())
         definePlugin(IslwynDialogue())

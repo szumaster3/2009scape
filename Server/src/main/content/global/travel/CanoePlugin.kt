@@ -187,6 +187,11 @@ class CanoePlugin : InteractionListener, InterfaceListener {
                     1 -> {
                         setVarbit(player, varbit, Station.TREE_FALLEN.varbit)
                         face(player, station.chopLocation.transform(station.facing))
+                        return@queueScript delayScript(player, 1)
+                    }
+
+                    2 -> {
+
                         return@queueScript stopExecuting(player)
                     }
 

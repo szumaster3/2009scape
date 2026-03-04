@@ -28,7 +28,7 @@ class VampireSlayer : Quest(Quests.VAMPIRE_SLAYER, 30, 29, 3, Vars.VARP_QUEST_VA
             line(player, "I spoke to Morgan in Draynor Village. He told me that the", line++, true)
             line(player, "locals are being attacked by a terrifying Vampire!", line++, true)
             line++
-            line(player, "I need to speak to !!Dr Harlow?? who can normally be found in", line++, true)
+            line(player, "I need to speak to !!Dr Harlow?? who can normally be found in", line++,)
             line(player, "the !!Blue Moon Inn?? in !!Varrock??.", line++, true)
         }
         if (getStage(player) == 20) {
@@ -40,8 +40,8 @@ class VampireSlayer : Quest(Quests.VAMPIRE_SLAYER, 30, 29, 3, Vars.VARP_QUEST_VA
             line++
             line(player, "I should see what advice !!Dr Harlow?? can give me about killing", line++, true)
             line(player, "!!Vampires??.", line++, true)
-            line(player, "When I'm ready, I should go to !!Draynor Manor??, north of", line++, true)
-            line(player, "Draynor to kill the !!Vampire?? that's living in the basement.", line++, true)
+            line(player, "When I'm ready, I should go to !!Draynor Manor??, north of", line++)
+            line(player, "Draynor to kill the !!Vampire?? that's living in the basement.", line++)
         }
         if (getStage(player) == 30) {
             line(player, "I spoke to Morgan in Draynor Village. He told me that the", line++, true)
@@ -64,8 +64,8 @@ class VampireSlayer : Quest(Quests.VAMPIRE_SLAYER, 30, 29, 3, Vars.VARP_QUEST_VA
             line(player, "I have spoken to Dr Harlow. He seemed terribly drunk, and", line++, true)
             line(player, "he kept asking me to buy him drinks.", line++, true)
             line++
-            line(player, "I have killed the Vampire, Count Draynor. Draynor Village is", line++, true)
-            line(player, "now safe!", line++, true)
+            line(player, "I have killed the Vampire, Count Draynor. Draynor Village is", line++)
+            line(player, "now safe!", line++)
             line++
             line(player, "<col=FF0000>QUEST COMPLETE!</col>", line, false)
         }

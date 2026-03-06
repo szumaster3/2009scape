@@ -25,84 +25,86 @@ class GemCutPlugin : InteractionListener {
             val gemId = if (used.id == Items.CHISEL_1755) with.id else used.id
             val gem = CraftingDefinition.Gem.forId(gemId) ?: return@onUseWith true
 
+            fun handleCut(amount: Int) {
+                var remaining = amount
+
+                queueScript(player, 0, QueueStrength.WEAK) {
+                    if (remaining <= 0)
+                        return@queueScript stopExecuting(player)
+
+                    if (!inInventory(player, gem.uncut)) {
+                        sendMessage(player, "You have run out of gems.")
+                        return@queueScript stopExecuting(player)
+                    }
+
+                    if (getStatLevel(player, Skills.CRAFTING) < gem.level) {
+                        sendDialogue(player, "You need a Crafting level of ${gem.level} to cut this gem.")
+                        return@queueScript stopExecuting(player)
+                    }
+
+                    animate(player, gem.animation)
+                    playAudio(player, Sounds.CHISEL_2586)
+                    delayClock(player, Clocks.SKILLING, 1)
+
+                    removeItem(player, gem.uncut)
+
+                    val craftingLevel = getStatLevel(player, Skills.CRAFTING)
+                    val crushed = when (gem.uncut) {
+                        Items.UNCUT_OPAL_1625 ->
+                            random(100) < getGemCrushChance(7.42, 0.0, craftingLevel)
+                        Items.UNCUT_JADE_1627 ->
+                            random(100) < getGemCrushChance(9.66, 0.0, craftingLevel)
+                        Items.UNCUT_RED_TOPAZ_1629 ->
+                            random(100) < getGemCrushChance(9.2, 0.0, craftingLevel)
+                        else -> false
+                    }
+
+                    if (crushed) {
+                        addItem(player, Items.CRUSHED_GEM_1633)
+                        rewardXP(
+                            player,
+                            Skills.CRAFTING,
+                            when (gem.uncut) {
+                                Items.UNCUT_OPAL_1625 -> 3.8
+                                Items.UNCUT_RED_TOPAZ_1629 -> 6.3
+                                else -> 5.0
+                            }
+                        )
+                        sendMessage(player, "You mis-hit the chisel and smash the gem to pieces!")
+                    } else {
+                        addItem(player, gem.cut)
+                        rewardXP(player, Skills.CRAFTING, gem.xp)
+                        sendMessage(player, "You cut the ${getItemName(gem.cut)}.")
+                    }
+
+                    remaining--
+
+                    if (remaining > 0 && inInventory(player, gem.uncut)) {
+                        delayClock(player, Clocks.SKILLING, 1)
+                        setCurrentScriptState(player, 0)
+                        delayScript(player, 1)
+                    } else {
+                        stopExecuting(player)
+                    }
+                }
+            }
+
+            val amount = amountInInventory(player, gem.uncut)
+
+            if (amount == 1) {
+                handleCut(1)
+                return@onUseWith true
+            }
+
             sendSkillDialogue(player) {
                 withItems(gem.cut)
 
-                create { _, amount ->
-                    var remaining = amount
-
-                    queueScript(player, 0, QueueStrength.WEAK) {
-                        if (remaining <= 0)
-                            return@queueScript stopExecuting(player)
-
-                        if (!inInventory(player, gem.uncut)) {
-                            sendMessage(player, "You have run out of gems.")
-                            return@queueScript stopExecuting(player)
-                        }
-
-                        if (getStatLevel(player, Skills.CRAFTING) < gem.level) {
-                            sendDialogue(
-                                player,
-                                "You need a Crafting level of ${gem.level} to cut this gem."
-                            )
-                            return@queueScript stopExecuting(player)
-                        }
-
-                        animate(player, gem.animation)
-                        playAudio(player, Sounds.CHISEL_2586)
-                        delayClock(player, Clocks.SKILLING, 1)
-
-                        removeItem(player, gem.uncut)
-
-                        val craftingLevel = getStatLevel(player, Skills.CRAFTING)
-                        val crushed = when (gem.uncut) {
-                            Items.UNCUT_OPAL_1625 ->
-                                random(100) < getGemCrushChance(7.42, 0.0, craftingLevel)
-                            Items.UNCUT_JADE_1627 ->
-                                random(100) < getGemCrushChance(9.66, 0.0, craftingLevel)
-                            Items.UNCUT_RED_TOPAZ_1629 ->
-                                random(100) < getGemCrushChance(9.2, 0.0, craftingLevel)
-                            else -> false
-                        }
-
-                        if (crushed) {
-                            addItem(player, Items.CRUSHED_GEM_1633)
-                            rewardXP(
-                                player,
-                                Skills.CRAFTING,
-                                when (gem.uncut) {
-                                    Items.UNCUT_OPAL_1625 -> 3.8
-                                    Items.UNCUT_RED_TOPAZ_1629 -> 6.3
-                                    else -> 5.0
-                                }
-                            )
-                            sendMessage(
-                                player,
-                                "You mis-hit the chisel and smash the gem to pieces!"
-                            )
-                        } else {
-                            addItem(player, gem.cut)
-                            rewardXP(player, Skills.CRAFTING, gem.xp)
-                            sendMessage(
-                                player,
-                                "You cut the ${getItemName(gem.cut)}."
-                            )
-                        }
-
-                        remaining--
-
-                        if (remaining > 0 && inInventory(player, gem.uncut)) {
-                            delayClock(player, Clocks.SKILLING, 1)
-                            setCurrentScriptState(player, 0)
-                            delayScript(player, 1)
-                        } else {
-                            stopExecuting(player)
-                        }
-                    }
+                create { _, amountChosen ->
+                    handleCut(amountChosen)
                 }
 
                 calculateMaxAmount {
-                    amountInInventory(player, gem.uncut)
+                    amount
                 }
             }
 
@@ -120,46 +122,54 @@ class GemCutPlugin : InteractionListener {
 
             val gemId = if (used.id == Items.HAMMER_2347) with.id else used.id
 
+            fun handleCrush(amount: Int) {
+                var remaining = amount
+
+                queueScript(player, 0, QueueStrength.WEAK) {
+                    if (remaining <= 0)
+                        return@queueScript stopExecuting(player)
+
+                    if (!inInventory(player, gemId)) {
+                        sendMessage(player, "You have run out of gems.")
+                        return@queueScript stopExecuting(player)
+                    }
+
+                    animate(player, Animations.USE_HAMMER_CHISEL_11041)
+                    delayClock(player, Clocks.SKILLING, 1)
+
+                    if (removeItem(player, gemId)) {
+                        addItem(player, Items.CRUSHED_GEM_1633)
+                        sendMessage(player, "You deliberately crush the gem with the hammer.")
+                    }
+
+                    remaining--
+
+                    if (remaining > 0 && inInventory(player, gemId)) {
+                        delayClock(player, Clocks.SKILLING, 1)
+                        setCurrentScriptState(player, 0)
+                        delayScript(player, 1)
+                    } else {
+                        stopExecuting(player)
+                    }
+                }
+            }
+
+            val amount = amountInInventory(player, gemId)
+
+            if (amount == 1) {
+                handleCrush(1)
+                return@onUseWith true
+            }
+
             sendSkillDialogue(player) {
                 withItems(Items.CRUSHED_GEM_1633)
 
-                create { _, amount ->
-                    var remaining = amount
-
-                    queueScript(player, 0, QueueStrength.WEAK) {
-                        if (remaining <= 0)
-                            return@queueScript stopExecuting(player)
-
-                        if (!inInventory(player, gemId)) {
-                            sendMessage(player, "You have run out of gems.")
-                            return@queueScript stopExecuting(player)
-                        }
-
-                        animate(player, Animations.USE_HAMMER_CHISEL_11041)
-                        delayClock(player, Clocks.SKILLING, 1)
-
-                        if (removeItem(player, gemId)) {
-                            addItem(player, Items.CRUSHED_GEM_1633)
-                            sendMessage(
-                                player,
-                                "You deliberately crush the gem with the hammer."
-                            )
-                        }
-
-                        remaining--
-
-                        if (remaining > 0 && inInventory(player, gemId)) {
-                            delayClock(player, Clocks.SKILLING, 1)
-                            setCurrentScriptState(player, 0)
-                            delayScript(player, 1)
-                        } else {
-                            stopExecuting(player)
-                        }
-                    }
+                create { _, amountChosen ->
+                    handleCrush(amountChosen)
                 }
 
                 calculateMaxAmount {
-                    amountInInventory(player, gemId)
+                    amount
                 }
             }
 

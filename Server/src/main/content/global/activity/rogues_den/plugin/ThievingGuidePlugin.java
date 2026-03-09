@@ -27,6 +27,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import static core.api.ContentAPIKt.finishedMoving;
 import static core.api.ContentAPIKt.sendNPCDialogueLines;
 
 /**
@@ -95,6 +96,9 @@ public class ThievingGuidePlugin extends OptionHandler {
 			);
 			break;
 		case "crack":
+			if (!finishedMoving(player)) {
+				return true;
+			}
 			if (player.getSkills().getLevel(Skills.THIEVING) < 50) {
 				player.getPacketDispatch().sendMessage("You need to be level " + level + " thief to crack this safe.");
 				return true;
@@ -105,10 +109,6 @@ public class ThievingGuidePlugin extends OptionHandler {
 			}
 			final boolean success = success(player, Skills.THIEVING);
 			player.lock(4);
-
-			Location safeLoc = new Location(player.getLocation().getX(), 4973);
-			player.faceLocation(safeLoc);
-
 			player.getPacketDispatch().sendMessage("You start cracking the safe.");
 			player.animate(animations[success ? 1 : 0]);
 			GameWorld.getPulser().submit(new Pulse(3, player) {
@@ -171,7 +171,7 @@ public class ThievingGuidePlugin extends OptionHandler {
 		int tries = 0;
 		while (item == null) {
 			ChanceItem i = chances.get(0);
-			if (rand <= i.chanceRate) {
+			if (rand <= i.getChanceRate()) {
 				item = i;
 				break;
 			}

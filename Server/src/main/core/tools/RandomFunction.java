@@ -189,7 +189,7 @@ public class RandomFunction {
     public static final ChanceItem getChanceItem(final ChanceItem[] items) {
         double total = 0;
         for (ChanceItem i : items) {
-            total += i.chanceRate;
+            total += i.getChanceRate();
         }
         final int random = random((int) total);
         double subTotal = 0;
@@ -199,7 +199,7 @@ public class RandomFunction {
         }
         Collections.shuffle(choices);
         for (ChanceItem i : choices) {
-            subTotal += i.chanceRate;
+            subTotal += i.getChanceRate();
             if (random < subTotal) {
                 return i;
             }
@@ -212,7 +212,7 @@ public class RandomFunction {
         final List<Item> always_rewards = new ArrayList<>(20);
         final List<ChanceItem> chanceTable = new ArrayList<ChanceItem>(table);
         boolean isAllAlways = false;
-        if (table.stream().filter(item -> item.chanceRate == 1).count() == table.size()) {
+        if (table.stream().filter(item -> item.getChanceRate() == 1).count() == table.size()) {
             isAllAlways = true;
         }
         if (table.size() == 1) {
@@ -223,11 +223,11 @@ public class RandomFunction {
                 while (rewards.isEmpty()) {
                     Collections.shuffle(chanceTable);
                     for (ChanceItem item : chanceTable) {
-                        if (item.chanceRate == 0.0) {
-                            item.chanceRate = DropFrequency.rate(item.dropFrequency);
+                        if (item.getChanceRate() == 0.0) {
+                            item.setChanceRate(DropFrequency.rate(item.getDropFrequency()));
                         }
-                        boolean roll = RandomFunction.random(1, (int) item.chanceRate) == 1;
-                        if (item.chanceRate != 1) {
+                        boolean roll = RandomFunction.random(1, (int) item.getChanceRate()) == 1;
+                        if (item.getChanceRate() != 1) {
                             if (roll) {
                                 rewards.add(item.getRandomItem());
                                 break;
@@ -238,11 +238,11 @@ public class RandomFunction {
             } else {
                 Collections.shuffle(chanceTable);
                 for (ChanceItem item : chanceTable) {
-                    if (item.chanceRate == 0.0) {
-                        item.chanceRate = DropFrequency.rate(item.dropFrequency);
+                    if (item.getChanceRate() == 0.0) {
+                        item.setChanceRate(DropFrequency.rate(item.getDropFrequency()));
                     }
-                    boolean roll = RandomFunction.random(1, (int) item.chanceRate) == 1;
-                    if (item.chanceRate != 1) {
+                    boolean roll = RandomFunction.random(1, (int) item.getChanceRate()) == 1;
+                    if (item.getChanceRate() != 1) {
                         if (roll) {
                             rewards.add(item.getRandomItem());
                             break;
@@ -251,49 +251,31 @@ public class RandomFunction {
                 }
             }
         }
-        table.stream().filter(item -> item.chanceRate == 1).forEach(item -> {
-            if (item.chanceRate == 0.0) {
-                item.chanceRate = DropFrequency.rate(item.dropFrequency);
+        table.stream().filter(item -> item.getChanceRate() == 1).forEach(item -> {
+            if (item.getChanceRate() == 0.0) {
+                item.setChanceRate(DropFrequency.rate(item.getDropFrequency()));
             }
             always_rewards.add(item.getRandomItem());
         });
         return Stream.concat(rewards.stream(), always_rewards.stream()).collect(Collectors.toList());
     }
 
-    /**
-     * Roll chance table list.
-     *
-     * @param atLeastOne the at least one
-     * @param table      the table
-     * @return the list
-     */
     public static List<Item> rollChanceTable(boolean atLeastOne, ChanceItem... table) {
         return rollChanceTable(atLeastOne, Arrays.asList(table));
     }
 
-    /**
-     * Roll weighted chance table item.
-     *
-     * @param table the table
-     * @return the item
-     */
     public static Item rollWeightedChanceTable(WeightedChanceItem... table) {
         return rollWeightedChanceTable(new ArrayList<>(Arrays.asList(table)));
     }
 
-    /**
-     * Roll weighted chance table item.
-     *
-     * @param table the table
-     * @return the item
-     */
     public static Item rollWeightedChanceTable(List<WeightedChanceItem> table) {
-        int sumOfWeights = table.stream().mapToInt(item -> item.getWeight()).sum();
+        int sumOfWeights = table.stream().mapToInt(item -> item.weight).sum();
         int rand = random(sumOfWeights);
         Collections.shuffle(table);
         for (WeightedChanceItem item : table) {
-            if (rand <= item.getWeight()) return item.getItem();
-            rand -= item.getWeight();
+            if (rand <= item.weight)
+                return item.getItem();
+            rand -= item.weight;
         }
         //We should get here if and only if the weighted chance table is empty.
 

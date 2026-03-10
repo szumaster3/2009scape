@@ -181,13 +181,12 @@ class CanoePlugin : InteractionListener, InterfaceListener {
                         playGlobalAudio(player.location, Sounds.TREE_FALLING_2734)
                         setVarbit(player, varbit, Station.TREE_FALLING.varbit)
                         animateScenery(player, node.asScenery(), TREE_FALLING_ANIM.id)
-                        return@queueScript delayScript(player, TREE_FALLING_ANIM.duration)
+                        return@queueScript delayScript(player, 1)
                     }
 
                     1 -> {
                         setVarbit(player, varbit, Station.TREE_FALLEN.varbit)
-                        face(player, station.chopLocation.transform(station.facing))
-                        return@queueScript delayScript(player, 1)
+                        return@queueScript delayScript(player, TREE_FALLING_ANIM.duration)
                     }
 
                     2 -> {

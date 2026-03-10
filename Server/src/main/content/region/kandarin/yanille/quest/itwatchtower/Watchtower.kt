@@ -14,6 +14,14 @@ import shared.consts.Vars
 @Initializable
 class Watchtower : Quest(Quests.WATCHTOWER, 131, 130, 4, Vars.VARP_QUEST_WATCHTOWER_PROGRESS_212, 0, 1, 13) {
 
+    private val evidences = intArrayOf(
+        Items.FINGERNAILS_2384,
+        Items.DAMAGED_DAGGER_2387,
+        Items.TATTERED_EYE_PATCH_2388,
+        Items.OLD_ROBE_2385,
+        Items.UNUSUAL_ARMOUR_2386,
+    )
+
     override fun drawJournal(player: Player, stage: Int) {
         super.drawJournal(player, stage)
         var line = 12
@@ -33,58 +41,246 @@ class Watchtower : Quest(Quests.WATCHTOWER, 131, 130, 4, Vars.VARP_QUEST_WATCHTO
         }
 
         if (stage == 1) {
-            line(player, "I accepted the challenge of finding the lost crystals.", line++)
-            if(inInventory(player, Items.FINGERNAILS_2384)) {
-                line(player, "I found some !!fingernails?? as evidence.", line++)
-                line(player, "I should take them to the !!Watchtower wizard??.", line++)
-                line++
-            }
+            line(player, "I accepted the challenge of finding the lost crystals.", line++, true)
+            line++
+            line(player, "I need to collect some !!evidence?? by searching the bushes.", line++)
             line++
         }
 
         if (stage == 2) {
             line(player, "I accepted the challenge of finding the lost crystals.", line++, true)
-            line++
-        }
+            line(player, "I have spoken to !!Watchtower Wizard??.", line++, false)
+            line(player, "I need to collect some evidence by !!searching the bushes??.", line++, allInInventory(player, *evidences) || stage > 20)
 
-        if (stage == 20) {
-            line(player, "I found some !!fingernails?? as evidence.", line++, true)
-            line(player, "I should take them to the !!Watchtower wizard??.", line++, true)
+            if (evidences.all { inInventory(player, it) }) {
+                line(player, "I have collected all the evidences.", line++, true)
+            } else {
+                evidences.forEach { itemId ->
+                    val item = getItemName(itemId)
+                    if (inInventory(player, itemId)) {
+                        line(player, "I found some $item as evidence.", line++, true)
+                    } else {
+                        line(player, "!!I still need $item??", line++)
+                    }
+                }
+            }
+            line(player, "I should take them to the !!Watchtower Wizard??.", line++)
             line++
-            line(player, "I was given !!a map?? by the guard.", line++, true)
         }
 
         if(stage == 10) {
-            line(player, "I need to search the !!skavid caves??.", line++, true)
+            line(player, "I accepted the challenge of finding the lost crystals.", line++, true)
+            line++
+            line(player, "I have spoken to Watchtower Wizard.", line++, true)
+            line++
+            line(player, "I have collected all the evidences.", line++, true)
+            line++
+            line(player, "I was given a map by the guard.", line++, true)
+            line++
+            if(getAttribute(player, "watchtower-cave", false)) {
+                line(player, "I found my way into the skavid caves.", line++, true)
+                line++
+            }
+            line(player, "I need to search the skavid caves.", line++)
+            line++
+        }
+
+        if (stage >= 20) {
+            line(player, "I accepted the challenge of finding the lost crystals.", line++, true)
+            line++
+            line(player, "I have spoken to Watchtower Wizard.", line++, true)
+            line++
+            line(player, "I have collected all the evidences.", line++, true)
+            line++
+            line(player, "I was given !!a map?? by the guard.", line++, true)
+            line++
             line(player, "I found my way into the skavid caves.", line++, true)
+            line++
+            line(player, "I need to distract the !!enclave guard??.", line++)
+            line++
         }
 
         if (stage == 60) {
+            line(player, "I accepted the challenge of finding the lost crystals.", line++, true)
+            line++
+            line(player, "I have spoken to Watchtower Wizard.", line++, true)
+            line++
+            line(player, "I have collected all the evidences.", line++, true)
+            line++
+            line(player, "I was given !!a map?? by the guard.", line++, true)
+            line++
+            line(player, "I found my way into the skavid caves.", line++, true)
+            line++
             line(player, "I used some cave nightshade to distract", line++, true)
             line(player, "the enclave guard.", line++, true)
-            line(player, "I need to defeat the ogre shamans", line++)
+            line++
+            line(player, "I need to defeat the !!ogre shamans??", line++)
             line(player, "and find the other !!crystals??.", line++)
         }
 
         if(stage == 70) {
+            line(player, "I accepted the challenge of finding the lost crystals.", line++, true)
+            line++
+            line(player, "I have spoken to Watchtower Wizard.", line++, true)
+            line++
+            line(player, "I have collected all the evidences.", line++, true)
+            line++
+            line(player, "I was given !!a map?? by the guard.", line++, true)
+            line++
+            line(player, "I found my way into the skavid caves.", line++, true)
+            line++
+            line(player, "I used some cave nightshade to distract", line++, true)
+            line(player, "the enclave guard.", line++, true)
+            line++
             line(player, "I tried to defeat the shamans, but they are", line++)
             line(player, "protected by powerful magics!", line++)
-            line(player, "I should speak with the !!Watchtower wizard?? to see if", line++)
+            line(player, "I should speak with the !!Watchtower Wizard?? to see if", line++)
             line(player, "he has any advice for me.", line++)
         }
 
+        if(stage == 75) {
+            line(player, "I accepted the challenge of finding the lost crystals.", line++, true)
+            line++
+            line(player, "I have spoken to Watchtower Wizard.", line++, true)
+            line++
+            line(player, "I have collected all the evidences.", line++, true)
+            line++
+            line(player, "I was given a map by the guard.", line++, true)
+            line++
+            line(player, "I found my way into the skavid caves.", line++, true)
+            line++
+            line(player, "I used some cave nightshade to distract", line++, true)
+            line(player, "the enclave guard.", line++, true)
+            line++
+            line(player, "I need to make a potion to !!destroy the shamans??.", line++)
+            line(player, "I have to gather the ingredients I know about.", line++)
+            line++
+            val ingredients = listOf(
+                Items.POTION_2394 to "base potion",
+                Items.CLEAN_GUAM_249 to "guam leaf",
+                Items.JANGERBERRIES_247 to "jangerberries",
+                Items.GROUND_BAT_BONES_2391 to "ground bat bones"
+            )
+
+            ingredients.forEach { (id, name) ->
+                if (inInventory(player, id)) {
+                    line(player, "I have collected the $name.", line++, true)
+                } else {
+                    line(player, "I still need to collect the !!$name??", line++)
+                }
+            }
+
+            if (allInInventory(player, *ingredients.map { it.first }.toIntArray())) {
+                line(player, "I have collected all the ingredients.", line++)
+                line(player, "I can now give them to the !!Watchtower Wizard?? to make the magic ogre potion.", line++)
+            }
+        }
+
         if(stage == 80) {
+            line(player, "I accepted the challenge of finding the lost crystals.", line++, true)
+            line++
+            line(player, "I have spoken to Watchtower Wizard.", line++, true)
+            line++
+            line(player, "I have collected all the evidences.", line++, true)
+            line++
+            line(player, "I was given a map by the guard.", line++, true)
+            line++
+            line(player, "I found my way into the skavid caves.", line++, true)
+            line++
+            line(player, "I used some cave nightshade to distract", line++, true)
+            line(player, "the enclave guard.", line++, true)
+            line++
+            line(player, "I need to make a potion to destroy the shamans.", line++, true)
+            line(player, "I have gathered the ingredients I know about.", line++, true)
+            line(player, "I have collected all the ingredients.", line++, true)
+            line++
             line(player, "I have made the ogre potion.", line++, true)
+            line(player, "I need to gave the potion to the wizard.", line++)
+            line++
         }
 
         if(stage == 85) {
-            line(player, "I gave the potion to the wizard. He infused it into a magic ogre potion.", line++, true)
+            line(player, "I accepted the challenge of finding the lost crystals.", line++, true)
+            line++
+            line(player, "I have spoken to Watchtower Wizard.", line++, true)
+            line++
+            line(player, "I have collected all the evidences.", line++, true)
+            line++
+            line(player, "I was given a map by the guard.", line++, true)
+            line++
+            line(player, "I found my way into the skavid caves.", line++, true)
+            line++
+            line(player, "I used some cave nightshade to distract", line++, true)
+            line(player, "the enclave guard.", line++, true)
+            line++
+            line(player, "I need to make a potion to destroy the shamans.", line++, true)
+            line(player, "I have gathered the ingredients I know about.", line++, true)
+            line(player, "I have collected all the ingredients.", line++, true)
+            line++
+            line(player, "I have made the ogre potion.", line++, true)
+            line++
+            line(player, "I gave the potion to the wizard.", line++, true)
+            line(player, "He infused it into a magic ogre potion.", line++, true)
             line(player, "I need to defeat the ogre shamans.", line++)
         }
 
         if(stage == 90) {
+            line(player, "I accepted the challenge of finding the lost crystals.", line++, true)
+            line++
+            line(player, "I have spoken to Watchtower Wizard.", line++, true)
+            line++
+            line(player, "I have collected all the evidences.", line++, true)
+            line++
+            line(player, "I was given a map by the guard.", line++, true)
+            line++
+            line(player, "I found my way into the skavid caves.", line++, true)
+            line++
+            line(player, "I used some cave nightshade to distract", line++, true)
+            line(player, "the enclave guard.", line++, true)
+            line++
+            line(player, "I need to make a potion to destroy the shamans.", line++, true)
+            line(player, "I have gathered the ingredients I know about.", line++, true)
+            line(player, "I have collected all the ingredients.", line++, true)
+            line++
+            line(player, "I have made the ogre potion.", line++, true)
+            line++
+            line(player, "I gave the potion to the wizard.", line++, true)
+            line(player, "He infused it into a magic ogre potion.", line++, true)
             line(player, "I killed all the ogre shamans.", line++, true)
-            line(player, "I need to return all the crystals to the !!Watchtower wizard??.", line++)
+            line++
+            line(player, "I need to return all the crystals to the !!Watchtower Wizard??.", line++)
+            line++
+        }
+
+        if(stage == 95) {
+            line(player, "I accepted the challenge of finding the lost crystals.", line++, true)
+            line++
+            line(player, "I have spoken to Watchtower Wizard.", line++, true)
+            line++
+            line(player, "I have collected all the evidences.", line++, true)
+            line++
+            line(player, "I was given a map by the guard.", line++, true)
+            line++
+            line(player, "I found my way into the skavid caves.", line++, true)
+            line++
+            line(player, "I used some cave nightshade to distract", line++, true)
+            line(player, "the enclave guard.", line++, true)
+            line++
+            line(player, "I need to make a potion to destroy the shamans.", line++, true)
+            line(player, "I have gathered the ingredients I know about.", line++, true)
+            line(player, "I have collected all the ingredients.", line++, true)
+            line++
+            line(player, "I have made the ogre potion.", line++, true)
+            line++
+            line(player, "I gave the potion to the wizard.", line++, true)
+            line(player, "He infused it into a magic ogre potion.", line++, true)
+            line(player, "I killed all the ogre shamans.", line++, true)
+            line++
+            line(player, "I have returned all the crystals to the Watchtower Wizard.", line++, true)
+            line++
+            line(player, "I need to use the four power crystals on", line++)
+            line(player, "the pillars of the !!shield generator??", line++)
+            line(player, "and throw the lever to activate the system.", line++)
         }
 
         if (stage == 100) {

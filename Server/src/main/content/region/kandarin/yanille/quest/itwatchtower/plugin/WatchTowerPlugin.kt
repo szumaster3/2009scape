@@ -714,6 +714,7 @@ class WatchTowerPlugin : InteractionListener {
                         if (location != null) {
                             teleport(player!!, location, TeleportManager.TeleportType.INSTANT)
                             sendMessage(player!!, "You enter the cave...")
+                            setAttribute(player!!, "watchtower-cave", true)
                         }
                     }
                     2 -> end()

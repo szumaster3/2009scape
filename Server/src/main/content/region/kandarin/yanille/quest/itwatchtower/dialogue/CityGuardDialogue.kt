@@ -65,7 +65,11 @@ class CityGuardDialogue : DialogueFile() {
                 sendMessage(player!!, "The guard gives you a map.")
             }
 
-            13 -> options("Do you have any other riddles for me?", "I have lost the map you gave me.").also { stage++ }
+            13 -> if(inBank(player!!, Items.SKAVID_MAP_2376)){
+                player("Do you have any other riddles for me?").also { stage = 15 }
+            } else {
+                options("Do you have any other riddles for me?", "I have lost the map you gave me.").also { stage++ }
+            }
             14 -> when(buttonID) {
                 1 -> player("Do you have any other riddles for me?").also { stage++ }
                 2 -> player("I have lost the map you gave me.").also { stage = 22 }

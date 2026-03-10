@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="https://github.com/szumaster3/windows/blob/master/welcome.png?raw=true">
+  <img src="https://i.imgur.com/yDTKfO6.jpeg">
 </div>
 
 <div align="center">

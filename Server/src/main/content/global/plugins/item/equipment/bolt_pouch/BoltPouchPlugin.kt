@@ -6,7 +6,6 @@ import core.game.container.impl.EquipmentContainer
 import core.game.event.EventHook
 import core.game.event.ItemEquipEvent
 import core.game.event.ItemUnequipEvent
-import core.game.global.action.DropListener
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
 import core.game.interaction.InterfaceListener
@@ -60,6 +59,10 @@ class BoltPouchPlugin : InterfaceListener, InteractionListener
             return@on true
         }
 
+        /*
+         * Handles destroy of bolt pouch.
+         */
+
         on(BOLT_POUCH, IntType.ITEM, "destroy") { player, item ->
             val itemDef = ItemDefinition.forId(item.id)
             sendDestroyItemDialogue(
@@ -68,70 +71,54 @@ class BoltPouchPlugin : InterfaceListener, InteractionListener
                 itemDef.getConfiguration(ItemConfigParser.DESTROY_MESSAGE)
             )
 
-            addDialogueAction(player) { player, button ->
-                if (button == 3) {
-                    closeDialogue(player)
-
+            addDialogueAction(player) { p, button ->
+                if (button == 3)
+                {
+                    closeDialogue(p)
                     val manager = player.boltPouchManager
-                    val container = manager.getPouchContainer(item.id)
 
-                    container?.let {
-                        for (i in 0 until it.capacity()) {
-                            val bolt = it.get(i)
-                            if (bolt != null && bolt.amount > 0) {
-                                val dropped = bolt.dropItem
-                                GroundItemManager.create(dropped, player.location, player)
-                                it.replace(null, i)
-                            }
+                    for (i in 0 until 4)
+                    {
+                        val id = manager.getBolt(i)
+                        val amount = manager.getAmount(i)
+
+                        if (id > 0)
+                        {
+                            GroundItemManager.create(
+                                Item(id, amount),
+                                player.location,
+                                player
+                            )
                         }
                     }
 
-                    removeItem(player, item.id)
-                    updateBoltPouchDisplay(player)
+                    manager.clearAll()
+                    removeItem(p, BOLT_POUCH)
+                    updateBoltPouchDisplay(p)
                 }
             }
             return@on true
         }
 
-        onUseWith(IntType.ITEM, BoltPouchManager.ALLOWED_BOLT_IDS, BOLT_POUCH) { player, used, with ->
-            val pouch = with.asItem()
+        /*
+         * Handles add the bolts to bolt pouch.
+         */
+
+        onUseWith(IntType.ITEM, BoltPouchManager.ALLOWED_BOLT_IDS, BOLT_POUCH) { player, used, _ ->
             val bolts = used.asItem()
             val manager = player.boltPouchManager
 
-            if (used.id !in BoltPouchManager.ALLOWED_BOLT_IDS)
+            val added = manager.addBolts(bolts.id, bolts.amount)
+
+            if (added > 0)
             {
-                sendMessage(player, "You can't add that type of bolt to the pouch.")
+                player.inventory.remove(Item(bolts.id, added))
+                sendMessage(player, "You add some bolts into the bolt pouch.")
             }
             else
             {
-                val added = manager.addBolts(pouch.id, bolts.id, bolts.asItem().amount)
-
-                if (added > 0)
-                {
-                    player.inventory.remove(Item(bolts.id, added))
-                    sendMessage(player, "You place some bolts into the bolt pouch.")
-                }
-
-                else
-                {
-                    val container = manager.getPouchContainer(pouch.id)
-                    container?.let {
-                        val existingSlot = (0 until it.capacity()).firstOrNull { slot ->
-                            val itemInSlot = it.get(slot)
-                            itemInSlot?.id == bolts.id && itemInSlot.amount >= BoltPouchManager.SIZE
-                        }
-                        if (existingSlot != null)
-                        {
-                            sendMessage(player, "You can't add more bolts of this type.")
-                        }
-                        else if (it.isFull)
-                        {
-                            sendMessage(player, "The bolt pouch is already full.")
-                        }
-                    }
-                }
+                sendMessage(player, "You can't hold any more of those bolts.")
             }
-
             updateBoltPouchDisplay(player)
             return@onUseWith true
         }
@@ -141,41 +128,27 @@ class BoltPouchPlugin : InterfaceListener, InteractionListener
     {
         on(Components.XBOWS_POUCH_433) { player, _, _, buttonID, _, _ ->
             val manager = player.boltPouchManager
-
             when (buttonID)
             {
                 in WIELD_BOLT_SLOTS -> {
                     val pouchSlot = WIELD_BOLT_SLOTS.indexOf(buttonID)
-
                     when {
-                        !manager.hasBolts(BOLT_POUCH, pouchSlot) ->
-                            sendMessage(player, "You don't have any bolts in this slot.")
-                        freeSlots(player) == 0 ->
-                            sendMessage(player, "You don't have enough space in your inventory.")
-                        manager.wieldBolts(BOLT_POUCH, pouchSlot, player) ->
-                            sendMessage(player, "You wield some bolts from your bolt pouch.")
+                        !manager.hasBolts(pouchSlot) -> sendMessage(player, "You don't have any bolts in this slot.")
+                        manager.wieldBolts(pouchSlot) -> sendMessage(player, "You wield some bolts from your bolt pouch.")
                     }
-
                     updateBoltPouchDisplay(player)
                 }
 
                 in REMOVE_BOLT_SLOTS -> {
                     val pouchSlot = REMOVE_BOLT_SLOTS.indexOf(buttonID)
-
                     when {
-                        !manager.hasBolts(BOLT_POUCH, pouchSlot) ->
-                            sendMessage(player, "There's nothing to remove in this slot.")
-                        freeSlots(player) == 0 ->
-                            sendMessage(player, "You don't have enough space in your inventory.")
-                        manager.removeBolts(BOLT_POUCH, pouchSlot, player) -> {
+                        !manager.hasBolts(pouchSlot) -> sendMessage(player, "There's nothing to remove in this slot.")
+                        freeSlots(player) == 0 -> sendMessage(player, "You don't have enough space in your inventory.")
+                        manager.removeBolts(pouchSlot) -> {
                             val ordinal = arrayOf("first", "second", "third", "fourth")[pouchSlot]
-                            sendMessage(
-                                player,
-                                "You remove all the bolts from the $ordinal slot of your bolt pouch."
-                            )
+                            sendMessage(player, "You remove all the bolts from the $ordinal slot of your bolt pouch.")
                         }
                     }
-
                     updateBoltPouchDisplay(player)
                 }
 
@@ -183,10 +156,8 @@ class BoltPouchPlugin : InterfaceListener, InteractionListener
                     val ammo = player.equipment.get(ARROWS_SLOT)
 
                     when {
-                        ammo == null || ammo.amount == 0 ->
-                            sendMessage(player, "You're not wielding any bolts.")
-                        freeSlots(player) == 0 ->
-                            sendMessage(player, "You don't have enough space in your inventory.")
+                        ammo == null || ammo.amount == 0 -> sendMessage(player, "You're not wielding any bolts.")
+                        freeSlots(player) == 0 -> sendMessage(player, "You don't have enough space in your inventory.")
                         else -> {
                             player.equipment.remove(ammo)
                             player.inventory.add(ammo)
@@ -213,22 +184,27 @@ class BoltPouchPlugin : InterfaceListener, InteractionListener
         }
     }
 
-    fun updateBoltPouchDisplay(player: Player) {
+    fun updateBoltPouchDisplay(player: Player)
+    {
         val manager = player.boltPouchManager
         val current = player.equipment.get(ARROWS_SLOT)
         val iface = Components.XBOWS_POUCH_433
 
-        if (current != null && current.id > 0 && current.amount > 0) {
+        if (current != null && current.amount > 0)
+        {
             player.packetDispatch.sendItemZoomOnInterface(current.id, current.amount, 190, iface, 18)
             sendString(player, current.name, iface, 29)
             sendString(player, colorize("%G${current.amount}"), iface, 24)
-        } else {
-            sendModelOnInterface(player, Components.XBOWS_POUCH_433, 18, -1)
+        }
+        else
+        {
+            sendModelOnInterface(player, iface, 18, -1)
             sendString(player, "Nothing", iface, 29)
             sendString(player, "0", iface, 24)
         }
 
-        for (i in 0 until MAX_SLOTS) {
+        for (i in 0 until MAX_SLOTS)
+        {
             val boltId = manager.getBolt(i)
             val amount = manager.getAmount(i)
 
@@ -237,13 +213,14 @@ class BoltPouchPlugin : InterfaceListener, InteractionListener
 
             sendString(player, name, iface, boltNameTextIds[i])
             sendString(player, amountText, iface, boltAmountTextIds[i])
-
-            if (boltId != -1) {
+            if (boltId != -1)
+            {
                 player.packetDispatch.sendItemZoomOnInterface(boltId, amount, 190, iface, modelComponentIds[i])
-            } else {
-                sendModelOnInterface(player, Components.XBOWS_POUCH_433, modelComponentIds[i], -1)
+            }
+            else
+            {
+                sendModelOnInterface(player, iface, modelComponentIds[i], -1)
             }
         }
     }
-
 }

@@ -9,7 +9,7 @@ import core.game.node.entity.player.Player
 import core.game.node.item.Item
 import shared.consts.Items
 
-class BoltPouchManager(val player: Player) {
+class BoltPouchManager(private val player: Player) {
 
     companion object {
         const val SIZE = 255
@@ -36,35 +36,40 @@ class BoltPouchManager(val player: Player) {
         )
     }
 
-    private val boltPouchContainers = mutableMapOf<Int, Container>()
+    private val container = Container(SLOTS, ContainerType.NEVER_STACK)
 
-    private fun getContainer(pouchId: Int): Container =
-        boltPouchContainers.getOrPut(pouchId) { Container(SLOTS, ContainerType.NEVER_STACK) }
+    fun hasBolts(slot: Int) =
+        (container.get(slot)?.amount ?: 0) > 0
 
-    fun getPouchContainer(pouchId: Int): Container? =
-        boltPouchContainers[pouchId]
+    fun getBolt(slot: Int) =
+        container.get(slot)?.id ?: -1
 
-    fun hasBolts(pouchId: Int, slot: Int): Boolean =
-        getContainer(pouchId).get(slot)?.amount?.let { it > 0 } ?: false
+    fun getAmount(slot: Int) =
+        container.get(slot)?.amount ?: 0
 
-    fun getBolt(slot: Int): Int =
-        getContainer(Items.BOLT_POUCH_9433).get(slot)?.id ?: -1
+    private fun clearSlot(slot: Int) {
+        container.replace(null, slot)
+        container.update()
+    }
 
-    fun getAmount(slot: Int): Int =
-        getContainer(Items.BOLT_POUCH_9433).get(slot)?.amount ?: 0
+    fun clearAll() {
+        for (i in 0 until container.capacity()) {
+            container.replace(null, i)
+        }
+        container.update()
+    }
 
-    fun addBolts(pouchId: Int, boltId: Int, amount: Int): Int {
-        if (boltId !in ALLOWED_BOLT_IDS) return 0
+    fun addBolts(id: Int, amount: Int): Int
+    {
+        if (id !in ALLOWED_BOLT_IDS) return 0
 
-        val container = getContainer(pouchId)
-
-        for (slot in 0 until container.capacity()) {
-            val item = container.get(slot)
-            if (item != null && item.id == boltId) {
+        for (i in 0 until container.capacity())
+        {
+            val item = container.get(i)
+            if (item != null && item.id == id)
+            {
                 val space = SIZE - item.amount
-                if (space <= 0) {
-                    return 0
-                }
+                if (space <= 0) return 0
                 val add = minOf(space, amount)
                 item.amount += add
                 container.update()
@@ -72,87 +77,69 @@ class BoltPouchManager(val player: Player) {
             }
         }
 
-        for (slot in 0 until container.capacity()) {
-            if (container.get(slot) == null) {
+        for (i in 0 until container.capacity())
+        {
+            if (container.get(i) == null)
+            {
                 val add = minOf(SIZE, amount)
-                container.replace(Item(boltId, add), slot)
+                container.replace(Item(id, add), i)
                 container.update()
                 return add
             }
         }
+
         return 0
     }
 
-    fun wieldBolts(pouchId: Int, slot: Int, player: Player): Boolean {
-        val container = getContainer(pouchId)
+    fun wieldBolts(slot: Int): Boolean
+    {
         val item = container.get(slot) ?: return false
         val arrowSlot = EquipmentContainer.SLOT_ARROWS
         val current = player.equipment.get(arrowSlot)
         if (current != null && current.amount > 0) return false
-        container.replace(null, slot)
-        container.update()
-        player.equipment.add(item, true, arrowSlot)
+        if (!player.equipment.add(item, true, arrowSlot))
+            return false
+
+        clearSlot(slot)
         return true
     }
 
-    fun removeBolts(pouchId: Int, slot: Int, player: Player): Boolean {
-        val container = getContainer(pouchId)
+    fun removeBolts(slot: Int): Boolean
+    {
         val item = container.get(slot) ?: return false
         if (!player.inventory.hasSpaceFor(item)) return false
-
-        container.remove(item, slot, true)
-        container.shift()
-        for (i in 0 until container.capacity()) {
-            if (container.get(i)?.amount == 0) container.replace(null, i)
-        }
-
         player.inventory.add(item)
+        clearSlot(slot)
         return true
     }
 
-    fun save(root: JsonObject) {
-        val pouchArray = JsonArray()
-        for ((pouchId, container) in boltPouchContainers) {
+    fun save(root: JsonObject)
+    {
+        val arr = JsonArray()
+        for (i in 0 until container.capacity())
+        {
+            val item = container.get(i)
             val obj = JsonObject()
-            obj.addProperty("pouch", pouchId.toString())
-            val bolts = JsonArray()
-
-            for (i in 0 until container.capacity()) {
-                val item = container.get(i)
-                val it = JsonObject()
-                it.addProperty("slot", i.toString())
-                if (item != null) {
-                    it.addProperty("id", item.id.toString())
-                    it.addProperty("amount", item.amount.toString())
-                } else {
-                    it.addProperty("id", "0")
-                    it.addProperty("amount", "0")
-                }
-                bolts.add(it)
-            }
-
-            obj.add("bolts", bolts)
-            pouchArray.add(obj)
+            obj.addProperty("slot", i)
+            obj.addProperty("id", item?.id ?: 0)
+            obj.addProperty("amount", item?.amount ?: 0)
+            arr.add(obj)
         }
-        root.add("boltPouch", pouchArray)
+
+        root.add("boltPouch", arr)
     }
 
-    fun parse(data: JsonArray) {
-        data.forEach { element ->
-            val obj = element.asJsonObject
-            val pouchId = obj.get("pouch").asInt
-            val container = getContainer(pouchId)
-            container.clear()
-
-            val boltsArray = obj.getAsJsonArray("bolts")
-            boltsArray?.forEach { boltElement ->
-                val b = boltElement.asJsonObject
-                val slot = b.get("slot").asInt
-                val id = b.get("id").asInt
-                val amount = b.get("amount").asInt
-                if (id != 0) {
-                    container.replace(Item(id, amount), slot)
-                }
+    fun parse(data: JsonArray)
+    {
+        clearAll()
+        data.forEach {
+            val obj = it.asJsonObject
+            val slot = obj["slot"].asInt
+            val id = obj["id"].asInt
+            val amount = obj["amount"].asInt
+            if (id > 0 && amount > 0)
+            {
+                container.replace(Item(id, amount), slot)
             }
         }
     }

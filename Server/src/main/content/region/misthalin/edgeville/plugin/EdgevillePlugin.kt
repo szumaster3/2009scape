@@ -2,14 +2,23 @@ package content.region.misthalin.edgeville.plugin
 
 import core.api.*
 import core.game.global.action.ClimbActionHandler
+import core.game.global.action.DoorActionHandler
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
+import core.game.node.entity.player.link.WarningManager.Companion.isWarningDisabled
+import core.game.node.entity.player.link.WarningManager.Companion.openWarningInterface
+import core.game.node.entity.player.link.Warnings
 import core.game.world.map.Location
 import core.game.world.update.flag.context.Animation
 import shared.consts.Animations
 import shared.consts.Scenery
 
 class EdgevillePlugin : InteractionListener {
+
+    companion object {
+        private val WILDERNESS_METAL_GATE = intArrayOf(Scenery.METAL_DOOR_29319,Scenery.METAL_DOOR_29320)
+    }
+
     override fun defineListeners() {
 
         /*
@@ -78,6 +87,22 @@ class EdgevillePlugin : InteractionListener {
             } else {
                 sendMessage(player, "You climb down through the trapdoor...")
                 ClimbActionHandler.climbLadder(player, node.asScenery(), "climb-down")
+            }
+            return@on true
+        }
+
+        /*
+         * Handles entrance to edge dungeon wild area.
+         */
+
+        on(WILDERNESS_METAL_GATE, IntType.SCENERY, "open") { player, node ->
+            val warning = Warnings.WILDERNESS_DITCH
+            if (!isWarningDisabled(player, warning) && player.location.y < 9918) {
+                setAttribute(player, "wild-metal-gate", true)
+                setAttribute(player, "wildy_ditch", node)
+                openWarningInterface(player, warning)
+            } else {
+                DoorActionHandler.handleAutowalkDoor(player, node.asScenery())
             }
             return@on true
         }

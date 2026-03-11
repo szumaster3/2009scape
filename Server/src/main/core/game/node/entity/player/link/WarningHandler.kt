@@ -33,6 +33,12 @@ object WarningHandler {
         val ditch = player.getAttribute<core.game.node.scenery.Scenery>("wildy_ditch") ?: return
         player.removeAttribute("wildy_ditch")
 
+        if(getAttribute(player, "wild-metal-gate", false)){
+            player.removeAttribute("wild-metal-gate")
+            DoorActionHandler.handleAutowalkDoor(player, ditch.asScenery())
+            return
+        }
+
         val (start, end) = getDitchLocations(player.location, ditch.location, ditch.rotation)
 
         if (player.location.getDistance(ditch.location) < 3) {

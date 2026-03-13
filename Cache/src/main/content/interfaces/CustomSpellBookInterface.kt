@@ -360,8 +360,8 @@ object CustomSpellBookInterface {
                 comp.baseHeight         = 24
                 comp.spriteId           = 999999999
                 comp.optionCircumfix    = "Cast"
-                comp.optionMask         = OptionMask.CAST_ON_GROUND
-                comp.settings           = IComponentSettings(OptionMask.CAST_ON_GROUND, -1)
+                comp.optionMask         = OptionMask.CAST_ON_SELF
+                comp.settings           = IComponentSettings(OptionMask.CAST_ON_SELF, -1)
                 comp.hasScripts         = true
                 comp.onLoadScript       = arrayOf(6, -2147483645, tabLayer, -1, -1, 64, "Arctic Dig", "Allows you to dig up treasure in the snow without a spade", Items.ELEMENTAL_RUNE_12850, 4, Items.DUST_RUNE_4696, 3, -1, 0, -1, 0)
             }).save()

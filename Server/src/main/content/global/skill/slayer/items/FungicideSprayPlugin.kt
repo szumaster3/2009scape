@@ -1,4 +1,4 @@
-package content.global.plugins.inter.with_item
+package content.global.skill.slayer.items
 
 import core.api.removeItem
 import core.api.replaceSlot

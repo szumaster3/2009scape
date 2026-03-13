@@ -20,7 +20,8 @@ class DiaryManager(val player: Player) {
         Diary(DiaryType.LUMBRIDGE),
         Diary(DiaryType.FALADOR),
         Diary(DiaryType.FREMENNIK),
-        Diary(DiaryType.SEERS_VILLAGE)
+        Diary(DiaryType.SEERS_VILLAGE),
+        Diary(DiaryType.ARDOUGNE)
     )
 
     /**

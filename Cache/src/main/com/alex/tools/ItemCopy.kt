@@ -110,6 +110,13 @@ class ItemCopy private constructor() {
         var kModifier: (ItemDefinition.() -> Unit)? = null
     }
 
+    fun load(): Int {
+        val store = Cache.getStore() ?: error("Store not initialized")
+        val lastArchiveId: Int = store.indexes[19].lastArchiveId
+        val validFiles = store.indexes[19].getValidFilesCount(lastArchiveId)
+        return lastArchiveId * 256 + validFiles
+    }
+
     companion object {
         @JvmStatic
         fun create() = ItemCopy()

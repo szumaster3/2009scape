@@ -14702,4 +14702,10 @@ object Items {
     const val AGILE_LEGS_14698 = 14698
     const val AGILE_LEGS_14699 = 14699
     const val SUMMONING_OBELISK_14700 = 14700
+    const val ARDOUGNE_CLOAK_1_14701 = 14701
+    const val ARDOUGNE_CLOAK_2_14702 = 14702
+    const val ARDOUGNE_CLOAK_3_14703 = 14703
+    const val ANTIQUE_LAMP_14704 = 14704
+    const val ANTIQUE_LAMP_14705 = 14705
+    const val ANTIQUE_LAMP_14706 = 14706
 }

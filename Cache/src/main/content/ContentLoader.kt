@@ -26,6 +26,7 @@ object ContentLoader {
         models()
         sprites()
         interfaces()
+        items()
     }
 
     private fun models()
@@ -41,5 +42,10 @@ object ContentLoader {
     private fun interfaces()
     {
         content.interfaces.CustomSpellBookInterface.add()
+    }
+
+    private fun items()
+    {
+        ItemLoader.importItems()
     }
 }

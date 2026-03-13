@@ -14,6 +14,15 @@
         <module>Server</module>
     </modules>
 
+    <profiles>
+        <profile>
+            <id>populate-cache</id>
+            <modules>
+                <module>Cache</module>
+            </modules>
+        </profile>
+    </profiles>
+
     <properties>
         <kotlin.version>1.8.20</kotlin.version>
         <kotlin.compiler.jvmTarget>11</kotlin.compiler.jvmTarget>

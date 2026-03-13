@@ -352,8 +352,9 @@ object CustomSpellBookInterface {
         IfaceCopy.to(834)
             .startAt(999999999)
             .addComponents(Consumer { comp ->
+                comp.name               = "arctic_dig_spell"
                 comp.version            = 3
-                comp.type               = 5
+                comp.type               = ComponentType.SPRITE
                 comp.baseX              = 19
                 comp.baseY              = 92
                 comp.baseWidth          = 24
@@ -369,8 +370,9 @@ object CustomSpellBookInterface {
         IfaceCopy.to(834)
             .startAt(999999999)
             .addComponents(Consumer { comp ->
+                comp.name               = "arctic_agility_spell"
                 comp.version            = 3
-                comp.type               = 5
+                comp.type               = ComponentType.SPRITE
                 comp.baseX              = 64
                 comp.baseY              = 92
                 comp.baseWidth          = 24
@@ -380,25 +382,16 @@ object CustomSpellBookInterface {
                 comp.optionMask         = OptionMask.CAST_ON_SELF
                 comp.settings           = IComponentSettings(OptionMask.CAST_ON_SELF, -1)
                 comp.hasScripts         = true
-                comp.onLoadScript       = arrayOf(
-                    6,
-                    -2147483645,
-                    tabLayer,
-                    -1,
-                    -1,
-                    86,
-                    "Arctic Agility",
-                    "Enchants your steps, allowing you to walk across ice",
-                    Items.MIST_RUNE_4695,
-                    2,
-                    Items.MIND_RUNE_558,
-                    20,
-                    Items.ICE_GLOVES_1580,
-                    1,
-                    -1,
-                    0
-                )
+                comp.onLoadScript       = arrayOf(6, -2147483645, tabLayer, -1, -1, 86, "Arctic Agility", "Enchants your steps, allowing you to walk across ice", Items.MIST_RUNE_4695, 2, Items.MIND_RUNE_558, 20, Items.ICE_GLOVES_1580, 1, -1, 0)
             }).save()
+
+
+        // Frost bolt
+        // Frost blast
+        // Frost wave
+
+        // Storm
+        // Thunder storm
 
     }
 }

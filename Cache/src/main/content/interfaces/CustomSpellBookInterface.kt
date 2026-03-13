@@ -194,7 +194,7 @@ object CustomSpellBookInterface {
             }).save()
 
         IfaceCopy.to(834)
-            .startAt(8)
+            .startAt(9)
             .addComponents(Consumer { comp ->
                 comp.name               = "sort_button_v1"
                 comp.version            = 3

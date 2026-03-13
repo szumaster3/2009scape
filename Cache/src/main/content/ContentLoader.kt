@@ -10,12 +10,10 @@ object ContentLoader {
     fun main(args: Array<String>)
     {
         runCatching {
-            println("Creating backup...")
-            Utils.backupCache()
-            println("Backup created. Initializing cache...")
+            println("Initializing cache...")
 
             Cache.init()
-            println("Cache initialized. Populating cache...")
+            println("Populating cache...")
 
             load()
             println("Cache populated successfully.")

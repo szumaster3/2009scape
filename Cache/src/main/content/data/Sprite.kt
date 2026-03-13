@@ -20,4 +20,7 @@ object Sprite {
 
     const val INVISIBLE_SPELL_LV3_OFF = 1718
     const val INVISIBLE_SPELL_LV3_ON = 1719
+
+    const val CREATE_FOOD_SPELL_OFF = 1720
+    const val CREATE_FOOD_SPELL_ON = 1721
 }

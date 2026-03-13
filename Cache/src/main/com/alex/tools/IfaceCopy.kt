@@ -7,7 +7,7 @@ import java.util.*
 import java.util.function.Consumer
 import kotlin.collections.ArrayList
 
-class Copy private constructor(val targetInterface: Int) {
+class IfaceCopy private constructor(val targetInterface: Int) {
     private val tasks: MutableList<CopyTask> = ArrayList()
 
     private var src = 0
@@ -16,18 +16,18 @@ class Copy private constructor(val targetInterface: Int) {
     private var modifier: Consumer<ComponentDefinition?>? = null
     private val copiedComponents = mutableListOf<ComponentDefinition>()
 
-    fun from(sourceInterface: Int): Copy {
+    fun from(sourceInterface: Int): IfaceCopy {
         this.src = sourceInterface
         return this
     }
 
-    fun startAt(id: Int): Copy {
+    fun startAt(id: Int): IfaceCopy {
         this.startId = id
         this.currentId = id
         return this
     }
 
-    fun modify(modifier: Consumer<ComponentDefinition?>?): Copy {
+    fun modify(modifier: Consumer<ComponentDefinition?>?): IfaceCopy {
         this.modifier = modifier
         return this
     }
@@ -38,21 +38,21 @@ class Copy private constructor(val targetInterface: Int) {
         return task
     }
 
-    fun copy(vararg sourceIds: Int): Copy {
+    fun copy(vararg sourceIds: Int): IfaceCopy {
         for (id in sourceIds) {
             tasks.add(CopyTask(this, id, currentId++))
         }
         return this
     }
 
-    fun copyRange(from: Int, to: Int): Copy {
+    fun copyRange(from: Int, to: Int): IfaceCopy {
         for (i in from..to) {
             copy(i)
         }
         return this
     }
 
-    fun addComponents(vararg modifiers: Consumer<ComponentDefinition>?): Copy {
+    fun addComponents(vararg modifiers: Consumer<ComponentDefinition>?): IfaceCopy {
         for (mod in modifiers) {
             val task = CopyTask(this, -1, currentId++)
             task.modifier = mod
@@ -128,7 +128,7 @@ class Copy private constructor(val targetInterface: Int) {
         }
     }
 
-    fun addComponents(vararg modifiers: ComponentDefinition.() -> Unit): Copy {
+    fun addComponents(vararg modifiers: ComponentDefinition.() -> Unit): IfaceCopy {
         for (mod in modifiers) {
             val task = CopyTask(this, -1, currentId++)
             task.modifier = Consumer { c -> c.mod() }
@@ -142,18 +142,18 @@ class Copy private constructor(val targetInterface: Int) {
     companion object {
 
         @JvmStatic
-        fun to(targetInterface: Int): Copy = Copy(targetInterface)
+        fun to(targetInterface: Int): IfaceCopy = IfaceCopy(targetInterface)
 
         @JvmStatic
-        fun newInterface(): Copy {
+        fun newInterface(): IfaceCopy {
             val id = createInterface(6, 36)
-            return Copy(id)
+            return IfaceCopy(id)
         }
 
         @JvmStatic
-        fun newInterface(templateInterface: Int, templateComponent: Int): Copy {
+        fun newInterface(templateInterface: Int, templateComponent: Int): IfaceCopy {
             val id = createInterface(templateInterface, templateComponent)
-            return Copy(id)
+            return IfaceCopy(id)
         }
 
         @JvmStatic

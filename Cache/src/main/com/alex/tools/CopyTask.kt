@@ -3,10 +3,10 @@ package com.alex.tools
 import com.alex.loaders.interfaces.ComponentDefinition
 import java.util.function.Consumer
 
-class CopyTask internal constructor(private val parent: Copy, val sourceId: Int, val targetId: Int) {
+class CopyTask internal constructor(private val parent: IfaceCopy, val sourceId: Int, val targetId: Int) {
     var modifier: Consumer<ComponentDefinition>? = null
 
-    internal constructor(parent: Copy, targetId: Int) : this(parent, -1, targetId)
+    internal constructor(parent: IfaceCopy, targetId: Int) : this(parent, -1, targetId)
 
     fun modify(modifier: Consumer<ComponentDefinition>): CopyTask {
         if (this.modifier == null) {
@@ -281,7 +281,7 @@ class CopyTask internal constructor(private val parent: Copy, val sourceId: Int,
         return modify { cd: ComponentDefinition -> cd.onVarcStrTransmit = arrayOf(`val`) }
     }
 
-    fun save(): Copy {
+    fun save(): IfaceCopy {
         parent.save()
         return parent
     }

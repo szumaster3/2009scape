@@ -2,7 +2,7 @@ package content.interfaces
 
 import com.alex.loaders.interfaces.ComponentType
 import com.alex.loaders.interfaces.IComponentSettings
-import com.alex.tools.Copy
+import com.alex.tools.IfaceCopy
 import content.data.OptionMask
 import shared.consts.Items
 import java.util.function.Consumer
@@ -10,11 +10,11 @@ import java.util.function.Consumer
 object spellbook_interface {
 
     fun add() {
-        val copy = Copy.newInterface()
-        val interfaceId = copy.targetInterface
+        val ifaceCopy = IfaceCopy.newInterface()
+        val interfaceId = ifaceCopy.targetInterface
         var parentID: Int = -1
 
-        Copy.to(834)
+        IfaceCopy.to(834)
             .startAt(0)
             .addComponents(Consumer { comp ->
                 comp.parentId   = -1
@@ -29,7 +29,7 @@ object spellbook_interface {
             })
             .save()
 
-        Copy.to(834)
+        IfaceCopy.to(834)
             .startAt(1)
             .addComponents(Consumer { comp ->
                 comp.name               = "blizzard_spell"
@@ -64,7 +64,7 @@ object spellbook_interface {
 
         // TODO:
 
-        Copy.to(834)
+        IfaceCopy.to(834)
             .startAt(2)
             .addComponents(Consumer { comp ->
                 comp.name               = "invisible_spell_lv1"
@@ -99,7 +99,7 @@ object spellbook_interface {
             })
             .save()
 
-        Copy.to(834)
+        IfaceCopy.to(834)
             .startAt(2)
             .addComponents(Consumer { comp ->
                 comp.name               = "invisible_spell_lv2"
@@ -134,7 +134,7 @@ object spellbook_interface {
             })
             .save()
 
-        Copy.to(834)
+        IfaceCopy.to(834)
             .startAt(2)
             .addComponents(Consumer { comp ->
                 comp.name               = "invisible_spell_lv3"
@@ -169,7 +169,7 @@ object spellbook_interface {
             })
             .save()
 
-        Copy.to(834)
+        IfaceCopy.to(834)
             .startAt(2)
             .addComponents(Consumer { comp ->
                 comp.name               = "god_wars_dungeon_teleport"
@@ -202,7 +202,7 @@ object spellbook_interface {
             })
             .save()
 
-        Copy.to(834)
+        IfaceCopy.to(834)
             .startAt(2)
             .addComponents(Consumer { comp ->
                 comp.name               = "guild_warehouse_teleport"

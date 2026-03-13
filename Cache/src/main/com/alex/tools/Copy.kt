@@ -2,7 +2,10 @@ package com.alex.tools
 
 import com.alex.Cache
 import com.alex.loaders.interfaces.ComponentDefinition
+import com.alex.util.crc32.CRC32HGenerator
+import java.util.*
 import java.util.function.Consumer
+import kotlin.collections.ArrayList
 
 class Copy private constructor(val targetInterface: Int) {
     private val tasks: MutableList<CopyTask> = ArrayList()
@@ -75,11 +78,10 @@ class Copy private constructor(val targetInterface: Int) {
 
     fun save(): List<ComponentDefinition> {
         copiedComponents.clear()
+        val store = Cache.getStore() ?: return copiedComponents
 
         for (task in tasks) {
-            var comp: ComponentDefinition?
-
-            comp = if (task.sourceId >= 0) {
+            val comp: ComponentDefinition? = if (task.sourceId >= 0) {
                 ComponentDefinition.getInterfaceComponent(src, task.sourceId)
             } else {
                 createNewComponent(task.targetId)
@@ -90,7 +92,15 @@ class Copy private constructor(val targetInterface: Int) {
             modifier?.accept(comp)
             task.modifier?.accept(comp)
 
-            Cache.getStore()!!.indexes[3].putFile(targetInterface, task.targetId, comp.encode(comp.hasScripts))
+            val fileNameHash: Int? = comp.name?.takeIf { it.isNotBlank() }?.let {
+                CRC32HGenerator.getHash(it.uppercase(Locale.getDefault()).toByteArray(Charsets.UTF_8))
+            }
+
+            if (fileNameHash != null) {
+                store.indexes[3].putFile(targetInterface, task.targetId, 2, comp.encode(comp.hasScripts), null, true, true, -1, fileNameHash)
+            } else {
+                store.indexes[3].putFile(targetInterface, task.targetId, comp.encode(comp.hasScripts))
+            }
 
             copiedComponents.add(comp)
         }

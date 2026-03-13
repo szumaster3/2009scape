@@ -3,12 +3,17 @@ package content.interfaces
 import com.alex.loaders.interfaces.ComponentType
 import com.alex.loaders.interfaces.IComponentSettings
 import com.alex.tools.Copy
+import content.data.OptionMask
+import shared.consts.Items
 import java.util.function.Consumer
 
 object spellbook_interface {
 
     fun add() {
+        val copy = Copy.newInterface()
+        val interfaceId = copy.targetInterface
         var parentID: Int = -1
+
         Copy.to(834)
             .startAt(0)
             .addComponents(Consumer { comp ->
@@ -27,6 +32,7 @@ object spellbook_interface {
         Copy.to(834)
             .startAt(1)
             .addComponents(Consumer { comp ->
+                comp.name               = "blizzard_spell"
                 comp.version            = 3
                 comp.parentId           = parentID
                 comp.type               = ComponentType.SPRITE
@@ -35,19 +41,20 @@ object spellbook_interface {
                 comp.baseWidth          = 24
                 comp.baseHeight         = 24
                 comp.spriteId           = 1707
-                comp.optionMask         = 2
-                comp.settings           = IComponentSettings(2, -1)
-                comp.rightClickOptions  = arrayOf("Cast")
+                comp.optionCircumfix    = "Cast"
+                comp.optionMask         = OptionMask.COMBAT_SPELL
+                comp.settings           = IComponentSettings(20480, -1)
+                comp.hasScripts         = true
                 comp.onLoadScript       = arrayOf(
                     6,
                     -2147483645,
                     (parentID shl 16) or 0,
-                    1707,
                     1708,
+                    1707,
                     9,
                     "Blizzard",
                     "A low level Ice missile",
-                    4695,
+                    Items.MIST_RUNE_4695,
                     1,
                     -1,
                     0

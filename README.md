@@ -117,5 +117,5 @@ mvn -version
 
 ### License
 
-AGPL-3.0  
-See [`LICENSE`](LICENSE) or https://www.gnu.org/licenses/agpl-3.0.html
+All modules in this repository are licensed under the AGPL-3.0 unless otherwise specified.  
+See [`LICENSE`](LICENSE) or https://www.gnu.org/licenses/agpl-3.0.html for details.

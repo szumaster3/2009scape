@@ -48,20 +48,26 @@ class Diary(
         if (!isStarted) return
 
         // Display area name with overall completion color.
-        sendString(player,
-            "${if (isComplete) GREEN else YELLOW}${type.displayName}", Components.AREA_TASK_259, type.child
+        sendString(
+            player,
+            "${if (isComplete) GREEN else YELLOW}${type.displayName}",
+            Components.AREA_TASK_259,
+            type.childIds[0]
         )
 
         // Display status for each individual level.
-        (0..2).forEach { i ->
+        for (i in 0..2) {
             val statusColor = when {
                 isComplete(i) -> GREEN
                 isStarted(i) -> YELLOW
                 else -> "<col=FF0000>"
             }
 
-            sendString(player,
-                "$statusColor${getLevel(i)}", Components.AREA_TASK_259, type.child + (i + 1)
+            sendString(
+                player,
+                "$statusColor${getLevel(i)}",
+                Components.AREA_TASK_259,
+                type.childIds[i + 1]
             )
         }
     }

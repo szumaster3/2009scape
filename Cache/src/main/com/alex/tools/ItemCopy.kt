@@ -76,7 +76,12 @@ class ItemCopy private constructor(private val startIdInitial: Int = 0) {
 
     fun save(): ItemCopy {
         val store = Cache.getStore() ?: throw IllegalStateException("Cache store is not loaded!")
-        copiedItems.forEach { it.write(store) }
+
+        copiedItems.forEach { item ->
+            item.write(store)
+            println("Packed ${item.name ?: "unknown"}:${item.id}")
+        }
+
         return this
     }
 

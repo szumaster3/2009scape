@@ -4,7 +4,6 @@ import com.alex.loaders.interfaces.ComponentType
 import com.alex.loaders.interfaces.IComponentSettings
 import com.alex.tools.IfaceCopy
 import shared.consts.Components
-import java.util.function.Consumer
 
 object AchievementDiaryInterface {
 
@@ -14,17 +13,17 @@ object AchievementDiaryInterface {
             .from(Components.AREA_TASK_259)
             .startAt(31)
             .copy(31)
-            .modify { comp ->
-                comp.name               = "area_task_5"
-                comp.parentId           = 16973831
-                comp.text               = "Ardougne"
-                comp.shadow             = true
-                comp.optionMask         = 2
-                comp.settings           = IComponentSettings(2, -1)
-                comp.rightClickOptions  = arrayOf("Read Journal", "", "", "", "", "", "", "", "", " ")
-                comp.onMouseHoverScript = arrayOf(45, comp.componentHash, 16777215)
-                comp.onMouseLeaveScript = arrayOf(45, comp.componentHash, 16711680)
-                comp.onVarpTransmit     = arrayOf(58)
+            .modify {
+                name               = "area_task_5"
+                parentId           = 16973831
+                text               = "Ardougne"
+                shadow             = true
+                optionMask         = 2
+                settings           = IComponentSettings(2, -1)
+                rightClickOptions  = arrayOf("Read Journal", "", "", "", "", "", "", "", "", " ")
+                onMouseHoverScript = arrayOf(45, componentHash, 16777215)
+                onMouseLeaveScript = arrayOf(45, componentHash, 16711680)
+                onVarpTransmit     = arrayOf(58)
             }
             .save()
 
@@ -39,7 +38,6 @@ object AchievementDiaryInterface {
         // Since we currently cannot use the script without editing it this,
         // we replicate the layout logic by using a fixed baseY value so that additional
         // components align correctly within the scrollable task list.
-
         val baseY = 455
         val step = 14
         val labels = listOf("Easy", "Medium", "Hard")
@@ -48,26 +46,28 @@ object AchievementDiaryInterface {
         labels.forEachIndexed { index, text ->
             IfaceCopy.to(Components.AREA_TASK_259)
                 .startAt(34 + index)
-                .addComponents(Consumer { comp ->
-                    comp.name               = prefix + text.lowercase()
-                    comp.version            = 3
-                    comp.parentId           = 16973831
-                    comp.type               = ComponentType.TEXT
-                    comp.baseX              = 28
-                    comp.baseY              = baseY + step * index
-                    comp.baseWidth          = 152
-                    comp.baseHeight         = 15
-                    comp.fontId             = 494
-                    comp.color              = 16711680
-                    comp.text               = text
-                    comp.shadow             = true
-                    comp.optionMask         = 2
-                    comp.settings           = IComponentSettings(2, -1)
-                    comp.rightClickOptions  = arrayOf("Read Journal", "", "", "", "", "", "", "", "", " ")
-                    comp.onMouseHoverScript = arrayOf(45, comp.componentHash, 16777215)
-                    comp.onMouseLeaveScript = arrayOf(45, comp.componentHash, 16711680)
-                    comp.onVarpTransmit     = arrayOf(58)
-                }).save()
+                .addComponent {
+                    name               = prefix + text.lowercase()
+                    version            = 3
+                    parentId           = 16973831
+                    type               = ComponentType.TEXT
+                    baseX              = 28
+                    this.baseY         = baseY + step * index
+                    baseWidth          = 152
+                    baseHeight         = 15
+                    fontId             = 494
+                    color              = 16711680
+                    this.text          = text
+                    shadow             = true
+                    optionMask         = 2
+                    settings           = IComponentSettings(2, -1)
+                    rightClickOptions  = arrayOf("Read Journal", "", "", "", "", "", "", "", "", " ")
+                    onMouseHoverScript = arrayOf(45, componentHash, 16777215)
+                    onMouseLeaveScript = arrayOf(45, componentHash, 16711680)
+                    onVarpTransmit     = arrayOf(58)
+                }
+                .save()
+
         }
     }
 }

@@ -4,16 +4,21 @@ import com.alex.Cache
 import com.alex.loaders.interfaces.ComponentDefinition
 import com.alex.util.crc32.CRC32HGenerator
 import java.util.*
-import java.util.function.Consumer
 import kotlin.collections.ArrayList
 
 class IfaceCopy private constructor(val targetInterface: Int) {
-    private val tasks: MutableList<CopyTask> = ArrayList()
 
+    private data class Task(
+        val sourceId: Int,
+        val targetId: Int,
+        val modifier: (ComponentDefinition.() -> Unit)? = null
+    )
+
+    private val tasks: MutableList<Task> = ArrayList()
     private var src = 0
     private var startId = 0
     private var currentId = 0
-    private var modifier: Consumer<ComponentDefinition?>? = null
+    private var globalModifier: (ComponentDefinition.() -> Unit)? = null
     private val copiedComponents = mutableListOf<ComponentDefinition>()
 
     fun from(sourceInterface: Int): IfaceCopy {
@@ -27,41 +32,45 @@ class IfaceCopy private constructor(val targetInterface: Int) {
         return this
     }
 
-    fun modify(modifier: Consumer<ComponentDefinition?>?): IfaceCopy {
-        this.modifier = modifier
+    fun modify(modifier: ComponentDefinition.() -> Unit): IfaceCopy {
+        globalModifier = if (globalModifier == null) {
+            modifier
+        } else {
+            val old = globalModifier!!
+            {
+                old()
+                modifier()
+            }
+        }
         return this
     }
 
-    fun copy(sourceId: Int): CopyTask {
-        val task = CopyTask(this, sourceId, currentId++)
-        tasks.add(task)
-        return task
+    fun copy(sourceId: Int, modifier: ComponentDefinition.() -> Unit = {}): IfaceCopy {
+        tasks.add(Task(sourceId, currentId++, modifier))
+        return this
     }
 
     fun copy(vararg sourceIds: Int): IfaceCopy {
-        for (id in sourceIds) {
-            tasks.add(CopyTask(this, id, currentId++))
-        }
+        sourceIds.forEach { copy(it) }
         return this
     }
 
     fun copyRange(from: Int, to: Int): IfaceCopy {
-        for (i in from..to) {
-            copy(i)
-        }
+        for (i in from..to) copy(i)
         return this
     }
 
-    fun addComponents(vararg modifiers: Consumer<ComponentDefinition>?): IfaceCopy {
-        for (mod in modifiers) {
-            val task = CopyTask(this, -1, currentId++)
-            task.modifier = mod
-            tasks.add(task)
-        }
+    fun addComponents(vararg modifiers: ComponentDefinition.() -> Unit): IfaceCopy {
+        modifiers.forEach { mod -> tasks.add(Task(-1, currentId++, mod)) }
         return this
     }
 
-    private fun createNewComponent(targetId: Int): ComponentDefinition? {
+    fun addComponent(modifier: ComponentDefinition.() -> Unit): IfaceCopy {
+        tasks.add(Task(-1, currentId++, modifier))
+        return this
+    }
+
+    private fun createNewComponent(targetId: Int): ComponentDefinition {
         var comps = ComponentDefinition.getInterface(targetInterface, true)
         if (comps!!.size <= targetId) {
             val expanded = arrayOfNulls<ComponentDefinition>(targetId + 1)
@@ -69,11 +78,9 @@ class IfaceCopy private constructor(val targetInterface: Int) {
             ComponentDefinition.componentDefinition?.set(targetInterface, expanded)
             comps = expanded
         }
-        if (comps[targetId] == null) {
-            comps[targetId] = ComponentDefinition()
-        }
+        if (comps[targetId] == null) comps[targetId] = ComponentDefinition()
         comps[targetId]!!.componentHash = (targetInterface shl 16) or targetId
-        return comps[targetId]
+        return comps[targetId]!!
     }
 
     fun save(): List<ComponentDefinition> {
@@ -81,23 +88,35 @@ class IfaceCopy private constructor(val targetInterface: Int) {
         val store = Cache.getStore() ?: return copiedComponents
 
         for (task in tasks) {
-            val comp: ComponentDefinition? = if (task.sourceId >= 0) {
+            val comp = if (task.sourceId >= 0)
                 ComponentDefinition.getInterfaceComponent(src, task.sourceId)
-            } else {
+            else
                 createNewComponent(task.targetId)
-            }
 
             comp!!.componentHash = (targetInterface shl 16) or task.targetId
 
-            modifier?.accept(comp)
-            task.modifier?.accept(comp)
+            globalModifier?.let { it(comp) }
+            task.modifier?.let { it(comp) }
+
+            val status = if (task.sourceId >= 0) "Modified" else "New"
+            println("Packed ${comp.name ?: "unnamed"}:$targetInterface:${task.targetId} [$status]")
 
             val fileNameHash: Int? = comp.name?.takeIf { it.isNotBlank() }?.let {
                 CRC32HGenerator.getHash(it.uppercase(Locale.getDefault()).toByteArray(Charsets.UTF_8))
             }
 
             if (fileNameHash != null) {
-                store.indexes[3].putFile(targetInterface, task.targetId, 2, comp.encode(comp.hasScripts), null, true, true, -1, fileNameHash)
+                store.indexes[3].putFile(
+                    targetInterface,
+                    task.targetId,
+                    2,
+                    comp.encode(comp.hasScripts),
+                    null,
+                    true,
+                    true,
+                    -1,
+                    fileNameHash
+                )
             } else {
                 store.indexes[3].putFile(targetInterface, task.targetId, comp.encode(comp.hasScripts))
             }
@@ -106,20 +125,18 @@ class IfaceCopy private constructor(val targetInterface: Int) {
         }
 
         init(targetInterface)
-
         return copiedComponents
     }
 
     private fun init(targetId: Int) {
         val compDefs = ComponentDefinition.componentDefinition
         if (compDefs == null || compDefs.size <= targetId) {
-            val newSize = targetId + 1
-            val expanded = arrayOfNulls<Array<ComponentDefinition?>?>(newSize)
+            val expanded = arrayOfNulls<Array<ComponentDefinition?>?>(targetId + 1)
             compDefs?.copyInto(expanded)
             ComponentDefinition.componentDefinition = expanded
         }
 
-        var comps = ComponentDefinition.componentDefinition!![targetId]
+        val comps = ComponentDefinition.componentDefinition!![targetId]
         val maxTarget = tasks.maxOfOrNull { it.targetId } ?: -1
         if (comps == null || comps.size <= maxTarget) {
             val newComps = arrayOfNulls<ComponentDefinition>(maxTarget + 1)
@@ -128,19 +145,9 @@ class IfaceCopy private constructor(val targetInterface: Int) {
         }
     }
 
-    fun addComponents(vararg modifiers: ComponentDefinition.() -> Unit): IfaceCopy {
-        for (mod in modifiers) {
-            val task = CopyTask(this, -1, currentId++)
-            task.modifier = Consumer { c -> c.mod() }
-            tasks.add(task)
-        }
-        return this
-    }
-
     fun getCopiedComponents(): List<ComponentDefinition> = copiedComponents
 
     companion object {
-
         @JvmStatic
         fun to(targetInterface: Int): IfaceCopy = IfaceCopy(targetInterface)
 

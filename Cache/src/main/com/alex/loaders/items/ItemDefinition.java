@@ -3,12 +3,18 @@ package com.alex.loaders.items;
 import com.alex.io.InputStream;
 import com.alex.io.OutputStream;
 import com.alex.store.Store;
+import com.alex.utils.Utils;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 
 public class ItemDefinition implements Cloneable {
+   private static PrintWriter printer;
    public int id;
    public boolean loaded;
    public int modelId;
@@ -97,7 +103,24 @@ public class ItemDefinition implements Cloneable {
       if(load) {
          this.loadItemDefinition(cache);
       }
+   }
 
+   public static void print(Store cache) {
+      try (PrintWriter writer = new PrintWriter(new BufferedWriter(new FileWriter("items_dump.txt")))) {
+         printer = writer;
+
+         int size = Utils.getItemDefinitionsSize(cache);
+         for (int id = 0; id < size; id++) {
+            ItemDefinition item = new ItemDefinition(cache, id, false);
+            item.loadItemDefinition(cache);
+            if (item.loaded) {
+               printItemData(item);
+            }
+         }
+
+      } catch (IOException e) {
+         e.printStackTrace();
+      }
    }
 
    public boolean isLoaded() {
@@ -1035,5 +1058,84 @@ public class ItemDefinition implements Cloneable {
 
    public String toString() {
       return this.id + " - " + this.name;
+   }
+
+   private static void printItemData(ItemDefinition item) {
+      printer.println("========== ITEM " + item.id + " ==========");
+      printer.println("name = " + item.name);
+      printer.println("modelId = " + item.modelId);
+      printer.println("zoom2d = " + item.zoom2d);
+      printer.println("xan2d = " + item.xan2d);
+      printer.println("yan2d = " + item.yan2d);
+      printer.println("zan2d = " + item.Zan2d);
+      printer.println("xOffset2d = " + item.xOffset2d);
+      printer.println("yOffset2d = " + item.yOffset2d);
+      printer.println("stackable = " + item.stackable);
+      printer.println("cost = " + item.cost);
+      printer.println("membersOnly = " + item.membersOnly);
+      printer.println("equipSlot = " + item.equipSlot);
+      printer.println("equipType = " + item.equipType);
+      printer.println("maleEquip1 = " + item.maleEquip1);
+      printer.println("maleEquip2 = " + item.maleEquip2);
+      printer.println("maleEquipModelId3 = " + item.maleEquipModelId3);
+      printer.println("femaleEquip1 = " + item.femaleEquip1);
+      printer.println("femaleEquip2 = " + item.femaleEquip2);
+      printer.println("femaleEquipModelId3 = " + item.femaleEquipModelId3);
+      printer.println("primaryMaleDialogueHead = " + item.primaryMaleDialogueHead);
+      printer.println("primaryFemaleDialogueHead = " + item.primaryFemaleDialogueHead);
+      printer.println("secondaryMaleDialogueHead = " + item.secondaryMaleDialogueHead);
+      printer.println("secondaryFemaleDialogueHead = " + item.secondaryFemaleDialogueHead);
+      printer.println("dummyItem = " + item.dummyItem);
+      printer.println("notedItemId = " + item.notedItemId);
+      printer.println("switchNoteItemId = " + item.switchNoteItemId);
+      printer.println("lendedItemId = " + item.lendedItemId);
+      printer.println("switchLendItemId = " + item.switchLendItemId);
+      printer.println("unnoted = " + item.unnoted);
+      printer.println("floorScaleX = " + item.floorScaleX);
+      printer.println("floorScaleY = " + item.floorScaleY);
+      printer.println("floorScaleZ = " + item.floorScaleZ);
+      printer.println("ambience = " + item.ambience);
+      printer.println("diffusion = " + item.diffusion);
+      printer.println("teamId = " + item.teamId);
+      printer.println("maleWieldX = " + item.maleWieldX);
+      printer.println("maleWieldY = " + item.maleWieldY);
+      printer.println("maleWieldZ = " + item.maleWieldZ);
+      printer.println("femaleWieldX = " + item.femaleWieldX);
+      printer.println("femaleWieldY = " + item.femaleWieldY);
+      printer.println("femaleWieldZ = " + item.femaleWieldZ);
+      printer.println("unknownInt18 = " + item.unknownInt18);
+      printer.println("unknownInt19 = " + item.unknownInt19);
+      printer.println("unknownInt20 = " + item.unknownInt20);
+      printer.println("unknownInt21 = " + item.unknownInt21);
+      printer.println("unknownInt22 = " + item.unknownInt22);
+      printer.println("unknownInt23 = " + item.unknownInt23);
+      printer.println("unknownValue1 = " + item.unknownValue1);
+      printer.println("unknownValue2 = " + item.unknownValue2);
+
+      if (item.groundOptions != null)
+         printer.println("groundOptions = " + java.util.Arrays.toString(item.groundOptions));
+      if (item.inventoryOptions != null)
+         printer.println("inventoryOptions = " + java.util.Arrays.toString(item.inventoryOptions));
+      if (item.originalModelColors != null) {
+         printer.println("originalModelColors = " + java.util.Arrays.toString(item.originalModelColors));
+         printer.println("modifiedModelColors = " + java.util.Arrays.toString(item.modifiedModelColors));
+      }
+      if (item.originalTextureColors != null) {
+         printer.println("originalTextureColors = " + java.util.Arrays.toString(item.originalTextureColors));
+         printer.println("modifiedTextureColors = " + java.util.Arrays.toString(item.modifiedTextureColors));
+      }
+      if (item.recolorPalette != null)
+         printer.println("recolorPalette = " + java.util.Arrays.toString(item.recolorPalette));
+      if (item.stackIds != null) {
+         printer.println("stackIds = " + java.util.Arrays.toString(item.stackIds));
+         printer.println("stackAmounts = " + java.util.Arrays.toString(item.stackAmounts));
+      }
+      if (item.unknownArray2 != null)
+         printer.println("unknownArray2 = " + java.util.Arrays.toString(item.unknownArray2));
+      if (item.clientScriptData != null)
+         printer.println("clientScriptData = " + item.clientScriptData);
+
+      printer.println();
+      printer.flush();
    }
 }

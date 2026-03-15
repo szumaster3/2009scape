@@ -75,6 +75,11 @@ public final class Utils {
         return name.toLowerCase(Locale.getDefault()).hashCode();
     }
 
+    public static int getItemDefinitionsSize(Store store) {
+        int lastArchiveId = store.getIndexes()[19].getLastArchiveId();
+        return lastArchiveId * 256 + store.getIndexes()[19].getValidFilesCount(lastArchiveId);
+    }
+
     public static int getRenderAnimationDefinitionsSize(Store store) {
         int lastArchiveId = store.getIndexes()[2].getLastArchiveId();
         return lastArchiveId * 128 + store.getIndexes()[2].getValidFilesCount(lastArchiveId);

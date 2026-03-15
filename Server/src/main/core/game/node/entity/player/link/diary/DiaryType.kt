@@ -12,7 +12,7 @@ import java.util.*
  */
 enum class DiaryType(
     val displayName: String,
-    val child: Int,
+    val childIds: IntArray,
     val levelNames: Array<String>,
     val achievements: Array<Array<String>>,
     val rewards: Array<Array<Item>>,
@@ -20,7 +20,8 @@ enum class DiaryType(
     val npcs: IntArray
 ) {
     KARAMJA(
-        "Karamja", 11,
+        "Karamja",
+        intArrayOf(11,12,13,14),
         arrayOf("Easy", "Medium", "Hard"),
         arrayOf(
             arrayOf(
@@ -79,7 +80,8 @@ enum class DiaryType(
 
     ),
     VARROCK(
-        "Varrock", 15,
+        "Varrock",
+        intArrayOf(15,16,17,18),
         arrayOf("Easy", "Medium", "Hard"),
         arrayOf(
             arrayOf(
@@ -152,7 +154,8 @@ enum class DiaryType(
 
     ),
     LUMBRIDGE(
-        "Lumbridge", 2,
+        "Lumbridge",
+        intArrayOf(2,3,4,5),
         arrayOf("Beginner", "Easy", "Medium"),
         arrayOf(
             arrayOf(
@@ -224,7 +227,8 @@ enum class DiaryType(
 
     ),
     FALADOR(
-        "Falador", 23,
+        "Falador",
+        intArrayOf(23,24,25,26),
         arrayOf("Easy", "Medium", "Hard"),
         arrayOf(
             arrayOf(
@@ -281,7 +285,8 @@ enum class DiaryType(
 
     ),
     FREMENNIK(
-        "Fremennik", 19,
+        "Fremennik",
+        intArrayOf(19,20,21,22),
         arrayOf("Easy", "Medium", "Hard"),
         arrayOf(
             arrayOf(
@@ -331,7 +336,7 @@ enum class DiaryType(
     ),
     SEERS_VILLAGE(
         "Seers' Village",
-        27,
+        intArrayOf(27,28,29,30),
         arrayOf("Easy", "Medium", "Hard"),
         arrayOf(
             arrayOf(
@@ -387,7 +392,7 @@ enum class DiaryType(
     ),
     ARDOUGNE(
         "Ardougne",
-        31,
+        intArrayOf(31,34,35,36),
         arrayOf("Easy", "Medium", "Hard"),
         arrayOf(
             arrayOf( // Easy
@@ -531,6 +536,6 @@ enum class DiaryType(
          * @return The matching DiaryType, or null if no match is found.
          */
         fun forChild(child: Int): DiaryType? =
-            values().find { type -> child in type.child..(type.child + 3) }
+            values().find { type -> child in type.childIds }
     }
 }

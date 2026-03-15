@@ -22,7 +22,7 @@ object ArdougneCloaks {
                 changeModelColor(4, 181)
                 maleEquipModelId1 = 45497
                 femaleEquipModelId1 = 45498
-                teamId = -1
+                teamId = 0
                 inventoryOptions = arrayOfNulls<String>(5).apply {
                     this[1] = "Wear"
                     this[3] = "Teleports"
@@ -46,7 +46,7 @@ object ArdougneCloaks {
                 changeModelColor(46110, 46107)
                 maleEquipModelId1 = 45497
                 femaleEquipModelId1 = 45498
-                teamId = -1
+                teamId = 0
                 inventoryOptions = arrayOfNulls<String>(5).apply {
                     this[1] = "Wear"
                     this[3] = "Teleports"
@@ -67,7 +67,7 @@ object ArdougneCloaks {
                 yOffset2d = 6
                 maleEquipModelId1 = 45497
                 femaleEquipModelId1 = 45498
-                teamId = -1
+                teamId = 0
                 inventoryOptions = arrayOfNulls<String>(5).apply {
                     this[1] = "Wear"
                     this[3] = "Teleports"

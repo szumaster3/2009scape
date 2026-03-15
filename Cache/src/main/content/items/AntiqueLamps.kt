@@ -21,7 +21,7 @@ object AntiqueLamps {
                 yOffset2d = -2
                 changeModelColor(11191, 840)
                 changeModelColor(11183, 563)
-                teamId = -1
+                teamId = 0
                 inventoryOptions = arrayOfNulls<String>(5).apply {
                     this[0] = "Rub"
                     this[4] = "Destroy"
@@ -44,7 +44,7 @@ object AntiqueLamps {
                 yOffset2d = -2
                 changeModelColor(11191, 840)
                 changeModelColor(11183, 563)
-                teamId = -1
+                teamId = 0
                 inventoryOptions = arrayOfNulls<String>(5).apply {
                     this[0] = "Rub"
                     this[4] = "Destroy"
@@ -67,7 +67,7 @@ object AntiqueLamps {
                 yOffset2d = -2
                 changeModelColor(11191, 840)
                 changeModelColor(11183, 563)
-                teamId = -1
+                teamId = 0
                 inventoryOptions = arrayOfNulls<String>(5).apply {
                     this[0] = "Rub"
                     this[4] = "Destroy"

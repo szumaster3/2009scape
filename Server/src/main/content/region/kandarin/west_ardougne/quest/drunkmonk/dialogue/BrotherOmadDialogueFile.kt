@@ -4,6 +4,7 @@ import core.api.*
 import core.game.dialogue.DialogueFile
 import core.game.dialogue.FaceAnim
 import core.game.node.entity.npc.NPC
+import core.game.node.entity.player.link.diary.DiaryType
 import core.game.node.item.Item
 import core.game.system.task.Pulse
 import core.game.world.GameWorld.Pulser
@@ -208,6 +209,7 @@ class BrotherOmadDialogueFile : DialogueFile() {
 
                         25 -> if (questComplete) {
                             finishQuest(player!!, Quests.MONKS_FRIEND)
+                            finishDiaryTask(player!!, DiaryType.ARDOUGNE, 0, 14)
                         }
                     }
                     count++

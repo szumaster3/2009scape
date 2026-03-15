@@ -476,7 +476,7 @@ enum class DiaryType(
             //  - [ ] Even more of the drops from the Tower of Life will be noted.
             //  - [ ] 100 Pure Essence per day from Wizard Cromperty.
             //  - [ ] Longer immunity from attack once teleporting to the wilderness from the Ardougne Lever. (10 secs)
-            //  - [ ] Toggle Ring of life teleport to Ardougne.
+            //  - [x] Toggle Ring of life teleport to Ardougne.
 
             arrayOf(Item(Items.ARDOUGNE_CLOAK_2_14702), Item(LampItem.ARDOUGNE_ACHIEVEMENT_MEDIUM.item)),
             // TODO:
@@ -484,7 +484,7 @@ enum class DiaryType(
             //  - [ ] Magical traps on chests will teleport the player to Ardougne's North Bank, instead of a random location.
             //  - [ ] Even more drops from the creatures in the Tower of Life will be noted.
             //  - [ ] Wizard Cromperty will give 150 pure essence per day.
-            //  - [ ] Ability to change the Watchtower teleport to take the player within Yanille's walls.
+            //  - [x] Ability to change the Watchtower teleport to take the player within Yanille's walls.
 
             arrayOf(Item(Items.ARDOUGNE_CLOAK_3_14703), Item(LampItem.ARDOUGNE_ACHIEVEMENT_HARD.item))
         ),

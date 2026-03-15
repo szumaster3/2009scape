@@ -9,8 +9,8 @@ import core.game.event.TeleportEvent
 import core.game.interaction.QueueStrength
 import core.game.node.entity.player.Player
 import core.game.node.entity.player.link.TeleportManager
+import core.game.node.entity.player.link.diary.DiaryType
 import core.game.node.item.Item
-import core.game.system.task.Pulse
 import core.game.world.map.Location
 import core.game.world.update.flag.context.Animation
 import core.game.world.update.flag.context.Graphics
@@ -60,6 +60,9 @@ enum class EnchantedJewellery(val options: Array<String>, val locations: Array<L
         lock(player, 4)
 
         val location = if (this@EnchantedJewellery == RING_OF_LIFE) {
+            if(isDiaryComplete(player, DiaryType.ARDOUGNE, 2)) {
+                Location.create(2662, 3307, 0)
+            }
             player.getRespawnLocation()
         } else {
             getLocation(buttonID)

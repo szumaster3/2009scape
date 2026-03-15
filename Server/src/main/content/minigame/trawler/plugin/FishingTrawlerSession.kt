@@ -5,6 +5,7 @@ import core.game.component.Component
 import core.game.node.entity.Entity
 import core.game.node.entity.npc.NPC
 import core.game.node.entity.player.Player
+import core.game.node.entity.player.link.diary.DiaryType
 import core.game.node.item.Item
 import core.game.node.scenery.Scenery
 import core.game.node.scenery.SceneryBuilder
@@ -350,6 +351,9 @@ class FishingTrawlerSession(
     override fun areaEnter(entity: Entity) {
         super.areaEnter(entity)
         log(this::class.java, Log.FINE, "ENTERED FTZ")
+        if(entity is Player){
+            finishDiaryTask(entity, DiaryType.ARDOUGNE, 0, 5)
+        }
     }
 
     override fun areaLeave(

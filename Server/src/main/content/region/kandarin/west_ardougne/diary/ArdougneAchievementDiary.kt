@@ -6,7 +6,10 @@ import content.global.travel.FairyRing
 import content.region.kandarin.port_khazard.dialogue.TindelMerchantDialogue
 import content.region.kandarin.west_ardougne.dialogue.ChiefServantDialogue
 import content.region.kandarin.west_ardougne.dialogue.CivilianDialogue
+import content.region.kandarin.west_ardougne.dialogue.RecruiterDialogue
+import content.region.kandarin.witchaven.dialogue.EzekialLovecraftDialogue
 import content.region.kandarin.yanille.dialogue.AleckDialogue
+import core.api.hasRequirement
 import core.api.inBorders
 import core.game.diary.DiaryAreaTask
 import core.game.diary.DiaryEventHookBase
@@ -18,15 +21,12 @@ import core.game.node.entity.player.link.diary.DiaryType
 import core.game.node.item.Item
 import core.game.world.map.Location
 import core.game.world.map.zone.ZoneBorders
-import shared.consts.Items
-import shared.consts.NPCs
-import shared.consts.Regions
-import shared.consts.Scenery
+import shared.consts.*
 
 class ArdougneAchievementDiary : DiaryEventHookBase(DiaryType.ARDOUGNE) {
     private val COMBAT_TRAINING_CAMP_AREA = ZoneBorders(2516, 3357, 2519, 3360)
     private val ARDOUGNE_NATURE_RUNE_CHEST_AREA = ZoneBorders(2670, 3298, 2678, 3304, 1, true)
-    private val SOUTH_OF_MONASTERY_AREA = ZoneBorders(2622, 3199, 2642, 3218)
+    private val POISON_ARROW_AREA = ZoneBorders(2658, 3271, 2667, 3277)
 
     private val RING_OF_DUELING = arrayOf(Items.RING_OF_DUELLING8_2552, Items.RING_OF_DUELLING7_2554, Items.RING_OF_DUELLING6_2556, Items.RING_OF_DUELLING5_2558, Items.RING_OF_DUELLING4_2560, Items.RING_OF_DUELLING3_2562, Items.RING_OF_DUELLING2_2564, Items.RING_OF_DUELLING1_2566)
     private val WIZARD_PORTAL = intArrayOf(Scenery.MAGIC_PORTAL_2156, Scenery.MAGIC_PORTAL_2157, Scenery.MAGIC_PORTAL_2158)
@@ -37,6 +37,7 @@ class ArdougneAchievementDiary : DiaryEventHookBase(DiaryType.ARDOUGNE) {
     private val MONASTERY_REGION = 10290
     private val BATTLEFIELD_REGION = 10034
     private val CREATURE_CREATION_UNDERGROUND_REGION = 12100
+    private val CASTLE_WAR_REGION = 9776
     private val OBSERVATORY_REGION = 9777
     private val PLAGUE_CITY_REGION = 10035
     private val LEGEND_GUILD_BASEMENT = 10904
@@ -52,7 +53,7 @@ class ArdougneAchievementDiary : DiaryEventHookBase(DiaryType.ARDOUGNE) {
             const val SELL_SILK_TO_TRADER = 2
             const val USE_ALTAR_IN_WEST_ARD = 3
             const val ENTER_CASTLE_WARS_WAITING_ROOM = 4
-            const val FISH_ON_FISHING_TRAWLER = 5
+            const val FISH_ON_FISHING_TRAWLER = 5 // Outside
             const val ENTER_COMBAT_TRAINING_CAMP = 6
             const val TALK_TO_CIVILIAN_ABOUT_CAT = 7
             const val KILL_UNICOW_IN_TOWER_OF_LIFE = 8
@@ -61,7 +62,7 @@ class ArdougneAchievementDiary : DiaryEventHookBase(DiaryType.ARDOUGNE) {
             const val PICK_LOCK_DOOR_EAST_OF_GEM_STALL = 11 // Outside
             const val SPEND_PENGUIN_POINTS_AT_ZOO = 12 // Outside
             const val USE_SUMMONING_OBELISK = 13 // Outside
-            const val POP_BALLOON_IN_MONASTERY = 14
+            const val POP_BALLOON_IN_MONASTERY = 14 // Outside
             const val BUY_WATER_VIAL_FROM_GENERAL_STORE = 15
             const val USE_NOTICEBOARD_NEAR_OBSERVATORY = 16
             const val KILL_SOMETHING_ON_KHAZARD_BATTLEFIELD = 17
@@ -82,7 +83,7 @@ class ArdougneAchievementDiary : DiaryEventHookBase(DiaryType.ARDOUGNE) {
             const val CAST_WATCHTOWER_TELEPORT = 6 // Outside
             const val TRAVEL_TO_CASTLE_WARS_BY_BALLOON = 7 // Outside
             const val CLAIM_BUCKETS_OF_SAND_FROM_BERT = 8 // Outside
-            const val RETURN_TO_PAST_AND_TALK_TO_SARAH = 9
+            const val RETURN_TO_PAST_AND_TALK_TO_SARAH = 9 // Outside
             const val CATCH_FISH_AT_FISHING_PLATFORM = 10
             const val CROSS_RIVER_DOUGNE_USING_LOG_BALANCE = 11 // Outside
             const val PICKPOCKET_MASTER_FARMER = 12 // Outside
@@ -120,6 +121,12 @@ class ArdougneAchievementDiary : DiaryEventHookBase(DiaryType.ARDOUGNE) {
                     DiaryLevel.EASY,
                     EasyTasks.ENTER_COMBAT_TRAINING_CAMP,
                 )
+                ,
+                DiaryAreaTask(
+                    POISON_ARROW_AREA,
+                    DiaryLevel.EASY,
+                    EasyTasks.BUY_SKEWERED_KEBAB_AT_POISON_ARROW,
+                )
             )
 
     override fun onPrayerPointsRecharged(player: Player, event: PrayerPointsRechargeEvent) {
@@ -141,7 +148,26 @@ class ArdougneAchievementDiary : DiaryEventHookBase(DiaryType.ARDOUGNE) {
                     EasyTasks.USE_NOTICEBOARD_NEAR_OBSERVATORY,
                 )
             }
-        }
+            CASTLE_WAR_REGION -> if(event.target.id in intArrayOf(Scenery.ZAMORAK_PORTAL_4388, Scenery.GUTHIX_PORTAL_4408, Scenery.SARADOMIN_PORTAL_4387)  && event.option == "enter") {
+                finishTask(
+                    player,
+                    DiaryLevel.EASY,
+                    EasyTasks.ENTER_CASTLE_WARS_WAITING_ROOM,
+                )
+                finishTask(
+                    player,
+                    DiaryLevel.HARD,
+                    HardTasks.BE_ON_WINNING_SIDE_IN_CASTLE_WARS,
+                )
+                if(hasRequirement(player, Quests.CATAPULT_CONSTRUCTION)) {
+                    finishTask(
+                        player,
+                        DiaryLevel.HARD,
+                        HardTasks.USE_CATAPULT_IN_CASTLE_WARS_AFTER_CONSTRUCTION
+                    )
+                }
+            }
+         }
     }
 
     override fun onDialogueOptionSelected(player: Player, event: DialogueOptionSelectionEvent) {
@@ -172,6 +198,16 @@ class ArdougneAchievementDiary : DiaryEventHookBase(DiaryType.ARDOUGNE) {
                         player,
                         DiaryLevel.EASY,
                         EasyTasks.VIEW_HUNTER_EQUIPMENT_IN_ALECKS_SHOP,
+                    )
+                }
+            }
+
+            is RecruiterDialogue -> {
+                if(event.currentStage == 3) {
+                    finishTask(
+                        player,
+                        DiaryLevel.EASY,
+                        EasyTasks.GET_CIVILIAN_TO_THROW_TOMATO,
                     )
                 }
             }
@@ -349,6 +385,13 @@ class ArdougneAchievementDiary : DiaryEventHookBase(DiaryType.ARDOUGNE) {
                     player,
                     DiaryLevel.EASY,
                     EasyTasks.TALK_TO_HEAD_SERVANT_AT_SERVANTS_GUILD,
+                )
+            }
+            is EzekialLovecraftDialogue -> {
+                finishTask(
+                    player,
+                    DiaryLevel.MEDIUM,
+                    MediumTasks.SELL_RUBIUM_TO_EZEKIAL_LOVECRAFT,
                 )
             }
         }

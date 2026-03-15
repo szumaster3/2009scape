@@ -8,7 +8,7 @@ object ItemLoader {
         val copy = ItemCopy.create().startAt(ItemCopy.create().load())
 
         copy.addItems({
-            //id = Items.ARDOUGNE_CLOAK_1_14701
+            id = Items.ARDOUGNE_CLOAK_1_14701
             name = "Ardougne cloak 1"
             invModelId = 45499
             cost = 0
@@ -28,12 +28,17 @@ object ItemLoader {
             floorScaleZ = 128
             maleEquipModelId1 = 45497
             femaleEquipModelId1 = 45498
-            inventoryOptions = arrayOf(null, "Wear", null, "Teleports", "Destroy")
+            maleEquipModelId2 = 45497
+            femaleEquipModelId2 = 45498
+            maleEquipModelId3 = -1
+            femaleEquipModelId3 = -1
+            teamId = 0
+            inventoryOptions = arrayOf("Wear", "Teleports", null, null, "Destroy")
             groundOptions = arrayOf(null, null, "Take", null, null)
         })
 
         copy.addItems({
-            //id = Items.ARDOUGNE_CLOAK_2_14702
+            id = Items.ARDOUGNE_CLOAK_2_14702
             name = "Ardougne cloak 2"
             invModelId = 45499
             cost = 0
@@ -53,19 +58,23 @@ object ItemLoader {
             floorScaleZ = 128
             maleEquipModelId1 = 45497
             femaleEquipModelId1 = 45498
-            inventoryOptions = arrayOf(null, "Wear", null, "Teleports", "Destroy")
+            maleEquipModelId2 = 45497
+            femaleEquipModelId2 = 45498
+            maleEquipModelId3 = -1
+            femaleEquipModelId3 = -1
+            teamId = 0
+            inventoryOptions = arrayOf("Wear", "Teleports", null, null, "Destroy")
             groundOptions = arrayOf(null, null, "Take", null, null)
         })
 
         copy.addItems({
-            //id = Items.ARDOUGNE_CLOAK_3_14703
+            id = Items.ARDOUGNE_CLOAK_3_14703
             name = "Ardougne cloak 3"
             invModelId = 45499
             cost = 0
             stackable = 0
             isMembersOnly = true
             equipSlot = 1
-            equipType = 0
             invModelZoom = 2140
             xan2d = 400
             yan2d = 948
@@ -76,12 +85,18 @@ object ItemLoader {
             floorScaleZ = 128
             maleEquipModelId1 = 45497
             femaleEquipModelId1 = 45498
-            inventoryOptions = arrayOf(null, "Wear", null, "Teleports", "Destroy")
+            maleEquipModelId2 = 45497
+            femaleEquipModelId2 = 45498
+            maleEquipModelId3 = -1
+            femaleEquipModelId3 = -1
+            teamId = 0
+            inventoryOptions = arrayOf("Wear", "Teleports", null, null, "Destroy")
             groundOptions = arrayOf(null, null, "Take", null, null)
         })
 
+        // Antique lamps
         copy.addItems({
-            //id = Items.ANTIQUE_LAMP_14704
+            id = Items.ANTIQUE_LAMP_14704
             name = "Antique lamp"
             invModelId = 3348
             cost = 1
@@ -99,13 +114,14 @@ object ItemLoader {
             floorScaleX = 128
             floorScaleY = 128
             floorScaleZ = 128
+            teamId = 0
             inventoryOptions = arrayOf("Rub", null, null, null, "Destroy")
             groundOptions = arrayOf(null, null, "Take", null, null)
             clientScriptData = mutableMapOf(59 to "1")
         })
 
         copy.addItems({
-            //id = Items.ANTIQUE_LAMP_14705
+            id = Items.ANTIQUE_LAMP_14705
             name = "Antique lamp"
             invModelId = 3348
             cost = 1
@@ -123,13 +139,14 @@ object ItemLoader {
             floorScaleX = 128
             floorScaleY = 128
             floorScaleZ = 128
+            teamId = 0
             inventoryOptions = arrayOf("Rub", null, null, null, "Destroy")
             groundOptions = arrayOf(null, null, "Take", null, null)
             clientScriptData = mutableMapOf(59 to "1")
         })
 
         copy.addItems({
-            //id = Items.ANTIQUE_LAMP_14706
+            id = Items.ANTIQUE_LAMP_14706
             name = "Antique lamp"
             invModelId = 3348
             cost = 1
@@ -147,6 +164,7 @@ object ItemLoader {
             floorScaleX = 128
             floorScaleY = 128
             floorScaleZ = 128
+            teamId = 0
             inventoryOptions = arrayOf("Rub", null, null, null, "Destroy")
             groundOptions = arrayOf(null, null, "Take", null, null)
             clientScriptData = mutableMapOf(59 to "1")

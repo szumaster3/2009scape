@@ -133621,6 +133621,78 @@
     "equipment_slot": "7"
   },
   {
+    "shop_price": "0",
+    "ge_buy_limit": "0",
+    "examine": "A shadowy Ardougne cloak.",
+    "grand_exchange_price": "0",
+    "durability": null,
+    "destroy": "true",
+    "name": "Ardougne cloak 1",
+    "destroy_message": "You can get another cloak of this type from Doctor Orbon in Ardougne.",
+    "tradeable": "false",
+    "weight": "0.4",
+    "archery_ticket_price": "0",
+    "id": "14701",
+    "equipment_slot": "1"
+  },
+  {
+    "shop_price": "0",
+    "ge_buy_limit": "0",
+    "examine": "A shadowy Ardougne cloak.",
+    "grand_exchange_price": "0",
+    "durability": null,
+    "destroy": "true",
+    "name": "Ardougne cloak 2",
+    "destroy_message": "You can get another cloak of this type from the Town Crier in Ardougne.",
+    "tradeable": "false",
+    "weight": "0.4",
+    "archery_ticket_price": "0",
+    "id": "14702",
+    "equipment_slot": "1"
+  },
+  {
+    "shop_price": "0",
+    "ge_buy_limit": "0",
+    "examine": "A shadowy Ardougne cloak.",
+    "grand_exchange_price": "0",
+    "durability": null,
+    "destroy": "true",
+    "name": "Ardougne cloak 3",
+    "destroy_message": "You can get another cloak of this type from Aleck in Yanille.",
+    "tradeable": "false",
+    "weight": "0.4",
+    "archery_ticket_price": "0",
+    "id": "14703",
+    "equipment_slot": "1"
+  },
+  {
+    "examine": "I wonder what happens if I rub it.",
+    "durability": null,
+    "name": "Antique lamp",
+    "tradeable": "false",
+    "destroy": "true",
+    "archery_ticket_price": "0",
+    "id": "14704"
+  },
+  {
+    "examine": "I wonder what happens if I rub it.",
+    "durability": null,
+    "name": "Antique lamp",
+    "tradeable": "false",
+    "destroy": "true",
+    "archery_ticket_price": "0",
+    "id": "14705"
+  },
+  {
+    "examine": "I wonder what happens if I rub it.",
+    "durability": null,
+    "name": "Antique lamp",
+    "tradeable": "false",
+    "destroy": "true",
+    "archery_ticket_price": "0",
+    "id": "14706"
+  },
+  {
     "examine": "Item container for C. Ele Minor Drop Table. You should not be able to obtain this item.",
     "name": "C. Ele Minor Drop Table",
     "id": "799"

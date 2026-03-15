@@ -1,7 +1,6 @@
 package content
 
 import com.alex.Cache
-import com.alex.loaders.print
 
 object ContentLoader {
     @JvmStatic
@@ -9,11 +8,9 @@ object ContentLoader {
     {
         runCatching {
             println("Initializing cache...")
-
             Cache.init()
             println("Populating cache...")
-            print(Cache.getStore(), "bas_dump.txt")
-//          load()
+            load()
             println("Cache populated successfully.")
         }.onFailure { e ->
             e.printStackTrace()
@@ -23,10 +20,10 @@ object ContentLoader {
 
     private fun load()
     {
-        models()
-        sprites()
+//      models()
+//      sprites()
         interfaces()
-        items()
+//      items()
     }
 
     private fun models()
@@ -41,7 +38,8 @@ object ContentLoader {
 
     private fun interfaces()
     {
-        content.interfaces.CustomSpellBookInterface.add()
+//      content.interfaces.CustomSpellBookInterface.add()
+        content.interfaces.AchievementDiaryInterface.add()
     }
 
     private fun items()

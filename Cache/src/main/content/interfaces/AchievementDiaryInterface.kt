@@ -15,6 +15,7 @@ object AchievementDiaryInterface {
             .startAt(31)
             .copy(31)
             .modify { comp ->
+                comp.name               = "area_task_5"
                 comp.parentId           = 16973831
                 comp.text               = "Ardougne"
                 comp.shadow             = true
@@ -42,11 +43,13 @@ object AchievementDiaryInterface {
         val baseY = 455
         val step = 14
         val labels = listOf("Easy", "Medium", "Hard")
+        val prefix = "area_task_5_"
 
         labels.forEachIndexed { index, text ->
             IfaceCopy.to(Components.AREA_TASK_259)
                 .startAt(34 + index)
                 .addComponents(Consumer { comp ->
+                    comp.name               = prefix + text.lowercase()
                     comp.version            = 3
                     comp.parentId           = 16973831
                     comp.type               = ComponentType.TEXT

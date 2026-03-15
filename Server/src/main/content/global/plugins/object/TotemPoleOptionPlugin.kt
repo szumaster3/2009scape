@@ -1,11 +1,9 @@
 package content.global.plugins.`object`
 
-import core.api.hasRequirement
-import core.api.log
-import core.api.sendDialogueLines
-import core.api.sendMessage
+import core.api.*
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
+import core.game.node.entity.player.link.diary.DiaryType
 import core.game.node.item.Item
 import core.tools.Log
 import shared.consts.Items
@@ -48,6 +46,9 @@ class TotemPoleOptionPlugin : InteractionListener {
                             .append("while big net Fishing.")
                     }.toString(),
                 )
+                if(hasDiaryTaskComplete(player, DiaryType.ARDOUGNE, 2, 0)) {
+                    finishDiaryTask(player, DiaryType.ARDOUGNE, 2, 0)
+                }
             } else {
                 sendMessage(player, "You can't do that.")
                 log(

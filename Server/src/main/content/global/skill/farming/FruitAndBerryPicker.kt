@@ -94,6 +94,10 @@ class FruitAndBerryPicker : OptionHandler() {
                         player.achievementDiaryManager.finishTask(player, DiaryType.VARROCK, 2, 0)
                     }
 
+                    if (plantable == Plantable.WATERMELON_SEED) {
+                        player.achievementDiaryManager.finishTask(player, DiaryType.ARDOUGNE, 1, 5)
+                    }
+
                     return patch.getFruitOrBerryCount() == 0
                 }
             },

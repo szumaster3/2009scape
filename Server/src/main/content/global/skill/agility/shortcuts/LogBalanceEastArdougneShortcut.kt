@@ -8,6 +8,7 @@ import core.game.interaction.InteractionListener
 import core.game.interaction.QueueStrength
 import core.game.node.entity.combat.ImpactHandler
 import core.game.node.entity.player.Player
+import core.game.node.entity.player.link.diary.DiaryType
 import core.game.node.entity.skill.Skills
 import core.game.world.map.Direction
 import core.game.world.map.Location
@@ -81,6 +82,9 @@ class LogBalanceEastArdougneShortcut : InteractionListener {
         {
             resetAnimator(player)
             clearLogoutListener(player, "balance-log")
+            if (!hasDiaryTaskComplete(player, DiaryType.ARDOUGNE, 1, 11)) {
+                finishDiaryTask(player, DiaryType.ARDOUGNE, 1 , 11)
+            }
         }
     }
 

@@ -100,6 +100,17 @@ class PickpocketListener : InteractionListener {
                     inBorders(player, ZoneBorders(2934, 3399, 3399, 3307)) && npc.id in intArrayOf(NPCs.GUARD_9, NPCs.GUARD_3230, NPCs.GUARD_3228, NPCs.GUARD_3229) -> {
                         finishDiaryTask(player, DiaryType.FALADOR, 1, 6)
                     }
+                    npc.id == NPCs.MASTER_FARMER_2234 || npc.id == NPCs.MASTER_FARMER_2235 -> {
+                        finishDiaryTask(player, DiaryType.ARDOUGNE, 1, 12)
+                    }
+                    npc.id == NPCs.WATCHMAN_34 && getItemFromEquipment(player, EquipmentSlot.HANDS) != null -> {
+                        if (inEquipment(player, Items.GLOVES_OF_SILENCE_10075)) {
+                            finishDiaryTask(player, DiaryType.ARDOUGNE, 2, 6)
+                        }
+                    }
+                    npc.id == NPCs.GUARD_32 && (player.viewport.region?.id == 10547) -> {
+                        finishDiaryTask(player, DiaryType.ARDOUGNE, 0 , 1)
+                    }
                 }
             }
 

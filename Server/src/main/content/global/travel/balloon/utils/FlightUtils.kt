@@ -84,8 +84,11 @@ object FlightUtils {
             openOverlay(player, Components.FADE_FROM_BLACK_170)
             removeAttribute(player, GameAttributes.BALLOON_ORIGIN)
             sendDialogue(player, "You arrive safely ${destination.destName}.")
-            if (destination == BalloonDefinition.VARROCK)
-                finishDiaryTask(player, DiaryType.VARROCK, 2, 17)
+            when (destination){
+                BalloonDefinition.VARROCK -> finishDiaryTask(player, DiaryType.VARROCK, 2, 17)
+                BalloonDefinition.CASTLE_WARS -> finishDiaryTask(player, DiaryType.ARDOUGNE, 1, 7)
+                else -> {}
+            }
             return@queueScript stopExecuting(player)
         }
     }

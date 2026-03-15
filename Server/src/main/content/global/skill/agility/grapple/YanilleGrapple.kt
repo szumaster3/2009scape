@@ -8,6 +8,7 @@ import core.game.interaction.OptionHandler
 import core.game.node.Node
 import core.game.node.entity.impl.ForceMovement
 import core.game.node.entity.player.Player
+import core.game.node.entity.player.link.diary.DiaryType
 import core.game.node.entity.skill.Skills
 import core.game.system.task.Pulse
 import core.game.world.GameWorld.Pulser
@@ -60,11 +61,7 @@ class YanilleGrapple : OptionHandler() {
         return this
     }
 
-    override fun handle(
-        player: Player,
-        node: Node,
-        option: String,
-    ): Boolean {
+    override fun handle(player: Player, node: Node, option: String): Boolean {
         val destination: Location
         val current = player.location
         when (option) {
@@ -132,6 +129,9 @@ class YanilleGrapple : OptionHandler() {
                                     closeInterface(player)
                                     AgilityHandler.checkGrappleBreak(player)
                                     player.logoutListeners.remove("yanille-grapple")
+                                    if (!hasDiaryTaskComplete(player, DiaryType.ARDOUGNE, 1, 2)) {
+                                        finishDiaryTask(player, DiaryType.ARDOUGNE, 1 , 2)
+                                    }
                                     return true
                                 }
                             }

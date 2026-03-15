@@ -99,6 +99,7 @@ private class CharterPulse(private val player: Player, private val charter: Char
             CharterShip.BRIMHAVEN_TO_ARDOUGNE -> finishDiaryTask(player, DiaryType.KARAMJA, 0, 4)
             CharterShip.CAIRN_ISLAND_TO_PORT_KHAZARD -> finishDiaryTask(player, DiaryType.KARAMJA, 1, 6)
             CharterShip.PORT_SARIM_TO_ENTRANA -> finishDiaryTask(player, DiaryType.FALADOR, 0, 14)
+            CharterShip.ARDOUGNE_TO_BRIMHAVEN -> finishDiaryTask(player, DiaryType.ARDOUGNE, 0, 10)
             else -> {}
         }
     }

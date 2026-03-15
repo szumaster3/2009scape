@@ -8,6 +8,7 @@ import core.game.dialogue.FaceAnim
 import core.game.dialogue.IfTopic
 import core.game.dialogue.Topic
 import core.game.node.entity.player.Player
+import core.game.node.entity.player.link.diary.DiaryType
 import core.tools.END_DIALOGUE
 import core.tools.Log
 import shared.consts.Items
@@ -114,13 +115,21 @@ class LarryDialogue(player: Player? = null) : Dialogue(player) {
                     npc(FaceAnim.HAPPY, "Well done finding those penguins. Keep up the hard", "work, they'll keep moving around.")
                     player.unlock()
                     true
-                },).also { end() }
+                }).also {
+                    if (!hasDiaryTaskComplete(player, DiaryType.ARDOUGNE, 0, 12)) {
+                        finishDiaryTask(player, DiaryType.ARDOUGNE, 0 , 12)
+                    }
+                    end()
+                }
             }
             30 -> {
                 end()
                 addItem(player, Items.COINS_995, 6500 * player.getAttribute(GameAttributes.ACTIVITY_PENGUINS_HNS_SCORE, 0))
                 removeAttribute(player, GameAttributes.ACTIVITY_PENGUINS_HNS_SCORE)
                 npc(FaceAnim.HAPPY, "Well done finding those penguins. Keep up the hard", "work, they'll keep moving around.")
+                if (!hasDiaryTaskComplete(player, DiaryType.ARDOUGNE, 0, 12)) {
+                    finishDiaryTask(player, DiaryType.ARDOUGNE, 0 , 12)
+                }
             }
             31 -> {
                 val hint = PenguinLocation.values()[PenguinManager.penguins.random()].hint

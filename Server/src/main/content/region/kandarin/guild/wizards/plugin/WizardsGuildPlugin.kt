@@ -8,6 +8,7 @@ import core.game.global.action.DoorActionHandler
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
 import core.game.node.entity.npc.NPC
+import core.game.node.entity.player.link.diary.DiaryType
 import core.game.node.entity.skill.Skills
 import core.game.world.map.Location
 import shared.consts.NPCs
@@ -35,6 +36,9 @@ class WizardsGuildPlugin : InteractionListener {
                 return@on true
             }
             DoorActionHandler.handleAutowalkDoor(player, node.asScenery())
+            if(hasDiaryTaskComplete(player, DiaryType.ARDOUGNE, 2, 2)) {
+                finishDiaryTask(player, DiaryType.ARDOUGNE, 2, 2)
+            }
             return@on true
         }
 

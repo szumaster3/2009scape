@@ -7,6 +7,7 @@ import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim
 import core.game.dialogue.Topic
 import core.game.node.entity.player.Player
+import core.game.node.entity.player.link.diary.DiaryType
 import core.game.node.item.Item
 import core.plugin.Initializable
 import core.tools.END_DIALOGUE
@@ -278,6 +279,9 @@ class BertDialogue(player: Player? = null) : Dialogue(player) {
             store.addProperty(username, true)
             player.setAttribute(GameAttributes.HAND_SAND_LAST_SAND_CLAIM, System.currentTimeMillis())
             player?.sendMessages("Thanks for the sand Bert!")
+            if (!hasDiaryTaskComplete(player, DiaryType.ARDOUGNE, 1, 8)) {
+                finishDiaryTask(player, DiaryType.ARDOUGNE, 1 , 8)
+            }
             closeDialogue(player)
         }
     }

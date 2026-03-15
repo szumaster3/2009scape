@@ -2,10 +2,13 @@ package content.global.skill.agility.shortcuts
 
 import content.global.skill.agility.AgilityHandler
 import content.global.skill.agility.AgilityShortcut
+import core.api.finishDiaryTask
+import core.api.hasDiaryTaskComplete
 import core.api.refreshAppearance
 import core.game.node.Node
 import core.game.node.entity.impl.ForceMovement
 import core.game.node.entity.player.Player
+import core.game.node.entity.player.link.diary.DiaryType
 import core.game.node.scenery.Scenery
 import core.game.system.task.Pulse
 import core.game.world.GameWorld.Pulser
@@ -82,6 +85,9 @@ class MonkeyBarShortcut : AgilityShortcut {
                             0.0,
                             null,
                         )
+                        if (!hasDiaryTaskComplete(player, DiaryType.ARDOUGNE, 2, 12)) {
+                            finishDiaryTask(player, DiaryType.ARDOUGNE, 2 , 12)
+                        }
                     } else if (count == 2) {
                         if (failed) {
                             player.appearance.setAnimations()

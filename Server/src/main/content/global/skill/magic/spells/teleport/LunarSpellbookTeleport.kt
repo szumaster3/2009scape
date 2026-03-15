@@ -2,9 +2,11 @@ package content.global.skill.magic.spells.teleport
 
 import content.global.skill.magic.SpellListener
 import content.global.skill.magic.spells.LunarSpells
+import core.api.finishDiaryTask
 import core.api.playGlobalAudio
 import core.game.node.entity.player.Player
 import core.game.node.entity.player.link.TeleportManager
+import core.game.node.entity.player.link.diary.DiaryType
 import core.game.node.item.Item
 import core.game.world.map.Location
 import shared.consts.Items
@@ -40,6 +42,7 @@ class LunarSpellbookTeleport : SpellListener("lunar") {
             requires(player, 71, arrayOf(Item(Items.ASTRAL_RUNE_9075, 2), Item(Items.LAW_RUNE_563, 1), Item(Items.EARTH_RUNE_557, 6)))
             if (!player.isTeleBlocked) playGlobalAudio(player.location, Sounds.TP_ALL_200)
             sendTeleport(player, 69.0, Location.create(2469, 3247, 0))
+            finishDiaryTask(player, DiaryType.ARDOUGNE, 2, 5)
         }
 
         /*

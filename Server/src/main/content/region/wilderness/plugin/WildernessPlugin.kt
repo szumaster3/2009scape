@@ -13,6 +13,7 @@ import core.game.interaction.QueueStrength
 import core.game.node.entity.player.Player
 import core.game.node.entity.player.link.TeleportManager
 import core.game.node.entity.player.link.TeleportManager.TeleportType
+import core.game.node.entity.player.link.diary.DiaryType
 import core.game.node.item.Item
 import core.game.world.map.Location
 import shared.consts.*
@@ -239,6 +240,9 @@ class WildernessPlugin : InteractionListener {
                             if (!hasTimerActive(player!!, GameAttributes.TELEBLOCK_TIMER)) {
                                 teleport(player!!, Location(3154, 3923, 0))
                                 sendMessage(player!!, "...And teleport into the wilderness.", 5)
+                                if(hasDiaryTaskComplete(player!!, DiaryType.ARDOUGNE, 2, 2)) {
+                                    finishDiaryTask(player!!, DiaryType.ARDOUGNE, 2, 2)
+                                }
                             } else {
                                 sendMessage(player!!, "A magical force has stopped you from teleporting.")
                             }

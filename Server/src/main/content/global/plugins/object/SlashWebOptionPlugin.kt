@@ -1,5 +1,6 @@
 package content.global.plugins.`object`
 
+import content.region.misthalin.varrock.diary.VarrockAchievementDiary
 import core.api.*
 import core.cache.def.impl.SceneryDefinition
 import core.game.container.Container
@@ -66,14 +67,14 @@ class SlashWebOptionPlugin : OptionHandler() {
             )
 
             if (scenery.id == shared.consts.Scenery.SPIDERWEB_29354) {
-                finishDiaryTask(player, DiaryType.VARROCK, 0, 17)
+                finishDiaryTask(player, DiaryType.VARROCK, 0, VarrockAchievementDiary.Companion.EasyTasks.SEWERS_CUT_COBWEB)
             }
 
             if (scenery.id == shared.consts.Scenery.SPIDERWEB_29354 &&
                 player.inventory.containsAtLeastOneItem(Items.RED_SPIDERS_EGGS_223) &&
                 player.location.y <= 9897
             ) {
-                finishDiaryTask(player, DiaryType.VARROCK, 1, 4)
+                finishDiaryTask(player, DiaryType.VARROCK, 1, VarrockAchievementDiary.Companion.MediumTasks.SEWER_GATHER_RED_SPIDERS_EGGS)
             }
         } else {
             sendMessage(player, "You fail to cut through it.")

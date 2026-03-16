@@ -2,6 +2,7 @@ package content.global.skill.construction.decoration.study
 
 import content.data.GameAttributes
 import content.global.skill.construction.Decoration
+import content.region.misthalin.varrock.diary.VarrockAchievementDiary
 import core.api.*
 import core.cache.def.impl.SceneryDefinition
 import core.game.interaction.InterfaceListener
@@ -198,7 +199,7 @@ class LecternPlugin : OptionHandler() {
                                     Decoration.MAHOGANY_DEMON_LECTERN.objectId
                                 )
                             ) {
-                                finishDiaryTask(player, DiaryType.VARROCK, 2, 8)
+                                finishDiaryTask(player, DiaryType.VARROCK, 2, VarrockAchievementDiary.Companion.HardTasks.MAKE_VARROCK_TELEPORT_TABLET_OR_MAHOGANY_LECTERN)
                             }
                             return@queueScript stopExecuting(player)
                         }

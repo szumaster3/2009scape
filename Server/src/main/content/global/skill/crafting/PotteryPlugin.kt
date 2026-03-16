@@ -1,10 +1,9 @@
 package content.global.skill.crafting
 
+import content.region.misthalin.lumbridge.diary.LumbridgeAchievementDiary
+import content.region.misthalin.varrock.diary.VarrockAchievementDiary
 import core.api.*
-import core.game.interaction.Clocks
-import core.game.interaction.IntType
-import core.game.interaction.InteractionListener
-import core.game.interaction.QueueStrength
+import core.game.interaction.*
 import core.game.node.Node
 import core.game.node.entity.player.Player
 import core.game.node.entity.player.link.diary.DiaryType
@@ -22,140 +21,17 @@ class PotteryPlugin : InteractionListener {
     override fun defineListeners() {
 
         /*
-         * Handles crafting on pottery wheel.
+         * Handles use soft clay on pottery wheels.
          */
 
         onUseWith(IntType.ITEM, Items.SOFT_CLAY_1761, *CraftingDefinition.POTTERY_WHEELS) { player, _, _ ->
-            val items = CraftingDefinition.Pottery.values().map { it.unfinished }.toTypedArray()
-            sendSkillDialogue(player) {
-                withItems(*items)
-
-                create { itemId, amount ->
-                    val pottery = CraftingDefinition.Pottery.forId(itemId) ?: run {
-                        return@create
-                    }
-
-                    if (getStatLevel(player, Skills.CRAFTING) < pottery.level) {
-                        sendMessage(player, "You need a Crafting level of ${pottery.level} to make this.")
-                        return@create
-                    }
-
-                    if (!inInventory(player, Items.SOFT_CLAY_1761)) {
-                        sendMessage(player, "You have run out of clay.")
-                        return@create
-                    }
-
-                    var remaining = amount
-
-                    queueScript(player, 0, QueueStrength.WEAK) {
-                        if (remaining <= 0 || !clockReady(player, Clocks.SKILLING)) return@queueScript stopExecuting(player)
-                        if (!inInventory(player, Items.SOFT_CLAY_1761)) return@queueScript stopExecuting(player)
-
-                        animate(player, 883)
-                        delayClock(player, Clocks.SKILLING, 5)
-
-                        if (removeItem(player, Items.SOFT_CLAY_1761)) {
-                            addItem(player, pottery.unfinished.id)
-                            rewardXP(player, Skills.CRAFTING, pottery.exp)
-                            val article = if (StringUtils.isPlusN(pottery.unfinished.name)) "an" else "a"
-                            sendMessage(player, "You make the clay into $article ${pottery.unfinished.name.lowercase(Locale.getDefault())}.")
-
-                            // Varrock & Lumbridge diary.
-                            when (pottery) {
-                                CraftingDefinition.Pottery.BOWL -> if (withinDistance(player, Location(3086, 3410, 0))) {
-                                    setAttribute(player, "/save:diary:varrock:spun-bowl", true)
-                                }
-                                CraftingDefinition.Pottery.POT -> if (withinDistance(player, Location(3086, 3410, 0))) {
-                                    finishDiaryTask(player, DiaryType.LUMBRIDGE, 0, 7)
-                                }
-                                else -> {}
-                            }
-
-                            remaining--
-                        }
-
-                        if (remaining > 0 && inInventory(player, Items.SOFT_CLAY_1761)) {
-                            delayClock(player, Clocks.SKILLING, 5)
-                            setCurrentScriptState(player, 0)
-                            delayScript(player, 5)
-                        } else stopExecuting(player)
-                    }
-                }
-
-                calculateMaxAmount { amountInInventory(player, Items.SOFT_CLAY_1761) }
-            }
-
+            handlePotteryWheel(player)
             return@onUseWith true
         }
 
         /*
-         * Handles firing in ovens.
+         * Handles unfired pottery in oven.
          */
-
-        fun firePottery(player: Player, pottery: CraftingDefinition.Pottery, oven: Node): Boolean {
-            if (oven.id == Scenery.POTTERY_OVEN_4308 && !isQuestComplete(player, Quests.THE_FREMENNIK_TRIALS)) {
-                sendMessage(player, "Only Fremenniks may use this ${oven.name.lowercase(Locale.getDefault())}.")
-                return false
-            }
-
-            if (getStatLevel(player, Skills.CRAFTING) < pottery.level) {
-                sendMessage(player, "You need a Crafting level of ${pottery.level} to do this.")
-                return false
-            }
-            if (!inInventory(player, pottery.unfinished.id)) {
-                sendMessage(player, "You don't have any ${pottery.unfinished.name.lowercase(Locale.getDefault())} to fire.")
-                return false
-            }
-
-            sendSkillDialogue(player) {
-                withItems(pottery.unfinished)
-                create { _, amount ->
-                    var remaining = amount
-                    queueScript(player, 0, QueueStrength.NORMAL) {
-                        if (remaining <= 0 || !clockReady(player, Clocks.SKILLING) || !inInventory(player, pottery.unfinished.id)) {
-                            return@queueScript false
-                        }
-
-                        playAudio(player, 2588)
-                        animate(player, Animations.HUMAN_FURNACE_SMELT_3243)
-                        delayClock(player, Clocks.SKILLING, 5)
-                        sendMessage(player, "You put ${pottery.unfinished.name.lowercase(Locale.getDefault())} in the oven.")
-
-                        if (removeItem(player, pottery.unfinished)) {
-                            addItem(player, pottery.product.id)
-                            rewardXP(player, Skills.CRAFTING, pottery.fireExp)
-                            sendMessage(player, "You remove ${pottery.product.name.lowercase(Locale.getDefault())} from the oven.")
-
-                            // Varrock diary.
-                            when (pottery) {
-                                CraftingDefinition.Pottery.BOWL ->
-                                    if (withinDistance(player, Location(3085, 3408, 0)) && getAttribute(player, "diary:varrock:spun-bowl", false)) {
-                                        finishDiaryTask(player, DiaryType.VARROCK, 0, 9)
-                                    }
-                                CraftingDefinition.Pottery.POT ->
-                                    if (withinDistance(player, Location(3085, 3408, 0))) {
-                                        finishDiaryTask(player, DiaryType.LUMBRIDGE, 0, 7)
-                                    }
-                                else -> {}
-                            }
-
-                            remaining--
-                        }
-
-                        if (remaining > 0 && inInventory(player, pottery.unfinished.id)) {
-                            delayClock(player, Clocks.SKILLING, 5)
-                            setCurrentScriptState(player, 0)
-                            delayScript(player, 5)
-                        }
-
-                        return@queueScript false
-                    }
-                }
-                calculateMaxAmount { player.inventory.getAmount(pottery.unfinished) }
-            }
-
-            return true
-        }
 
         onUseWith(IntType.ITEM, CraftingDefinition.UNFIRED_POTTERY_ITEM_IDS, *CraftingDefinition.POTTERY_OVENS) { player, used, oven ->
             val pottery = CraftingDefinition.Pottery.forId(used.id) ?: return@onUseWith false
@@ -164,38 +40,16 @@ class PotteryPlugin : InteractionListener {
         }
 
         /*
-         * Handles interaction with fire ovens.
+         * Handles use of oven.
          */
 
         on(CraftingDefinition.POTTERY_OVENS, IntType.SCENERY, "fire") { player, node ->
-            sendSkillDialogue(player) {
-                val potteryMap = mapOf(
-                    Items.UNFIRED_POT_1787 to CraftingDefinition.Pottery.POT,
-                    Items.UNFIRED_PIE_DISH_1789 to CraftingDefinition.Pottery.DISH,
-                    Items.UNFIRED_BOWL_1791 to CraftingDefinition.Pottery.BOWL,
-                    Items.UNFIRED_PLANT_POT_5352 to CraftingDefinition.Pottery.PLANT,
-                    Items.UNFIRED_POT_LID_4438 to CraftingDefinition.Pottery.LID
-                )
-
-                withItems(*potteryMap.keys.toIntArray())
-
-                create { selectedItemId, _ ->
-                    val pottery = potteryMap[selectedItemId]
-                    if (pottery != null) {
-                        firePottery(player, pottery, node)
-                    }
-                }
-
-                calculateMaxAmount { selectedItemId ->
-                    amountInInventory(player, selectedItemId)
-                }
-            }
-
+            handleOvenInteraction(player, node)
             return@on true
         }
 
         /*
-         * Handles interacting with the cooking range.
+         * Handles cooking range interaction.
          */
 
         on(CraftingDefinition.RANGE, IntType.SCENERY, "fire") { player, node ->
@@ -203,9 +57,140 @@ class PotteryPlugin : InteractionListener {
                 faceLocation(player, node.location)
                 openDialogue(player, 43989, Items.UNCOOKED_STEW_2001, "stew")
             }
-
             return@on true
         }
     }
 
+    private fun handlePotteryWheel(player: Player) {
+        val items = CraftingDefinition.Pottery.values().map { it.unfinished }.toTypedArray()
+        sendSkillDialogue(player) {
+            withItems(*items)
+
+            create { itemId, amount ->
+                val pottery = CraftingDefinition.Pottery.forId(itemId) ?: return@create
+                if (!checkRequirements(player, pottery.level, Items.SOFT_CLAY_1761)) return@create
+
+                process(player, amount, Items.SOFT_CLAY_1761, pottery.unfinished.id, pottery.exp,
+                    animation = 883
+                ) {
+                    handleDiaryWheel(player, pottery)
+                    val article = if (StringUtils.isPlusN(pottery.unfinished.name)) "an" else "a"
+                    sendMessage(player, "You make the clay into $article ${pottery.unfinished.name.lowercase(Locale.getDefault())}.")
+                }
+            }
+
+            calculateMaxAmount { amountInInventory(player, Items.SOFT_CLAY_1761) }
+        }
+    }
+
+    private fun firePottery(player: Player, pottery: CraftingDefinition.Pottery, oven: Node): Boolean {
+        if (oven.id == Scenery.POTTERY_OVEN_4308 && !isQuestComplete(player, Quests.THE_FREMENNIK_TRIALS)) {
+            sendMessage(player, "Only Fremenniks may use this ${oven.name.lowercase(Locale.getDefault())}.")
+            return false
+        }
+
+        if (!checkRequirements(player, pottery.level, pottery.unfinished.id)) return false
+
+        sendSkillDialogue(player) {
+            withItems(pottery.unfinished)
+            create { _, amount ->
+                process(player, amount, pottery.unfinished.id, pottery.product.id, pottery.fireExp,
+                    animation = Animations.HUMAN_FURNACE_SMELT_3243,
+                    audio = 2588
+                ) {
+                    sendMessage(player, "You put ${pottery.unfinished.name.lowercase(Locale.getDefault())} in the oven.")
+                    sendMessage(player, "You remove ${pottery.product.name.lowercase(Locale.getDefault())} from the oven.")
+                    handleDiaryOven(player, pottery)
+                }
+            }
+
+            calculateMaxAmount { player.inventory.getAmount(pottery.unfinished) }
+        }
+
+        return true
+    }
+
+    private fun handleOvenInteraction(player: Player, node: Node) {
+        val potteryMap = mapOf(
+            Items.UNFIRED_POT_1787       to CraftingDefinition.Pottery.POT,
+            Items.UNFIRED_PIE_DISH_1789  to CraftingDefinition.Pottery.DISH,
+            Items.UNFIRED_BOWL_1791      to CraftingDefinition.Pottery.BOWL,
+            Items.UNFIRED_PLANT_POT_5352 to CraftingDefinition.Pottery.PLANT,
+            Items.UNFIRED_POT_LID_4438   to CraftingDefinition.Pottery.LID
+        )
+
+        sendSkillDialogue(player) {
+            withItems(*potteryMap.keys.toIntArray())
+
+            create { selectedItemId, _ ->
+                potteryMap[selectedItemId]?.let { firePottery(player, it, node) }
+            }
+
+            calculateMaxAmount { selectedItemId -> amountInInventory(player, selectedItemId) }
+        }
+    }
+
+    private fun checkRequirements(player: Player, level: Int, itemId: Int): Boolean {
+        if (getStatLevel(player, Skills.CRAFTING) < level) {
+            sendMessage(player, "You need a Crafting level of $level to do this.")
+            return false
+        }
+        if (!inInventory(player, itemId)) {
+            sendMessage(player, "You don't have the required item.")
+            return false
+        }
+        return true
+    }
+
+    private fun process(player: Player, amount: Int, inputId: Int, output: Int, exp: Double, animation: Int, audio: Int? = null, diaryAction: (() -> Unit)? = null) {
+        var remaining = amount
+        queueScript(player, 0, QueueStrength.WEAK) {
+            if (remaining <= 0 || !clockReady(player, Clocks.SKILLING) || !inInventory(player, inputId)) return@queueScript stopExecuting(player)
+
+            audio?.let { playAudio(player, it) }
+            animate(player, animation)
+            delayClock(player, Clocks.SKILLING, 5)
+
+            if (removeItem(player, inputId)) {
+                addItem(player, output)
+                rewardXP(player, Skills.CRAFTING, exp)
+                diaryAction?.invoke()
+                remaining--
+            }
+
+            if (remaining > 0 && inInventory(player, inputId)) {
+                delayClock(player, Clocks.SKILLING, 5)
+                setCurrentScriptState(player, 0)
+                delayScript(player, 5)
+            } else stopExecuting(player)
+        }
+    }
+
+    private fun handleDiaryWheel(player: Player, pottery: CraftingDefinition.Pottery) {
+        when (pottery) {
+            CraftingDefinition.Pottery.BOWL ->
+                if (withinDistance(player, Location(3086, 3410, 0))) {
+                    setAttribute(player, "/save:diary:varrock:spun-bowl", true)
+                }
+            CraftingDefinition.Pottery.POT ->
+                if (withinDistance(player, Location(3086, 3410, 0))) {
+                    finishDiaryTask(player, DiaryType.LUMBRIDGE, 0, LumbridgeAchievementDiary.Companion.BeginnerTasks.BARBARIAN_VILLAGE_FIRE_A_POT)
+                }
+            else -> {}
+        }
+    }
+
+    private fun handleDiaryOven(player: Player, pottery: CraftingDefinition.Pottery) {
+        when (pottery) {
+            CraftingDefinition.Pottery.BOWL ->
+                if (withinDistance(player, Location(3085, 3408, 0)) && getAttribute(player, "diary:varrock:spun-bowl", false)) {
+                    finishDiaryTask(player, DiaryType.VARROCK, 0, VarrockAchievementDiary.Companion.EasyTasks.BARBARIAN_VILLAGE_SPIN_A_BOWL)
+                }
+            CraftingDefinition.Pottery.POT ->
+                if (withinDistance(player, Location(3085, 3408, 0))) {
+                    finishDiaryTask(player, DiaryType.LUMBRIDGE, 0, LumbridgeAchievementDiary.Companion.BeginnerTasks.BARBARIAN_VILLAGE_FIRE_A_POT)
+                }
+            else -> {}
+        }
+    }
 }

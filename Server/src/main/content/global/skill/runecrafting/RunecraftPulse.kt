@@ -2,6 +2,8 @@ package content.global.skill.runecrafting
 
 import content.global.plugins.item.equipment.fog_gloves.FOGGlovesManager
 import content.global.skill.runecrafting.Talisman.Companion.forName
+import content.region.asgarnia.falador.diary.FaladorAchievementDiary
+import content.region.misthalin.lumbridge.diary.LumbridgeAchievementDiary
 import core.ServerConstants
 import core.api.*
 import core.game.container.impl.EquipmentContainer
@@ -162,8 +164,8 @@ class RunecraftPulse(
 
                 // Diary checks
                 if (altar == Altar.NATURE) finishDiaryTask(player, DiaryType.KARAMJA, 2, 3)
-                if (altar == Altar.AIR && craftedRunes.amount >= 196) finishDiaryTask(player, DiaryType.FALADOR, 2, 2)
-                if (altar == Altar.WATER && rune == Rune.WATER) finishDiaryTask(player, DiaryType.LUMBRIDGE, 1, 11)
+                if (altar == Altar.AIR && craftedRunes.amount >= 196) finishDiaryTask(player, DiaryType.FALADOR, 2, FaladorAchievementDiary.Companion.HardTasks.CRAFT_196_AIR_RUNES_AT_ONCE)
+                if (altar == Altar.WATER && rune == Rune.WATER) finishDiaryTask(player, DiaryType.LUMBRIDGE, 1, LumbridgeAchievementDiary.Companion.EasyTasks.SWAMP_WATER_ALTAR_CRAFT_RUNE)
             }
         } else {
             if (removeItem(player, item)) {

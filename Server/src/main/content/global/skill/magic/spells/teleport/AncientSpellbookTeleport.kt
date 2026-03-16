@@ -2,6 +2,7 @@ package content.global.skill.magic.spells.teleport
 
 import content.global.skill.magic.SpellListener
 import content.global.skill.magic.spells.AncientSpells
+import content.region.misthalin.varrock.diary.VarrockAchievementDiary
 import core.api.finishDiaryTask
 import core.api.sendMessage
 import core.game.component.Component
@@ -99,7 +100,7 @@ class AncientSpellbookTeleport : SpellListener("ancient") {
 
         if (player.teleporter.send(dest, teleportType)) {
             if (loc == Location.create(3087, 3495, 0)) {
-                finishDiaryTask(player, DiaryType.VARROCK, 2, 11)
+                finishDiaryTask(player, DiaryType.VARROCK, 2, VarrockAchievementDiary.Companion.HardTasks.EDGEVILLE_TELEPORT_USING_ANCIENT_MAGICKS)
             }
 
             player.setAttribute("teleport:items", runes)

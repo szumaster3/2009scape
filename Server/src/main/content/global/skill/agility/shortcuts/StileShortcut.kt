@@ -9,7 +9,6 @@ import core.game.interaction.QueueStrength
 import core.game.node.entity.player.Player
 import core.game.world.map.Direction
 import core.game.world.map.Location
-import shared.consts.Animations
 import shared.consts.Scenery
 
 /**
@@ -17,7 +16,6 @@ import shared.consts.Scenery
  * @author Ceikry
  */
 class StileShortcut : InteractionListener {
-    // TODO: Wooden stile 849 with sfx.
     val ids = intArrayOf(Scenery.STILE_993, Scenery.STILE_3730, Scenery.STILE_7527, Scenery.STILE_12982, Scenery.STILE_19222, Scenery.STILE_22302, Scenery.STILE_29460, Scenery.STILE_33842, Scenery.STILE_34776, Scenery.STILE_39508, Scenery.STILE_39509, Scenery.STILE_39510)
     private val FALCONRY_STILE = Scenery.STILE_19222
 
@@ -27,26 +25,18 @@ class StileShortcut : InteractionListener {
             val startLoc = p.location.transform(direction, 1)
             val endLoc = p.location.transform(direction, 2)
 
+            closeAllInterfaces(p)
             p.walkingQueue.reset()
-
             p.walkingQueue.addPath(startLoc.x, startLoc.y)
-            forceMove(
-                p,
-                startLoc,
-                endLoc,
-                0,
-                animationCycles(Animations.WALK_OVER_STILE_10980),
-                direction,
-                Animations.WALK_OVER_STILE_10980,
-            )
+            forceMove(p, startLoc, endLoc, 0, animationCycles(839), direction, 839)
+
             queueScript(p, 5, QueueStrength.SOFT) { _ ->
                 val end = endLoc.transform(direction, 1)
                 p.walkingQueue.reset()
                 p.walkingQueue.addPath(end.x, end.y)
-                if (n.id == FALCONRY_STILE) {
+
+                if (n.id == FALCONRY_STILE)
                     handleFalconry(p, endLoc)
-                }
-                sendMessage(p, "You climb over the stile.")
                 return@queueScript stopExecuting(p)
             }
             return@on true
@@ -57,40 +47,39 @@ class StileShortcut : InteractionListener {
         }
     }
 
+
     companion object {
-        fun getInteractLocation(pLoc: Location, sLoc: Location, orientation: Orientation): Location =
+        fun getInteractLocation(pLoc: Location, sLoc: Location, orientation: Orientation): Location {
             when (orientation) {
                 Orientation.HORIZONTAL -> {
-                    if (pLoc.x <= sLoc.x) {
-                        sLoc.transform(-1, 0, 0)
-                    } else {
-                        sLoc.transform(2, 0, 0)
-                    }
+                    if (pLoc.x <= sLoc.x) return sLoc.transform(-1, 0, 0)
+                    else return sLoc.transform(2, 0, 0)
                 }
 
                 Orientation.VERTICAL -> {
-                    if (pLoc.y <= sLoc.y) {
-                        sLoc.transform(0, -1, 0)
-                    } else {
-                        sLoc.transform(0, 2, 0)
-                    }
+                    if (pLoc.y <= sLoc.y) return sLoc.transform(0, -1, 0)
+                    else return sLoc.transform(0, 2, 0)
                 }
             }
+        }
 
-        fun getOrientation(rotation: Direction): Orientation =
+        fun getOrientation(rotation: Direction): Orientation {
             when (rotation) {
-                Direction.EAST, Direction.WEST -> Orientation.HORIZONTAL
-                else -> Orientation.VERTICAL
+                Direction.EAST, Direction.WEST -> return Orientation.HORIZONTAL
+                else -> return Orientation.VERTICAL
             }
+        }
 
         fun handleFalconry(p: Player, endLoc: Location) {
-            if (endLoc.y == 3619) {
+            if (endLoc.y == 3619)
                 ActivityManager.start(p, "falconry", false)
-            } else {
+            else
                 ActivityManager.getActivity("falconry").leave(p, false)
-            }
         }
     }
 
-    enum class Orientation { HORIZONTAL, VERTICAL }
+    enum class Orientation {
+        HORIZONTAL,
+        VERTICAL
+    }
 }

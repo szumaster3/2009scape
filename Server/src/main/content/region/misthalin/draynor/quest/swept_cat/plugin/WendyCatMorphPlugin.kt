@@ -1,12 +1,14 @@
 package content.region.misthalin.draynor.quest.swept_cat.plugin
 
 import content.global.skill.summoning.pets.Pets
+import content.region.misthalin.varrock.diary.VarrockAchievementDiary
 import core.api.*
 import core.game.dialogue.DialogueFile
 import core.game.dialogue.FaceAnim
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
 import core.game.node.entity.npc.NPC
+import core.game.node.entity.player.link.diary.DiaryType
 import core.game.node.item.Item
 import core.game.world.update.flag.context.Animation
 import shared.consts.*
@@ -119,6 +121,7 @@ private class WendyRegularCatDialogueExtension : DialogueFile() {
                         newFamiliar.sendChat("Miaow!", 1)
                     }
                 }
+                finishDiaryTask(player!!, DiaryType.VARROCK, 1, VarrockAchievementDiary.Companion.MediumTasks.SELECT_KITTEN_COLOR)
 
                 npcl(FaceAnim.HAPPY, "There you go! Oh, such a beautiful colour.")
                 stage = 5

@@ -36,8 +36,7 @@ class LumbridgeAchievementDiary : DiaryEventHookBase(DiaryType.LUMBRIDGE) {
 
         private val DEAD_TREES = arrayOf(Scenery.DEAD_TREE_1282, Scenery.DEAD_TREE_1286, Scenery.DEAD_TREE_1365)
         private val ZOMBIES = arrayOf(NPCs.ZOMBIE_73, NPCs.ZOMBIE_74)
-        private val WATER_SOURCE =
-            arrayOf(Items.BUCKET_OF_WATER_1929, Items.JUG_OF_WATER_1937, Items.BOWL_OF_WATER_1921)
+        private val WATER_SOURCE = arrayOf(Items.BUCKET_OF_WATER_1929, Items.JUG_OF_WATER_1937, Items.BOWL_OF_WATER_1921)
 
         object BeginnerTasks {
             const val CASTLE_CLIMB_TO_HIGHEST_POINT = 0
@@ -47,7 +46,7 @@ class LumbridgeAchievementDiary : DiaryEventHookBase(DiaryType.LUMBRIDGE) {
             const val AL_KHARID_PASS_THROUGH_GATE = 4
             const val CHAMPIONS_GUILD_MINE_CLAY = 5
             const val BARBARIAN_VILLAGE_MAKE_SOFT_CLAY = 6
-            const val BARBARIAN_VILLAGE_FIRE_A_POT = 7
+            const val BARBARIAN_VILLAGE_FIRE_A_POT = 7 // Outside
             const val DRAYNOR_ENTER_SPOOKY_MANSION_COURTYARD = 8
             const val DRAYNOR_VISIT_MARKET = 9
             const val DRAYNOR_TALK_TO_TOWNCRIER_ABOUT_RULES = 10
@@ -136,7 +135,7 @@ class LumbridgeAchievementDiary : DiaryEventHookBase(DiaryType.LUMBRIDGE) {
         event: ResourceProducedEvent,
     ) {
         when (player.viewport.region!!.id) {
-            12439 ->
+            12439 -> {
                 if (event.itemId == Items.STEEL_LONGSWORD_1295) {
                     finishTask(
                         player,
@@ -144,8 +143,9 @@ class LumbridgeAchievementDiary : DiaryEventHookBase(DiaryType.LUMBRIDGE) {
                         MediumTasks.DRAYNOR_JAIL_SEWER_SMITH_STEEL_LONGSWORD,
                     )
                 }
+            }
 
-            12596 ->
+            12596 -> {
                 if (event.itemId == Items.CLAY_434) {
                     finishTask(
                         player,
@@ -153,7 +153,7 @@ class LumbridgeAchievementDiary : DiaryEventHookBase(DiaryType.LUMBRIDGE) {
                         BeginnerTasks.CHAMPIONS_GUILD_MINE_CLAY,
                     )
                 }
-
+            }
             12593, 12849 -> {
                 when (event.itemId) {
                     Items.RAW_SHRIMPS_317 -> {
@@ -163,7 +163,6 @@ class LumbridgeAchievementDiary : DiaryEventHookBase(DiaryType.LUMBRIDGE) {
                             BeginnerTasks.SWAMP_CATCH_SHRIMPS,
                         )
                     }
-
                     Items.COPPER_ORE_436 -> {
                         finishTask(
                             player,
@@ -171,7 +170,6 @@ class LumbridgeAchievementDiary : DiaryEventHookBase(DiaryType.LUMBRIDGE) {
                             BeginnerTasks.SWAMP_MINE_COPPER_ORE,
                         )
                     }
-
                     Items.COAL_453 -> {
                         finishTask(
                             player,
@@ -179,7 +177,6 @@ class LumbridgeAchievementDiary : DiaryEventHookBase(DiaryType.LUMBRIDGE) {
                             MediumTasks.SWAMP_MINE_COAL,
                         )
                     }
-
                     Items.LOGS_1511 -> {
                         if (event.source.id in DEAD_TREES) {
                             finishTask(
@@ -189,7 +186,6 @@ class LumbridgeAchievementDiary : DiaryEventHookBase(DiaryType.LUMBRIDGE) {
                             )
                         }
                     }
-
                     Items.COOKED_MEAT_2142 -> {
                         if (event.original == Items.RAW_RAT_MEAT_2134) {
                             finishTask(
@@ -201,8 +197,7 @@ class LumbridgeAchievementDiary : DiaryEventHookBase(DiaryType.LUMBRIDGE) {
                     }
                 }
             }
-
-            12850 ->
+            12850 -> {
                 when (event.itemId) {
                     Items.WILLOW_LOGS_1519 -> {
                         finishTask(
@@ -211,7 +206,6 @@ class LumbridgeAchievementDiary : DiaryEventHookBase(DiaryType.LUMBRIDGE) {
                             MediumTasks.RIVER_GATHER_WILLOW_LOGS,
                         )
                     }
-
                     Items.RAW_PIKE_349 -> {
                         finishTask(
                             player,
@@ -219,7 +213,6 @@ class LumbridgeAchievementDiary : DiaryEventHookBase(DiaryType.LUMBRIDGE) {
                             EasyTasks.RIVER_CATCH_PIKE,
                         )
                     }
-
                     Items.RAW_SALMON_331 -> {
                         finishTask(
                             player,
@@ -227,7 +220,6 @@ class LumbridgeAchievementDiary : DiaryEventHookBase(DiaryType.LUMBRIDGE) {
                             MediumTasks.RIVER_CATCH_SALMON,
                         )
                     }
-
                     Items.LOBSTER_379 -> {
                         if (event.original == Items.RAW_LOBSTER_377 && event.source.id == Scenery.COOKING_RANGE_114) {
                             finishTask(
@@ -237,7 +229,6 @@ class LumbridgeAchievementDiary : DiaryEventHookBase(DiaryType.LUMBRIDGE) {
                             )
                         }
                     }
-
                     Items.UNSTRUNG_SYMBOL_1714 -> {
                         if (event.original == Items.SILVER_BAR_2355 && event.source.id == Scenery.FURNACE_36956) {
                             finishTask(
@@ -247,7 +238,6 @@ class LumbridgeAchievementDiary : DiaryEventHookBase(DiaryType.LUMBRIDGE) {
                             )
                         }
                     }
-
                     Items.SILVER_BAR_2355 -> {
                         if (event.original == Items.SILVER_ORE_442 && event.source.id == Scenery.FURNACE_36956) {
                             finishTask(
@@ -257,7 +247,6 @@ class LumbridgeAchievementDiary : DiaryEventHookBase(DiaryType.LUMBRIDGE) {
                             )
                         }
                     }
-
                     Items.STEEL_BAR_2353 -> {
                         finishTask(
                             player,
@@ -266,8 +255,9 @@ class LumbridgeAchievementDiary : DiaryEventHookBase(DiaryType.LUMBRIDGE) {
                         )
                     }
                 }
+            }
 
-            13107 ->
+            13107 -> {
                 when (event.itemId) {
                     Items.IRON_ORE_440 -> {
                         finishTask(
@@ -276,7 +266,6 @@ class LumbridgeAchievementDiary : DiaryEventHookBase(DiaryType.LUMBRIDGE) {
                             EasyTasks.AL_KHARID_MINE_IRON,
                         )
                     }
-
                     Items.SILVER_ORE_442 -> {
                         finishTask(
                             player,
@@ -285,8 +274,9 @@ class LumbridgeAchievementDiary : DiaryEventHookBase(DiaryType.LUMBRIDGE) {
                         )
                     }
                 }
+            }
 
-            13105 ->
+            13105 -> {
                 when (event.itemId) {
                     Items.LEATHER_GLOVES_1059 -> {
                         finishTask(
@@ -295,7 +285,6 @@ class LumbridgeAchievementDiary : DiaryEventHookBase(DiaryType.LUMBRIDGE) {
                             EasyTasks.CRAFT_LEATHER_GLOVES,
                         )
                     }
-
                     Items.LEATHER_1741 -> {
                         finishTask(
                             player,
@@ -304,15 +293,13 @@ class LumbridgeAchievementDiary : DiaryEventHookBase(DiaryType.LUMBRIDGE) {
                         )
                     }
                 }
+            }
         }
     }
 
-    override fun onNpcKilled(
-        player: Player,
-        event: NPCKillEvent,
-    ) {
+    override fun onNpcKilled(player: Player, event: NPCKillEvent) {
         when (player.viewport.region!!.id) {
-            12593, 12849 ->
+            12593, 12849 -> {
                 if (event.npc.id == NPCs.GIANT_RAT_86) {
                     finishTask(
                         player,
@@ -320,8 +307,9 @@ class LumbridgeAchievementDiary : DiaryEventHookBase(DiaryType.LUMBRIDGE) {
                         EasyTasks.SWAMP_KILL_GIANT_RAT,
                     )
                 }
+            }
 
-            12438, 12439 ->
+            12438, 12439 -> {
                 if (event.npc.id in ZOMBIES) {
                     finishTask(
                         player,
@@ -329,15 +317,13 @@ class LumbridgeAchievementDiary : DiaryEventHookBase(DiaryType.LUMBRIDGE) {
                         EasyTasks.DRAYNOR_JAIL_SEWER_KILL_ZOMBIE,
                     )
                 }
+            }
         }
     }
 
-    override fun onTeleported(
-        player: Player,
-        event: TeleportEvent,
-    ) {
+    override fun onTeleported(player: Player, event: TeleportEvent) {
         when (event.source) {
-            is NPC ->
+            is NPC -> {
                 if (event.method == TeleportMethod.NPC && event.source.id == NPCs.SEDRIDOR_300) {
                     finishTask(
                         player,
@@ -345,15 +331,13 @@ class LumbridgeAchievementDiary : DiaryEventHookBase(DiaryType.LUMBRIDGE) {
                         EasyTasks.WIZARDS_TOWER_TELEPORT_ESSENCE_MINE,
                     )
                 }
+            }
         }
     }
 
-    override fun onFireLit(
-        player: Player,
-        event: LitFireEvent,
-    ) {
+    override fun onFireLit(player: Player, event: LitFireEvent) {
         when (player.viewport.region!!.id) {
-            12593, 12849 ->
+            12593, 12849 -> {
                 if (event.logId == Items.LOGS_1511) {
                     finishTask(
                         player,
@@ -361,8 +345,9 @@ class LumbridgeAchievementDiary : DiaryEventHookBase(DiaryType.LUMBRIDGE) {
                         EasyTasks.SWAMP_LIGHT_NORMAL_LOGS,
                     )
                 }
+            }
 
-            12850 ->
+            12850 -> {
                 if (event.logId == Items.WILLOW_LOGS_1519) {
                     if (inBorders(player, CASTLE_COURTYARD_AREA)) {
                         finishTask(
@@ -372,34 +357,18 @@ class LumbridgeAchievementDiary : DiaryEventHookBase(DiaryType.LUMBRIDGE) {
                         )
                     }
                 }
+            }
         }
     }
 
-    override fun onInteracted(
-        player: Player,
-        event: InteractionEvent,
-    ) {
+    override fun onInteracted(player: Player, event: InteractionEvent) {
         when (player.viewport.region!!.id) {
-            /*
-            12337 ->
-                if (event.target.id == Scenery.RAILING_37668 && event.option == "taunt-through") {
-                    finishTask(
-                        player,
-                        DiaryLevel.EASY,
-                        EasyTasks.WIZARDS_TOWER_TAUNT_DEMON,
-                    )
-                }
-
-            */
-
-            12849 ->
-                if (event.target.id == Scenery.DOOR_2406 &&
+            12849 -> if (event.target.id == Scenery.DOOR_2406 &&
                     event.option == "open" &&
                     !inEquipmentOrInventory(
                         player,
                         Items.DRAMEN_STAFF_772,
-                    ) ||
-                    !inEquipmentOrInventory(player, Items.LUNAR_STAFF_9084)
+                    ) || !inEquipmentOrInventory(player, Items.LUNAR_STAFF_9084)
                 ) {
                     finishTask(
                         player,
@@ -407,7 +376,6 @@ class LumbridgeAchievementDiary : DiaryEventHookBase(DiaryType.LUMBRIDGE) {
                         EasyTasks.SWAMP_SEARCH_SHED,
                     )
                 }
-
             12850 -> {
                 if (event.target.id == Scenery.FLAG_37335 && event.option == "raise") {
                     finishTask(
@@ -424,17 +392,7 @@ class LumbridgeAchievementDiary : DiaryEventHookBase(DiaryType.LUMBRIDGE) {
                         BeginnerTasks.CHURCH_PLAY_ORGAN,
                     )
                 }
-/*
-                if (event.target.id == Scenery.BELL_36976 && event.option == "ring") {
-                    finishTask(
-                        player,
-                        DiaryLevel.BEGINNER,
-                        BeginnerTasks.CHURCH_RING_THE_BELL,
-                    )
-                }
-*/
             }
-
             13104 -> {
                 if (event.target.id == Scenery.SHANTAY_PASS_35542 && event.option == "quick-pass") {
                     finishTask(
@@ -444,13 +402,12 @@ class LumbridgeAchievementDiary : DiaryEventHookBase(DiaryType.LUMBRIDGE) {
                     )
                 }
             }
-
             13899 -> {
                 if (event.target.id == Scenery.WATER_ALTAR_2480 && event.option == "craft-rune") {
                     if (inInventory(player, Items.PURE_ESSENCE_7937) || inInventory(player, Items.RUNE_ESSENCE_1436)) {
                         finishTask(
                             player,
-                            DiaryLevel.MEDIUM,
+                            DiaryLevel.EASY,
                             EasyTasks.SWAMP_WATER_ALTAR_CRAFT_RUNE,
                         )
                     }
@@ -459,10 +416,7 @@ class LumbridgeAchievementDiary : DiaryEventHookBase(DiaryType.LUMBRIDGE) {
         }
     }
 
-    override fun onAttributeRemoved(
-        player: Player,
-        event: AttributeRemoveEvent,
-    ) {
+    override fun onAttributeRemoved(player: Player, event: AttributeRemoveEvent) {
         when (event.attribute) {
             "gc:flying" -> {
                 finishTask(
@@ -474,10 +428,7 @@ class LumbridgeAchievementDiary : DiaryEventHookBase(DiaryType.LUMBRIDGE) {
         }
     }
 
-    override fun onDialogueOpened(
-        player: Player,
-        event: DialogueOpenEvent,
-    ) {
+    override fun onDialogueOpened(player: Player, event: DialogueOpenEvent) {
         if (event.dialogue is DukeHoracioDialogue) {
             finishTask(
                 player,
@@ -495,10 +446,7 @@ class LumbridgeAchievementDiary : DiaryEventHookBase(DiaryType.LUMBRIDGE) {
         }
     }
 
-    override fun onDialogueOptionSelected(
-        player: Player,
-        event: DialogueOptionSelectionEvent,
-    ) {
+    override fun onDialogueOptionSelected(player: Player, event: DialogueOptionSelectionEvent) {
         when (event.dialogue) {
             is DukeDragonSlayerDialogue -> {
                 val dragonSlayerStage = getQuestStage(player, Quests.DRAGON_SLAYER)
@@ -510,7 +458,6 @@ class LumbridgeAchievementDiary : DiaryEventHookBase(DiaryType.LUMBRIDGE) {
                     )
                 }
             }
-
             is LumbridgeGuideDialogue -> {
                 if (event.currentStage == 40) {
                     finishTask(
@@ -520,7 +467,6 @@ class LumbridgeAchievementDiary : DiaryEventHookBase(DiaryType.LUMBRIDGE) {
                     )
                 }
             }
-
             is DoomsayerDialogue -> {
                 if (event.currentStage >= 13) {
                     finishTask(
@@ -530,7 +476,6 @@ class LumbridgeAchievementDiary : DiaryEventHookBase(DiaryType.LUMBRIDGE) {
                     )
                 }
             }
-
             is WiseOldManDialogue -> {
                 if (event.currentStage == 102 || event.currentStage == 100) {
                     finishTask(
@@ -540,7 +485,6 @@ class LumbridgeAchievementDiary : DiaryEventHookBase(DiaryType.LUMBRIDGE) {
                     )
                 }
             }
-
             is FatherUhrneyDialogue -> {
                 if (event.currentStage == 520) {
                     finishTask(
@@ -550,7 +494,6 @@ class LumbridgeAchievementDiary : DiaryEventHookBase(DiaryType.LUMBRIDGE) {
                     )
                 }
             }
-
             is TownCrierDialogue -> {
                 if (inBorders(player, DRAYNOR_MARKET_AREA) && event.currentStage == 71) {
                     finishTask(
@@ -563,10 +506,7 @@ class LumbridgeAchievementDiary : DiaryEventHookBase(DiaryType.LUMBRIDGE) {
         }
     }
 
-    override fun onPickedUp(
-        player: Player,
-        event: PickUpEvent,
-    ) {
+    override fun onPickedUp(player: Player, event: PickUpEvent) {
         when (player.viewport.region!!.id) {
             12850, 12851 -> {
                 if (event.itemId == Items.COWHIDE_1739) {
@@ -582,10 +522,7 @@ class LumbridgeAchievementDiary : DiaryEventHookBase(DiaryType.LUMBRIDGE) {
         }
     }
 
-    override fun onInterfaceOpened(
-        player: Player,
-        event: InterfaceOpenEvent,
-    ) {
+    override fun onInterfaceOpened(player: Player, event: InterfaceOpenEvent) {
         when (player.viewport.region!!.id) {
             12338 ->
                 if (event.component.id == Components.BANK_V2_MAIN_762) {
@@ -595,7 +532,6 @@ class LumbridgeAchievementDiary : DiaryEventHookBase(DiaryType.LUMBRIDGE) {
                         EasyTasks.DRAYNOR_ACCESS_BANK,
                     )
                 }
-
             12850 -> {
                 if (event.component.id == Components.SHOP_TEMPLATE_620) {
                     finishTask(
@@ -616,10 +552,7 @@ class LumbridgeAchievementDiary : DiaryEventHookBase(DiaryType.LUMBRIDGE) {
         }
     }
 
-    override fun onSpellCast(
-        player: Player,
-        event: SpellCastEvent,
-    ) {
+    override fun onSpellCast(player: Player, event: SpellCastEvent) {
         when (event.spellId) {
             ModernSpells.LUMBRIDGE_TELEPORT -> {
                 if (getStatLevel(player, Skills.MAGIC) >= 31 &&
@@ -638,12 +571,9 @@ class LumbridgeAchievementDiary : DiaryEventHookBase(DiaryType.LUMBRIDGE) {
         }
     }
 
-    override fun onJobAssigned(
-        player: Player,
-        event: JobAssignmentEvent,
-    ) {
+    override fun onJobAssigned(player: Player, event: JobAssignmentEvent) {
         when (player.viewport.region!!.id) {
-            12849 ->
+            12849 -> {
                 if (event.employerNpc.id == NPCs.FISHING_TUTOR_4901) {
                     finishTask(
                         player,
@@ -651,15 +581,13 @@ class LumbridgeAchievementDiary : DiaryEventHookBase(DiaryType.LUMBRIDGE) {
                         BeginnerTasks.SWAMP_FISHING_TUTOR_GET_A_JOB,
                     )
                 }
+            }
         }
     }
 
-    override fun onUsedWith(
-        player: Player,
-        event: UseWithEvent,
-    ) {
+    override fun onUsedWith(player: Player, event: UseWithEvent) {
         when (player.viewport.region!!.id) {
-            12595 ->
+            12595 -> {
                 if (event.used == Items.EMPTY_POT_1931 && event.with == Scenery.FLOUR_BIN_36878) {
                     finishTask(
                         player,
@@ -667,8 +595,9 @@ class LumbridgeAchievementDiary : DiaryEventHookBase(DiaryType.LUMBRIDGE) {
                         BeginnerTasks.WINDMILL_MAKE_FLOUR,
                     )
                 }
+            }
 
-            12341 ->
+            12341 -> {
                 if (event.used in WATER_SOURCE && event.with == Items.CLAY_434) {
                     finishTask(
                         player,
@@ -676,6 +605,7 @@ class LumbridgeAchievementDiary : DiaryEventHookBase(DiaryType.LUMBRIDGE) {
                         BeginnerTasks.BARBARIAN_VILLAGE_MAKE_SOFT_CLAY,
                     )
                 }
+            }
         }
     }
 }

@@ -1,5 +1,6 @@
 package content.global.skill.agility.shortcuts
 
+import content.region.misthalin.varrock.diary.VarrockAchievementDiary
 import core.api.*
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
@@ -105,7 +106,7 @@ class UnderwallTunnelShortcut : InteractionListener {
                 forceMove(player, node.location, destination, 30, 120, direction, ANIMATIONS[1])
                 {
                     player.animate(Animation(ANIMATIONS[2]))
-                    finishDiaryTask(player, DiaryType.VARROCK, 1, 8)
+                    finishDiaryTask(player, DiaryType.VARROCK, 1, VarrockAchievementDiary.Companion.MediumTasks.USE_GE_UNDER_WALL_SHORTCUT)
                 }
 
                 return@queueScript stopExecuting(player)

@@ -1,6 +1,7 @@
 package content.region.misthalin.varrock.guild.cooks_guild.dialogue
 
 import content.data.GameAttributes
+import content.region.misthalin.varrock.diary.VarrockAchievementDiary
 import core.api.*
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim
@@ -61,9 +62,7 @@ class RomilyWeaklaxDialogue(player: Player? = null) : Dialogue(player) {
                 3 -> player("I'm good thanks.").also { stage = END_DIALOGUE }
             }
 
-            2 -> options(
-                "I'd like to buy some pies.", "I've got those pies you wanted.", "I'm good thanks."
-            ).also { stage++ }
+            2 -> options("I'd like to buy some pies.", "I've got those pies you wanted.", "I'm good thanks.").also { stage++ }
 
             3 -> when (buttonId) {
                 1 -> player("I'd like to buy some pies.").also { stage = 10 }
@@ -101,6 +100,7 @@ class RomilyWeaklaxDialogue(player: Player? = null) : Dialogue(player) {
                     else -> {
                         npc("Thank you! If you could bring me the other $deficit pies, that'd be great!")
                         setAttribute(player, GameAttributes.DIARY_VARROCK_ROMILY_WEAKLAX_PIE_AMOUNT, deficit)
+                        finishDiaryTask(player, DiaryType.VARROCK,2, VarrockAchievementDiary.Companion.HardTasks.GIVE_WEAKLAX_A_PIE)
                     }
                 }
                 player.inventory.remove(Item(pieId, piesInInventory))

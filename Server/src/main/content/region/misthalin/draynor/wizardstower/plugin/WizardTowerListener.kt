@@ -1,6 +1,7 @@
 package content.region.misthalin.draynor.wizardstower.plugin
 
 import content.global.travel.EssenceTeleport
+import content.region.misthalin.lumbridge.diary.LumbridgeAchievementDiary
 import core.api.*
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
@@ -9,7 +10,6 @@ import core.game.node.entity.impl.Projectile
 import core.game.node.entity.npc.NPC
 import core.game.node.entity.player.link.diary.DiaryType
 import core.game.node.entity.player.link.emote.Emotes
-import core.game.system.task.Pulse
 import core.game.world.map.Location
 import core.game.world.update.flag.context.Animation
 import core.game.world.update.flag.context.Graphics
@@ -64,7 +64,7 @@ class WizardTowerListener : InteractionListener {
             sendChat(demon, "Graaaagh!")
             sendMessage(player, "You taunt the demon, making it growl.")
             face(demon, player, 3)
-            finishDiaryTask(player, DiaryType.LUMBRIDGE, 1, 13)
+            finishDiaryTask(player, DiaryType.LUMBRIDGE, 1, LumbridgeAchievementDiary.Companion.EasyTasks.WIZARDS_TOWER_TAUNT_DEMON)
             emote(player, Emotes.RASPBERRY)
             return@on true
         }

@@ -85,7 +85,7 @@ object FlightUtils {
             removeAttribute(player, GameAttributes.BALLOON_ORIGIN)
             sendDialogue(player, "You arrive safely ${destination.destName}.")
             when (destination){
-                BalloonDefinition.VARROCK -> finishDiaryTask(player, DiaryType.VARROCK, 2, 17)
+                BalloonDefinition.VARROCK -> finishDiaryTask(player, DiaryType.VARROCK, 1, 17)
                 BalloonDefinition.CASTLE_WARS -> finishDiaryTask(player, DiaryType.ARDOUGNE, 1, 7)
                 else -> {}
             }

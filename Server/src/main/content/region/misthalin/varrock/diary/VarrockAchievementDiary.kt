@@ -129,7 +129,7 @@ class VarrockAchievementDiary : DiaryEventHookBase(DiaryType.VARROCK) {
 
     override fun onResourceProduced(player: Player, event: ResourceProducedEvent) {
         when (player.viewport.region!!.id) {
-            12341 ->
+            12341 -> {
                 when (event.itemId) {
                     Items.RAW_TROUT_335 ->
                         finishTask(
@@ -138,8 +138,9 @@ class VarrockAchievementDiary : DiaryEventHookBase(DiaryType.VARROCK) {
                             EasyTasks.BARBARIAN_VILLAGE_CATCH_TROUT,
                         )
                 }
+            }
 
-            12853 ->
+            12853 -> {
                 when (event.itemId) {
                     Items.ADAMANT_MED_HELM_1145 ->
                         finishTask(
@@ -148,8 +149,9 @@ class VarrockAchievementDiary : DiaryEventHookBase(DiaryType.VARROCK) {
                             HardTasks.SMITH_ADAMANT_MED_HELM_SOUTHEAST,
                         )
                 }
+            }
 
-            13108 ->
+            13108 -> {
                 when (event.itemId) {
                     Items.IRON_ORE_440 ->
                         finishTask(
@@ -158,8 +160,9 @@ class VarrockAchievementDiary : DiaryEventHookBase(DiaryType.VARROCK) {
                             EasyTasks.MINE_IRON_SOUTHEAST,
                         )
                 }
+            }
 
-            13110 ->
+            13110 -> {
                 when (event.itemId) {
                     Items.LOGS_1511 ->
                         if (event.source.id == Scenery.DYING_TREE_24168) {
@@ -170,8 +173,9 @@ class VarrockAchievementDiary : DiaryEventHookBase(DiaryType.VARROCK) {
                             )
                         }
                 }
+            }
 
-            13366 ->
+            13366 -> {
                 when (event.itemId) {
                     Items.LIMESTONE_3211 ->
                         finishTask(
@@ -180,8 +184,9 @@ class VarrockAchievementDiary : DiaryEventHookBase(DiaryType.VARROCK) {
                             EasyTasks.PATERDOMUS_MINE_LIMESTONE,
                         )
                 }
+            }
 
-            10571 ->
+            10571 -> {
                 when (event.itemId) {
                     Items.EARTH_TIARA_5535 ->
                         finishTask(
@@ -190,12 +195,13 @@ class VarrockAchievementDiary : DiaryEventHookBase(DiaryType.VARROCK) {
                             MediumTasks.CRAFT_EARTH_TIARA,
                         )
                 }
+            }
         }
     }
 
     override fun onTeleported(player: Player, event: TeleportEvent) {
         when (event.source) {
-            is NPC ->
+            is NPC -> {
                 if (event.method == TeleportMethod.NPC && event.source.id == NPCs.AUBURY_553) {
                     finishTask(
                         player,
@@ -203,8 +209,9 @@ class VarrockAchievementDiary : DiaryEventHookBase(DiaryType.VARROCK) {
                         EasyTasks.AUBURY_TELEPORT_ESSENCE_MINE,
                     )
                 }
+            }
 
-            is Item ->
+            is Item -> {
                 if (event.source.id in 11190..11194) {
                     finishTask(
                         player,
@@ -212,12 +219,13 @@ class VarrockAchievementDiary : DiaryEventHookBase(DiaryType.VARROCK) {
                         MediumTasks.DIGSITE_PENDANT_TELEPORT,
                     )
                 }
+            }
         }
     }
 
     override fun onInteracted(player: Player, event: InteractionEvent) {
         when (player.viewport.region!!.id) {
-            12342 ->
+            12342 -> {
                 if (event.target.id == Scenery.TRAPDOOR_26934) {
                     finishTask(
                         player,
@@ -225,8 +233,9 @@ class VarrockAchievementDiary : DiaryEventHookBase(DiaryType.VARROCK) {
                         EasyTasks.EDGEVILLE_ENTER_DUNGEON_SOUTH,
                     )
                 }
+            }
 
-            12698 ->
+            12698 -> {
                 if (event.target.id == Scenery.PIPE_29370 && hasLevelStat(player, Skills.AGILITY, 51)) {
                     finishTask(
                         player,
@@ -234,6 +243,7 @@ class VarrockAchievementDiary : DiaryEventHookBase(DiaryType.VARROCK) {
                         HardTasks.USE_MOSS_GIANT_PIPE_SHORTCUT,
                     )
                 }
+            }
         }
 
         if (isQuestComplete(player, Quests.DRAGON_SLAYER)) {
@@ -319,7 +329,7 @@ class VarrockAchievementDiary : DiaryEventHookBase(DiaryType.VARROCK) {
 
     override fun onUsedWith(player: Player, event: UseWithEvent) {
         when (event.used) {
-            in Bones.array ->
+            in Bones.array -> {
                 if (event.with in STRAY_DOGS) {
                     finishTask(
                         player,
@@ -327,6 +337,7 @@ class VarrockAchievementDiary : DiaryEventHookBase(DiaryType.VARROCK) {
                         EasyTasks.GIVE_STRAY_DOG_A_BONE,
                     )
                 }
+            }
         }
         when {
             inBorders(player, AIR_OBELISK_AREA) -> {
@@ -345,9 +356,7 @@ class VarrockAchievementDiary : DiaryEventHookBase(DiaryType.VARROCK) {
 
     override fun onInterfaceOpened(player: Player, event: InterfaceOpenEvent) {
         when (event.component.id) {
-            Components.THESSALIA_CLOTHES_MALE_591,
-            Components.THESSALIA_CLOTHES_FEMALE_594,
-            ->
+            Components.THESSALIA_CLOTHES_MALE_591, Components.THESSALIA_CLOTHES_FEMALE_594 -> {
                 if (player.viewport.region!!.id == 12853) {
                     finishTask(
                         player,
@@ -355,6 +364,7 @@ class VarrockAchievementDiary : DiaryEventHookBase(DiaryType.VARROCK) {
                         EasyTasks.THESSALIA_BROWSE_CLOTHES,
                     )
                 }
+            }
         }
     }
 

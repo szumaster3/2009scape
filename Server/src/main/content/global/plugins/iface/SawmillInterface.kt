@@ -1,6 +1,7 @@
 package content.global.plugins.iface
 
 import content.global.skill.construction.items.PlankType
+import content.region.misthalin.varrock.diary.VarrockAchievementDiary
 import core.api.*
 import core.game.component.Component
 import core.game.component.ComponentDefinition
@@ -92,10 +93,10 @@ class SawmillInterface : ComponentPlugin() {
 
         when {
             plank == PlankType.WOOD ->
-                finishDiaryTask(player, DiaryType.VARROCK, 0, 3)
+                finishDiaryTask(player, DiaryType.VARROCK, 0, VarrockAchievementDiary.Companion.EasyTasks.MAKE_PLANK_SAWMILL)
 
             plank == PlankType.MAHOGANY && amount >= 20 ->
-                finishDiaryTask(player, DiaryType.VARROCK, 1, 15)
+                finishDiaryTask(player, DiaryType.VARROCK, 1, VarrockAchievementDiary.Companion.MediumTasks.SAWMILL_BUY_20_MAHOGANY_PLANKS)
         }
     }
 }

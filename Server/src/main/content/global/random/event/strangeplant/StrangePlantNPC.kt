@@ -69,7 +69,6 @@ class StrangePlantNPC(
                             animate(this, strangePlantTransformAnim)
                             return@queueScript delayScript(this, strangePlantTransformAnim.duration)
                         }
-
                         1 -> {
                             this.transform(NPCs.STRANGE_PLANT_408)
                             this.behavior = StrangePlantBehavior()
@@ -77,17 +76,12 @@ class StrangePlantNPC(
                             transformed = true
                             return@queueScript stopExecuting(this)
                         }
-
                         else -> return@queueScript stopExecuting(this)
                     }
                 }
             }
-            if (transformed && !this.inCombat()) {
+            if (transformed && !this.inCombat())
                 this.attack(player)
-            }
-        }
-        if (!withinDistance(player, this.location, 8)) {
-            AntiMacro.terminateEventNpc(player)
         }
     }
 

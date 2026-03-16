@@ -54,9 +54,6 @@ class SecurityGuardNPC(
     }
 
     override fun tick() {
-        if (!withinDistance(player, this.location, 8)) {
-            this.terminate()
-        }
         if (ticksLeft <= 10) {
             ticksLeft = 10
             if (timeLeft <= getWorldTicks()) {

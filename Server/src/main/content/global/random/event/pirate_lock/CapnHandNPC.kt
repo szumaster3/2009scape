@@ -33,22 +33,4 @@ class CapnHandNPC(
     override fun finalizeDeath(killer: Entity?) {
         super.finalizeDeath(killer)
     }
-
-    override fun tick() {
-        if (!player.location.withinDistance(this.location, 8)) {
-            this.terminate()
-        }
-        if (ticksLeft <= 10) {
-            ticksLeft = 10
-            if (timeLeft <= getWorldTicks()) {
-                AntiMacro.terminateEventNpc(player)
-            }
-        }
-        super.tick()
-        if (!player.viewport.currentPlane!!.npcs
-                .contains(this)
-        ) {
-            this.clear()
-        }
-    }
 }

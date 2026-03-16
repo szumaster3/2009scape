@@ -88,7 +88,7 @@ abstract class RandomEventNPC(
         if (!pulseManager.hasPulseRunning() && !finalized) {
             follow()
         }
-        if (!player.isActive || !withinDistance(player, location, 10)) {
+        if (!player.isActive || !withinDistance(player, location, 8)) {
             terminate()
         }
         if (ticksLeft <= 0 && initialized) {

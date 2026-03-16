@@ -1,6 +1,6 @@
 package content.global.random
 
-import content.global.random.event.certers.CerterNPC
+import content.global.random.event.certers.CertersBrothersNPC
 import content.global.random.event.drill_demon.SergeantDamienNPC
 import content.global.random.event.drunkdwarf.DrunkenDwarfNPC
 import content.global.random.event.evil_bob.EvilBobNPC
@@ -43,7 +43,7 @@ enum class RandomEvents(
     SANDWICH_LADY(npc = SandwichLadyNPC()),
     GENIE(npc = GenieNPC()),
     CERTER(
-        CerterNPC(),
+        CertersBrothersNPC(),
         loot =
             WeightBasedTable.create(
                 WeightedItem(Items.UNCUT_SAPPHIRE_1623, 1, 1, 3.4),

@@ -11,14 +11,14 @@ import core.tools.RandomFunction
 import shared.consts.NPCs
 import shared.consts.Sounds
 
-val certersNPC = listOf(NPCs.NILES_2536, NPCs.MILES_2537, NPCs.GILES_2538).random()
+private val certersNPC = listOf(NPCs.NILES_2536, NPCs.MILES_2537, NPCs.GILES_2538).random()
 // If in region 11924 = npc + 820
 
 /**
  * Represents the Certers event.
  * @author Ceikry
  */
-class CerterNPC(override var loot: WeightBasedTable? = null) : RandomEventNPC(certersNPC) {
+class CertersBrothersNPC(override var loot: WeightBasedTable? = null) : RandomEventNPC(certersNPC) {
 
     private lateinit var pName: String
     private lateinit var phrases: Array<String>

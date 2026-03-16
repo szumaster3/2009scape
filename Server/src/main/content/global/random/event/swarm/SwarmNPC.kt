@@ -26,17 +26,8 @@ class SwarmNPC(
 
     override fun tick() {
         super.tick()
-        if (!this.inCombat()) {
+        if (!this.inCombat())
             this.attack(player)
-        }
-        if (!withinDistance(player, this.location, 8)) {
-            this.terminate()
-        }
-        if (!player.viewport.currentPlane!!.npcs
-                .contains(this)
-        ) {
-            this.clear()
-        }
     }
 
     override fun talkTo(npc: NPC) {

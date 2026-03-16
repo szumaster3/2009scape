@@ -27,7 +27,7 @@ class QuizMasterNPC(
     override fun tick() {
         super.tick()
         player.pulseManager.run(
-            object : Pulse(2) {
+            object : Pulse(6) {
                 override fun pulse(): Boolean {
                     player.face(findLocalNPC(player, NPCs.QUIZ_MASTER_2477))
                     player.animate(Animation.create(QuizMaster.SIT_ANIMATION))

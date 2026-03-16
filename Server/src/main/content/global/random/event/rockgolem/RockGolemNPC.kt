@@ -31,15 +31,9 @@ class RockGolemNPC(
     }
 
     override fun tick() {
-        if (!player.location.withinDistance(this.location, 8)) {
-            this.terminate()
-        }
         super.tick()
-        if (!player.viewport.currentPlane!!.npcs
-                .contains(this)
-        ) {
-            this.clear()
-        }
+        if (!this.inCombat())
+            this.attack(player)
     }
 
     override fun talkTo(npc: NPC) {

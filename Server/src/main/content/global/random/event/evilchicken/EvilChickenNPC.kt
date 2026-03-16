@@ -12,15 +12,14 @@ import shared.consts.Items
 import shared.consts.NPCs
 import java.lang.Integer.max
 
-val ids = NPCs.EVIL_CHICKEN_2463..NPCs.EVIL_CHICKEN_2468
+private val ids = NPCs.EVIL_CHICKEN_2463..NPCs.EVIL_CHICKEN_2468
 
 /**
  * Represents The Evil Chicken NPC.
  * @author Emperor.
  */
-class EvilChickenNPC(
-    override var loot: WeightBasedTable? = null,
-) : RandomEventNPC(NPCs.EVIL_CHICKEN_2463) {
+class EvilChickenNPC(override var loot: WeightBasedTable? = null) : RandomEventNPC(NPCs.EVIL_CHICKEN_2463) {
+
     val phrases =
         arrayOf(
             "Bwuk",
@@ -40,10 +39,7 @@ class EvilChickenNPC(
         this.transform(id)
         this.attack(player)
         sendChat(
-            phrases.random().replace(
-                "@name",
-                player.name.replaceFirstChar { if (it.isLowerCase()) it.titlecase() else it.toString() },
-            ),
+            phrases.random().replace("@name", player.name.replaceFirstChar { if (it.isLowerCase()) it.titlecase() else it.toString() }),
         )
         this.isRespawn = false
     }
@@ -66,9 +62,7 @@ class EvilChickenNPC(
             )
         }
         super.tick()
-        if (!player.viewport.currentPlane!!.npcs
-                .contains(this)
-        ) {
+        if (!player.viewport.currentPlane!!.npcs.contains(this)) {
             this.clear()
         }
     }

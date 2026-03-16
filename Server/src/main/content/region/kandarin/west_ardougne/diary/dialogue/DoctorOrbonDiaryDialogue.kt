@@ -11,6 +11,7 @@ import core.game.node.entity.player.link.diary.Diary
 import core.game.node.entity.player.link.diary.DiaryType
 import shared.consts.Items
 import shared.consts.NPCs
+import shared.consts.Quests
 
 /**
  * Represents the Ardougne diary dialogue with Doctor Orbon.
@@ -70,6 +71,11 @@ class DoctorOrbonDiaryDialogue : DialogueFile() {
                 stage = 0
             }
             18 -> {
+                if(!isQuestComplete(player!!, Quests.WATCHTOWER)) {
+                    end()
+                    sendMessage(player!!, "You need to complete The Watchtower quest to do this.")
+                    return
+                }
                 setTitle(player!!, 2)
                 val altTele = getAttribute(player!!, GameAttributes.ATTRIBUTE_WATCHTOWER_ALT_TELE, false)
                 sendOptions(player!!, "Toggle Watchtower Teleport to ${if (altTele) "Watchtower" else "centre of Yanille"}?", "Yes", "No")

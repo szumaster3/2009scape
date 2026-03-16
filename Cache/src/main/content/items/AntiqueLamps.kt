@@ -1,6 +1,6 @@
 package content.items
 
-import com.alex.tools.ItemPacker
+import backend.alex.tools.ItemPacker
 
 object AntiqueLamps {
 

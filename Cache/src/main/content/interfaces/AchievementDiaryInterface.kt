@@ -1,7 +1,7 @@
 package content.interfaces
 
-import com.alex.loaders.interfaces.ComponentType
-import com.alex.tools.IfacePacker
+import backend.alex.loaders.interfaces.ComponentType
+import backend.alex.tools.IfacePacker
 import consts.Color
 import consts.InterfaceFont
 import shared.consts.Components

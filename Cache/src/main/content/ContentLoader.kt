@@ -1,10 +1,10 @@
 package content
 
-import com.alex.Cache
-import com.alex.loaders.BasDefinition
-import com.alex.loaders.LocDefinition
-import com.alex.loaders.items.ItemDefinition
-import com.alex.tools.ModelPacker
+import backend.alex.Cache
+import backend.alex.loaders.BasDefinition
+import backend.alex.loaders.LocDefinition
+import backend.alex.loaders.items.ItemDefinition
+import backend.alex.tools.ModelPacker
 import content.items.AntiqueLamps
 import content.items.ArdougneCloaks
 

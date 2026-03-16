@@ -1,9 +1,9 @@
 package content.interfaces
 
-import com.alex.loaders.interfaces.ComponentDefinition
-import com.alex.loaders.interfaces.ComponentType
-import com.alex.loaders.interfaces.IComponentSettings
-import com.alex.tools.IfacePacker
+import backend.alex.loaders.interfaces.ComponentDefinition
+import backend.alex.loaders.interfaces.ComponentType
+import backend.alex.loaders.interfaces.IComponentSettings
+import backend.alex.tools.IfacePacker
 import consts.OptionMask
 import consts.Sprite
 import shared.consts.Items

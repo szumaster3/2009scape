@@ -22,21 +22,28 @@ class EnchantedKeyPlugin : InteractionListener {
          */
 
         on(ENCHANTED_KEY, IntType.ITEM, "Feel", "Rub") { player, _ ->
+
             if (!inBorders(player, RUB_BORDERS)) {
                 sendMessage(player, "The key's not hot enough for this to be correct spot.")
+                return@on false
             }
-            if (!player.inventory.isEmpty && !player.equipment.isEmpty) {
+
+            if (!player.inventory.isEmpty || !player.equipment.isEmpty) {
                 sendDialogueLines(
                     player,
                     "You will need your Worn Equipment And Inventory to be empty",
                     "before you can use travel option (with the exception of the",
                     "enchanted key)."
                 )
+                return@on true
             }
+
             sendChat(player, "Predem abducto!")
+
             if (hasRequirement(player, Quests.MEETING_HISTORY)) {
                 finishDiaryTask(player, DiaryType.ARDOUGNE, 1, 9)
             }
+
             return@on true
         }
     }

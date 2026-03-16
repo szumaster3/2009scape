@@ -15522,5 +15522,9 @@
   {
     "examine": "Allows access to the level below.",
     "ids": "28742"
+  },
+  {
+    "examine": "What kind of sick person keeps a skull on the wall?",
+    "ids": "20061"
   }
 ]

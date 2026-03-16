@@ -297,7 +297,7 @@ class Watchtower : Quest(Quests.WATCHTOWER, 131, 130, 4, Vars.VARP_QUEST_WATCHTO
         rewardXP(player, Skills.MAGIC, 15250.0)
         addItemOrDrop(player, Items.COINS_995, 5000)
         addItem(player, Items.SPELL_SCROLL_2396, 1)
-        removeAttributes(player, GameAttributes.WATCHTOWER_ROCK_CAKE)
+        removeAttributes(player, GameAttributes.WATCHTOWER_ROCK_CAKE, GameAttributes.WATCHTOWER_TOBAN_GOLD, GameAttributes.WATCHTOWER_TOBAN_KEY, GameAttributes.WATCHTOWER_GORAD_TOOTH, GameAttributes.WATCHTOWER_DRAGON_BONES, GameAttributes.WATCHTOWER_RELIC_3, GameAttributes.WATCHTOWER_RELIC_2, GameAttributes.WATCHTOWER_RELIC_1)
     }
 
     override fun newInstance(`object`: Any?): Quest = this

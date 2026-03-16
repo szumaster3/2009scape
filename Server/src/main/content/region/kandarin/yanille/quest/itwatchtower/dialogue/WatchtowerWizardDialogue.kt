@@ -295,18 +295,13 @@ class WatchtowerWizardDialogue(player: Player? = null) : Dialogue(player) {
             }
             602 -> npc(FaceAnim.HAPPY, "Well, if you ever want to make friends with an ogre,", "this is the item to have!").also {
                 end()
-                sendItemDialogue(player, Items.OGRE_RELIC_2372, "The wizard gives you a complete statue.")
-                setQuestStage(player, Quests.WATCHTOWER, 10)
-                addItemOrDrop(player, Items.OGRE_RELIC_2372, 1)
-                removeAttributes(player,
-                    GameAttributes.WATCHTOWER_TOBAN_GOLD,
-                    GameAttributes.WATCHTOWER_TOBAN_KEY,
-                    GameAttributes.WATCHTOWER_GORAD_TOOTH,
-                    GameAttributes.WATCHTOWER_DRAGON_BONES,
-                    GameAttributes.WATCHTOWER_RELIC_3,
-                    GameAttributes.WATCHTOWER_RELIC_2,
-                    GameAttributes.WATCHTOWER_RELIC_1,
-                )
+                val relics = intArrayOf(Items.RELIC_PART_1_2373, Items.RELIC_PART_2_2374, Items.RELIC_PART_3_2375)
+                if(allInInventory(player, *relics)){
+                    removeAll(player, relics)
+                    sendItemDialogue(player, Items.OGRE_RELIC_2372, "The wizard gives you a complete statue.")
+                    setQuestStage(player, Quests.WATCHTOWER, 10)
+                    addItemOrDrop(player, Items.OGRE_RELIC_2372, 1)
+                }
             }
 
             700 -> npcl(FaceAnim.HAPPY, "Ah, it's part of an old ogre statue. I'll see if I can fix it up for you. It might come in handy. There may be more parts to find... I'll keep this for later.").also { stage = END_DIALOGUE }

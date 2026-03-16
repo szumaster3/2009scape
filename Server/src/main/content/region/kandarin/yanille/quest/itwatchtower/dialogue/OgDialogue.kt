@@ -70,8 +70,8 @@ class OgDialogue(player: Player? = null) : Dialogue(player) {
             2 -> npc(FaceAnim.OLD_DEFAULT, "You got no business there!").also { stage++ }
             3 -> npc(FaceAnim.OLD_DEFAULT, "Just a minute... Maybe if you did somet'ing for me, I", "might help you get in.").also { stage++ }
             4 -> player("What can I do to help an ogre?").also { stage++ }
-            5 -> npc(FaceAnim.OLD_DEFAULT, "South-east of here der is more ogres - the name of the", "chieftain is Toban. He stole gold from me and I want it", "back!").also { stage++ }
-            6 -> npc(FaceAnim.OLD_DEFAULT, "Here is a key to the chest it's in. If you bring it here,", "I may reward you...").also {
+            5 -> npc(FaceAnim.OLD_SAD, "South-east of here der is more ogres - the name of the", "chieftain is Toban. He stole gold from me and I want it", "back!").also { stage++ }
+            6 -> npc(FaceAnim.OLD_SAD, "Here is a key to the chest it's in. If you bring it here,", "I may reward you...").also {
                 end()
                 addItemOrDrop(player, Items.TOBANS_KEY_2378, 1)
                 setAttribute(player, GameAttributes.WATCHTOWER_TOBAN_GOLD, true)

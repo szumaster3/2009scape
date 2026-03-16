@@ -25,7 +25,8 @@ class DoctorOrbonDialogue(player: Player? = null) : Dialogue(player) {
         if (getQuestStage(player, Quests.SHEEP_HERDER) == 10) {
             player("Hello doctor. I need to acquire some protective clothing", "so that I can dispose of some escaped sheep infected", "with the plague.")
         } else {
-            player("I have a question about my Achievement Diary.").also { stage = 7 }
+            end()
+            openDialogue(player, DoctorOrbonDiaryDialogue())
         }
         return true
     }
@@ -54,10 +55,6 @@ class DoctorOrbonDialogue(player: Player? = null) : Dialogue(player) {
 
             5 -> npc("These should protect you from infection.").also { stage = END_DIALOGUE }
             6 -> npc("That's unfortunate.").also { stage = END_DIALOGUE }
-            7 -> {
-                end()
-                openDialogue(player, DoctorOrbonDiaryDialogue())
-            }
         }
         return true
     }

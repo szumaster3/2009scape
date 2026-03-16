@@ -4,10 +4,11 @@ import content.data.GameAttributes
 import core.api.*
 import core.game.dialogue.DialogueFile
 import core.game.dialogue.FaceAnim
+import core.game.dialogue.IfTopic
+import core.game.dialogue.Topic
 import core.game.node.entity.npc.NPC
 import core.game.node.entity.player.link.diary.Diary
 import core.game.node.entity.player.link.diary.DiaryType
-import core.tools.END_DIALOGUE
 import shared.consts.Items
 import shared.consts.NPCs
 
@@ -19,34 +20,19 @@ class DoctorOrbonDiaryDialogue : DialogueFile() {
     override fun handle(componentID: Int, buttonID: Int) {
         npc = NPC(NPCs.DOCTOR_ORBON_290)
         when (stage) {
-            0 -> {
-                when {
-                    Diary.canClaimLevelRewards(player!!, DiaryType.ARDOUGNE, 1) -> {
-                        player("I've completed all of the Easy tasks in my Ardougne set.")
-                        stage = 8
-                    }
+            0 -> showTopics(
+                IfTopic("I've completed all of the Easy tasks in my Ardougne set.", 8, Diary.canClaimLevelRewards(player!!, DiaryType.ARDOUGNE, 0)),
+                IfTopic("You again? How did you get on with the cloak?", 15, Diary.canReplaceReward(player!!, DiaryType.ARDOUGNE, 0)),
+                IfTopic("I'd like to change my Watchtower Teleport point.", 18, isDiaryComplete(player!!, DiaryType.ARDOUGNE, 2)),
+                IfTopic("I have question about my Achievement Diary", 20,player!!.achievementDiaryManager.getDiary(DiaryType.ARDOUGNE)!!.isComplete(0, true) && !Diary.hasClaimedLevelRewards(player!!, DiaryType.ARDOUGNE, 0))
+            )
 
-                    Diary.canReplaceReward(player!!, DiaryType.ARDOUGNE, 1) -> {
-                        npcl(FaceAnim.ASKING, "You again? How did you get on with the cloak?")
-                        stage = 15
-                    }
-
-                    isDiaryComplete(player!!, DiaryType.ARDOUGNE, 2) -> {
-                        player("I'd like to change my Watchtower Teleport point.")
-                        stage = 18
-                    }
-
-                    else -> {
-                        options(
-                            "What is the Achievement Diary?",
-                            "What are the rewards?",
-                            "How do I claim the rewards?",
-                            "Sorry, I was just leaving."
-                        )
-                        stage = 1
-                    }
-                }
-            }
+            20 -> showTopics(
+                Topic("What is the Achievement Diary?", 2),
+                Topic("What are the rewards?", 5),
+                Topic("How do I claim the rewards?", 6),
+                Topic("See you later.", end())
+            )
 
             1 -> when (buttonID) {
                 1 -> player("What is the Achievement Diary?").also { stage++ }
@@ -68,7 +54,7 @@ class DoctorOrbonDiaryDialogue : DialogueFile() {
             8 -> npcl(FaceAnim.HAPPY, "Ah, that's a relief. You can wear an Ardougne cloak now - I have one for you.").also { stage++ }
             9 -> player("Yes please.").also { stage++ }
             10 -> {
-                Diary.flagRewarded(player!!, DiaryType.ARDOUGNE, 1)
+                Diary.flagRewarded(player!!, DiaryType.ARDOUGNE, 0)
                 sendDoubleItemDialogue(player!!, Items.ARDOUGNE_CLOAK_1_14701, Items.ANTIQUE_LAMP_14704, "Doctor Orbon hands you a cloak and an old lamp.")
                 stage++
             }
@@ -79,7 +65,7 @@ class DoctorOrbonDiaryDialogue : DialogueFile() {
             15 -> player(FaceAnim.SAD, "I lost it.").also { stage++ }
             16 -> npcl(FaceAnim.ASKING, "Lost it? Well, it just so happens I found another. Take better care of this one.").also { stage++ }
             17 -> {
-                Diary.grantReplacement(player!!, DiaryType.ARDOUGNE, 1)
+                Diary.grantReplacement(player!!, DiaryType.ARDOUGNE, 0)
                 sendItemDialogue(player!!, Items.ARDOUGNE_CLOAK_1_14701, "Doctor Orbon hands you a cloak.")
                 stage = 0
             }
@@ -89,13 +75,14 @@ class DoctorOrbonDiaryDialogue : DialogueFile() {
                 sendOptions(player!!, "Toggle Watchtower Teleport to ${if (altTele) "Watchtower" else "centre of Yanille"}?", "Yes", "No")
                 stage++
             }
-            19 -> {
-                if (buttonID == 1) {
+            19 -> when(buttonID){
+                1 -> {
+                    end()
                     setAttribute(player!!, GameAttributes.ATTRIBUTE_WATCHTOWER_ALT_TELE, !getAttribute(player!!, GameAttributes.ATTRIBUTE_WATCHTOWER_ALT_TELE, false))
+                    val destinationText = if (getAttribute(player!!, GameAttributes.ATTRIBUTE_WATCHTOWER_ALT_TELE, false)) "centre of Yanille" else "Watchtower"
+                    sendMessage(player!!, "Watchtower Teleport will now teleport you to the $destinationText.")
                 }
-                val destinationText = if (getAttribute(player!!, GameAttributes.ATTRIBUTE_WATCHTOWER_ALT_TELE, false)) "centre of Yanille" else "Watchtower"
-                sendMessage(player!!, "Watchtower Teleport will now teleport you to the $destinationText.")
-                stage = END_DIALOGUE
+                2 -> end()
             }
         }
     }

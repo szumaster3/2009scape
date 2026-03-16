@@ -51,7 +51,7 @@ class VarrockAchievementDiary : DiaryEventHookBase(DiaryType.VARROCK) {
             const val GIVE_STRAY_DOG_A_BONE = 8
             const val BARBARIAN_VILLAGE_SPIN_A_BOWL = 9
             const val EDGEVILLE_ENTER_DUNGEON_SOUTH = 10
-            const val MOVE_POH_TO_VARROCK = 11
+            const val MOVE_POH_TO_DIFFERENT_LOCATION = 11
             const val SPEAK_TO_HAIG_HALEN_50QP = 12
             const val ENTER_EARTH_ALTAR = 13
             const val ELSIE_TELL_A_STORY = 14

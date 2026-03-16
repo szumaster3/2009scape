@@ -7,6 +7,7 @@ import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
 import core.game.interaction.QueueStrength
 import core.game.node.entity.player.Player
+import core.game.node.entity.skill.Skills
 import core.game.world.map.Direction
 import core.game.world.map.Location
 import shared.consts.Scenery
@@ -21,6 +22,10 @@ class StileShortcut : InteractionListener {
 
     override fun defineListeners() {
         on(ids, IntType.SCENERY, "climb-over") { p, n ->
+            if(n.id == Scenery.FENCE_9300 && getStatLevel(p, Skills.AGILITY) < 13) {
+                sendDialogue(p, "You need an Agility level of 13 to negotiate this obstacle.")
+                return@on true
+            }
             val direction = Vector.betweenLocs(p.location, n.location).toDirection()
             val startLoc = p.location.transform(direction, 1)
             val endLoc = p.location.transform(direction, 2)

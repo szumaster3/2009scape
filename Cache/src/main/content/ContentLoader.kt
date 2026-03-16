@@ -4,7 +4,7 @@ import backend.alex.Cache
 import backend.alex.loaders.BasDefinition
 import backend.alex.loaders.LocDefinition
 import backend.alex.loaders.items.ItemDefinition
-import backend.alex.tools.ModelPacker
+import backend.alex.tools.*
 import content.items.AntiqueLamps
 import content.items.ArdougneCloaks
 
@@ -53,5 +53,11 @@ object ContentLoader {
         LocDefinition.print(Cache.getStore(), "dumps/object_dumps.txt")
         ItemDefinition.print(Cache.getStore(), "dumps/item_dumps.txt")
         BasDefinition.print(Cache.getStore(), "dumps/bas_dumps.txt")
+    }
+
+    private fun dump() {
+        MapDumper.dump()
+        SpriteDumper.dump()
+        ModelDumper.dump()
     }
 }

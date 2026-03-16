@@ -117,10 +117,7 @@ class FaladorAchievementDiary : DiaryEventHookBase(DiaryType.FALADOR) {
                 },
             )
 
-    override fun onInteracted(
-        player: Player,
-        event: InteractionEvent,
-    ) {
+    override fun onInteracted(player: Player, event: InteractionEvent) {
         when (player.viewport.region!!.regionId) {
             FALADOR_PARTY_ROOM -> {
                 if (event.option == "burst" && event.target.id in PARTY_BALLOONS) {
@@ -146,13 +143,10 @@ class FaladorAchievementDiary : DiaryEventHookBase(DiaryType.FALADOR) {
         }
     }
 
-    override fun onDialogueOptionSelected(
-        player: Player,
-        event: DialogueOptionSelectionEvent,
-    ) {
+    override fun onDialogueOptionSelected(player: Player, event: DialogueOptionSelectionEvent) {
         when (event.dialogue) {
             is RisingSunInnBartenderDialogue -> {
-                if (event.currentStage in 12..14) {
+                if (event.currentStage == 5) {
                     finishTask(
                         player,
                         DiaryLevel.EASY,
@@ -163,12 +157,9 @@ class FaladorAchievementDiary : DiaryEventHookBase(DiaryType.FALADOR) {
         }
     }
 
-    override fun onResourceProduced(
-        player: Player,
-        event: ResourceProducedEvent,
-    ) {
+    override fun onResourceProduced(player: Player, event: ResourceProducedEvent) {
         when (player.viewport.region!!.id) {
-            11828 ->
+            11828 -> {
                 when (event.itemId) {
                     Items.YEW_LOGS_1515, Items.MAGIC_LOGS_1513 -> {
                         if (inBorders(player, PARK_TREE_PATCH_AREA)) {
@@ -180,8 +171,9 @@ class FaladorAchievementDiary : DiaryEventHookBase(DiaryType.FALADOR) {
                         }
                     }
                 }
+            }
 
-            11825 ->
+            11825 -> {
                 when (event.itemId) {
                     Items.BLURITE_LIMBS_9422 ->
                         finishTask(
@@ -190,8 +182,9 @@ class FaladorAchievementDiary : DiaryEventHookBase(DiaryType.FALADOR) {
                             MediumTasks.SMITH_BLURITE_CROSSBOW_LIMBS_ON_THURGOS_ANVIL,
                         )
                 }
+            }
 
-            11339 ->
+            11339 -> {
                 when (event.itemId) {
                     Items.AIR_TIARA_5527 ->
                         finishTask(
@@ -200,13 +193,11 @@ class FaladorAchievementDiary : DiaryEventHookBase(DiaryType.FALADOR) {
                             EasyTasks.MAKE_AIR_TIARA,
                         )
                 }
+            }
         }
     }
 
-    override fun onNpcKilled(
-        player: Player,
-        event: NPCKillEvent,
-    ) {
+    override fun onNpcKilled(player: Player, event: NPCKillEvent) {
         if(event.npc.id in BLACK_KNIGHTS) {
             finishTask(
                 player,
@@ -216,7 +207,7 @@ class FaladorAchievementDiary : DiaryEventHookBase(DiaryType.FALADOR) {
         }
 
         when (player.viewport.region!!.id) {
-            11828 ->
+            11828 -> {
                 if (event.npc.id in PARK_DUCKS && inBorders(event.npc, PARK_POND_AREA)) {
                     finishTask(
                         player,
@@ -224,6 +215,8 @@ class FaladorAchievementDiary : DiaryEventHookBase(DiaryType.FALADOR) {
                         EasyTasks.PARK_KILL_A_DUCK,
                     )
                 }
+            }
+
             12181 -> when (event.npc.id) {
                 in SKELETAL_WYVERNS -> finishTask(
                     player,
@@ -239,10 +232,7 @@ class FaladorAchievementDiary : DiaryEventHookBase(DiaryType.FALADOR) {
         }
     }
 
-    override fun onItemPurchasedFromShop(
-        player: Player,
-        event: ItemShopPurchaseEvent,
-    ) {
+    override fun onItemPurchasedFromShop(player: Player, event: ItemShopPurchaseEvent) {
         when {
             inBorders(player, WAYNES_CHAINS_AREA) && (event.itemId == Items.BLACK_CHAINBODY_1107) -> {
                 fulfillTaskRequirement(
@@ -263,10 +253,7 @@ class FaladorAchievementDiary : DiaryEventHookBase(DiaryType.FALADOR) {
         }
     }
 
-    override fun onItemEquipped(
-        player: Player,
-        event: ItemEquipEvent,
-    ) {
+    override fun onItemEquipped(player: Player, event: ItemEquipEvent) {
         when {
             inBorders(player, WAYNES_CHAINS_AREA) && (event.itemId == Items.BLACK_CHAINBODY_1107) -> {
                 whenTaskRequirementFulfilled(player, ATTRIBUTE_BLACK_CHAINBODY_PURCHASED) {
@@ -280,10 +267,7 @@ class FaladorAchievementDiary : DiaryEventHookBase(DiaryType.FALADOR) {
         }
     }
 
-    override fun onFairyRingDialed(
-        player: Player,
-        event: FairyRingDialEvent,
-    ) {
+    override fun onFairyRingDialed(player: Player, event: FairyRingDialEvent) {
         if (event.fairyRing == FairyRing.AIQ) {
             finishTask(
                 player,
@@ -293,10 +277,7 @@ class FaladorAchievementDiary : DiaryEventHookBase(DiaryType.FALADOR) {
         }
     }
 
-    override fun onLightSourceLit(
-        player: Player,
-        event: LitLightSourceEvent,
-    ) {
+    override fun onLightSourceLit(player: Player, event: LitLightSourceEvent) {
         when {
             inBorders(player, CHEMIST_AREA) && (event.litLightSourceId == LightSources.BULLSEYE_LANTERN.litId) -> {
                 finishTask(
@@ -308,10 +289,7 @@ class FaladorAchievementDiary : DiaryEventHookBase(DiaryType.FALADOR) {
         }
     }
 
-    override fun onUsedWith(
-        player: Player,
-        event: UseWithEvent,
-    ) {
+    override fun onUsedWith(player: Player, event: UseWithEvent) {
         when {
             inBorders(player, PORT_SARIM_FLOWER_PATCH_AREA) -> {
                 if (event.used == Items.SCARECROW_6059 &&

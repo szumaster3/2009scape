@@ -286,8 +286,8 @@ class VarrockAchievementDiary : DiaryEventHookBase(DiaryType.VARROCK) {
 
     override fun onDialogueOptionSelected(player: Player, event: DialogueOptionSelectionEvent) {
         when (event.dialogue) {
-            is BennyDialogue ->
-                if (event.currentStage == 14) {
+            is BennyDialogue -> {
+                if (event.currentStage == 4) {
                     if (inInventory(player, Items.COINS_995, 50)) {
                         finishTask(
                             player,
@@ -296,17 +296,17 @@ class VarrockAchievementDiary : DiaryEventHookBase(DiaryType.VARROCK) {
                         )
                     }
                 }
-
-            is ElsieDialogue ->
-                if (event.currentStage == 12) {
+            }
+            is ElsieDialogue -> {
+                if (event.currentStage == 4) {
                     finishTask(
                         player,
                         DiaryLevel.EASY,
                         EasyTasks.ELSIE_TELL_A_STORY,
                     )
                 }
-
-            is DimintheisDialogue ->
+            }
+            is DimintheisDialogue -> {
                 if (event.currentStage == 6000) {
                     finishTask(
                         player,
@@ -314,7 +314,7 @@ class VarrockAchievementDiary : DiaryEventHookBase(DiaryType.VARROCK) {
                         HardTasks.OBTAIN_NEW_SET_OF_FAMILY_CREST_GAUNTLETS,
                     )
                 }
-
+            }
             is OrlandoSmithDialogue -> {
                 if (event.currentStage >= 1) {
                     finishTask(

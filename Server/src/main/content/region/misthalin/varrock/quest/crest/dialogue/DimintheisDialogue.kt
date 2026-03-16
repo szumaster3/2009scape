@@ -25,13 +25,13 @@ class DimintheisDialogue(player: Player? = null) : Dialogue(player) {
         val hasGauntlets = hasAnItem(player, Items.COOKING_GAUNTLETS_775, Items.GOLDSMITH_GAUNTLETS_776, Items.CHAOS_GAUNTLETS_777, Items.FAMILY_GAUNTLETS_778).container != null
 
         if (questComplete && hasGauntlets) {
-            npc("Thank you for saving our family honour,", "We will never forget you")
+            npc("Thank you for saving our family honour,", "We will never forget you.")
             stage = 1000
             return true
         }
 
         if (questComplete && !hasGauntlets) {
-            player("I've lost the gauntlets you gave me")
+            player("I've lost the gauntlets you gave me.")
             stage = 6000
             return true
         }

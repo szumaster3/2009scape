@@ -4,6 +4,8 @@ import content.data.GameAttributes
 import content.global.travel.FairyRing
 import content.region.kandarin.camelot.quest.grail.dialogue.GalahadDialogue
 import content.region.kandarin.seers_village.dialogue.ThormacDialogue
+import content.region.misthalin.lumbridge.diary.LumbridgeAchievementDiary.Companion.BeginnerTasks
+import content.region.misthalin.lumbridge.diary.LumbridgeAchievementDiary.Companion.EasyTasks
 import core.api.*
 import core.game.diary.DiaryEventHookBase
 import core.game.diary.DiaryLevel
@@ -16,10 +18,7 @@ import core.game.node.entity.skill.Skills
 import core.game.node.item.Item
 import core.game.world.map.Location
 import core.game.world.map.zone.ZoneBorders
-import shared.consts.Items
-import shared.consts.NPCs
-import shared.consts.Quests
-import shared.consts.Scenery
+import shared.consts.*
 
 class SeersAchievementDiary : DiaryEventHookBase(DiaryType.SEERS_VILLAGE) {
     companion object {
@@ -99,10 +98,7 @@ class SeersAchievementDiary : DiaryEventHookBase(DiaryType.SEERS_VILLAGE) {
         }
     }
 
-    override fun onResourceProduced(
-        player: Player,
-        event: ResourceProducedEvent,
-    ) {
+    override fun onResourceProduced(player: Player, event: ResourceProducedEvent) {
         if (event.source.id == Scenery.OBELISK_OF_WATER_2151 && event.amount >= 5) {
             finishTask(
                 player,
@@ -112,7 +108,7 @@ class SeersAchievementDiary : DiaryEventHookBase(DiaryType.SEERS_VILLAGE) {
         }
 
         when (player.viewport.region!!.id) {
-            10805 ->
+            10805 -> {
                 if (event.itemId == Items.FLAX_1779) {
                     progressIncrementalTask(
                         player,
@@ -122,8 +118,9 @@ class SeersAchievementDiary : DiaryEventHookBase(DiaryType.SEERS_VILLAGE) {
                         5,
                     )
                 }
+            }
 
-            10806 ->
+            10806 -> {
                 if (event.itemId == Items.YEW_LOGS_1515) {
                     progressIncrementalTask(
                         player,
@@ -133,8 +130,9 @@ class SeersAchievementDiary : DiaryEventHookBase(DiaryType.SEERS_VILLAGE) {
                         5,
                     )
                 }
+            }
 
-            10807 ->
+            10807 -> {
                 if (event.itemId in CHURN_PRODUCT) {
                     finishTask(
                         player,
@@ -142,6 +140,7 @@ class SeersAchievementDiary : DiaryEventHookBase(DiaryType.SEERS_VILLAGE) {
                         EasyTasks.SINCLAIR_MANSION_USE_CHURN,
                     )
                 }
+            }
 
             11317 ->
                 when (event.itemId) {
@@ -197,12 +196,9 @@ class SeersAchievementDiary : DiaryEventHookBase(DiaryType.SEERS_VILLAGE) {
         }
     }
 
-    override fun onNpcKilled(
-        player: Player,
-        event: NPCKillEvent,
-    ) {
+    override fun onNpcKilled(player: Player, event: NPCKillEvent) {
         when (player.viewport.region!!.id) {
-            10906 ->
+            10906 -> {
                 if (event.npc.id in WORKSHOP_ELEMENTALS) {
                     progressFlaggedTask(
                         player,
@@ -213,8 +209,9 @@ class SeersAchievementDiary : DiaryEventHookBase(DiaryType.SEERS_VILLAGE) {
                         0xF,
                     )
                 }
+            }
 
-            10549 ->
+            10549 -> {
                 if (event.npc.id in RANGING_GUILD_ARCHERS) {
                     progressFlaggedTask(
                         player,
@@ -225,15 +222,13 @@ class SeersAchievementDiary : DiaryEventHookBase(DiaryType.SEERS_VILLAGE) {
                         0xF,
                     )
                 }
+            }
         }
     }
 
-    override fun onTeleported(
-        player: Player,
-        event: TeleportEvent,
-    ) {
+    override fun onTeleported(player: Player, event: TeleportEvent) {
         when (event.source) {
-            is Item ->
+            is Item -> {
                 if (event.source.id in COMBAT_BRACELETS) {
                     if (event.location == RANGING_GUILD_LOCATION) {
                         finishTask(
@@ -243,13 +238,11 @@ class SeersAchievementDiary : DiaryEventHookBase(DiaryType.SEERS_VILLAGE) {
                         )
                     }
                 }
+            }
         }
     }
 
-    override fun onFireLit(
-        player: Player,
-        event: LitFireEvent,
-    ) {
+    override fun onFireLit(player: Player, event: LitFireEvent) {
         when {
             inBorders(player, SEERS_VILLAGE_AREA) -> {
                 if (event.logId == Items.MAGIC_LOGS_1513) {
@@ -263,10 +256,7 @@ class SeersAchievementDiary : DiaryEventHookBase(DiaryType.SEERS_VILLAGE) {
         }
     }
 
-    override fun onInteracted(
-        player: Player,
-        event: InteractionEvent,
-    ) {
+    override fun onInteracted(player: Player, event: InteractionEvent) {
         when {
             inBorders(player, SEERS_COAL_TRUCKS_AREA) -> {
                 whenTaskRequirementFulfilled(player, ATTRIBUTE_COAL_TRUCK_FULL) {
@@ -282,23 +272,10 @@ class SeersAchievementDiary : DiaryEventHookBase(DiaryType.SEERS_VILLAGE) {
         }
     }
 
-    override fun onDialogueOptionSelected(
-        player: Player,
-        event: DialogueOptionSelectionEvent,
-    ) {
+    override fun onDialogueOptionSelected(player: Player, event: DialogueOptionSelectionEvent) {
         when (event.dialogue) {
-            is ThormacDialogue -> {
-                if (isQuestComplete(player, Quests.SCORPION_CATCHER) && event.currentStage == 4) {
-                    finishTask(
-                        player,
-                        DiaryLevel.MEDIUM,
-                        MediumTasks.THORMAC_SORCERER_TALK_ABOUT_MYSTIC_STAVES,
-                    )
-                }
-            }
-
             is GalahadDialogue -> {
-                if (event.currentStage == 3) {
+                if (event.currentStage == 5) {
                     finishTask(
                         player,
                         DiaryLevel.EASY,
@@ -309,10 +286,7 @@ class SeersAchievementDiary : DiaryEventHookBase(DiaryType.SEERS_VILLAGE) {
         }
     }
 
-    override fun onAttributeSet(
-        player: Player,
-        event: AttributeSetEvent,
-    ) {
+    override fun onAttributeSet(player: Player, event: AttributeSetEvent) {
         when (event.attribute) {
             "/save:coal-truck-inventory" -> {
                 if (event.value !is Int) return
@@ -328,10 +302,7 @@ class SeersAchievementDiary : DiaryEventHookBase(DiaryType.SEERS_VILLAGE) {
         }
     }
 
-    override fun onItemAlchemized(
-        player: Player,
-        event: ItemAlchemizationEvent,
-    ) {
+    override fun onItemAlchemized(player: Player, event: ItemAlchemizationEvent) {
         if (inBorders(player, SEERS_BANK_AREA)) {
             if (event.itemId == Items.MAGIC_SHORTBOW_861 && event.isHigh) {
                 finishTask(
@@ -343,10 +314,7 @@ class SeersAchievementDiary : DiaryEventHookBase(DiaryType.SEERS_VILLAGE) {
         }
     }
 
-    override fun onFairyRingDialed(
-        player: Player,
-        event: FairyRingDialEvent,
-    ) {
+    override fun onFairyRingDialed(player: Player, event: FairyRingDialEvent) {
         if (event.fairyRing == FairyRing.ALS) {
             finishTask(
                 player,
@@ -356,10 +324,7 @@ class SeersAchievementDiary : DiaryEventHookBase(DiaryType.SEERS_VILLAGE) {
         }
     }
 
-    override fun onItemPurchasedFromShop(
-        player: Player,
-        event: ItemShopPurchaseEvent,
-    ) {
+    override fun onItemPurchasedFromShop(player: Player, event: ItemShopPurchaseEvent) {
         if (event.itemId == Items.CANDLE_36 && player.viewport.region!!.id == 11061) {
             finishTask(
                 player,
@@ -367,7 +332,6 @@ class SeersAchievementDiary : DiaryEventHookBase(DiaryType.SEERS_VILLAGE) {
                 EasyTasks.BUY_CANDLE,
             )
         }
-
         if (event.itemId in RANGING_GUILD_STOCK && player.viewport.region!!.id == 10549) {
             finishTask(
                 player,
@@ -377,10 +341,7 @@ class SeersAchievementDiary : DiaryEventHookBase(DiaryType.SEERS_VILLAGE) {
         }
     }
 
-    override fun onPrayerPointsRecharged(
-        player: Player,
-        event: PrayerPointsRechargeEvent,
-    ) {
+    override fun onPrayerPointsRecharged(player: Player, event: PrayerPointsRechargeEvent) {
         if (player.viewport.region!!.id == 10806) {
             if (event.altar.id == Scenery.ALTAR_409 || event.altar.id == Scenery.ALTAR_19145) {
                 finishTask(
@@ -392,10 +353,17 @@ class SeersAchievementDiary : DiaryEventHookBase(DiaryType.SEERS_VILLAGE) {
         }
     }
 
-    override fun onSpellCast(
-        player: Player,
-        event: SpellCastEvent,
-    ) {
+    override fun onInterfaceOpened(player: Player, event: InterfaceOpenEvent) {
+        if(event.component.id == Components.STAFF_ENCHANT_332) {
+            finishTask(
+                player,
+                DiaryLevel.MEDIUM,
+                MediumTasks.THORMAC_SORCERER_TALK_ABOUT_MYSTIC_STAVES,
+            )
+        }
+    }
+
+    override fun onSpellCast(player: Player, event: SpellCastEvent) {
         if (event.spellBook == SpellBookManager.SpellBook.MODERN &&
             event.spellId == 26 && getStatLevel(player, Skills.MAGIC) >= 45 &&
             inInventory(player, Items.LAW_RUNE_563, 1) &&

@@ -23,10 +23,7 @@ class OrlandoSmithDialogue(player: Player? = null) : Dialogue(player) {
             }
 
             1 -> {
-                npcl(
-                    FaceAnim.HALF_GUILTY,
-                    "Well, mate, to tell you the truth, I think I've come a gutser with these displays.",
-                )
+                npcl(FaceAnim.HALF_GUILTY, "Well, mate, to tell you the truth, I think I've come a gutser with these displays.")
                 stage++
             }
 
@@ -44,10 +41,7 @@ class OrlandoSmithDialogue(player: Player? = null) : Dialogue(player) {
             }
 
             4 -> {
-                npcl(
-                    FaceAnim.HALF_GUILTY,
-                    "But to be deadset with you, I wasn't paying much attention to me boss over there and I've done a bit of a rush job.",
-                )
+                npcl(FaceAnim.HALF_GUILTY, "But to be deadset with you, I wasn't paying much attention to me boss over there and I've done a bit of a rush job.")
                 stage++
             }
 
@@ -67,10 +61,7 @@ class OrlandoSmithDialogue(player: Player? = null) : Dialogue(player) {
             }
 
             8 -> {
-                npcl(
-                    FaceAnim.HALF_GUILTY,
-                    "Well, you look like a pretty smart cobber. Could you take a look at the display plaques and give 'em a runthrough?",
-                )
+                npcl(FaceAnim.HALF_GUILTY, "Well, you look like a pretty smart cobber. Could you take a look at the display plaques and give 'em a runthrough?")
                 stage++
             }
 
@@ -98,10 +89,7 @@ class OrlandoSmithDialogue(player: Player? = null) : Dialogue(player) {
             }
 
             12 -> {
-                npcl(
-                    FaceAnim.HALF_GUILTY,
-                    "Take a gander at each case and I'll look over your shoulder to give some advice.",
-                )
+                npcl(FaceAnim.HALF_GUILTY, "Take a gander at each case and I'll look over your shoulder to give some advice.")
                 stage = END_DIALOGUE
             }
 

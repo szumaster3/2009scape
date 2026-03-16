@@ -467,17 +467,8 @@ class LumbridgeAchievementDiary : DiaryEventHookBase(DiaryType.LUMBRIDGE) {
                     )
                 }
             }
-            is DoomsayerDialogue -> {
-                if (event.currentStage >= 13) {
-                    finishTask(
-                        player,
-                        DiaryLevel.BEGINNER,
-                        BeginnerTasks.SPEAK_TO_DOOMSAYER,
-                    )
-                }
-            }
             is WiseOldManDialogue -> {
-                if (event.currentStage == 102 || event.currentStage == 100) {
+                if (event.currentStage == 2) {
                     finishTask(
                         player,
                         DiaryLevel.EASY,
@@ -486,7 +477,7 @@ class LumbridgeAchievementDiary : DiaryEventHookBase(DiaryType.LUMBRIDGE) {
                 }
             }
             is FatherUhrneyDialogue -> {
-                if (event.currentStage == 520) {
+                if (event.currentStage == 21) {
                     finishTask(
                         player,
                         DiaryLevel.EASY,
@@ -549,6 +540,13 @@ class LumbridgeAchievementDiary : DiaryEventHookBase(DiaryType.LUMBRIDGE) {
                     )
                 }
             }
+        }
+        if(event.component.id == Components.CWS_DOOMSAYER_583) {
+            finishTask(
+                player,
+                DiaryLevel.BEGINNER,
+                BeginnerTasks.SPEAK_TO_DOOMSAYER,
+            )
         }
     }
 

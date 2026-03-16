@@ -2,7 +2,6 @@ package content.region.asgarnia.falador.plugin
 
 import content.region.asgarnia.falador.dialogue.*
 import content.region.asgarnia.falador.plugin.temple_knights.SirVyvinDialogue
-import content.region.kandarin.east_ardougne.dialogue.market.TownCrierDialogue
 import core.api.*
 import core.game.global.action.DoorActionHandler
 import core.game.interaction.IntType
@@ -269,17 +268,6 @@ class FaladorPlugin : InteractionListener {
 
         on(NPCs.ZANDAR_HORFYRE_3308, IntType.NPC, "talk-to") { player, node ->
             openDialogue(player, ZandarHorfyreDialogue(), node.asNpc())
-            return@on true
-        }
-
-        on(intArrayOf(
-            NPCs.TOWN_CRIER_6135,
-            NPCs.TOWN_CRIER_6136,
-            NPCs.TOWN_CRIER_6137,
-            NPCs.TOWN_CRIER_6138,
-            NPCs.TOWN_CRIER_6139,
-        ), IntType.NPC, "talk-to") { player, node ->
-            openDialogue(player, TownCrierDialogue(), node.asNpc())
             return@on true
         }
 

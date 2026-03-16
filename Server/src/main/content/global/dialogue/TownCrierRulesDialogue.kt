@@ -1,21 +1,13 @@
-package content.region.kandarin.east_ardougne.dialogue.market
+package content.global.dialogue
 
 import content.global.plugins.item.books_and_scrolls.impl.GeneralRuleBook
-import core.api.lock
-import core.api.runTask
-import core.api.stopWalk
-import core.api.visualize
-import core.game.dialogue.Dialogue
-import core.game.dialogue.DialogueFile
-import core.game.dialogue.FaceAnim
-import core.game.node.entity.npc.NPC
-import core.game.node.entity.player.Player
+import core.api.*
+import core.game.dialogue.*
 import core.game.world.GameWorld.settings
-import core.plugin.Initializable
 import core.tools.END_DIALOGUE
-import shared.consts.NPCs
+import core.game.dialogue.DialogueFile
 
-class TownCrierDialogue : DialogueFile() {
+class TownCrierRulesDialogue : DialogueFile() {
 
     override fun handle(componentID: Int, buttonID: Int) {
         when (stage) {

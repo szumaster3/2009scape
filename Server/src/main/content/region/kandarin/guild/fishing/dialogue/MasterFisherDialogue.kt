@@ -20,7 +20,6 @@ class MasterFisherDialogue(player: Player? = null) : Dialogue(player) {
         } else {
             npc("Hello, only the top fishers are allowed to use our", "premier fishing facilities and you seem to meet the", "criteria. Enjoy!")
         }
-        stage = 0
         return true
     }
 

@@ -6,6 +6,7 @@ import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
 import shared.consts.Items
 import shared.consts.Scenery
+import shared.consts.Vars
 
 class GWDEntranceRopePlugin : InteractionListener {
     override fun defineListeners() {
@@ -18,7 +19,7 @@ class GWDEntranceRopePlugin : InteractionListener {
             if (!removeItem(player, used)) {
                 return@onUseWith false
             }
-            setVarbit(player, 3932, 1)
+            setVarbit(player, Vars.VARBIT_GWD_ROPE_ON_HOLE_3932, 1, true)
             return@onUseWith true
         }
     }

@@ -35,23 +35,22 @@ class PoisonWeaponPlugin : InteractionListener {
             val product = PoisonSets.itemMap[item.id]?.get(index) ?: return@onUseWith true
             val amt = min(5, item.amount)
 
-            if (removeItem(player, Item(item.id, amt))) {
-                addItemOrDrop(player, product, amt)
-                replaceSlot(player, used.asItem().slot, Item(Items.VIAL_229, 1))
-                sendMessage(player, "You poison the ${item.name.lowercase()}.")
-            }
+            if (!removeItem(player, Item(item.id, amt))) return@onUseWith false
+
+            addItemOrDrop(player, product, amt)
+            replaceSlot(player, used.asItem().slot, Item(Items.VIAL_229, 1))
+            sendMessage(player, "You poison the ${item.name.lowercase()}.")
             return@onUseWith true
         }
 
         onUseWith(IntType.ITEM, Items.KARAMBWAN_PASTE_3153, *regularKarambwanWeapons) { player, used, with ->
             val item = with.asItem()
             val product = KarambwanPoisonSets.itemMap[item.id] ?: return@onUseWith true
+            if (!removeItem(player, used.asItem())) return@onUseWith false
 
-            if (removeItem(player, used.asItem())) {
-                replaceSlot(player, item.slot, Item(product.kp, 1))
-                val weaponType = if (product.name.contains("spear", ignoreCase = true)) "spear" else "hasta"
-                sendMessage(player, "You smear the poisonous Karambwan paste over the $weaponType.")
-            }
+            replaceSlot(player, item.slot, Item(product.kp, 1))
+            val weaponType = if (product.name.contains("spear", ignoreCase = true)) "spear" else "hasta"
+            sendMessage(player, "You smear the poisonous Karambwan paste over the $weaponType.")
             return@onUseWith true
         }
 
@@ -59,10 +58,8 @@ class PoisonWeaponPlugin : InteractionListener {
             val item = with.asItem()
             val base = PoisonSets.getBase(item.id) ?: return@onUseWith false
             val amt = min(5, item.amount)
-
-            if (removeItem(player, Item(item.id, amt))) {
-                replaceSlot(player, item.slot, Item(base, amt))
-            }
+            if (!removeItem(player, Item(item.id, amt))) return@onUseWith false
+            replaceSlot(player, item.slot, Item(base, amt))
             return@onUseWith true
         }
 
@@ -70,10 +67,9 @@ class PoisonWeaponPlugin : InteractionListener {
             val item = with.asItem()
             val base = KarambwanPoisonSets.getBase(item.id) ?: return@onUseWith false
             val amt = min(5, item.amount)
+            if (!removeItem(player, Item(item.id, amt))) return@onUseWith false
 
-            if (removeItem(player, Item(item.id, amt))) {
-                replaceSlot(player, item.slot, Item(base, amt))
-            }
+            replaceSlot(player, item.slot, Item(base, amt))
             return@onUseWith true
         }
     }
@@ -276,16 +272,16 @@ class PoisonWeaponPlugin : InteractionListener {
             pp = Items.SILVER_BOLTSP_PLUS_9299,
             ppp = Items.SILVER_BOLTSP_PLUS_PLUS_9306,
         ),
-        IRON_JAVELIN(
-            base = Items.IRON_JAVELIN_826,
+        BRONZE_JAVELIN(
+            base = Items.BRONZE_JAVELIN_825,
             p = Items.BRONZE_JAVELINP_831,
-            pp = Items.IRON_JAVELINP_PLUS_5643,
+            pp = Items.BRONZE_JAVELINP_PLUS_5642,
             ppp = Items.BRONZE_JAVNP_PLUS_PLUS_5648,
         ),
-        BRONZE_JAVELIN(
+        IRON_JAVELIN(
             base = Items.IRON_JAVELIN_826,
             p = Items.IRON_JAVELINP_832,
-            pp = Items.BRONZE_JAVELINP_PLUS_5642,
+            pp = Items.IRON_JAVELINP_PLUS_5643,
             ppp = Items.IRON_JAVELINP_PLUS_PLUS_5649,
         ),
         STEEL_JAVELIN(
@@ -328,7 +324,7 @@ class PoisonWeaponPlugin : InteractionListener {
             base = Items.BRONZE_DAGGER_1205,
             p = Items.BRONZE_DAGGERP_1221,
             pp = Items.BRONZE_DAGGERP_PLUS_5670,
-            ppp = Items.BRZE_DAGGERP_PLUS_PLUS_5688,
+            ppp = Items.BRONZE_DAGGERP_PLUS_PLUS_5688,
         ),
         STEEL_DAGGER(
             base = Items.STEEL_DAGGER_1207,

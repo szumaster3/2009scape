@@ -66,8 +66,9 @@ class WizardDialogue(player: Player? = null) : Dialogue(player) {
 
                     val maxByBark = player.inventory.getAmount(BARK) / barkType.amount
                     val maxByCoins = player.inventory.getAmount(COINS) / barkType.cost
+                    val freeSlots = player.inventory.freeSlots()
 
-                    min(maxByBark, maxByCoins)
+                    minOf(maxByBark, maxByCoins, freeSlots)
                 }
             }
         }

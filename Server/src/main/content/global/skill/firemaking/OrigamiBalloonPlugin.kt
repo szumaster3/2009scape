@@ -60,18 +60,38 @@ class OrigamiBalloonPlugin : InteractionListener {
 
             val dye = DyeItem.forId(used.id) ?: return@onUseWith true
             val maxAmount = min(amountInInventory(player, dye.dyeId), amountInInventory(player, balloon.id))
-
             if (maxAmount == 0) return@onUseWith true
 
             sendSkillDialogue(player) {
-                withItems(dye.origamiBallonId)
+                withItems(dye.origamiBalloonId)
 
                 create { _, amount ->
-                    runTask(player, 2, amount) {
-                        if (!inInventory(player, dye.dyeId) || !inInventory(player, Items.ORIGAMI_BALLOON_9934)) return@runTask
+                    var remaining = amount
+                    queueScript(player, 0, QueueStrength.WEAK) {
+                        if (remaining <= 0 || amountInInventory(player, dye.dyeId) <= 0 || amountInInventory(player, Items.ORIGAMI_BALLOON_9934) <= 0) {
+                            return@queueScript stopExecuting(player)
+                        }
+
+                        animate(player, Animations.CRAFT_BONGOS_5140)
+                        sendMessage(player, "You dye an origami balloon.")
+
                         removeItem(player, Item(dye.dyeId))
                         removeItem(player, Item(Items.ORIGAMI_BALLOON_9934))
-                        addItem(player, dye.origamiBallonId, 1)
+                        addItem(player, dye.origamiBalloonId)
+                        rewardXP(player, Skills.CRAFTING, 5.0)
+
+                        remaining--
+
+                        if (remaining > 0 &&
+                            amountInInventory(player, dye.dyeId) > 0 &&
+                            amountInInventory(player, Items.ORIGAMI_BALLOON_9934) > 0
+                        ) {
+                            delayClock(player, Clocks.SKILLING, 2)
+                            setCurrentScriptState(player, 0)
+                            delayScript(player, 2)
+                        } else {
+                            stopExecuting(player)
+                        }
                     }
                 }
 
@@ -105,10 +125,18 @@ class OrigamiBalloonPlugin : InteractionListener {
                 sendMessage(player, "You light the origami ${getItemName(with.id).lowercase(Locale.getDefault())}.")
                 delayClock(player, Clocks.SKILLING, 3)
                 rewardXP(player, Skills.FIREMAKING, 20.0)
+
                 Projectile
                     .create(player, null, projectileGfx, 45, 45, 1, 70, 0)
-                    .transform(player, player.location.transform(player.direction, (player.direction.ordinal + 1) % 8), false, 70, 140)
+                    .transform(
+                        player,
+                        player.location.transform(player.direction, (player.direction.ordinal + 1) % 8),
+                        false,
+                        70,
+                        140
+                    )
                     .send()
+
                 stopExecuting(player)
             }
 
@@ -118,11 +146,6 @@ class OrigamiBalloonPlugin : InteractionListener {
 
     companion object {
         /**
-         * The balloon graphics.
-         */
-
-
-        /**
          * The dyes.
          */
         private val DYE_IDS = DyeItem.values().map { it.dyeId }.toIntArray()
@@ -130,6 +153,6 @@ class OrigamiBalloonPlugin : InteractionListener {
         /**
          * The coloured origami balloons.
          */
-        private val BALLOON_IDS = (DyeItem.values().map { it.origamiBallonId } + Items.ORIGAMI_BALLOON_9934).toIntArray()
+        private val BALLOON_IDS = (DyeItem.values().map { it.origamiBalloonId } + listOf(Items.ORIGAMI_BALLOON_9934)).toIntArray()
     }
 }

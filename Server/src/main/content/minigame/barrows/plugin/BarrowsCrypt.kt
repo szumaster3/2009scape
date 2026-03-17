@@ -11,17 +11,11 @@ import core.game.node.scenery.Scenery
 import core.game.world.map.Direction
 import core.game.world.map.Location
 import core.game.world.map.RegionManager.getTeleportLocation
+import shared.consts.NPCs
 
-open class BarrowsCrypt(
-    val index: Int,
-    val npcId: Int,
-    val enterLocation: Location,
-    val exitLocation: Location,
-) {
-    fun openSarcophagus(
-        player: Player,
-        scenery: Scenery,
-    ) {
+open class BarrowsCrypt(val index: Int, val npcId: Int, val enterLocation: Location, val exitLocation: Location) {
+
+    fun openSarcophagus(player: Player, scenery: Scenery) {
         if (index == player.getSavedData().activityData.barrowTunnelIndex) {
             player.dialogueInterpreter.open("barrow_tunnel", index)
             return
@@ -33,19 +27,11 @@ open class BarrowsCrypt(
             return
         }
         sendMessage(player, "You don't find anything.")
-        val location =
-            getTeleportLocation(
-                scenery.location.transform(Direction.SOUTH_WEST),
-                scenery.sizeX + 1,
-                scenery.sizeY + 1,
-            )
+        val location = getTeleportLocation(scenery.location.transform(Direction.SOUTH_WEST), scenery.sizeX + 1, scenery.sizeY + 1)
         spawnBrother(player, location)
     }
 
-    fun spawnBrother(
-        player: Player,
-        location: Location?,
-    ): Boolean {
+    fun spawnBrother(player: Player, location: Location?): Boolean {
         if (player.getAttribute("brother:$index", false)) {
             return false
         }
@@ -72,12 +58,12 @@ open class BarrowsCrypt(
 
         private val CRYPTS =
             arrayOf(
-                BarrowsCrypt(AHRIM, 2025, Location.create(3557, 9703, 3), Location.create(3565, 3289, 0)),
-                BarrowsCrypt(DHAROK, 2026, Location.create(3556, 9718, 3), Location.create(3575, 3298, 0)),
-                BarrowsCrypt(GUTHAN, 2027, Location.create(3534, 9704, 3), Location.create(3577, 3283, 0)),
-                BarrowsCrypt(KARIL, 2028, Location.create(3546, 9684, 3), Location.create(3565, 3276, 0)),
-                BarrowsCrypt(TORAG, 2029, Location.create(3568, 9683, 3), Location.create(3553, 3283, 0)),
-                BarrowsCrypt(VERAC, 2030, Location.create(3578, 9706, 3), Location.create(3557, 3298, 0)),
+                BarrowsCrypt(AHRIM,  NPCs.AHRIM_THE_BLIGHTED_2025,  Location.create(3557, 9703, 3), Location.create(3565, 3289, 0)),
+                BarrowsCrypt(DHAROK, NPCs.DHAROK_THE_WRETCHED_2026, Location.create(3556, 9718, 3), Location.create(3575, 3298, 0)),
+                BarrowsCrypt(GUTHAN, NPCs.GUTHAN_THE_INFESTED_2027, Location.create(3534, 9704, 3), Location.create(3577, 3283, 0)),
+                BarrowsCrypt(KARIL,  NPCs.KARIL_THE_TAINTED_2028,   Location.create(3546, 9684, 3), Location.create(3565, 3276, 0)),
+                BarrowsCrypt(TORAG,  NPCs.TORAG_THE_CORRUPTED_2029, Location.create(3568, 9683, 3), Location.create(3553, 3283, 0)),
+                BarrowsCrypt(VERAC,  NPCs.VERAC_THE_DEFILED_2030,   Location.create(3578, 9706, 3), Location.create(3557, 3298, 0)),
             )
 
         fun init() {

@@ -7,6 +7,7 @@ import core.game.node.entity.player.Player;
 import core.plugin.ClassScanner;
 import core.plugin.Initializable;
 import core.plugin.Plugin;
+import shared.consts.NPCs;
 
 /**
  * Represents the option plugin used to handle the pc island related nodes.
@@ -17,7 +18,12 @@ public final class PCIslandOptionPlugin extends OptionHandler {
 
 	@Override
 	public Plugin<Object> newInstance(Object arg) throws Throwable {
-		for (int id : new int[] { 3786, 3788, 3789, 5956 }) {
+		for (int id : new int[] {
+				NPCs.VOID_KNIGHT_3786,
+				NPCs.VOID_KNIGHT_3788,
+				NPCs.VOID_KNIGHT_3789,
+				NPCs.VOID_KNIGHT_5956
+		}) {
 			NPCDefinition.forId(id).getHandlers().put("option:exchange", this);
 		}
 		ClassScanner.definePlugin(new PCRewardInterface());

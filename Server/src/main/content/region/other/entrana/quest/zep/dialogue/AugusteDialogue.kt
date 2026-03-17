@@ -22,7 +22,7 @@ class AugusteDialogue(player: Player? = null) : Dialogue(player) {
         val hasWool = inInventory(player!!, Items.BALL_OF_WOOL_1759, 1)
         val hasPotatoes = inInventory(player!!, Items.POTATOES10_5438, 1)
 
-        val hasDyedBalloon = DyeItem.values().map { it.origamiBallonId }.toIntArray()
+        val hasDyedBalloon = DyeItem.values().map { it.origamiBalloonId }.toIntArray()
         val hasPlain = inInventory(player, Items.ORIGAMI_BALLOON_9934)
         val hasDyed = anyInInventory(player, *hasDyedBalloon)
 

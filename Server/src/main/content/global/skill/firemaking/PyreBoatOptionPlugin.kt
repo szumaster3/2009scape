@@ -3,10 +3,7 @@ package content.global.skill.firemaking
 import content.data.skill.SkillingTool
 import content.global.skill.firemaking.items.Log
 import content.region.kandarin.baxtorian.BarbarianTraining
-import core.api.sendDialogue
-import core.api.sendDialogueLines
-import core.api.sendMessage
-import core.api.sendMessages
+import core.api.*
 import core.cache.def.impl.SceneryDefinition
 import core.game.interaction.OptionHandler
 import core.game.node.Node
@@ -31,6 +28,8 @@ import core.plugin.Plugin
 import core.tools.RandomFunction
 import shared.consts.Items
 import shared.consts.NPCs
+import java.util.*
+import kotlin.collections.ArrayList
 import shared.consts.Scenery as Objects
 
 @Initializable
@@ -44,10 +43,14 @@ class PyreBoatOptionPlugin : OptionHandler() {
     }
 
     override fun handle(player: Player, node: Node, option: String): Boolean {
-        for (location in USED_LOCATIONS) {
-            if (location.withinDistance(node.location, 3)) {
-                sendMessage(player, "This pyre site is in use currently.")
-                return true
+        if (node !is Scenery) return false
+
+        synchronized(USED_LOCATIONS) {
+            for (location in USED_LOCATIONS) {
+                if (location.withinDistance(node.location, 3)) {
+                    sendMessage(player, "This pyre site is in use currently.")
+                    return true
+                }
             }
         }
 
@@ -84,19 +87,20 @@ class PyreBoatOptionPlugin : OptionHandler() {
             return true
         }
 
-        if (player.getAttribute("barb", null) != null && (player.getAttribute("barb") as NPC).isActive) {
+        val barb = player.getAttribute("barb") as? NPC
+        if (barb?.isActive == true) {
             sendMessage(player, "You must defeat the barbarian spirit first.")
             return true
         }
 
         player.setAttribute("logType", type)
-        ritual(player, node as Scenery)
+        ritual(player, node)
         return true
     }
 
     private fun ritual(player: Player, scenery: Scenery) {
         player.lock()
-        USED_LOCATIONS.add(scenery.location)
+        synchronized(USED_LOCATIONS) { USED_LOCATIONS.add(scenery.location) }
         player.faceLocation(scenery.location)
         GameWorld.Pulser.submit(getPulse(player, scenery))
     }
@@ -104,66 +108,67 @@ class PyreBoatOptionPlugin : OptionHandler() {
     private fun getPulse(player: Player, scenery: Scenery): Pulse {
         val logType = player.getAttribute("logType", LogType.NORMAL)
         val tool = SkillingTool.getAxe(player)
-        val bones =
-            if (player.inventory.containsItem(CHEWED_BONES)) {
-                player.inventory.getItem(CHEWED_BONES)
-            } else {
-                player.inventory.getItem(MANGLED_BONES)
-            }
+        val bones = player.inventory.getItem(CHEWED_BONES) ?: player.inventory.getItem(MANGLED_BONES)
 
         return object : Pulse(1, player) {
             var count = 0
             var objectId = Objects.CARVED_LOG_25288
 
             override fun pulse(): Boolean {
-                if ((count % 6 == 0 || count == 0) && count <= 10 && objectId <= Objects.PYRE_BOAT_25291) {
-                    player.animate(getAnimation(tool))
-                    player.faceLocation(scenery.location)
-                }
-                if (count % 4 == 0) {
-                    if (objectId == Objects.PYRE_BOAT_25291) {
-                        if (player.inventory.remove(Item(logType.log.logId), bones)) {
-                            player.animator.reset()
-                            player.skills.addExperience(Skills.CRAFTING, logType.experiences[0])
-                            player.skills.addExperience(Skills.FIREMAKING, logType.experiences[1])
+                try {
+                    if ((count % 6 == 0) && count <= 10 && objectId <= Objects.PYRE_BOAT_25291) {
+                        player.animate(getAnimation(tool))
+                        player.faceLocation(scenery.location)
+                    }
 
-                            if (bones.id == CHEWED_BONES.id) {
-                                player.inventory.add(getRandomItem(player), player)
-                                sendMessages(player,
-                                    "The ancient barbarian is laid to rest. Your future prayer training is blessed,",
-                                    "as his spirit ascends to a glorious afterlife. Spirits drop an object into your",
-                                    "pack.",
-                                )
-                            } else {
-                                val barb = NPC.create(NPCs.FEROCIOUS_BARBARIAN_SPIRIT_752, scenery.location.transform(scenery.direction, 1))
-                                (barb as FerociousBarbarianNPC).target = player
-                                barb.init()
-                                barb.moveStep()
-                                player.setAttribute("barb", barb)
-                                player.unlock()
+                    if (count % 4 == 0) {
+                        if (objectId == Objects.PYRE_BOAT_25291) {
+                            if (player.inventory.remove(Item(logType.log.logId), bones)) {
+                                resetAnimator(player)
+                                rewardXP(player, Skills.CRAFTING, logType.xp[0])
+                                rewardXP(player, Skills.FIREMAKING, logType.xp[1])
+
+                                if (bones?.id == CHEWED_BONES.id) {
+                                    player.inventory.add(getRandomItem(player), player)
+                                    sendMessages(player, "The ancient barbarian is laid to rest. Your future prayer training is blessed,", "as his spirit ascends to a glorious afterlife. Spirits drop an object into your", "pack.")
+                                } else {
+                                    val npc = NPC.create(NPCs.FEROCIOUS_BARBARIAN_SPIRIT_752, scenery.location.transform(scenery.direction, 1)) as FerociousBarbarianNPC
+                                    npc.target = player
+                                    npc.init()
+                                    npc.moveStep()
+                                    player.setAttribute("barb", npc)
+                                    player.unlock()
+                                }
                             }
                         }
+
+                        if (objectId == Objects.PYRE_BOAT_25295) return true
+                        replace(objectId++, scenery, player)
                     }
 
-                    if (objectId == Objects.PYRE_BOAT_25295) {
-                        return true
-                    }
-
-                    replace(objectId++, scenery, player)
+                    count++
+                    return false
+                } catch (e: Exception) {
+                    stop()
+                    return true
                 }
-                count++
-                return false
             }
 
             override fun stop() {
-                super.stop()
-                player.unlock()
-                if(!player.savedData.activityData.isBarbarianFiremakingPyre) {
-                    player.savedData.activityData.isBarbarianFiremakingPyre = true
-                    sendDialogueLines(player, "You feel you have learned more of barbarian ways. Otto might wish", "to talk to you more.")
+                try {
+                    player.unlock()
+                    if (!player.savedData.activityData.isBarbarianFiremakingPyre) {
+                        player.savedData.activityData.isBarbarianFiremakingPyre = true
+                        sendDialogueLines(
+                            player,
+                            "You feel you have learned more of barbarian ways. Otto might wish",
+                            "to talk to you more."
+                        )
+                    }
+                    replace(Objects.PYRE_SITE_25286, scenery, player)
+                } finally {
+                    synchronized(USED_LOCATIONS) { USED_LOCATIONS.remove(scenery.location) }
                 }
-                replace(Objects.PYRE_SITE_25286, scenery, player)
-                USED_LOCATIONS.remove(scenery.location)
             }
         }
     }
@@ -175,41 +180,36 @@ class PyreBoatOptionPlugin : OptionHandler() {
 
     private fun getLocation(newId: Int, ship: Scenery): Location {
         var location = ship.location.transform(ship.direction, -2)
-        when {
-            ship.location.x == 2507 || ship.location.x == 2519 -> location = location.transform(-1, 0, 0)
-            ship.location.x == 2503 -> location = location.transform(-2, -1, 0)
+        when (ship.location.x) {
+            2507, 2519 -> location = location.transform(-1, 0, 0)
+            2503 -> location = location.transform(-2, -1, 0)
         }
         return location
     }
 
     private fun getRandomItem(player: Player): Item {
-        if (RandomFunction.random(250) == 10) {
-            return DFH
-        }
+        if (RandomFunction.random(250) == 10) return DFH
         return RandomFunction.getChanceItem(REWARDS)
     }
 
     override fun getDestination(node: Node, n: Node): Location? =
-        if (n is Scenery) {
-            n.location.transform(n.direction, 1)
-        } else {
-            null
-        }
+        if (n is Scenery) n.location.transform(n.direction, 1) else null
+
 
     fun getAnimation(tool: SkillingTool?): Animation? =
         when (tool) {
-            SkillingTool.BRONZE_AXE -> Animation.create(3291)
-            SkillingTool.IRON_AXE -> Animation.create(3290)
-            SkillingTool.STEEL_AXE -> Animation.create(3289)
-            SkillingTool.BLACK_AXE -> Animation.create(3288)
+            SkillingTool.BRONZE_AXE  -> Animation.create(3291)
+            SkillingTool.IRON_AXE    -> Animation.create(3290)
+            SkillingTool.STEEL_AXE   -> Animation.create(3289)
+            SkillingTool.BLACK_AXE   -> Animation.create(3288)
             SkillingTool.MITHRIL_AXE -> Animation.create(3287)
             SkillingTool.ADAMANT_AXE -> Animation.create(3286)
-            SkillingTool.RUNE_AXE -> Animation.create(3285)
-            SkillingTool.DRAGON_AXE -> Animation.create(3292)
+            SkillingTool.RUNE_AXE    -> Animation.create(3285)
+            SkillingTool.DRAGON_AXE  -> Animation.create(3292)
             else -> null
         }
 
-    enum class LogType(val log: Log, val level: Int, val experiences: DoubleArray, val enhancedExp: Int) {
+    enum class LogType(val log: Log, val level: Int, val xp: DoubleArray, val enhancedExp: Int) {
         NORMAL(Log.NORMAL, 11, doubleArrayOf(10.0, 40.0), 1),
         ACHEY(Log.ACHEY, 11, doubleArrayOf(10.0, 40.0), 1),
         OAK(Log.OAK, 25, doubleArrayOf(15.0, 60.0), 2),
@@ -280,23 +280,22 @@ class PyreBoatOptionPlugin : OptionHandler() {
         }
 
     companion object {
-        private val REWARDS =
-            arrayOf(
-                ChanceItem(Items.DEATH_RUNE_560, 8, 15, DropFrequency.COMMON),
-                ChanceItem(Items.BLOOD_RUNE_565, 4, 7, DropFrequency.COMMON),
-                ChanceItem(Items.DIAMOND_1601, 2, 2, DropFrequency.UNCOMMON),
-                ChanceItem(Items.BIG_BONES_532, 10, 10, DropFrequency.RARE),
-                ChanceItem(Items.RANARR_POTIONUNF_100, 2, 2, DropFrequency.COMMON),
-                ChanceItem(Items.SILVER_BOLTS_9145, 5, 5, DropFrequency.COMMON),
-                ChanceItem(Items.RUNE_BOLTS_9144, 10, 10, DropFrequency.UNCOMMON),
-                ChanceItem(Items.RUNE_ARROW_892, 10, 10, DropFrequency.COMMON),
-                ChanceItem(Items.ADAMANT_KNIFE_867, 20, 20, DropFrequency.UNCOMMON),
-                ChanceItem(Items.ADAMANT_DARTP_816, 20, 20, DropFrequency.COMMON),
-                ChanceItem(Items.MITH_GRAPPLE_9419, 1, 1, DropFrequency.COMMON),
-            )
+        private val REWARDS = arrayOf(
+            ChanceItem(Items.DEATH_RUNE_560, 8, 15, DropFrequency.COMMON),
+            ChanceItem(Items.BLOOD_RUNE_565, 4, 7, DropFrequency.COMMON),
+            ChanceItem(Items.DIAMOND_1601, 2, 2, DropFrequency.UNCOMMON),
+            ChanceItem(Items.BIG_BONES_532, 10, 10, DropFrequency.RARE),
+            ChanceItem(Items.RANARR_POTIONUNF_100, 2, 2, DropFrequency.COMMON),
+            ChanceItem(Items.SILVER_BOLTS_9145, 5, 5, DropFrequency.COMMON),
+            ChanceItem(Items.RUNE_BOLTS_9144, 10, 10, DropFrequency.UNCOMMON),
+            ChanceItem(Items.RUNE_ARROW_892, 10, 10, DropFrequency.COMMON),
+            ChanceItem(Items.ADAMANT_KNIFE_867, 20, 20, DropFrequency.UNCOMMON),
+            ChanceItem(Items.ADAMANT_DARTP_816, 20, 20, DropFrequency.COMMON),
+            ChanceItem(Items.MITH_GRAPPLE_9419, 1, 1, DropFrequency.COMMON)
+        )
         private val CHEWED_BONES = Item(Items.CHEWED_BONES_11338)
         private val MANGLED_BONES = Item(Items.MANGLED_BONES_11337)
         private val DFH = Item(Items.DRAGON_FULL_HELM_11335)
-        private val USED_LOCATIONS = ArrayList<Location>(20)
+        private val USED_LOCATIONS = Collections.synchronizedList(ArrayList<Location>(20))
     }
 }

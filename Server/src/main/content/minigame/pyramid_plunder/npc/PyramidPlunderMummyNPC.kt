@@ -6,10 +6,8 @@ import core.game.world.map.Location
 import core.tools.RandomFunction
 import shared.consts.NPCs
 
-class PyramidPlunderMummyNPC(
-    location: Location?,
-    player: Player?,
-) : PyramidPlunderNPC(IDS[0], location, player!!) {
+class PyramidPlunderMummyNPC(location: Location?, player: Player?) : PyramidPlunderNPC(IDS[0], location, player!!) {
+
     override fun init() {
         super.init()
         isRespawn = false

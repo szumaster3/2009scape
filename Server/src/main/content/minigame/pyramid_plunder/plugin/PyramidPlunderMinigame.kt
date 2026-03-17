@@ -21,11 +21,8 @@ import shared.consts.Items
 import shared.consts.NPCs
 import shared.consts.Scenery
 
-class PyramidPlunderMinigame :
-    InteractionListener,
-    TickListener,
-    LogoutListener,
-    MapArea {
+class PyramidPlunderMinigame : InteractionListener, TickListener, LogoutListener, MapArea
+{
     override fun tick() {
         val playersToExpel = PlunderUtils.decrementTimeRemaining()
         playersToExpel.forEach { player -> PlunderUtils.expel(player, false) }
@@ -56,7 +53,7 @@ class PyramidPlunderMinigame :
         val openUrn = intArrayOf(Scenery.URN_16505, Scenery.URN_16506, Scenery.URN_16507)
         val snakeUrn = intArrayOf(Scenery.URN_16509, Scenery.URN_16510, Scenery.URN_16511)
         val charmedSnake = intArrayOf(Scenery.URN_16513, Scenery.URN_16514, Scenery.URN_16515)
-        val entranceId = intArrayOf(16484, 16487, 16490, 16493)
+        val entranceId = intArrayOf(Scenery.AN_ANONYMOUS_LOOKING_DOOR_16484, Scenery.AN_ANONYMOUS_LOOKING_DOOR_16487, Scenery.AN_ANONYMOUS_LOOKING_DOOR_16490, Scenery.AN_ANONYMOUS_LOOKING_DOOR_16493)
         val sarcophagusId = Scenery.SARCOPHAGUS_16495
 
         on(Scenery.SPEARTRAP_16517, IntType.SCENERY, "pass") { player, node ->

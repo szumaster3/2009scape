@@ -11,6 +11,7 @@ import core.game.node.item.GroundItemManager
 import core.game.node.item.Item
 import core.plugin.Initializable
 import core.tools.END_DIALOGUE
+import shared.consts.Components
 import shared.consts.Items
 import shared.consts.NPCs
 
@@ -36,13 +37,7 @@ class MrsWinkinDialogueFile : FlagsHandler() {
     override fun handle(componentID: Int, buttonID: Int) {
         when (stage) {
             0 -> npcl(FaceAnim.OLD_NORMAL, "Oh, hello there, dear. How can I help you?").also { stage++ }
-            1 -> options(
-                "Where are we?",
-                "Have you got any flags?",
-                "Do you have a spare spade?",
-                "Do you have anything for trade?",
-                "Nothing. I'm fine, thanks.",
-            ).also { stage++ }
+            1 -> options("Where are we?", "Have you got any flags?", "Do you have a spare spade?", "Do you have anything for trade?", "Nothing. I'm fine, thanks.").also { stage++ }
 
             2 -> when (buttonID) {
                 1 -> playerl("Where are we?").also { stage = 10 }
@@ -84,7 +79,7 @@ class MrsWinkinDialogueFile : FlagsHandler() {
             40 -> npcl(FaceAnim.OLD_NORMAL, "Of course.").also { stage++ }
             41 -> {
                 end()
-                player!!.interfaceManager.open(Component(686))
+                player!!.interfaceManager.open(Component(Components.RABBIT_SHOP_686))
             }
             51 -> npcl(FaceAnim.OLD_NORMAL, "Okay, dear.").also { stage = END_DIALOGUE }
         }

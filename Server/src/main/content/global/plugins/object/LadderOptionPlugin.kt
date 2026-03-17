@@ -20,17 +20,10 @@ class LadderOptionPlugin : OptionHandler() {
         return this
     }
 
-    override fun handle(
-        player: Player,
-        node: Node,
-        option: String,
-    ): Boolean {
+    override fun handle(player: Player, node: Node, option: String): Boolean {
         ClimbActionHandler.climbLadder(player, node as Scenery, option)
         return true
     }
 
-    override fun getDestination(
-        n: Node,
-        `object`: Node,
-    ): Location? = ClimbActionHandler.getDestination(`object` as Scenery)
+    override fun getDestination(n: Node, `object`: Node): Location? = ClimbActionHandler.getDestination(`object` as Scenery)
 }

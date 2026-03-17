@@ -17,32 +17,24 @@ class MagicAltarOptionPlugin : InteractionListener {
     override fun defineListeners() {
 
         /*
-         * Handles swaping the spellbooks on altar.
+         * Handles swapping the spellbooks on altar.
          */
 
         on(intArrayOf(ANCIENT_ALTAR, LUNAR_ALTAR), IntType.SCENERY, "pray-at", "pray") { player, node ->
-            if (meetsRequirements(player, node)) {
-                swapSpellBook(player, node)
+            val altar = node as? Node ?: return@on true
+            if (meetsRequirements(player, altar)) {
+                swapSpellBook(player, altar)
             }
             return@on true
         }
     }
 
     private fun meetsRequirements(player: Player, altar: Node): Boolean {
-        val level = if (altar.id == ANCIENT_ALTAR) 50 else 65
-        if (!hasRequirement(
-                player,
-                if (altar.id ==
-                    ANCIENT_ALTAR
-                ) {
-                    Quests.DESERT_TREASURE
-                } else {
-                    Quests.LUNAR_DIPLOMACY
-                },
-            )
-        ) {
-            return false
-        }
+        val isAncient = altar.id == ANCIENT_ALTAR
+        val requiredQuest = if (isAncient) Quests.DESERT_TREASURE else Quests.LUNAR_DIPLOMACY
+        val level = if (isAncient) 50 else 65
+
+        if (!hasRequirement(player, requiredQuest)) return false
         if (!hasLevelStat(player, Skills.MAGIC, level)) {
             sendMessage(player, "You need a Magic level of at least $level in order to do this.")
             return false
@@ -51,45 +43,42 @@ class MagicAltarOptionPlugin : InteractionListener {
         return true
     }
 
-    private fun swapSpellBook(
-        player: Player,
-        altar: Node,
-    ) {
+    private fun swapSpellBook(player: Player, altar: Node) {
         lock(player, 3)
-        playAudio(player, Sounds.PRAYER_RECHARGE_2674)
-        animate(player, Animations.HUMAN_PRAY_645)
+        try {
+            playAudio(player, Sounds.PRAYER_RECHARGE_2674)
+            animate(player, Animations.HUMAN_PRAY_645)
 
-        if (altar.id == ANCIENT_ALTAR) {
-            player.skills.decrementPrayerPoints(player.skills.prayerPoints)
-        }
-        if (SpellBook.forInterface(player.spellBookManager.spellBook) ==
-            if (altar.id == ANCIENT_ALTAR) SpellBook.ANCIENT else SpellBook.LUNAR
-        ) {
-            sendMessage(
-                player,
-                if (altar.id ==
-                    ANCIENT_ALTAR
-                ) {
+            val isAncient = altar.id == ANCIENT_ALTAR
+
+            if (isAncient) {
+                player.skills.decrementPrayerPoints(player.skills.prayerPoints)
+            }
+
+            val currentBook = SpellBook.forInterface(player.spellBookManager.spellBook) ?: SpellBook.MODERN
+
+            if (currentBook == if (isAncient) SpellBook.ANCIENT else SpellBook.LUNAR) {
+                val message = if (isAncient) {
                     "You feel a strange drain upon your memory..."
                 } else {
                     "Modern spells activated!"
-                },
-            )
-            player.spellBookManager.setSpellBook(SpellBook.MODERN)
-            player.spellBookManager.update(player)
-        } else {
-            sendMessage(
-                player,
-                if (altar.id ==
-                    ANCIENT_ALTAR
-                ) {
+                }
+                sendMessage(player, message)
+                player.spellBookManager.setSpellBook(SpellBook.MODERN)
+            } else {
+                val message = if (isAncient) {
                     "You feel a strange wisdom fill your mind..."
                 } else {
                     "Lunar spells activated!"
-                },
-            )
-            player.spellBookManager.setSpellBook(if (altar.id == ANCIENT_ALTAR) SpellBook.ANCIENT else SpellBook.LUNAR)
+                }
+                sendMessage(player, message)
+                player.spellBookManager.setSpellBook(if (isAncient) SpellBook.ANCIENT else SpellBook.LUNAR)
+            }
+
             player.spellBookManager.update(player)
+
+        } finally {
+            player.unlock()
         }
     }
 

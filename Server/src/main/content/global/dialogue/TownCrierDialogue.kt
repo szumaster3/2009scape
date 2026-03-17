@@ -11,7 +11,6 @@ import core.game.node.entity.player.link.diary.DiaryType
 import core.game.world.GameWorld
 import core.game.world.GameWorld.settings
 import core.plugin.Initializable
-import core.tools.END_DIALOGUE
 import shared.consts.NPCs
 
 @Initializable

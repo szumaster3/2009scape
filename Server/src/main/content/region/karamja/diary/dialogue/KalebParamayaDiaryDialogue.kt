@@ -17,7 +17,7 @@ class KalebParamayaDiaryDialogue : DialogueFile() {
                     stage = 2
                 }
                 if (Diary.canReplaceReward(player!!, DiaryType.KARAMJA, 1)) {
-                    player("I've seemed to have lost my gloves..")
+                    player("I've seemed to have lost my gloves...")
                     stage = 7
                 }
                 options("What is the Achievement Diary?", "What are the rewards?", "How do I claim the rewards?", "See you later.")

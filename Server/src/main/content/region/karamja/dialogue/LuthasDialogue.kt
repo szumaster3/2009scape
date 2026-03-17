@@ -1,9 +1,6 @@
 package content.region.karamja.dialogue
 
-import core.api.getAttribute
-import core.api.removeAttribute
-import core.api.sendMessage
-import core.api.setAttribute
+import core.api.*
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim
 import core.game.node.entity.npc.NPC
@@ -13,6 +10,7 @@ import core.game.node.item.GroundItemManager
 import core.game.node.item.Item
 import core.plugin.Initializable
 import core.tools.END_DIALOGUE
+import shared.consts.Items
 import shared.consts.NPCs
 
 /**
@@ -69,16 +67,16 @@ class LuthasDialogue(player: Player? = null) : Dialogue(player) {
             20 -> npc(FaceAnim.HAPPY, "Well done, here's your payment.").also { stage++ }
             21 -> {
                 end()
+                val global = player.getSavedData().globalData
+                global.setKaramjaBannanas(0)
+                global.setLuthasTask(false)
+
+                if (player.getAttribute("stashed-rum")) {
+                    player.removeAttribute("stashed-rum")
+                    player.setAttribute("/save:wydin-rum", true)
+                }
                 sendMessage(player, "Luthas hands you 30 coins.")
-                player.getSavedData().globalData.setKaramjaBannanas(0)
-                player.getSavedData().globalData.setLuthasTask(false)
-                if (getAttribute(player, "stashed-rum", false)) {
-                    removeAttribute(player, "stashed-rum")
-                    setAttribute(player, "/save:wydin-rum", true)
-                }
-                if (!player.inventory.add(Item(995, 30))) {
-                    GroundItemManager.create(GroundItem(Item(995, 30), player.location, player))
-                }
+                addItemOrDrop(player, Items.COINS_995, 30)
             }
         }
         return true

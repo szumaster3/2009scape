@@ -26,7 +26,7 @@ class JungleForesterDiaryDialogue(player: Player? = null) : Dialogue(player) {
                 if (Diary.canClaimLevelRewards(player, DiaryType.KARAMJA, 2)) {
                     player("I've done all the hard tasks in my Karamja", "Achievement Diary.").also { stage = 9 }
                 } else if (Diary.canReplaceReward(player, DiaryType.KARAMJA, 2)) {
-                    player("I've seemed to have lost my gloves..").also { stage = 14 }
+                    player("I've seemed to have lost my gloves...").also { stage = 14 }
                 } else {
                     options("What is the Achievement Diary?", "What are the rewards?", "How do I claim the rewards?", "See you later.")
                     stage++

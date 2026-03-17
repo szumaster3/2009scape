@@ -72,7 +72,9 @@ class PortSarimPlugin : InteractionListener {
         on(Scenery.CRATE_2071, IntType.SCENERY, "search") { player, _ ->
             sendMessage(player, "There are lots of bananas in the crate.")
 
-            if (!player.getAttribute("wydin-rum", false)) {
+            val rumAvailable = player.getAttribute("wydin-rum", false)
+
+            if (!rumAvailable) {
                 setTitle(player, 2)
                 sendOptions(player, "Do you want to take a banana?", "Yes.", "No.")
                 addDialogueAction(player) { _, option ->
@@ -91,15 +93,15 @@ class PortSarimPlugin : InteractionListener {
             } else {
                 if (freeSlots(player) == 0) {
                     sendMessage(player, "Not enough inventory space to take your rum.")
-                } else {
-                    lock(player, 2)
-                    animate(player, Animations.HUMAN_MULTI_USE_832)
-                    sendMessage(player, "You find your bottle of rum in amongst the bananas.")
-                    addItem(player, Items.KARAMJAN_RUM_431)
-                    removeAttributes(player, "wydin-rum", "stashed-rum")
+                    return@on true
                 }
-            }
+                lock(player, 2)
+                animate(player, Animations.HUMAN_MULTI_USE_832)
+                sendMessage(player, "You find your bottle of rum in amongst the bananas.")
+                addItem(player, Items.KARAMJAN_RUM_431)
+                removeAttributes(player, "wydin-rum", "stashed-rum")
 
+            }
             return@on true
         }
 
@@ -148,7 +150,7 @@ class PortSarimPlugin : InteractionListener {
 
         on(NPCs.WORMBRAIN_745, IntType.NPC, "attack") { player, node ->
             if (getQuestStage(player, Quests.DRAGON_SLAYER) != 20) {
-                sendDialogue(player, "The goblin is already in prison. You have no reason to attack him.")
+                sendMessage(player, "The goblin is already in prison. You have no reason to attack him.")
             } else {
                 player.properties.combatPulse.attack(node)
             }
@@ -208,14 +210,7 @@ class PortSarimPlugin : InteractionListener {
             return@on true
         }
 
-        on(intArrayOf(
-            NPCs.MONK_OF_ENTRANA_657,
-            NPCs.MONK_OF_ENTRANA_658,
-            NPCs.MONK_OF_ENTRANA_2728,
-            NPCs.MONK_OF_ENTRANA_2729,
-            NPCs.MONK_OF_ENTRANA_2730,
-            NPCs.MONK_OF_ENTRANA_2731,
-        ), IntType.NPC, "talk-to") { player, node ->
+        on(intArrayOf(NPCs.MONK_OF_ENTRANA_657, NPCs.MONK_OF_ENTRANA_658, NPCs.MONK_OF_ENTRANA_2728, NPCs.MONK_OF_ENTRANA_2729, NPCs.MONK_OF_ENTRANA_2730, NPCs.MONK_OF_ENTRANA_2731), IntType.NPC, "talk-to") { player, node ->
             openDialogue(player, MonkOfEntranaDialogue(), node.asNpc())
             return@on true
         }
@@ -230,24 +225,16 @@ class PortSarimPlugin : InteractionListener {
     private class EntranceDialogue : DialogueFile() {
         override fun handle(componentID: Int, buttonID: Int) {
             when(stage) {
-                0 -> {
-                    sendDialogueLines(player!!, "STOP! The creatures in this cave are VERY Dangerous. Are you", "sure you want to enter?")
-                    stage++
-                }
-                1 -> {
-                    options("Yes, I'm not afraid of death!", "No thanks, I don't want to die!")
-                    stage++
-                }
-                2 -> {
-                    end()
-                    if (buttonID == 1) {
-                        val LOCATION = Location.create(3056, 9555, 0)
-                        player!!.properties.teleportLocation = LOCATION
+                0 -> sendDialogueLines(player!!, "STOP! The creatures in this cave are VERY Dangerous. Are you", "sure you want to enter?").also { stage++ }
+                1 -> options("Yes, I'm not afraid of death!", "No thanks, I don't want to die!").also { stage++ }
+                2 -> when(buttonID) {
+                    1 -> {
+                        val location = Location.create(3056, 9555, 0)
+                        player!!.properties.teleportLocation = location
                         sendMessage(player!!, "You venture into the icy cavern.")
                     }
                 }
             }
-
         }
     }
 }

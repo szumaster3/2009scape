@@ -1,11 +1,13 @@
 package content.region.karamja.shilo_village.plugin
 
+import content.region.karamja.diary.KaramjaAchievementDiary
 import core.api.*
 import core.game.global.action.DoorActionHandler
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
 import core.game.interaction.QueueStrength
 import core.game.node.entity.player.Player
+import core.game.node.entity.player.link.diary.DiaryType
 import core.game.node.item.Item
 import core.game.world.map.Location
 import shared.consts.*
@@ -155,11 +157,12 @@ class ShiloVillagePlugin : InteractionListener {
                 return
             }
 
-            lock(player, 6)
+            if(!removeItem(player, Item(Items.COINS_995, 10))) return
+
             closeDialogue(player)
+            lock(player, 6)
             sendDialogueLines(player, "You pay the fare and hand 10 gold coins to $npcName.")
             addDialogueAction(player) { _, _ ->
-                removeItem(player, Item(Items.COINS_995, 10))
                 openOverlay(player, Components.FADE_TO_BLACK_120)
                 queueScript(player, 5, QueueStrength.SOFT) {
                     val destination = if (isShilo) Location.create(2834, 2951, 0) else Location.create(2780, 3212, 0)
@@ -167,8 +170,12 @@ class ShiloVillagePlugin : InteractionListener {
                     closeOverlay(player)
                     openOverlay(player, Components.FADE_FROM_BLACK_170)
                     sendDialogueLines(player, "You feel tired from the journey, but at least you didn't have to walk", "all that distance.")
+                    if(isShilo){
+                        finishDiaryTask(player, DiaryType.KARAMJA, 1, KaramjaAchievementDiary.Companion.MediumTasks.USE_VIGROY_HAJEDY_CARTS)
+                    }
                     return@queueScript stopExecuting(player)
                 }
+                return@addDialogueAction
             }
         }
     }

@@ -236,13 +236,6 @@ class KaramjaAchievementDiary : DiaryEventHookBase(DiaryType.KARAMJA) {
             }
 
             11058 -> {
-                if (event.target.id == NPCs.HAJEDY_510 && event.option == "pay-fare") {
-                    finishTask(
-                        player = player,
-                        level = DiaryLevel.MEDIUM,
-                        task = MediumTasks.USE_VIGROY_HAJEDY_CARTS,
-                    )
-                }
                 if (event.target.id in FRUIT_TREES) {
                     finishTask(
                         player = player,

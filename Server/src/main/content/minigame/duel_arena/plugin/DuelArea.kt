@@ -15,9 +15,9 @@ import core.game.node.entity.combat.equipment.WeaponInterface
 import core.game.node.entity.impl.PulseManager
 import core.game.node.entity.player.Player
 import core.game.node.entity.player.link.HintIconManager
-import core.game.node.entity.player.link.WarningManager
-import core.game.node.entity.player.link.Warnings
 import core.game.node.entity.player.link.prayer.PrayerType
+import core.game.node.entity.player.link.warning.WarningManager
+import core.game.node.entity.player.link.warning.WarningType
 import core.game.node.item.GroundItem
 import core.game.node.item.GroundItemManager
 import core.game.node.item.Item
@@ -263,33 +263,44 @@ class DuelArea
             return false
         }
 
-        override fun enter(e: Entity): Boolean {
-            if (e is Player) {
-                val p = e.asPlayer()
-                if (inBorders(p, 3312, 3233, 3313, 3236) && !WarningManager.isWarningDisabled(p, Warnings.DUEL_ARENA)) {
-                    WarningManager.openWarningInterface(p, Warnings.DUEL_ARENA)
-                    return true;
+    override fun enter(e: Entity): Boolean {
+        if (e is Player) {
+            val p = e.asPlayer()
+
+            if (inBorders(p, 3312, 3233, 3313, 3236)) {
+
+                WarningManager.trigger(p, WarningType.DUEL_ARENA) {
+                    getSession(p)
+                    p.properties.isSafeZone = true
+                    p.properties.spawnLocation = RandomFunction.getRandomElement<Location>(RESPAWN_LOCATIONS)
+                    p.interaction.remove(DuelArenaActivity.CHALLENGE_OPTION)
+                    p.interaction.set(FIGHT_OPTION)
                 }
+
+                return true
             }
-            if (e.isPlayer) {
-                getSession(e.asPlayer())
-                e.properties.isSafeZone = true
-                e.properties.spawnLocation = RandomFunction.getRandomElement<Location>(RESPAWN_LOCATIONS)
-                e.asPlayer().interaction.remove(DuelArenaActivity.CHALLENGE_OPTION)
-                e.asPlayer().interaction.set(FIGHT_OPTION)
-            } else if (e is Familiar) {
-                val f = e
-                val o = f.owner
-                if (o != null && !o.familiarManager.hasPet()) {
-                    val s: DuelSession = getSession(f.owner)!!
-                    if (s != null && s.hasRule(DuelRule.ENABLE_SUMMONING)) {
-                        f.transform()
-                    }
-                }
-                f.properties.isMultiZone = true
-            }
-            return super.enter(e)
         }
+
+        if (e.isPlayer) {
+            getSession(e.asPlayer())
+            e.properties.isSafeZone = true
+            e.properties.spawnLocation = RandomFunction.getRandomElement<Location>(RESPAWN_LOCATIONS)
+            e.asPlayer().interaction.remove(DuelArenaActivity.CHALLENGE_OPTION)
+            e.asPlayer().interaction.set(FIGHT_OPTION)
+        } else if (e is Familiar) {
+            val f = e
+            val o = f.owner
+            if (o != null && !o.familiarManager.hasPet()) {
+                val s: DuelSession = getSession(f.owner)!!
+                if (s != null && s.hasRule(DuelRule.ENABLE_SUMMONING)) {
+                    f.transform()
+                }
+            }
+            f.properties.isMultiZone = true
+        }
+
+        return super.enter(e)
+    }
 
         @Suppress("deprecation")
         override fun leave(

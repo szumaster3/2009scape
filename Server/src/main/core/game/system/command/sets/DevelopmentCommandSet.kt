@@ -18,7 +18,7 @@ import core.game.node.entity.combat.ImpactHandler.HitsplatType
 import core.game.node.entity.player.Player
 import core.game.node.entity.player.link.HintIconManager
 import core.game.node.entity.player.link.SpellBookManager
-import core.game.node.entity.player.link.Warnings
+import core.game.node.entity.player.link.warning.WarningType
 import core.game.node.entity.player.link.diary.DiaryType
 import core.game.system.command.Privilege
 import core.game.system.task.Pulse
@@ -132,9 +132,9 @@ class DevelopmentCommandSet : CommandSet(Privilege.ADMIN) {
             usage = "::resetwarnings",
             description = "Resets all warnings"
         ) { player, _ ->
-            val resetList = mutableListOf<Warnings>()
+            val resetList = mutableListOf<WarningType>()
 
-            Warnings.values.forEach { warning ->
+            WarningType.values.forEach { warning ->
                 val currentValue = getVarbit(player, warning.varbit)
                 if (currentValue != 0) {
                     setVarbit(player, warning.varbit, 0)

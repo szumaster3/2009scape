@@ -5,9 +5,8 @@ import core.game.global.action.ClimbActionHandler
 import core.game.global.action.DoorActionHandler
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
-import core.game.node.entity.player.link.WarningManager.Companion.isWarningDisabled
-import core.game.node.entity.player.link.WarningManager.Companion.openWarningInterface
-import core.game.node.entity.player.link.Warnings
+import core.game.node.entity.player.link.warning.WarningManager
+import core.game.node.entity.player.link.warning.WarningType
 import core.game.world.map.Location
 import core.game.world.update.flag.context.Animation
 import shared.consts.Animations
@@ -96,14 +95,17 @@ class EdgevillePlugin : InteractionListener {
          */
 
         on(WILDERNESS_METAL_GATE, IntType.SCENERY, "open") { player, node ->
-            val warning = Warnings.WILDERNESS_DITCH
-            if (!isWarningDisabled(player, warning) && player.location.y < 9918) {
-                setAttribute(player, "wild-metal-gate", true)
-                setAttribute(player, "wildy_ditch", node)
-                openWarningInterface(player, warning)
+            val warning = WarningType.WILDERNESS_DITCH
+            if (player.location.y < 9918) {
+                WarningManager.trigger(player, warning) {
+                    setAttribute(player, "wild-metal-gate", true)
+                    setAttribute(player, "wildy_ditch", node)
+                    DoorActionHandler.handleAutowalkDoor(player, node.asScenery())
+                }
             } else {
                 DoorActionHandler.handleAutowalkDoor(player, node.asScenery())
             }
+
             return@on true
         }
     }

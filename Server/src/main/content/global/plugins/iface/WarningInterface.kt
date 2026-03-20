@@ -3,8 +3,8 @@ package content.global.plugins.iface
 import core.api.getVarbit
 import core.api.sendMessage
 import core.game.interaction.InterfaceListener
-import core.game.node.entity.player.link.WarningManager
-import core.game.node.entity.player.link.Warnings
+import core.game.node.entity.player.link.warning.WarningManager
+import core.game.node.entity.player.link.warning.WarningType
 import shared.consts.Components
 
 /**
@@ -19,7 +19,8 @@ class WarningInterface : InterfaceListener {
          */
 
         on(Components.CWS_DOOMSAYER_583) { player, _, _, buttonID, _, _ ->
-            val warning = Warnings.values().find { it.buttonId == buttonID } ?: return@on true
+            val warning = WarningType.values().find { it.buttonId == buttonID } ?: return@on true
+
             if (buttonID == 81) {
                 sendMessage(player, "This option is only available on PvP worlds.")
                 return@on true
@@ -34,11 +35,12 @@ class WarningInterface : InterfaceListener {
                 return@on true
             }
 
-            val wasDisabled = WarningManager.isWarningDisabled(player, warning)
+            val wasDisabled = WarningManager.isDisabled(player, warning)
             WarningManager.toggleWarning(player, warning)
 
             val status = if (wasDisabled) "enabled" else "disabled"
             sendMessage(player, "You have $status the ${warning.name.lowercase().replace('_', ' ')} warning.")
+
             return@on true
         }
     }

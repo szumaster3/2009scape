@@ -13,8 +13,8 @@ import core.game.node.entity.impl.Animator.Priority;
 import core.game.node.entity.impl.Projectile;
 import core.game.node.entity.npc.AbstractNPC;
 import core.game.node.entity.player.Player;
-import core.game.node.entity.player.link.WarningManager;
-import core.game.node.entity.player.link.Warnings;
+import core.game.node.entity.player.link.warning.WarningManager;
+import core.game.node.entity.player.link.warning.WarningType;
 import core.game.node.entity.player.link.diary.DiaryType;
 import core.game.node.item.Item;
 import core.game.system.task.Pulse;
@@ -194,20 +194,20 @@ public final class GiantMoleNPC extends AbstractNPC {
                     player.getPacketDispatch().sendMessage("It's going to be dark down there, I should bring a light source.");
                     return;
                 }
-                if (!WarningManager.isWarningDisabled(player, Warnings.FALADOR_MOLE_LAIR)) {
-                    WarningManager.openWarningInterface(player, Warnings.FALADOR_MOLE_LAIR);
-                    return;
-                } else {
+
+                WarningManager.trigger(player, WarningType.FALADOR_MOLE_LAIR, () -> {
                     player.getProperties().setTeleportLocation(Location.create(1752, 5237, 0));
                     playAudio(player, Sounds.ROOF_COLLAPSE_1384);
-                    player.getPacketDispatch().sendMessage("You seem to have dropped down into a network of mole tunnels.");
+                    player.getPacketDispatch().sendMessage("You seem to have dropped into a network of mole tunnels.");
 
                     if (!player.getAchievementDiaryManager().getDiary(DiaryType.FALADOR).isComplete(0, 5)) {
                         player.getAchievementDiaryManager().getDiary(DiaryType.FALADOR).updateTask(player, 0, 5, true);
                     }
-                }
+                    return null;
+                });
             }
         };
+
         DigSpadeHandler.register(Location.create(3005, 3376, 0), action);
         DigSpadeHandler.register(Location.create(2999, 3375, 0), action);
         DigSpadeHandler.register(Location.create(2996, 3377, 0), action);
@@ -235,6 +235,7 @@ public final class GiantMoleNPC extends AbstractNPC {
                 return true;
             }
         });
+
         return super.newInstance(arg);
     }
 

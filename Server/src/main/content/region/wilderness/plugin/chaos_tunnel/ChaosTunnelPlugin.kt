@@ -10,8 +10,8 @@ import core.game.node.entity.Entity
 import core.game.node.entity.npc.NPC
 import core.game.node.entity.player.Player
 import core.game.node.entity.player.link.TeleportManager
-import core.game.node.entity.player.link.WarningManager
-import core.game.node.entity.player.link.Warnings
+import core.game.node.entity.player.link.warning.WarningManager
+import core.game.node.entity.player.link.warning.WarningType
 import core.game.node.scenery.Scenery
 import core.game.world.GameWorld
 import core.game.world.GameWorld.ticks
@@ -54,10 +54,11 @@ class ChaosTunnelPlugin : MapArea, InteractionListener {
         }
 
         on(intArrayOf(Objects.RIFT_28891, Objects.RIFT_28892, Objects.RIFT_28893), IntType.SCENERY, "enter") { player, node ->
+
             val WARNING_MAP = mapOf(
-               Objects.RIFT_28891 to Warnings.CHAOS_TUNNELS_WEST,
-               Objects.RIFT_28892 to Warnings.CHAOS_TUNNELS_CENTRAL,
-               Objects.RIFT_28893 to Warnings.CHAOS_TUNNELS_EAST
+                Objects.RIFT_28891 to WarningType.CHAOS_TUNNELS_WEST,
+                Objects.RIFT_28892 to WarningType.CHAOS_TUNNELS_CENTRAL,
+                Objects.RIFT_28893 to WarningType.CHAOS_TUNNELS_EAST
             )
 
             if (player.inCombat()) {
@@ -86,12 +87,17 @@ class ChaosTunnelPlugin : MapArea, InteractionListener {
             }
 
             val warning = WARNING_MAP[node.id]
-            if (warning != null && !WarningManager.isWarningDisabled(player, warning)) {
-                WarningManager.openWarningInterface(player, warning)
-                return@on true
+
+            if (warning != null) {
+                WarningManager.trigger(player, warning) {
+                    if (loc != null) {
+                        teleport(player, loc)
+                    }
+                }
+            } else {
+                if (loc != null) teleport(player, loc)
             }
 
-            if (loc != null) teleport(player, loc)
             return@on true
         }
 

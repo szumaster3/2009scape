@@ -2,6 +2,7 @@ package content.region.kandarin.yanille.quest.itwatchtower.plugin
 
 import content.data.GameAttributes
 import content.data.skill.SkillingTool
+import content.region.kandarin.yanille.quest.itwatchtower.cutscene.EnclaveCutscene
 import content.region.kandarin.yanille.quest.itwatchtower.dialogue.BattlementDialogue
 import content.region.kandarin.yanille.quest.itwatchtower.dialogue.CityGuardDialogue
 import content.region.kandarin.yanille.quest.itwatchtower.dialogue.OgreGuardNorthWestGateDialogue
@@ -18,9 +19,8 @@ import core.game.node.entity.combat.ImpactHandler
 import core.game.node.entity.npc.NPC
 import core.game.node.entity.player.Player
 import core.game.node.entity.player.link.TeleportManager
-import core.game.node.entity.player.link.WarningHandler
-import core.game.node.entity.player.link.WarningManager
-import core.game.node.entity.player.link.Warnings
+import core.game.node.entity.player.link.warning.WarningManager
+import core.game.node.entity.player.link.warning.WarningType
 import core.game.node.entity.skill.Skills
 import core.game.node.item.Item
 import core.game.world.map.Location
@@ -437,15 +437,26 @@ class WatchTowerPlugin : InteractionListener {
          */
 
         onUseWith(IntType.NPC, Items.CAVE_NIGHTSHADE_2398, NPCs.ENCLAVE_GUARD_870) { player, _, npc ->
-            sendNPCDialogueLines(player, npc.id, FaceAnim.OLD_DEFAULT, false, "What is this? Arrrrgh! I cannot stand this plant! Argh,", "it burns! It burns!")
+            sendNPCDialogueLines(
+                player,
+                npc.id,
+                FaceAnim.OLD_DEFAULT,
+                false,
+                "What is this? Arrrrgh! I cannot stand this plant! Argh,",
+                "it burns! It burns!"
+            )
+
             addDialogueAction(player) { _, _ ->
-                if (!WarningManager.isWarningDisabled(player, Warnings.WATCHTOWER_SHAMAN_CAVE)) {
-                    WarningManager.openWarningInterface(player, Warnings.WATCHTOWER_SHAMAN_CAVE)
-                    return@addDialogueAction
-                } else {
-                    WarningHandler.handleWatchtower(player)
+                WarningManager.trigger(player, WarningType.WATCHTOWER_SHAMAN_CAVE) {
+                    if (isQuestComplete(player, Quests.WATCHTOWER)) {
+                        teleport(player, Location.create(2588, 9410, 0), TeleportManager.TeleportType.INSTANT)
+                        sendMessage(player, "You run past the guard while he's busy.")
+                    } else {
+                        EnclaveCutscene(player).start(true)
+                    }
                 }
             }
+
             return@onUseWith true
         }
 

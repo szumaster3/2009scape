@@ -1,6 +1,6 @@
 package content.global.bots
 
-import core.api.closeInterface
+import content.region.wilderness.plugin.WildernessDitchPlugin
 import core.api.forceMove
 import core.game.bots.AIRepository
 import core.game.bots.CombatBotAssembler
@@ -16,14 +16,12 @@ import core.game.node.entity.combat.CombatSwingHandler
 import core.game.node.entity.combat.InteractionType
 import core.game.node.entity.combat.MeleeSwingHandler
 import core.game.node.entity.player.Player
-import core.game.node.entity.player.link.WarningHandler
 import core.game.node.entity.skill.Skills
 import core.game.node.item.Item
 import core.game.world.map.Location
 import core.game.world.map.RegionManager
 import core.game.world.map.zone.ZoneBorders
 import core.game.world.map.zone.impl.WildernessZone
-import core.tools.RandomFunction
 import shared.consts.Animations
 import shared.consts.Items
 import shared.consts.Scenery
@@ -212,7 +210,7 @@ class GreenDragonKiller(val style: CombatStyle) : Script() {
             return
         }
 
-        val (start, end) = WarningHandler.getDitchLocations(bot.location, ditch.location, 0)
+        val (start, end) = WildernessDitchPlugin.getDitchLocations(bot.location, ditch.location, 0)
 
         if (bot.location != start) {
             bot.pulseManager.run(object : MovementPulse(bot, start, DestinationFlag.LOCATION) {

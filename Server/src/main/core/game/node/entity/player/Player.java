@@ -47,6 +47,7 @@ import core.game.node.entity.player.link.prayer.Prayer;
 import core.game.node.entity.player.link.prayer.PrayerType;
 import core.game.node.entity.player.link.quest.QuestRepository;
 import core.game.node.entity.player.link.request.RequestManager;
+import core.game.node.entity.player.link.warning.PendingWarning;
 import core.game.node.entity.skill.Skills;
 import core.game.node.entity.state.State;
 import core.game.node.entity.state.StateRepository;
@@ -203,6 +204,11 @@ public class Player extends Entity {
      * Handles packet dispatching for the player.
      */
     private final PacketDispatch packetDispatch = new PacketDispatch(this);
+
+    /**
+     * Represents a warning that has been triggered.
+     */
+    private PendingWarning pendingWarning;
 
     /**
      * Indicates whether the player was logged out automatically for being AFK.
@@ -1416,6 +1422,24 @@ public class Player extends Entity {
      */
     public void setCustomState(String state) {
         this.customState = state;
+    }
+
+    /**
+     * Gets pending warning.
+     *
+     * @return the pending warning
+     */
+    public PendingWarning getPendingWarning() {
+        return pendingWarning;
+    }
+
+    /**
+     * Sets pending warning.
+     *
+     * @param pendingWarning the pendingWarning
+     */
+    public void setPendingWarning(PendingWarning pendingWarning) {
+        this.pendingWarning = pendingWarning;
     }
 
     /**

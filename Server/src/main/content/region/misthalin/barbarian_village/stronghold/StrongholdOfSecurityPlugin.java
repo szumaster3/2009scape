@@ -14,8 +14,8 @@ import core.game.interaction.OptionHandler;
 import core.game.node.Node;
 import core.game.node.entity.Entity;
 import core.game.node.entity.player.Player;
-import core.game.node.entity.player.link.WarningManager;
-import core.game.node.entity.player.link.Warnings;
+import core.game.node.entity.player.link.warning.WarningManager;
+import core.game.node.entity.player.link.warning.WarningType;
 import core.game.node.scenery.Scenery;
 import core.game.system.task.Pulse;
 import core.game.world.GameWorld;
@@ -112,26 +112,35 @@ public final class StrongholdOfSecurityPlugin extends MapZone implements Plugin<
                     ladder(player, Location.create(2042, 5245, 0));
                     player.getPacketDispatch().sendMessage("You climb up the ladder to the level above.");
                     return true;
-                case 16149: // Ladder from Level 1 to Level 2 (Flesh crawlers)
-                    if (!WarningManager.isWarningDisabled(player, Warnings.STRONGHOLD_OF_SECURITY_LADDERS)) {
-                        openComponent(player, Location.create(2042, 5245, 0));
-                    } else {
-                        ClimbActionHandler.climb(player, new Animation(Animations.HUMAN_CLIMB_STAIRS_828), Location.create(2042, 5245, 0));
-                    }
+                case 16149:
+                    WarningManager.trigger(player, WarningType.STRONGHOLD_OF_SECURITY_LADDERS, () -> {
+                        ClimbActionHandler.climb(
+                                player,
+                                new Animation(Animations.HUMAN_CLIMB_STAIRS_828),
+                                Location.create(2042, 5245, 0)
+                        );
+                        return null;
+                    });
                     return true;
-                case 16081: // Ladder from Level 2 to Level 3 (Poison spiders)
-                    if (!WarningManager.isWarningDisabled(player, Warnings.STRONGHOLD_OF_SECURITY_LADDERS)) {
-                        openComponent(player, Location.create(2123, 5252, 0));
-                    } else {
-                        ClimbActionHandler.climb(player, new Animation(Animations.HUMAN_CLIMB_STAIRS_828), Location.create(2123, 5252, 0));
-                    }
+                case 16081:
+                    WarningManager.trigger(player, WarningType.STRONGHOLD_OF_SECURITY_LADDERS, () -> {
+                        ClimbActionHandler.climb(
+                                player,
+                                new Animation(Animations.HUMAN_CLIMB_STAIRS_828),
+                                Location.create(2123, 5252, 0)
+                        );
+                        return null;
+                    });
                     return true;
-                case 16115: // Ladder from Level 3 to Level 4 (Shades)
-                    if (!WarningManager.isWarningDisabled(player, Warnings.STRONGHOLD_OF_SECURITY_LADDERS)) {
-                        openComponent(player, Location.create(2358, 5215, 0));
-                    } else {
-                        ClimbActionHandler.climb(player, new Animation(Animations.HUMAN_CLIMB_STAIRS_828), Location.create(2358, 5215, 0));
-                    }
+                case 16115:
+                    WarningManager.trigger(player, WarningType.STRONGHOLD_OF_SECURITY_LADDERS, () -> {
+                        ClimbActionHandler.climb(
+                                player,
+                                new Animation(Animations.HUMAN_CLIMB_STAIRS_828),
+                                Location.create(2358, 5215, 0)
+                        );
+                        return null;
+                    });
                     return true;
                 case 16150:
                 case 16082:

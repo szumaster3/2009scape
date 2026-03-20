@@ -14,8 +14,8 @@ import core.game.node.entity.impl.ForceMovement
 import core.game.node.entity.impl.Projectile
 import core.game.node.entity.npc.NPC
 import core.game.node.entity.player.Player
-import core.game.node.entity.player.link.WarningManager
-import core.game.node.entity.player.link.Warnings
+import core.game.node.entity.player.link.warning.WarningManager
+import core.game.node.entity.player.link.warning.WarningType
 import core.game.node.entity.skill.Skills
 import core.game.node.item.Item
 import core.game.system.task.Pulse
@@ -273,18 +273,16 @@ class TrollheimPlugin : OptionHandler() {
         override fun enter(entity: Entity): Boolean {
             if (entity is Player) {
                 val player = entity.asPlayer()
-                if (player.walkingQueue.footPrint.y < 3592 &&
-                    !WarningManager.isWarningDisabled(player, Warnings.DEATH_PLATEAU))
-                {
-                    player.walkingQueue.reset()
-                    player.pulseManager.clear()
-                    WarningManager.openWarningInterface(player, Warnings.DEATH_PLATEAU)
-                }
-                else
-                {
+
+                if (player.walkingQueue.footPrint.y < 3592) {
+                    WarningManager.trigger(player, WarningType.DEATH_PLATEAU) {
+                        player.walkingQueue.reset()
+                        player.pulseManager.clear()
+                    }
                     return false
                 }
             }
+
             return super.enter(entity)
         }
 

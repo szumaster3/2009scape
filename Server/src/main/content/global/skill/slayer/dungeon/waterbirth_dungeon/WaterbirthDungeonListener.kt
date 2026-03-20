@@ -3,8 +3,8 @@ package content.global.skill.slayer.dungeon.waterbirth_dungeon
 import core.api.*
 import core.game.global.action.ClimbActionHandler
 import core.game.interaction.InteractionListener
-import core.game.node.entity.player.link.WarningManager
-import core.game.node.entity.player.link.Warnings
+import core.game.node.entity.player.link.warning.WarningManager
+import core.game.node.entity.player.link.warning.WarningType
 import core.game.world.map.Location
 import shared.consts.Quests
 import shared.consts.Scenery
@@ -109,9 +109,7 @@ class WaterbirthDungeonListener : InteractionListener {
          */
 
         on(Scenery.LADDER_10230, SCENERY, "climb-down") { player, _ ->
-            if (!WarningManager.isWarningDisabled(player, Warnings.DAGANNOTH_KINGS_LADDER)) {
-                WarningManager.openWarningInterface(player, Warnings.DAGANNOTH_KINGS_LADDER)
-            } else {
+            WarningManager.trigger(player, WarningType.DAGANNOTH_KINGS_LADDER) {
                 ClimbActionHandler.climb(player, ClimbActionHandler.CLIMB_DOWN, Location(2899, 4449, 0))
             }
             return@on true

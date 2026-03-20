@@ -6,8 +6,8 @@ import core.game.dialogue.FaceAnim
 import core.game.global.action.DoorActionHandler
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
-import core.game.node.entity.player.link.WarningManager
-import core.game.node.entity.player.link.Warnings
+import core.game.node.entity.player.link.warning.WarningManager
+import core.game.node.entity.player.link.warning.WarningType
 import core.game.node.item.Item
 import core.tools.DARK_RED
 import shared.consts.Items
@@ -67,16 +67,23 @@ class ShantayPassPlugin : InteractionListener {
             if (player.location.y < 3117) {
                 sendMessage(player, "You go through the gate.")
                 forceMove(player, player.location, destination, 30, 180, null)
-            } else {
-                if (!WarningManager.isWarningDisabled(player, Warnings.SHANTAY_PASS)) {
-                    WarningManager.openWarningInterface(player, Warnings.SHANTAY_PASS)
-                } else if (!removeItem(player, Items.SHANTAY_PASS_1854)) {
-                    sendNPCDialogue(player, NPCs.SHANTAY_GUARD_838, "You need a Shantay pass to get through this gate. See Shantay, he will sell you one for a very reasonable price.", FaceAnim.NEUTRAL)
+                return@on true
+            }
+
+            WarningManager.trigger(player, WarningType.SHANTAY_PASS) {
+                if (!removeItem(player, Items.SHANTAY_PASS_1854)) {
+                    sendNPCDialogue(
+                        player,
+                        NPCs.SHANTAY_GUARD_838,
+                        "You need a Shantay pass to get through this gate. See Shantay, he will sell you one for a very reasonable price.",
+                        FaceAnim.NEUTRAL
+                    )
                 } else {
                     sendMessage(player, "You go through the gate.")
                     forceMove(player, player.location, destination, 30, 180, null)
                 }
             }
+
             return@on true
         }
 

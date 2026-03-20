@@ -5,8 +5,8 @@ import core.game.event.FairyRingDialEvent
 import core.game.interaction.InterfaceListener
 import core.game.node.entity.player.Player
 import core.game.node.entity.player.link.TeleportManager
-import core.game.node.entity.player.link.WarningManager
-import core.game.node.entity.player.link.Warnings
+import core.game.node.entity.player.link.warning.WarningManager
+import core.game.node.entity.player.link.warning.WarningType
 import core.game.system.task.Pulse
 import core.game.world.GameWorld
 import core.game.world.map.Location
@@ -135,8 +135,15 @@ class FairyRingInterface : InterfaceListener {
             null
         }
 
-        if (ring == FairyRing.AJQ && !WarningManager.isWarningDisabled(player, Warnings.FAIRY_RING_TO_DORGESH_KAAN)) {
-            WarningManager.openWarningInterface(player, Warnings.FAIRY_RING_TO_DORGESH_KAAN)
+        if (ring == FairyRing.AJQ) {
+            WarningManager.trigger(player, WarningType.FAIRY_RING_TO_DORGESH_KAAN) {
+                player.dispatch(FairyRingDialEvent(FairyRing.AJQ))
+                teleport(player, FairyRing.AJQ.tile!!, TeleportManager.TeleportType.FAIRY_RING)
+
+                if (!player.savedData.globalData.hasTravelLog(2)) {
+                    player.savedData.globalData.setTravelLog(2)
+                }
+            }
             return
         }
 

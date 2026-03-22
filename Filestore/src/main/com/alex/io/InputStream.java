@@ -270,4 +270,16 @@ public final class InputStream extends Stream {
         int value = (readUnsignedByte() << 16) | (readUnsignedByte() << 8) | readUnsignedByte();
         return value;
     }
+
+    public int readUnsignedMedium() {
+        return readMedium() & 0xFFFFFF;
+    }
+
+    public int readSignedShort() {
+        int value = readUnsignedShort();
+        if (value > 32767) {
+            value -= 65536;
+        }
+        return value;
+    }
 }

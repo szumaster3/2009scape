@@ -85,7 +85,7 @@ public class ItemDefinition implements Cloneable {
 
    public ItemDefinition(Store cache, int id, boolean load) {
       this.id = id;
-       this.setDefinition();
+      this.setDefinition();
       this.setDefaultOptions();
       if(load) {
          this.loadItemDefinition(cache);

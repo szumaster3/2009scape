@@ -3,11 +3,9 @@ package content
 import com.alex.Cache
 import com.alex.loaders.BasDefinition
 import com.alex.loaders.LocDefinition
+import com.alex.loaders.NpcDefinition
 import com.alex.loaders.items.ItemDefinition
-import com.alex.tools.MapDumper
-import com.alex.tools.ModelDumper
-import com.alex.tools.ModelPacker
-import com.alex.tools.SpriteDumper
+import com.alex.tools.*
 import content.items.*
 import content.objects.`Obelisk(42004)`
 
@@ -29,6 +27,7 @@ object ContentLoader {
         interfaces()
         objects()
         items()
+        npcs()
     }
 
     private fun interfaces() {
@@ -56,7 +55,11 @@ object ContentLoader {
     }
 
     private fun sprites() {
-        //SpritePacker.add()
+        SpritePacker.add()
+    }
+
+    private fun npcs() {
+
     }
 
     private fun print() {
@@ -65,6 +68,7 @@ object ContentLoader {
         ItemDefinition.print(store,       "dumps/item_dumps.txt")
         ItemDefinition.printParams(store, "dumps/item_params.txt")
         BasDefinition.print(store,        "dumps/bas_dumps.txt")
+        NpcDefinition.print(store,        "dumps/npc_dumps.txt")
     }
 
     private fun dump() {

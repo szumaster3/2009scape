@@ -81,6 +81,11 @@ public final class Utils {
         return lastArchiveId * 256 + store.getIndexes()[19].getValidFilesCount(lastArchiveId);
     }
 
+    public static int getNPCDefinitionsSize(Store store) {
+        int lastArchiveId = store.getIndexes()[18].getLastArchiveId();
+        return lastArchiveId * 128 + store.getIndexes()[18].getValidFilesCount(lastArchiveId);
+    }
+
     public static final int getObjectDefinitionsSize(Store store) {
         int lastArchiveId = store.getIndexes()[16].getLastArchiveId();
         return lastArchiveId * 256 + store.getIndexes()[16].getValidFilesCount(lastArchiveId);

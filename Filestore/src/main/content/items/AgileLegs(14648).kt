@@ -11,20 +11,20 @@ object `AgileLegs(14648)` {
                 name = "Agile legs"
                 invModelId = 45472
                 zoom2d = 1979
-                xan2d = 458
-                yan2d = 0
-                zan2d = 0
-                xOffset2d = 0
-                yOffset2d = 4
+                xAngle2D = 458
+                yAngle2D = 0
+                zAngle2D = 0
+                xOffset2D = 0
+                yOffset2D = 4
                 stackable = 0
                 cost = 1
-                membersOnly = true
+                members = true
                 maleEquipModelId1 = 455473
                 femaleEquipModelId1 = 45474
-                unnoted = false
-                teamId = 0
-                groundOptions = arrayOfNulls<String>(5).apply { this[2] = "Take" }
-                inventoryOptions = arrayOfNulls<String>(5).apply {
+                stockMarket = false
+                team = 0
+                ops = arrayOfNulls<String>(5).apply { this[2] = "Take" }
+                iops = arrayOfNulls<String>(5).apply {
                     this[1] = "Wear"
                     this[4] = "Destroy"
                 }

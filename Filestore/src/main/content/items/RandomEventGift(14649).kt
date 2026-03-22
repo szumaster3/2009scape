@@ -11,26 +11,26 @@ object `RandomEventGift(14649)` {
                 name = "Random event gift"
                 invModelId = 2426
                 zoom2d = 1180
-                xan2d = 97
-                yan2d = 1895
-                zan2d = 0
-                xOffset2d = 0
-                yOffset2d = -8
+                xAngle2D = 97
+                yAngle2D = 1895
+                zAngle2D = 0
+                xOffset2D = 0
+                yOffset2D = -8
                 stackable = 0
                 cost = 100
-                membersOnly = false
-                unnoted = false
-                ambience = 5
-                teamId = 0
+                members = false
+                stockMarket = false
+                ambient = 5
+                team = 0
                 changeModelColor(22410,60325)
-                inventoryOptions = arrayOfNulls<String>(5).apply {
+                iops = arrayOfNulls<String>(5).apply {
                     this[0] = "Open"
                     this[4] = "Drop"
                 }
-                groundOptions = arrayOfNulls<String>(5).apply {
+                ops = arrayOfNulls<String>(5).apply {
                     this[2] = "Take"
                 }
-                clientScriptData = HashMap<Any, Any>().apply { put(59, "1") }
+                params = HashMap<Any, Any>().apply { put(59, "1") }
             }
         )
         copy.save()

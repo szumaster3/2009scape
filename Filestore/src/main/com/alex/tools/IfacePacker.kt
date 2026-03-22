@@ -98,8 +98,8 @@ class IfacePacker private constructor(val targetInterfaceId: Int) {
             globalModifier?.let { it(comp) }
             task.modifier?.let { it(comp) }
 
-            val status = if (task.sourceId >= 0) "Modified" else "New"
-            println("Packed ${comp.name ?: "unnamed"}:$targetInterfaceId:${task.targetId} [$status]")
+            val status = if (task.sourceId >= 0) "Modified" else "Packed"
+            println("$status component $targetInterfaceId:${task.targetId}:${comp.name ?: "unnamed"}")
 
             val fileNameHash: Int? = comp.name?.takeIf { it.isNotBlank() }?.let {
                 CRC32HGenerator.getHash(it.uppercase(Locale.getDefault()).toByteArray(Charsets.UTF_8))

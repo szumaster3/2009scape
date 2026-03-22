@@ -12,22 +12,22 @@ object `SeersHeadbands(14645-14646)` {
                 name = "Seer's headband 2"
                 invModelId = 45487
                 zoom2d = 724
-                xan2d = 111
-                yan2d = 1841
-                zan2d = 0
-                xOffset2d = -3
-                yOffset2d = -8
+                xAngle2D = 111
+                yAngle2D = 1841
+                zAngle2D = 0
+                xOffset2D = -3
+                yOffset2D = -8
                 stackable = 0
                 cost = 1
-                membersOnly = true
+                members = true
                 maleEquipModelId1 = 45490
                 femaleEquipModelId1 = 45491
-                primaryMaleDialogueHead = 45488
-                primaryFemaleDialogueHead = 45489
-                unnoted = false
-                teamId = 0
-                groundOptions = arrayOfNulls<String>(5).apply { this[2] = "Take" }
-                inventoryOptions = arrayOfNulls<String>(5).apply {
+                manhead = 45488
+                womanhead = 45489
+                stockMarket = false
+                team = 0
+                ops = arrayOfNulls<String>(5).apply { this[2] = "Take" }
+                iops = arrayOfNulls<String>(5).apply {
                     this[1] = "Wear"
                     this[4] = "Destroy"
                 }
@@ -41,22 +41,22 @@ object `SeersHeadbands(14645-14646)` {
                 name = "Seer's headband 3"
                 invModelId = 45492
                 zoom2d = 852
-                xan2d = 111
-                yan2d = 1841
-                zan2d = 0
-                xOffset2d = -3
-                yOffset2d = -3
+                xAngle2D = 111
+                yAngle2D = 1841
+                zAngle2D = 0
+                xOffset2D = -3
+                yOffset2D = -3
                 stackable = 0
                 cost = 1
-                membersOnly = true
+                members = true
                 maleEquipModelId1 = 45495
                 femaleEquipModelId1 = 45496
-                primaryMaleDialogueHead = 45493
-                primaryFemaleDialogueHead = 45494
-                unnoted = false
-                teamId = 0
-                groundOptions = arrayOfNulls<String>(5).apply { this[2] = "Take" }
-                inventoryOptions = arrayOfNulls<String>(5).apply {
+                manhead = 45493
+                womanhead = 45494
+                stockMarket = false
+                team = 0
+                ops = arrayOfNulls<String>(5).apply { this[2] = "Take" }
+                iops = arrayOfNulls<String>(5).apply {
                     this[1] = "Wear"
                     this[4] = "Destroy"
                 }

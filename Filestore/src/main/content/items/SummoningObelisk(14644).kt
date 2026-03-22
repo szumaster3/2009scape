@@ -12,24 +12,24 @@ object `SummoningObelisk(14644)` {
                 name = "Summoning obelisk"
                 invModelId = 31686
                 zoom2d = 5456
-                xan2d = 210
-                yan2d = 1880
-                zan2d = 0
-                xOffset2d = 0
-                yOffset2d = -100
+                xAngle2D = 210
+                yAngle2D = 1880
+                zAngle2D = 0
+                xOffset2D = 0
+                yOffset2D = -100
                 stackable = 0
                 cost = 1
-                membersOnly = false
+                members = false
                 dummyItem = 1
-                unnoted = false
-                teamId = 0
-                inventoryOptions = arrayOfNulls<String>(5).apply {
+                stockMarket = false
+                team = 0
+                iops = arrayOfNulls<String>(5).apply {
                     this[4] = "Drop"
                 }
-                groundOptions = arrayOfNulls<String>(5).apply {
+                ops = arrayOfNulls<String>(5).apply {
                     this[2] = "Take"
                 }
-                clientScriptData = HashMap<Any, Any>().apply {
+                params = HashMap<Any, Any>().apply {
                     put(211, "${Items.MARBLE_BLOCK_8786}")
                     put(212, "1")    // Amount
                     put(213, "${Items.SPIRIT_SHARDS_12183}")

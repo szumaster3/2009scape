@@ -13,69 +13,69 @@ object `AntiqueLamps(14641-14643)` {
                 invModelId = 3348
                 cost = 1
                 stackable = 0
-                isMembersOnly = true
+                isMembers = true
                 invModelZoom = 840
-                xan2d = 28
-                yan2d = 228
-                xOffset2d = 2
-                yOffset2d = -2
+                xAngle2D = 28
+                yAngle2D = 228
+                xOffset2D = 2
+                yOffset2D = -2
                 changeModelColor(11191, 840)
                 changeModelColor(11183, 563)
-                teamId = 0
-                inventoryOptions = arrayOfNulls<String>(5).apply {
+                team = 0
+                iops = arrayOfNulls<String>(5).apply {
                     this[0] = "Rub"
                     this[4] = "Destroy"
                 }
-                groundOptions = arrayOfNulls<String>(5).apply {
+                ops = arrayOfNulls<String>(5).apply {
                     this[2] = "Take"
                 }
-                clientScriptData = HashMap<Any, Any>().apply { put(59, "1") }
+                params = HashMap<Any, Any>().apply { put(59, "1") }
             },
             {
                 name = "Antique lamp"
                 invModelId = 3348
                 cost = 1
                 stackable = 0
-                isMembersOnly = true
+                isMembers = true
                 invModelZoom = 840
-                xan2d = 28
-                yan2d = 228
-                xOffset2d = 2
-                yOffset2d = -2
+                xAngle2D = 28
+                yAngle2D = 228
+                xOffset2D = 2
+                yOffset2D = -2
                 changeModelColor(11191, 840)
                 changeModelColor(11183, 563)
-                teamId = 0
-                inventoryOptions = arrayOfNulls<String>(5).apply {
+                team = 0
+                iops = arrayOfNulls<String>(5).apply {
                     this[0] = "Rub"
                     this[4] = "Destroy"
                 }
-                groundOptions = arrayOfNulls<String>(5).apply {
+                ops = arrayOfNulls<String>(5).apply {
                     this[2] = "Take"
                 }
-                clientScriptData = HashMap<Any, Any>().apply { put(59, "1") }
+                params = HashMap<Any, Any>().apply { put(59, "1") }
             },
             {
                 name = "Antique lamp"
                 invModelId = 3348
                 cost = 1
                 stackable = 0
-                isMembersOnly = true
+                isMembers = true
                 invModelZoom = 840
-                xan2d = 28
-                yan2d = 228
-                xOffset2d = 2
-                yOffset2d = -2
+                xAngle2D = 28
+                yAngle2D = 228
+                xOffset2D = 2
+                yOffset2D = -2
                 changeModelColor(11191, 840)
                 changeModelColor(11183, 563)
-                teamId = 0
-                inventoryOptions = arrayOfNulls<String>(5).apply {
+                team = 0
+                iops = arrayOfNulls<String>(5).apply {
                     this[0] = "Rub"
                     this[4] = "Destroy"
                 }
-                groundOptions = arrayOfNulls<String>(5).apply {
+                ops = arrayOfNulls<String>(5).apply {
                     this[2] = "Take"
                 }
-                clientScriptData = HashMap<Any, Any>().apply { put(59, "1") }
+                params = HashMap<Any, Any>().apply { put(59, "1") }
             }
         )
 

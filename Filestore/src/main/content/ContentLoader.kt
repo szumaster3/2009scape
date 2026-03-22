@@ -16,8 +16,8 @@ object ContentLoader {
     fun main(args: Array<String>) {
         runCatching {
             Cache.init()
-            //print()
             load()
+            print()
         }.onFailure { e ->
             e.printStackTrace()
         }
@@ -60,9 +60,11 @@ object ContentLoader {
     }
 
     private fun print() {
-        LocDefinition.print(Cache.getStore(), "dumps/object_dumps.txt")
-        ItemDefinition.print(Cache.getStore(), "dumps/item_dumps.txt")
-        BasDefinition.print(Cache.getStore(), "dumps/bas_dumps.txt")
+        val store = Cache.getStore()
+        LocDefinition.print(store,        "dumps/object_dumps.txt")
+        ItemDefinition.print(store,       "dumps/item_dumps.txt")
+        ItemDefinition.printParams(store, "dumps/item_params.txt")
+        BasDefinition.print(store,        "dumps/bas_dumps.txt")
     }
 
     private fun dump() {

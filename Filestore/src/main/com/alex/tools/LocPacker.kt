@@ -76,7 +76,7 @@ class LocPacker private constructor(private val startId: Int = 0) {
             val data = stream.buffer.copyOf(stream.offset)
             store.indexes[16].putFile(loc.id shr 8, loc.id and 0xFF, data)
 
-            println("Packed loc ${loc.name ?: "unknown"}:${loc.id}")
+            println("Packed loc ${loc.id}:${loc.name ?: "unknown"}")
             savedLocs.add(loc)
             currentId++
         }

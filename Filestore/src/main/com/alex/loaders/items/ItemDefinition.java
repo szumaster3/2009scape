@@ -5,74 +5,71 @@ import com.alex.store.Store;
 import com.alex.utils.Utils;
 
 import java.io.*;
+import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 
 public class ItemDefinition implements Cloneable {
-   private static PrintWriter printer;
    public int id;
    public boolean loaded;
-   public int modelId;
+   public int model;
    public String name;
    public int zoom2d;
-   public int xan2d;
-   public int yan2d;
-   public int xOffset2d;
-   public int yOffset2d;
+   public int xAngle2D;
+   public int yAngle2D;
+   public int xOffset2D;
+   public int yOffset2D;
    public int equipSlot;
    public int equipType;
    public int stackable;
    public int cost;
-   public boolean membersOnly;
-   public int maleEquip1;
-   public int femaleEquip1;
-   public int maleEquip2;
-   public int femaleEquip2;
-   public int maleEquipModelId3;
-   public int femaleEquipModelId3;
-   public String[] groundOptions;
-   public String[] inventoryOptions;
-   public int[] originalModelColors;
-   public int[] modifiedModelColors;
-   public short[] originalTextureColors;
-   public short[] modifiedTextureColors;
-   public byte[] recolorPalette;
-   public int[] unknownArray2;
-   public boolean unnoted;
-   public int primaryMaleDialogueHead;
-   public int primaryFemaleDialogueHead;
-   public int secondaryMaleDialogueHead;
-   public int secondaryFemaleDialogueHead;
-   public int zan2d;
+   public boolean members;
+   public int manwear;
+   public int womanwear;
+   public int manwear2;
+   public int womanwear2;
+   public int manwear3;
+   public int womanwear3;
+   public String[] ops;
+   public String[] iops;
+   public int[] recol_d;
+   public int[] recol_s;
+   public short[] retex_d;
+   public short[] retex_s;
+   public byte[] recol_p;
+   public boolean stockMarket;
+   public int manhead;
+   public int womanhead;
+   public int manhead2;
+   public int womanhead2;
+   public int zAngle2D;
    public int dummyItem;
-   public int noteId;
-   public int notedTemplateId;
-   public int[] stackIds;
-   public int[] stackAmounts;
-   public int floorScaleX;
-   public int floorScaleY;
-   public int floorScaleZ;
-   public int ambience;
-   public int diffusion;
-   public int teamId;
-   public int switchLendItemId;
-   public int lendedItemId;
-   public int maleWieldX;
-   public int maleWieldY;
-   public int maleWieldZ;
-   public int femaleWieldX;
-   public int femaleWieldY;
-   public int femaleWieldZ;
-   public int unknownInt18;
-   public int unknownInt19;
-   public int unknownInt20;
-   public int unknownInt21;
-   public int unknownInt22;
-   public int unknownInt23;
-   public int unknownValue1;
-   public int unknownValue2;
-   public HashMap clientScriptData;
+   public int certlink;
+   public int certtemplate;
+   public int[] countobj;
+   public int[] countco;
+   public int resizeX;
+   public int resizeY;
+   public int resizeZ;
+   public int ambient;
+   public int contrast;
+   public int team;
+   public int lentLink;
+   public int lentTemplate;
+   public int manWearXOff;
+   public int manWearYOff;
+   public int manWearZOff;
+   public int womanWearXOff;
+   public int womanWearYOff;
+   public int womanWearZOff;
+   public int cursor1Op;
+   public int cursor1;
+   public int cursor2Op;
+   public int cursor2;
+   public HashMap params;
 
    public static ItemDefinition getItemDefinition(Store cache, int itemId) {
       return getItemDefinition(cache, itemId, true);
@@ -88,228 +85,11 @@ public class ItemDefinition implements Cloneable {
 
    public ItemDefinition(Store cache, int id, boolean load) {
       this.id = id;
-      this.setDefaultsVariableValules();
+       this.setDefinition();
       this.setDefaultOptions();
       if(load) {
          this.loadItemDefinition(cache);
       }
-   }
-
-   public static void print(Store cache, String outputFile) {
-      try {
-         File file = new File(outputFile);
-         File parent = file.getParentFile();
-         if (parent != null && !parent.exists()) {
-            parent.mkdirs();
-         }
-         if (!file.exists()) {
-            file.createNewFile();
-         }
-
-         try (PrintWriter writer = new PrintWriter(new BufferedWriter(new FileWriter(file)))) {
-            printer = writer;
-
-            int size = Utils.getItemDefinitionsSize(cache);
-            for (int id = 0; id < size; id++) {
-               ItemDefinition item = new ItemDefinition(cache, id, false);
-               item.loadItemDefinition(cache);
-               if (item.loaded) {
-                  printItemData(item);
-               }
-            }
-         }
-
-      } catch (IOException e) {
-         e.printStackTrace();
-      }
-   }
-
-   public boolean isLoaded() {
-      return this.loaded;
-   }
-
-   public int getCost() {
-      return this.cost;
-   }
-
-   public int getTeamId() {
-      return this.teamId;
-   }
-
-   public int getStackable() {
-      return this.stackable;
-   }
-
-   public boolean isUnnoted() {
-      return this.unnoted;
-   }
-
-   public int getLendedItemId() {
-      return this.lendedItemId;
-   }
-
-   public int getXan2d() {
-      return this.xan2d;
-   }
-
-   public void setXan2d(int xan2d) {
-      this.xan2d = xan2d;
-   }
-
-   public int getYan2d() {
-      return this.yan2d;
-   }
-
-   public void setYan2d(int yan2d) {
-      this.yan2d = yan2d;
-   }
-
-   public int getxOffset2d() {
-      return this.xOffset2d;
-   }
-
-   public void setxOffset2d(int xOffset2d) {
-      this.xOffset2d = xOffset2d;
-   }
-
-   public int getyOffset2d() {
-      return this.yOffset2d;
-   }
-
-   public void setyOffset2d(int yOffset2d) {
-      this.yOffset2d = yOffset2d;
-   }
-
-   public int getMaleEquipModelId1() {
-      return this.maleEquip1;
-   }
-
-   public void setMaleEquipModelId1(int maleEquipModelId1) {
-      this.maleEquip1 = maleEquipModelId1;
-   }
-
-   public int getFemaleEquipModelId1() {
-      return this.femaleEquip1;
-   }
-
-   public void setFemaleEquipModelId1(int femaleEquipModelId1) {
-      this.femaleEquip1 = femaleEquipModelId1;
-   }
-
-   public int getMaleEquipModelId2() {
-      return this.maleEquip2;
-   }
-
-   public void setMaleEquipModelId2(int maleEquipModelId2) {
-      this.maleEquip2 = maleEquipModelId2;
-   }
-
-   public int getFemaleEquipModelId2() {
-      return this.femaleEquip2;
-   }
-
-   public void setFemaleEquipModelId2(int femaleEquipModelId2) {
-      this.femaleEquip2 = femaleEquipModelId2;
-   }
-
-   public int getMaleEquipModelId3() {
-      return this.maleEquipModelId3;
-   }
-
-   public void setMaleEquipModelId3(int maleEquipModelId3) {
-      this.maleEquipModelId3 = maleEquipModelId3;
-   }
-
-   public int getFemaleEquipModelId3() {
-      return this.femaleEquipModelId3;
-   }
-
-   public void setFemaleEquipModelId3(int femaleEquipModelId3) {
-      this.femaleEquipModelId3 = femaleEquipModelId3;
-   }
-
-   public int[] getOriginalModelColors() {
-      return this.originalModelColors;
-   }
-
-   public void setOriginalModelColors(int[] originalModelColors) {
-      this.originalModelColors = originalModelColors;
-   }
-
-   public int[] getModifiedModelColors() {
-      return this.modifiedModelColors;
-   }
-
-   public void setModifiedModelColors(int[] modifiedModelColors) {
-      this.modifiedModelColors = modifiedModelColors;
-   }
-
-   public int[] getStackAmounts() {
-      return this.stackAmounts;
-   }
-
-   public void setStackAmounts(int[] stackAmounts) {
-      this.stackAmounts = stackAmounts;
-   }
-
-   public int[] getStackIds() {
-      return this.stackIds;
-   }
-
-   public void setStackIds(int[] stackIds) {
-      this.stackIds = stackIds;
-   }
-
-   public void setStackable(int stackable) {
-      this.stackable = stackable;
-   }
-
-   public void setCost(int cost) {
-      this.cost = cost;
-   }
-
-   public void setTeamId(int teamId) {
-      this.teamId = teamId;
-   }
-
-   public void setMembersOnly(boolean membersOnly) {
-      this.membersOnly = membersOnly;
-   }
-
-   public void setUnnoted(boolean unnoted) {
-      this.unnoted = unnoted;
-   }
-
-   public void setEquipSlot(int equipSlot) {
-      this.equipSlot = equipSlot;
-   }
-
-   public void setEquipType(int equipType) {
-      this.equipType = equipType;
-   }
-
-   public int getSwitchLendItemId() {
-      return this.switchLendItemId;
-   }
-
-   public void setSwitchLendItemId(int switchLendItemId) {
-      this.switchLendItemId = switchLendItemId;
-   }
-
-   public void setLendedItemId(int lendedItemId) {
-      this.lendedItemId = lendedItemId;
-   }
-
-   public int getId() {
-      return this.id;
-   }
-
-   public void setId(int id) {
-      this.id = id;
-   }
-
-   public void write(Store store) {
-      store.getIndexes()[19].putFile(this.getArchiveId(), this.getFileId(), this.encode());
    }
 
    private void loadItemDefinition(Store cache) {
@@ -321,49 +101,48 @@ public class ItemDefinition implements Cloneable {
             var4.printStackTrace();
          }
 
-         if(this.notedTemplateId != -1) {
-            this.toNote(cache);
+         if(this.certtemplate != -1) {
+            this.generateCertificate(cache);
          }
 
-         if(this.lendedItemId != -1) {
-            this.toLend(cache);
+         if(this.lentTemplate != -1) {
+            this.generateLent(cache);
          }
 
          this.loaded = true;
       }
    }
 
-   private void toNote(Store store) {
-      ItemDefinition realItem = getItemDefinition(store, this.noteId);
-      this.membersOnly = realItem.membersOnly;
+   private void generateCertificate(Store store) {
+      ItemDefinition realItem = getItemDefinition(store, this.certlink);
+      this.members = realItem.members;
       this.cost = realItem.cost;
       this.name = realItem.name;
       this.stackable = 1;
    }
 
-   private void toLend(Store store) {
-      ItemDefinition realItem = getItemDefinition(store, this.switchLendItemId);
-      this.originalModelColors = realItem.originalModelColors;
-      this.modifiedModelColors = realItem.modifiedModelColors;
-      this.teamId = realItem.teamId;
+   private void generateLent(Store store) {
+      ItemDefinition link = getItemDefinition(store, this.lentLink);
+      this.recol_d = link.recol_d;
+      this.recol_s = link.recol_s;
+      this.team = link.team;
       this.cost = 0;
-      this.membersOnly = realItem.membersOnly;
-      this.name = realItem.name;
-      this.inventoryOptions = new String[5];
-      this.groundOptions = realItem.groundOptions;
-      if(realItem.inventoryOptions != null) {
-         System.arraycopy(realItem.inventoryOptions, 0, this.inventoryOptions, 0, 4);
+      this.members = link.members;
+      this.name = link.name;
+      this.iops = new String[5];
+      this.ops = link.ops;
+      if(link.iops != null) {
+         System.arraycopy(link.iops, 0, this.iops, 0, 4);
       }
-
-      this.inventoryOptions[4] = "Discard";
-      this.maleEquip1 = realItem.maleEquip1;
-      this.maleEquip2 = realItem.maleEquip2;
-      this.femaleEquip1 = realItem.femaleEquip1;
-      this.femaleEquip2 = realItem.femaleEquip2;
-      this.maleEquipModelId3 = realItem.maleEquipModelId3;
-      this.femaleEquipModelId3 = realItem.femaleEquipModelId3;
-      this.equipType = realItem.equipType;
-      this.equipSlot = realItem.equipSlot;
+      this.iops[4] = "Discard";
+      this.manwear = link.manwear;
+      this.manwear2 = link.manwear2;
+      this.womanwear = link.womanwear;
+      this.womanwear2 = link.womanwear2;
+      this.manwear3 = link.manwear3;
+      this.womanwear3 = link.womanwear3;
+      this.equipType = link.equipType;
+      this.equipSlot = link.equipSlot;
    }
 
    public int getArchiveId() {
@@ -374,582 +153,497 @@ public class ItemDefinition implements Cloneable {
       return 0xff & this.id;
    }
 
-   public boolean hasSpecialBar() {
-      if(this.clientScriptData == null) {
-         return false;
-      } else {
-         Object specialBar = this.clientScriptData.get(Integer.valueOf(686));
-         return specialBar != null && specialBar instanceof Integer && ((Integer)specialBar).intValue() == 1;
-      }
-   }
-
-   public int getRenderAnimId() {
-      if(this.clientScriptData == null) {
-         return 1426;
-      } else {
-         Object animId = this.clientScriptData.get(Integer.valueOf(644));
-         return animId != null && animId instanceof Integer?((Integer)animId).intValue():1426;
-      }
-   }
-
-   public int getQuestId() {
-      if(this.clientScriptData == null) {
-         return -1;
-      } else {
-         System.out.println(this.clientScriptData);
-         Object questId = this.clientScriptData.get(Integer.valueOf(861));
-         return questId != null && questId instanceof Integer?((Integer)questId).intValue():-1;
-      }
-   }
-
-   public HashMap getWearingSkillRequiriments() {
-      if(this.clientScriptData == null) {
-         return null;
-      } else {
-         HashMap skills = new HashMap();
-         int nextLevel = -1;
-         int nextSkill = -1;
-         Iterator var5 = this.clientScriptData.keySet().iterator();
-
-         while(var5.hasNext()) {
-            int key = ((Integer)var5.next()).intValue();
-            Object value = this.clientScriptData.get(Integer.valueOf(key));
-            if(!(value instanceof String)) {
-               if(key == 23) {
-                  skills.put(Integer.valueOf(4), value);
-                  skills.put(Integer.valueOf(11), Integer.valueOf(61));
-               } else if(key >= 749 && key < 797) {
-                  if(key % 2 == 0) {
-                     nextLevel = ((Integer)value).intValue();
-                  } else {
-                     nextSkill = ((Integer)value).intValue();
-                  }
-
-                  if(nextLevel != -1 && nextSkill != -1) {
-                     skills.put(Integer.valueOf(nextSkill), Integer.valueOf(nextLevel));
-                     nextLevel = -1;
-                     nextSkill = -1;
-                  }
-               }
-            }
-         }
-
-         return skills;
-      }
-   }
-
-   public void printClientScriptData() {
-      Iterator key2 = this.clientScriptData.keySet().iterator();
-
-      while(key2.hasNext()) {
-         int requiriments = ((Integer)key2.next()).intValue();
-         Object value = this.clientScriptData.get(Integer.valueOf(requiriments));
-         System.out.println("KEY: " + requiriments + ", VALUE: " + value);
-      }
-
-      HashMap requiriments1 = this.getWearingSkillRequiriments();
-      if(requiriments1 == null) {
-         System.out.println("null.");
-      } else {
-         System.out.println(requiriments1.keySet().size());
-         Iterator value1 = requiriments1.keySet().iterator();
-
-         while(value1.hasNext()) {
-            int key21 = ((Integer)value1.next()).intValue();
-            Object value2 = requiriments1.get(Integer.valueOf(key21));
-            System.out.println("SKILL: " + key21 + ", LEVEL: " + value2);
-         }
-
-      }
-   }
-
-   private void setDefaultOptions() {
-      this.groundOptions = new String[]{null, null, "Take", null, null};
-      this.inventoryOptions = new String[]{null, null, null, null, "Drop"};
-   }
-
-   private void setDefaultsVariableValules() {
+    private void setDefinition() {
       this.name = "null";
-      this.maleEquip1 = -1;
-      this.maleEquip2 = -1;
-      this.femaleEquip1 = -1;
-      this.femaleEquip2 = -1;
+      this.manwear = -1;
+      this.manwear2 = -1;
+      this.womanwear = -1;
+      this.womanwear2 = -1;
       this.zoom2d = 2000;
-      this.switchLendItemId = -1;
-      this.lendedItemId = -1;
-      this.noteId = -1;
-      this.notedTemplateId = -1;
-      this.floorScaleZ = 128;
-      this.floorScaleX = 128;
-      this.floorScaleY = 128;
+      this.lentLink = -1;
+      this.lentTemplate = -1;
+      this.certlink = -1;
+      this.certtemplate = -1;
+      this.resizeZ = 128;
+      this.resizeX = 128;
+      this.resizeY = 128;
       this.cost = 1;
-      this.maleEquipModelId3 = -1;
-      this.femaleEquipModelId3 = -1;
-      this.teamId = -1;
+      this.manwear3 = -1;
+      this.womanwear3 = -1;
+      this.team = -1;
       this.equipType = -1;
       this.equipSlot = -1;
-      this.primaryMaleDialogueHead = -1;
-      this.secondaryMaleDialogueHead = -1;
-      this.primaryFemaleDialogueHead = -1;
-      this.secondaryFemaleDialogueHead = -1;
-      this.zan2d = 0;
+      this.manhead = -1;
+      this.manhead2 = -1;
+      this.womanhead = -1;
+      this.womanhead2 = -1;
+      this.zAngle2D = 0;
    }
 
-   public byte[] encode() {
-      com.alex.io.OutputStream stream = new com.alex.io.OutputStream();
+    private void decode(com.alex.io.InputStream stream, int opcode) {
+        switch (opcode) {
+            case 1:
+                this.model = stream.readUnsignedShort();
+                break;
+            case 2:
+                this.name = stream.readString();
+                break;
+            case 4:
+                this.zoom2d = stream.readUnsignedShort();
+                break;
+            case 5:
+                this.xAngle2D = stream.readUnsignedShort();
+                break;
+            case 6:
+                this.yAngle2D = stream.readUnsignedShort();
+                break;
+            case 7:
+                this.xOffset2D = (short) stream.readUnsignedShort();
+                break;
+            case 8:
+                this.yOffset2D = (short) stream.readUnsignedShort();
+                break;
+            case 11:
+                this.stackable = 1;
+                break;
+            case 12:
+                this.cost = stream.readInt();
+                break;
+            case 16:
+                this.members = true;
+                break;
+            case 23:
+                this.manwear = stream.readUnsignedShort();
+                break;
+            case 24:
+                this.manwear2 = stream.readUnsignedShort();
+                break;
+            case 25:
+                this.womanwear = stream.readUnsignedShort();
+                break;
+            case 26:
+                this.womanwear2 = stream.readUnsignedShort();
+                break;
+            case 30:
+            case 31:
+            case 32:
+            case 33:
+            case 34:
+                this.ops[opcode - 30] = stream.readString();
+                break;
+            case 35:
+            case 36:
+            case 37:
+            case 38:
+            case 39:
+                this.iops[opcode - 35] = stream.readString();
+                break;
+            case 40:
+                int len40 = stream.readUnsignedByte();
+                this.recol_d = new int[len40];
+                this.recol_s = new int[len40];
 
-      stream.writeByte(1);
+                for (int i = 0; i < len40; i++) {
+                    this.recol_d[i] = stream.readUnsignedShort();
+                    this.recol_s[i] = stream.readUnsignedShort();
+                }
+                break;
+            case 41:
+                int len41 = stream.readUnsignedByte();
+                this.retex_d = new short[len41];
+                this.retex_s = new short[len41];
 
-      stream.writeBigSmart(this.modelId);
+                for (int i = 0; i < len41; i++) {
+                    this.retex_d[i] = (short) stream.readUnsignedShort();
+                    this.retex_s[i] = (short) stream.readUnsignedShort();
+                }
+                break;
+            case 42:
+                int len42 = stream.readUnsignedByte();
+                this.recol_p = new byte[len42];
 
-      if(!this.name.equals("null") && this.notedTemplateId == -1) {
-         stream.writeByte(2);
-         stream.writeString(this.name);
-      }
+                for (int i = 0; i < len42; i++) {
+                    this.recol_p[i] = (byte) stream.readByte();
+                }
+                break;
+            case 65:
+                this.stockMarket = true;
+                break;
+            case 78:
+                this.manwear3 = stream.readUnsignedShort();
+                break;
+            case 79:
+                this.womanwear3 = stream.readUnsignedShort();
+                break;
+            case 90:
+                this.manhead = stream.readUnsignedShort();
+                break;
+            case 91:
+                this.womanhead = stream.readUnsignedShort();
+                break;
+            case 92:
+                this.manhead2 = stream.readUnsignedShort();
+                break;
+            case 93:
+                this.womanhead2 = stream.readUnsignedShort();
+                break;
+            case 95:
+                this.zAngle2D = stream.readUnsignedShort();
+                break;
+            case 96:
+                this.dummyItem = stream.readUnsignedByte();
+                break;
+            case 97:
+                this.certlink = stream.readUnsignedShort();
+                break;
+            case 98:
+                this.certtemplate = stream.readUnsignedShort();
+                break;
+            case 100:
+            case 101:
+            case 102:
+            case 103:
+            case 104:
+            case 105:
+            case 106:
+            case 107:
+            case 108:
+            case 109:
+                if (this.countobj == null) {
+                    this.countobj = new int[10];
+                    this.countco = new int[10];
+                }
 
-      // zoom2d
-      if(this.zoom2d != 2000) {
-         stream.writeByte(4);
-         stream.writeShort(this.zoom2d);
-      }
+                int idx = opcode - 100;
+                this.countobj[idx] = stream.readUnsignedShort();
+                this.countco[idx] = stream.readUnsignedShort();
+                break;
+            case 110:
+                this.resizeX = stream.readUnsignedShort();
+                break;
+            case 111:
+                this.resizeY = stream.readUnsignedShort();
+                break;
+            case 112:
+                this.resizeZ = stream.readUnsignedShort();
+                break;
+            case 113:
+                this.ambient = stream.readByte();
+                break;
+            case 114:
+                this.contrast = stream.readByte();
+                break;
+            case 115:
+                this.team = stream.readUnsignedByte();
+                break;
+            case 121:
+                this.lentLink = stream.readUnsignedShort();
+                break;
+            case 122:
+                this.lentTemplate = stream.readUnsignedShort();
+                break;
+            case 125:
+                this.manWearXOff = stream.readByte();
+                this.manWearYOff = stream.readByte();
+                this.manWearZOff = stream.readByte();
+                break;
+            case 126:
+                this.womanWearXOff = stream.readByte();
+                this.womanWearYOff = stream.readByte();
+                this.womanWearZOff = stream.readByte();
+                break;
+            case 127:
+                this.cursor1Op = stream.readUnsignedByte();
+                this.cursor1 = stream.readUnsignedShort();
+                break;
+            case 128:
+                this.cursor2Op = stream.readUnsignedByte();
+                this.cursor2 = stream.readUnsignedShort();
+                break;
+            case 129:
+                stream.readUnsignedByte();
+                stream.readUnsignedShort();
+                break;
+            case 130:
+                stream.readUnsignedByte();
+                stream.readUnsignedShort();
+                break;
+            case 249:
+                int size = stream.readUnsignedByte();
 
-      if(this.xan2d != 0) {
-         stream.writeByte(5);
-         stream.writeShort(this.xan2d);
-      }
-      if(this.yan2d != 0) {
-         stream.writeByte(6);
-         stream.writeShort(this.yan2d);
-      }
-      int data;
-      if(this.xOffset2d != 0) {
-         stream.writeByte(7);
-         stream.writeShort(this.xOffset2d & 0xFFFF);
-      }
-      if(this.yOffset2d != 0) {
-         stream.writeByte(8);
-         stream.writeShort(this.yOffset2d & 0xFFFF);
-      }
+                if (this.params == null) {
+                    this.params = new HashMap<>(size);
+                }
+                for (int i = 0; i < size; i++) {
+                    boolean isString = stream.readUnsignedByte() == 1;
+                    int key = (stream.readUnsignedByte() << 16) | (stream.readUnsignedByte() << 8) | stream.readUnsignedByte();
+                    Object value = isString ? stream.readString() : stream.readInt();
+                    this.params.put(key, value);
+                }
+                break;
 
-      if(this.stackable >= 1 && this.notedTemplateId == -1) stream.writeByte(11);
-      if(this.cost != 1 && this.lendedItemId == -1) {
-         stream.writeByte(12);
-         stream.writeInt(this.cost);
-      }
-      if(this.equipSlot != -1) { stream.writeByte(13); stream.writeByte(this.equipSlot); }
-      if(this.equipType != -1) { stream.writeByte(14); stream.writeByte(this.equipType); }
-      if(this.membersOnly && this.notedTemplateId == -1) stream.writeByte(16);
+            default:
+                throw new RuntimeException("Unhandled opcode: " + opcode);
+        }
+    }
 
-      if(this.maleEquip1 != -1) {
-         stream.writeByte(23);
-         stream.writeBigSmart(this.maleEquip1);
-      }
-      if(this.maleEquip2 != -1) {
-         stream.writeByte(24);
-         stream.writeBigSmart(this.maleEquip2);
-      }
-      if(this.femaleEquip1 != -1) {
-         stream.writeByte(25);
-         stream.writeBigSmart(this.femaleEquip1);
-      }
-      if(this.femaleEquip2 != -1) {
-         stream.writeByte(26);
-         stream.writeBigSmart(this.femaleEquip2);
-      }
+    public byte[] encode() {
+        com.alex.io.OutputStream stream = new com.alex.io.OutputStream();
 
-      for(int index = 0; index < 5; index++) {
-         String option = this.groundOptions[index];
-         if ((index == 5 && option.equals("Examine")) || (index == 2 && option.equals("Take")) || option == null) {
-            continue;
-         }
-         stream.writeByte(30 + index);
-         stream.writeString(this.groundOptions[index]);
-      }
+        stream.writeByte(1);
+        stream.writeShort(this.model);
 
-      for(int index = 0; index < 5; index++) {
-         String option = this.inventoryOptions[index];
-         if (index == 4 && option.equals("Drop") || option == null) {
-            continue;
-         }
-         stream.writeByte(35 + index);
-         stream.writeString(this.inventoryOptions[index]);
-      }
+        if (this.name != null && !this.name.equals("null") && this.certtemplate == -1) {
+            stream.writeByte(2);
+            stream.writeString(this.name);
+        }
 
-      if(this.originalModelColors != null && this.modifiedModelColors != null) {
-         stream.writeByte(40);
-         stream.writeByte(this.originalModelColors.length);
+        if (this.zoom2d != 2000) {
+            stream.writeByte(4);
+            stream.writeShort(this.zoom2d);
+        }
 
-         for(data = 0; data < this.originalModelColors.length; ++data) {
-            stream.writeShort(this.originalModelColors[data]);
-            stream.writeShort(this.modifiedModelColors[data]);
-         }
-      }
+        if (this.xAngle2D != 0) {
+            stream.writeByte(5);
+            stream.writeShort(this.xAngle2D);
+        }
 
-      if(this.originalTextureColors != null && this.modifiedTextureColors != null) {
-         stream.writeByte(41);
-         stream.writeByte(this.originalTextureColors.length);
+        if (this.yAngle2D != 0) {
+            stream.writeByte(6);
+            stream.writeShort(this.yAngle2D);
+        }
 
-         for(data = 0; data < this.originalTextureColors.length; ++data) {
-            stream.writeShort(this.originalTextureColors[data]);
-            stream.writeShort(this.modifiedTextureColors[data]);
-         }
-      }
+        if (this.xOffset2D != 0) {
+            stream.writeByte(7);
+            stream.writeShort(this.xOffset2D & 0xFFFF);
+        }
 
-      if(this.recolorPalette != null) {
-         stream.writeByte(42);
-         stream.writeByte(this.recolorPalette.length);
+        if (this.yOffset2D != 0) {
+            stream.writeByte(8);
+            stream.writeShort(this.yOffset2D & 0xFFFF);
+        }
 
-         for(data = 0; data < this.recolorPalette.length; ++data) {
-            stream.writeByte(this.recolorPalette[data]);
-         }
-      }
+        if (this.stackable >= 1 && this.certtemplate == -1) {
+            stream.writeByte(11);
+        }
 
-      if(this.unnoted) {
-         stream.writeByte(65);
-      }
+        if (this.cost != 1 && this.lentTemplate == -1) {
+            stream.writeByte(12);
+            stream.writeInt(this.cost);
+        }
 
-      if(this.maleEquipModelId3 != -1) {
-         stream.writeByte(78);
-         stream.writeBigSmart(this.maleEquipModelId3);
-      }
+        if (this.members && this.certtemplate == -1) {
+            stream.writeByte(16);
+        }
 
-      if(this.femaleEquipModelId3 != -1) {
-         stream.writeByte(79);
-         stream.writeBigSmart(this.femaleEquipModelId3);
-      }
+        if (this.manwear != -1) {
+            stream.writeByte(23);
+            stream.writeShort(this.manwear);
+        }
 
-      if (this.primaryMaleDialogueHead != -1) {
-         stream.writeByte(90);
-         stream.writeBigSmart(this.primaryMaleDialogueHead);
-      }
+        if (this.manwear2 != -1) {
+            stream.writeByte(24);
+            stream.writeShort(this.manwear2);
+        }
 
-      if (this.primaryFemaleDialogueHead != -1) {
-         stream.writeByte(91);
-         stream.writeBigSmart(this.primaryFemaleDialogueHead);
-      }
+        if (this.womanwear != -1) {
+            stream.writeByte(25);
+            stream.writeShort(this.womanwear);
+        }
 
-      if (this.secondaryMaleDialogueHead != -1) {
-         stream.writeByte(92);
-         stream.writeBigSmart(this.secondaryMaleDialogueHead);
-      }
+        if (this.womanwear2 != -1) {
+            stream.writeByte(26);
+            stream.writeShort(this.womanwear2);
+        }
 
-      if (this.secondaryFemaleDialogueHead != -1) {
-         stream.writeByte(93);
-         stream.writeBigSmart(this.secondaryFemaleDialogueHead);
-      }
+        for (int i = 0; i < 5; i++) {
+            String option = this.ops[i];
+            if (option == null) continue;
 
-      if (this.zan2d != 0) {
-         stream.writeByte(95);
-         stream.writeShort(this.zan2d);
-      }
+            stream.writeByte(30 + i);
+            stream.writeString(option);
+        }
 
-      if(this.noteId != -1) {
-         stream.writeByte(97);
-         stream.writeShort(this.noteId);
-      }
+        for (int i = 0; i < 5; i++) {
+            String option = this.iops[i];
+            if (option == null) continue;
 
-      if(this.notedTemplateId != -1) {
-         stream.writeByte(98);
-         stream.writeShort(this.notedTemplateId);
-      }
+            stream.writeByte(35 + i);
+            stream.writeString(option);
+        }
 
-      if(this.stackIds != null && this.stackAmounts != null) {
-         for(data = 0; data < this.stackIds.length; ++data) {
-            if(this.stackIds[data] != 0 || this.stackAmounts[data] != 0) {
-               stream.writeByte(100 + data);
-               stream.writeShort(this.stackIds[data]);
-               stream.writeShort(this.stackAmounts[data]);
+        if (this.recol_d != null) {
+            stream.writeByte(40);
+            stream.writeByte(this.recol_d.length);
+
+            for (int i = 0; i < this.recol_d.length; i++) {
+                stream.writeShort(this.recol_d[i]);
+                stream.writeShort(this.recol_s[i]);
             }
-         }
-      }
+        }
 
-      if(this.floorScaleX != 128) {
-         stream.writeByte(110);
-         stream.writeShort(this.floorScaleX);
-      }
+        if (this.retex_d != null) {
+            stream.writeByte(41);
+            stream.writeByte(this.retex_d.length);
 
-      if(this.floorScaleY != 128) {
-         stream.writeByte(111);
-         stream.writeShort(this.floorScaleY);
-      }
-
-      if(this.floorScaleZ != 128) {
-         stream.writeByte(112);
-         stream.writeShort(this.floorScaleZ);
-      }
-
-      if(this.ambience != 0) {
-         stream.writeByte(113);
-         stream.writeByte(this.ambience);
-      }
-
-      if(this.diffusion != 0) {
-         stream.writeByte(114);
-         stream.writeByte(this.diffusion);
-      }
-
-      if(this.teamId != 0) {
-         stream.writeByte(115);
-         stream.writeByte(this.teamId);
-      }
-
-      if(this.switchLendItemId != -1) {
-         stream.writeByte(121);
-         stream.writeShort(this.switchLendItemId);
-      }
-
-      if(this.lendedItemId != -1) {
-         stream.writeByte(122);
-         stream.writeShort(this.lendedItemId);
-      }
-
-      if(this.maleWieldX != 0 || this.maleWieldY != 0 || this.maleWieldZ != 0) {
-         stream.writeByte(125);
-         stream.writeByte(this.maleWieldX);
-         stream.writeByte(this.maleWieldY);
-         stream.writeByte(this.maleWieldZ);
-      }
-
-      if(this.femaleWieldX != 0 || this.femaleWieldY != 0 || this.femaleWieldZ != 0) {
-         stream.writeByte(126);
-         stream.writeByte(this.femaleWieldX);
-         stream.writeByte(this.femaleWieldY);
-         stream.writeByte(this.femaleWieldZ);
-      }
-
-      if(this.unknownArray2 != null) {
-         stream.writeByte(132);
-         stream.writeByte(this.unknownArray2.length);
-
-         for(data = 0; data < this.unknownArray2.length; ++data) {
-            stream.writeShort(this.unknownArray2[data]);
-         }
-      }
-
-      if(this.clientScriptData != null) {
-         stream.writeByte(249);
-         stream.writeByte(this.clientScriptData.size());
-         Iterator var5 = this.clientScriptData.keySet().iterator();
-
-         while(var5.hasNext()) {
-            data = ((Integer)var5.next()).intValue();
-            Object value2 = this.clientScriptData.get(Integer.valueOf(data));
-            stream.writeByte(value2 instanceof String?1:0);
-            stream.write24BitInt(data);
-            if(value2 instanceof String) {
-               stream.writeString((String)value2);
-            } else {
-               stream.writeInt(((Integer)value2).intValue());
+            for (int i = 0; i < this.retex_d.length; i++) {
+                stream.writeShort(this.retex_d[i]);
+                stream.writeShort(this.retex_s[i]);
             }
-         }
-      }
+        }
 
-      stream.writeByte(0);
-      byte[] var6 = new byte[stream.getOffset()];
-      stream.setOffset(0);
-      stream.getBytes(var6, 0, var6.length);
-      return var6;
-   }
+        if (this.recol_p != null) {
+            stream.writeByte(42);
+            stream.writeByte(this.recol_p.length);
 
-   public int getInvModelId() {
-      return this.modelId;
-   }
-
-   public void setInvModelId(int modelId) {
-      this.modelId = modelId;
-   }
-
-   public int getInvModelZoom() {
-      return this.zoom2d;
-   }
-
-   public void setInvModelZoom(int modelZoom) {
-      this.zoom2d = modelZoom;
-   }
-
-   private final void decode(com.alex.io.InputStream stream, int opcode) {
-      if(opcode == 1) {
-         this.modelId = stream.readUnsignedShort();//stream.readBigSmart();
-      } else if(opcode == 2) {
-         this.name = stream.readString();
-      } else if(opcode == 4) {
-         this.zoom2d = stream.readUnsignedShort();
-      } else if(opcode == 5) {
-         this.xan2d = stream.readUnsignedShort();
-      } else if(opcode == 6) {
-         this.yan2d = stream.readUnsignedShort();
-      } else if(opcode == 7) {
-         this.xOffset2d = stream.readUnsignedShort();
-         if(this.xOffset2d > Short.MAX_VALUE) {
-         //if(this.modelOffset1 > 32767) {
-            this.xOffset2d -= 65536;
-         }
-
-      } else if(opcode == 8) {
-         this.yOffset2d = stream.readUnsignedShort();
-         if(this.yOffset2d > Short.MAX_VALUE) {
-         //if(this.modelOffset2 > 32767) {
-            this.yOffset2d -= 65536;
-         }
-
-      } else if(opcode == 11) {
-         this.stackable = 1;
-      } else if(opcode == 12) {
-         this.cost = stream.readInt();
-      } else if(opcode == 13) {
-         this.equipSlot = stream.readUnsignedByte();
-      } else if(opcode == 14) {
-         this.equipType = stream.readUnsignedByte();
-      } else if(opcode == 16) {
-         this.membersOnly = true;
-      } else if(opcode == 18) {
-         stream.readUnsignedShortLE();
-      } else if(opcode == 23) {
-         this.maleEquip1 = stream.readUnsignedShort();//stream.readBigSmart();
-      } else if(opcode == 24) {
-         this.maleEquip2 = stream.readUnsignedShort();//stream.readBigSmart();
-      } else if(opcode == 25) {
-         this.femaleEquip1 = stream.readUnsignedShort();//stream.readBigSmart();
-      } else if(opcode == 26) {
-         this.femaleEquip2 = stream.readUnsignedShort();//stream.readBigSmart();
-      } else if(opcode == 27) {
-         stream.readUnsignedByte();
-      } else if(opcode >= 30 && opcode < 35) {
-         this.groundOptions[opcode - 30] = stream.readString();
-      } else if(opcode >= 35 && opcode < 40) {
-         this.inventoryOptions[opcode - 35] = stream.readString();
-      } else {
-         int length;
-         int index;
-         if(opcode == 40) {
-            length = stream.readUnsignedByte();
-            this.originalModelColors = new int[length];
-            this.modifiedModelColors = new int[length];
-
-            for(index = 0; index < length; ++index) {
-               this.originalModelColors[index] = stream.readUnsignedShort();
-               this.modifiedModelColors[index] = stream.readUnsignedShort();
+            for (byte b : this.recol_p) {
+                stream.writeByte(b);
             }
-         } else if(opcode == 41) {
-            length = stream.readUnsignedByte();
-            this.originalTextureColors = new short[length];
-            this.modifiedTextureColors = new short[length];
+        }
 
-            for(index = 0; index < length; ++index) {
-               this.originalTextureColors[index] = (short)stream.readUnsignedShort();
-               this.modifiedTextureColors[index] = (short)stream.readUnsignedShort();
-            }
-         } else if(opcode == 42) {
-            length = stream.readUnsignedByte();
-            this.recolorPalette = new byte[length];
+        if (this.stockMarket) {
+            stream.writeByte(65);
+        }
 
-            for(index = 0; index < length; ++index) {
-               this.recolorPalette[index] = (byte)stream.readByte();
-            }
-         } else if(opcode == 65) {
-            this.unnoted = true;
-         } else if(opcode == 78) {
-            this.maleEquipModelId3 = stream.readUnsignedShort();//stream.readBigSmart();
-         } else if(opcode == 79) {
-            this.femaleEquipModelId3 = stream.readUnsignedShort();//stream.readBigSmart();
-         } else if(opcode == 90) {
-            this.primaryMaleDialogueHead = stream.readUnsignedShort();//stream.readBigSmart();
-         } else if(opcode == 91) {
-            this.primaryFemaleDialogueHead = stream.readUnsignedShort();//stream.readBigSmart();
-         } else if(opcode == 92) {
-            this.secondaryMaleDialogueHead = stream.readUnsignedShort();//stream.readBigSmart();
-         } else if(opcode == 93) {
-            this.secondaryFemaleDialogueHead = stream.readUnsignedShort();//stream.readBigSmart();
-         } else if(opcode == 95) {
-            this.zan2d = stream.readUnsignedShort();
-         } else if(opcode == 96) {
-            this.dummyItem = stream.readUnsignedByte();
-         } else if(opcode == 97) {
-            this.noteId = stream.readUnsignedShort();
-         } else if(opcode == 98) {
-            this.notedTemplateId = stream.readUnsignedShort();
-         } else if(opcode >= 100 && opcode < 110) {
-            if(this.stackIds == null) {
-               this.stackIds = new int[10];
-               this.stackAmounts = new int[10];
-            }
+        if (this.manwear3 != -1) {
+            stream.writeByte(78);
+            stream.writeShort(this.manwear3);
+        }
 
-            this.stackIds[opcode - 100] = stream.readUnsignedShort();
-            this.stackAmounts[opcode - 100] = stream.readUnsignedShort();
-         } else if(opcode == 110) {
-            this.floorScaleX = stream.readUnsignedShort();
-         } else if(opcode == 111) {
-            this.floorScaleY = stream.readUnsignedShort();
-         } else if(opcode == 112) {
-            this.floorScaleZ = stream.readUnsignedShort();
-         } else if(opcode == 113) {
-            this.ambience = stream.readByte();
-         } else if(opcode == 114) {
-            this.diffusion = stream.readByte();
-         } else if(opcode == 115) {
-            this.teamId = stream.readUnsignedByte();
-         } else if(opcode == 121) {
-            this.switchLendItemId = stream.readUnsignedShort();
-         } else if(opcode == 122) {
-            this.lendedItemId = stream.readUnsignedShort();
-         } else if(opcode == 125) {
-            this.maleWieldX = stream.readByte();
-            this.maleWieldY = stream.readByte();
-            this.maleWieldZ = stream.readByte();
-         } else if(opcode == 126) {
-            this.femaleWieldX = stream.readByte();
-            this.femaleWieldY = stream.readByte();
-            this.femaleWieldZ = stream.readByte();
-         } else if(opcode == 127) {
-            this.unknownInt18 = stream.readUnsignedByte();
-            this.unknownInt19 = stream.readUnsignedShort();
-         } else if(opcode == 128) {
-            this.unknownInt20 = stream.readUnsignedByte();
-            this.unknownInt21 = stream.readUnsignedShort();
-         } else if(opcode == 129) {
-            this.unknownInt20 = stream.readUnsignedByte();
-            this.unknownInt21 = stream.readUnsignedShort();
-         } else if(opcode == 130) {
-            this.unknownInt22 = stream.readUnsignedByte();
-            this.unknownInt23 = stream.readUnsignedShort();
-         } else if(opcode == 132) {
-            length = stream.readUnsignedByte();
-            this.unknownArray2 = new int[length];
+        if (this.womanwear3 != -1) {
+            stream.writeByte(79);
+            stream.writeShort(this.womanwear3);
+        }
 
-            for(index = 0; index < length; ++index) {
-               this.unknownArray2[index] = stream.readUnsignedShort();
-            }
-         } else if(opcode == 134) {
-            stream.readUnsignedByte();
-         } else if(opcode == 139) {
-            this.unknownValue2 = stream.readUnsignedShort();
-         } else if(opcode == 140) {
-            this.unknownValue1 = stream.readUnsignedShort();
-		}else if (opcode == 191) {
-            //int opcode191 = 0;
-		}else if (opcode == 218) {
-            //int opcode218 = 0;
-		}else if (opcode == 219) {
-            //int opcode219 = 0;
-         } else if(opcode == 249) {
-            length = stream.readUnsignedByte();
-            if(this.clientScriptData == null) {
-               this.clientScriptData = new HashMap(length);
-            }
+        if (this.manhead != -1) {
+            stream.writeByte(90);
+            stream.writeShort(this.manhead);
+        }
 
-            for(index = 0; index < length; ++index) {
-               boolean stringInstance = stream.readUnsignedByte() == 1;
-               int key = stream.read24BitInt();
-               Object value = stringInstance?stream.readString():Integer.valueOf(stream.readInt());
-               this.clientScriptData.put(Integer.valueOf(key), value);
-            }
-         //}
-         } else {
-               throw new RuntimeException("MISSING OPCODE " + opcode + " FOR ITEM " + this.id);
-            }
-      }
+        if (this.womanhead != -1) {
+            stream.writeByte(91);
+            stream.writeShort(this.womanhead);
+        }
 
-   }
+        if (this.manhead2 != -1) {
+            stream.writeByte(92);
+            stream.writeShort(this.manhead2);
+        }
+
+        if (this.womanhead2 != -1) {
+            stream.writeByte(93);
+            stream.writeShort(this.womanhead2);
+        }
+
+        if (this.zAngle2D != 0) {
+            stream.writeByte(95);
+            stream.writeShort(this.zAngle2D);
+        }
+
+        if (this.certlink != -1) {
+            stream.writeByte(97);
+            stream.writeShort(this.certlink);
+        }
+
+        if (this.certtemplate != -1) {
+            stream.writeByte(98);
+            stream.writeShort(this.certtemplate);
+        }
+
+        if (this.countobj != null) {
+            for (int i = 0; i < this.countobj.length; i++) {
+                if (this.countobj[i] != 0 || this.countco[i] != 0) {
+                    stream.writeByte(100 + i);
+                    stream.writeShort(this.countobj[i]);
+                    stream.writeShort(this.countco[i]);
+                }
+            }
+        }
+
+        if (this.resizeX != 128) {
+            stream.writeByte(110);
+            stream.writeShort(this.resizeX);
+        }
+
+        if (this.resizeY != 128) {
+            stream.writeByte(111);
+            stream.writeShort(this.resizeY);
+        }
+
+        if (this.resizeZ != 128) {
+            stream.writeByte(112);
+            stream.writeShort(this.resizeZ);
+        }
+
+        if (this.ambient != 0) {
+            stream.writeByte(113);
+            stream.writeByte(this.ambient);
+        }
+
+        if (this.contrast != 0) {
+            stream.writeByte(114);
+            stream.writeByte(this.contrast);
+        }
+
+        if (this.team != 0) {
+            stream.writeByte(115);
+            stream.writeByte(this.team);
+        }
+
+        if (this.lentLink != -1) {
+            stream.writeByte(121);
+            stream.writeShort(this.lentLink);
+        }
+
+        if (this.lentTemplate != -1) {
+            stream.writeByte(122);
+            stream.writeShort(this.lentTemplate);
+        }
+
+        if (this.manWearXOff != 0 || this.manWearYOff != 0 || this.manWearZOff != 0) {
+            stream.writeByte(125);
+            stream.writeByte(this.manWearXOff);
+            stream.writeByte(this.manWearYOff);
+            stream.writeByte(this.manWearZOff);
+        }
+
+        if (this.womanWearXOff != 0 || this.womanWearYOff != 0 || this.womanWearZOff != 0) {
+            stream.writeByte(126);
+            stream.writeByte(this.womanWearXOff);
+            stream.writeByte(this.womanWearYOff);
+            stream.writeByte(this.womanWearZOff);
+        }
+
+        if (this.params != null) {
+            stream.writeByte(249);
+            stream.writeByte(this.params.size());
+
+            for (Object obj : this.params.entrySet()) {
+                Map.Entry entry = (Map.Entry) obj;
+
+                int key = (Integer) entry.getKey();
+                Object value = entry.getValue();
+
+                stream.writeByte(value instanceof String ? 1 : 0);
+
+                stream.writeByte((key >> 16) & 0xFF);
+                stream.writeByte((key >> 8) & 0xFF);
+                stream.writeByte(key & 0xFF);
+
+                if (value instanceof String) {
+                    stream.writeString((String) value);
+                } else {
+                    stream.writeInt((Integer) value);
+                }
+            }
+        }
+
+        stream.writeByte(0);
+        byte[] data = new byte[stream.getOffset()];
+        stream.setOffset(0);
+        stream.getBytes(data, 0, data.length);
+        return data;
+    }
 
    private void readOpcodeValues(InputStream stream) {
       while(true) {
@@ -962,82 +656,66 @@ public class ItemDefinition implements Cloneable {
       }
    }
 
-   public void setName(String name) {
-      this.name = name;
-   }
-
-   public String getName() {
-      return this.name;
-   }
-
    public void resetTextureColors() {
-      this.originalTextureColors = null;
-      this.modifiedTextureColors = null;
-   }
-
-   public boolean isWearItem() {
-      return this.equipSlot != -1;
-   }
-
-   public boolean isMembersOnly() {
-      return this.membersOnly;
+      this.retex_d = null;
+      this.retex_s = null;
    }
 
    public void changeTextureColor(short originalModelColor, short modifiedModelColor) {
-      if(this.originalTextureColors != null) {
-         for(int newOriginalModelColors = 0; newOriginalModelColors < this.originalTextureColors.length; ++newOriginalModelColors) {
-            if(this.originalTextureColors[newOriginalModelColors] == originalModelColor) {
-               this.modifiedTextureColors[newOriginalModelColors] = modifiedModelColor;
+      if(this.retex_d != null) {
+         for(int newOriginalModelColors = 0; newOriginalModelColors < this.retex_d.length; ++newOriginalModelColors) {
+            if(this.retex_d[newOriginalModelColors] == originalModelColor) {
+               this.retex_s[newOriginalModelColors] = modifiedModelColor;
                return;
             }
          }
 
-         short[] var5 = Arrays.copyOf(this.originalTextureColors, this.originalTextureColors.length + 1);
-         short[] newModifiedModelColors = Arrays.copyOf(this.modifiedTextureColors, this.modifiedTextureColors.length + 1);
+         short[] var5 = Arrays.copyOf(this.retex_d, this.retex_d.length + 1);
+         short[] newModifiedModelColors = Arrays.copyOf(this.retex_s, this.retex_s.length + 1);
          var5[var5.length - 1] = originalModelColor;
          newModifiedModelColors[newModifiedModelColors.length - 1] = modifiedModelColor;
-         this.originalTextureColors = var5;
-         this.modifiedTextureColors = newModifiedModelColors;
+         this.retex_d = var5;
+         this.retex_s = newModifiedModelColors;
       } else {
-         this.originalTextureColors = new short[]{originalModelColor};
-         this.modifiedTextureColors = new short[]{modifiedModelColor};
+         this.retex_d = new short[]{originalModelColor};
+         this.retex_s = new short[]{modifiedModelColor};
       }
 
    }
 
    public void resetModelColors() {
-      this.originalModelColors = null;
-      this.modifiedModelColors = null;
+      this.recol_d = null;
+      this.recol_s = null;
    }
 
    public void changeModelColor(int originalModelColor, int modifiedModelColor) {
-      if(this.originalModelColors != null) {
-         for(int newOriginalModelColors = 0; newOriginalModelColors < this.originalModelColors.length; ++newOriginalModelColors) {
-            if(this.originalModelColors[newOriginalModelColors] == originalModelColor) {
-               this.modifiedModelColors[newOriginalModelColors] = modifiedModelColor;
+      if(this.recol_d != null) {
+         for(int newOriginalModelColors = 0; newOriginalModelColors < this.recol_d.length; ++newOriginalModelColors) {
+            if(this.recol_d[newOriginalModelColors] == originalModelColor) {
+               this.recol_s[newOriginalModelColors] = modifiedModelColor;
                return;
             }
          }
 
-         int[] var5 = Arrays.copyOf(this.originalModelColors, this.originalModelColors.length + 1);
-         int[] newModifiedModelColors = Arrays.copyOf(this.modifiedModelColors, this.modifiedModelColors.length + 1);
+         int[] var5 = Arrays.copyOf(this.recol_d, this.recol_d.length + 1);
+         int[] newModifiedModelColors = Arrays.copyOf(this.recol_s, this.recol_s.length + 1);
          var5[var5.length - 1] = originalModelColor;
          newModifiedModelColors[newModifiedModelColors.length - 1] = modifiedModelColor;
-         this.originalModelColors = var5;
-         this.modifiedModelColors = newModifiedModelColors;
+         this.recol_d = var5;
+         this.recol_s = newModifiedModelColors;
       } else {
-         this.originalModelColors = new int[]{originalModelColor};
-         this.modifiedModelColors = new int[]{modifiedModelColor};
+         this.recol_d = new int[]{originalModelColor};
+         this.recol_s = new int[]{modifiedModelColor};
       }
 
    }
 
-   public String[] getGroundOptions() {
-      return this.groundOptions;
+   public String[] getOps() {
+      return this.ops;
    }
 
-   public String[] getInventoryOptions() {
-      return this.inventoryOptions;
+   public String[] getIops() {
+      return this.iops;
    }
 
    public int getEquipSlot() {
@@ -1048,95 +726,443 @@ public class ItemDefinition implements Cloneable {
       return this.equipType;
    }
 
-   public Object clone() {
-      try {
-         return super.clone();
-      } catch (CloneNotSupportedException var2) {
-         var2.printStackTrace();
-         return null;
-      }
-   }
+    public boolean isLoaded() {
+        return this.loaded;
+    }
 
-   public String toString() {
+    public int getCost() {
+        return this.cost;
+    }
+
+    public int getTeam() {
+        return this.team;
+    }
+
+    public int getStackable() {
+        return this.stackable;
+    }
+
+    public boolean isStockMarket() {
+        return this.stockMarket;
+    }
+
+    public int getLentTemplate() {
+        return this.lentTemplate;
+    }
+
+    public int getxAngle2D() {
+        return this.xAngle2D;
+    }
+
+    public void setxAngle2D(int xAngle2D) {
+        this.xAngle2D = xAngle2D;
+    }
+
+    public int getyAngle2D() {
+        return this.yAngle2D;
+    }
+
+    public void setyAngle2D(int yAngle2D) {
+        this.yAngle2D = yAngle2D;
+    }
+
+    public int getxOffset2D() {
+        return this.xOffset2D;
+    }
+
+    public void setxOffset2D(int xOffset2D) {
+        this.xOffset2D = xOffset2D;
+    }
+
+    public int getyOffset2D() {
+        return this.yOffset2D;
+    }
+
+    public void setyOffset2D(int yOffset2D) {
+        this.yOffset2D = yOffset2D;
+    }
+
+    public int getMaleEquipModelId1() {
+        return this.manwear;
+    }
+
+    public void setMaleEquipModelId1(int maleEquipModelId1) {
+        this.manwear = maleEquipModelId1;
+    }
+
+    public int getFemaleEquipModelId1() {
+        return this.womanwear;
+    }
+
+    public void setFemaleEquipModelId1(int femaleEquipModelId1) {
+        this.womanwear = femaleEquipModelId1;
+    }
+
+    public int getMaleEquipModelId2() {
+        return this.manwear2;
+    }
+
+    public void setMaleEquipModelId2(int maleEquipModelId2) {
+        this.manwear2 = maleEquipModelId2;
+    }
+
+    public int getFemaleEquipModelId2() {
+        return this.womanwear2;
+    }
+
+    public void setFemaleEquipModelId2(int femaleEquipModelId2) {this.womanwear2 = femaleEquipModelId2;}
+
+    public int getInvModelId() {
+        return this.model;
+    }
+
+    public void setInvModelId(int modelId) {
+        this.model = modelId;
+    }
+
+    public int getInvModelZoom() {
+        return this.zoom2d;
+    }
+
+    public void setInvModelZoom(int modelZoom) {
+        this.zoom2d = modelZoom;
+    }
+
+    public int getManwear3() {
+        return this.manwear3;
+    }
+
+    public void setManwear3(int manwear3) {
+        this.manwear3 = manwear3;
+    }
+
+    public int getWomanwear3() {
+        return this.womanwear3;
+    }
+
+    public void setWomanwear3(int womanwear3) {
+        this.womanwear3 = womanwear3;
+    }
+
+    public int[] getRecol_d() {
+        return this.recol_d;
+    }
+
+    public void setRecol_d(int[] recol_d) {
+        this.recol_d = recol_d;
+    }
+
+    public int[] getRecol_s() {
+        return this.recol_s;
+    }
+
+    public void setRecol_s(int[] recol_s) {
+        this.recol_s = recol_s;
+    }
+
+    public int[] getCountco() {
+        return this.countco;
+    }
+
+    public void setCountco(int[] countco) {
+        this.countco = countco;
+    }
+
+    public int[] getCountobj() {
+        return this.countobj;
+    }
+
+    public void setCountobj(int[] countobj) {
+        this.countobj = countobj;
+    }
+
+    public void setStackable(int stackable) {
+        this.stackable = stackable;
+    }
+
+    public void setCost(int cost) {
+        this.cost = cost;
+    }
+
+    public void setTeam(int team) {
+        this.team = team;
+    }
+
+    public void setMembers(boolean members) {
+        this.members = members;
+    }
+
+    public void setStockMarket(boolean stockMarket) {
+        this.stockMarket = stockMarket;
+    }
+
+    public void setEquipSlot(int equipSlot) {
+        this.equipSlot = equipSlot;
+    }
+
+    public void setEquipType(int equipType) {
+        this.equipType = equipType;
+    }
+
+    public int getLentLink() {
+        return this.lentLink;
+    }
+
+    public void setLentLink(int lentLink) {
+        this.lentLink = lentLink;
+    }
+
+    public void setLentTemplate(int lentTemplate) {
+        this.lentTemplate = lentTemplate;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return this.name;
+    }
+
+    public boolean isWearItem() {
+        return this.equipSlot != -1;
+    }
+
+    public boolean isMembers() {
+        return this.members;
+    }
+
+    public int getId() {
+        return this.id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String toString() {
       return this.id + " - " + this.name;
    }
 
-   private static void printItemData(ItemDefinition item) {
-      printer.println("========== ITEM " + item.id + " ==========");
-      printer.println("name = " + item.name);
-      printer.println("modelId = " + item.modelId);
-      printer.println("zoom2d = " + item.zoom2d);
-      printer.println("xan2d = " + item.xan2d);
-      printer.println("yan2d = " + item.yan2d);
-      printer.println("zan2d = " + item.zan2d);
-      printer.println("xOffset2d = " + item.xOffset2d);
-      printer.println("yOffset2d = " + item.yOffset2d);
-      printer.println("stackable = " + item.stackable);
-      printer.println("cost = " + item.cost);
-      printer.println("membersOnly = " + item.membersOnly);
-      printer.println("equipSlot = " + item.equipSlot);
-      printer.println("equipType = " + item.equipType);
-      printer.println("maleEquip1 = " + item.maleEquip1);
-      printer.println("maleEquip2 = " + item.maleEquip2);
-      printer.println("maleEquipModelId3 = " + item.maleEquipModelId3);
-      printer.println("femaleEquip1 = " + item.femaleEquip1);
-      printer.println("femaleEquip2 = " + item.femaleEquip2);
-      printer.println("femaleEquipModelId3 = " + item.femaleEquipModelId3);
-      printer.println("primaryMaleDialogueHead = " + item.primaryMaleDialogueHead);
-      printer.println("primaryFemaleDialogueHead = " + item.primaryFemaleDialogueHead);
-      printer.println("secondaryMaleDialogueHead = " + item.secondaryMaleDialogueHead);
-      printer.println("secondaryFemaleDialogueHead = " + item.secondaryFemaleDialogueHead);
-      printer.println("dummyItem = " + item.dummyItem);
-      printer.println("notedItemId = " + item.notedTemplateId);
-      printer.println("switchNoteItemId = " + item.noteId);
-      printer.println("lendedItemId = " + item.lendedItemId);
-      printer.println("switchLendItemId = " + item.switchLendItemId);
-      printer.println("unnoted = " + item.unnoted);
-      printer.println("floorScaleX = " + item.floorScaleX);
-      printer.println("floorScaleY = " + item.floorScaleY);
-      printer.println("floorScaleZ = " + item.floorScaleZ);
-      printer.println("ambience = " + item.ambience);
-      printer.println("diffusion = " + item.diffusion);
-      printer.println("teamId = " + item.teamId);
-      printer.println("maleWieldX = " + item.maleWieldX);
-      printer.println("maleWieldY = " + item.maleWieldY);
-      printer.println("maleWieldZ = " + item.maleWieldZ);
-      printer.println("femaleWieldX = " + item.femaleWieldX);
-      printer.println("femaleWieldY = " + item.femaleWieldY);
-      printer.println("femaleWieldZ = " + item.femaleWieldZ);
-      printer.println("unknownInt18 = " + item.unknownInt18);
-      printer.println("unknownInt19 = " + item.unknownInt19);
-      printer.println("unknownInt20 = " + item.unknownInt20);
-      printer.println("unknownInt21 = " + item.unknownInt21);
-      printer.println("unknownInt22 = " + item.unknownInt22);
-      printer.println("unknownInt23 = " + item.unknownInt23);
-      printer.println("unknownValue1 = " + item.unknownValue1);
-      printer.println("unknownValue2 = " + item.unknownValue2);
+    public boolean hasSpecialBar() {
+        if (this.params == null) {
+            return false;
+        } else {
+            Object specialBar = this.params.get(Integer.valueOf(686));
+            return specialBar != null && specialBar instanceof Integer && ((Integer) specialBar).intValue() == 1;
+        }
+    }
 
-      if (item.groundOptions != null)
-         printer.println("groundOptions = " + java.util.Arrays.toString(item.groundOptions));
-      if (item.inventoryOptions != null)
-         printer.println("inventoryOptions = " + java.util.Arrays.toString(item.inventoryOptions));
-      if (item.originalModelColors != null) {
-         printer.println("originalModelColors = " + java.util.Arrays.toString(item.originalModelColors));
-         printer.println("modifiedModelColors = " + java.util.Arrays.toString(item.modifiedModelColors));
-      }
-      if (item.originalTextureColors != null) {
-         printer.println("originalTextureColors = " + java.util.Arrays.toString(item.originalTextureColors));
-         printer.println("modifiedTextureColors = " + java.util.Arrays.toString(item.modifiedTextureColors));
-      }
-      if (item.recolorPalette != null)
-         printer.println("recolorPalette = " + java.util.Arrays.toString(item.recolorPalette));
-      if (item.stackIds != null) {
-         printer.println("stackIds = " + java.util.Arrays.toString(item.stackIds));
-         printer.println("stackAmounts = " + java.util.Arrays.toString(item.stackAmounts));
-      }
-      if (item.unknownArray2 != null)
-         printer.println("unknownArray2 = " + java.util.Arrays.toString(item.unknownArray2));
-      if (item.clientScriptData != null)
-         printer.println("clientScriptData = " + item.clientScriptData);
+    public int getRenderAnimId() {
+        if (this.params == null) {
+            return 1426;
+        } else {
+            Object animId = this.params.get(Integer.valueOf(644));
+            return animId != null && animId instanceof Integer ? ((Integer) animId).intValue() : 1426;
+        }
+    }
 
-      printer.println();
-      printer.flush();
-   }
+    public int getQuestId() {
+        if (this.params == null) {
+            return -1;
+        } else {
+            System.out.println(this.params);
+            Object questId = this.params.get(Integer.valueOf(861));
+            return questId != null && questId instanceof Integer ? ((Integer) questId).intValue() : -1;
+        }
+    }
+
+    public HashMap getWearingSkillRequirements() {
+        if (this.params == null) {
+            return null;
+        } else {
+            HashMap skills = new HashMap();
+            int nextLevel = -1;
+            int nextSkill = -1;
+            Iterator var5 = this.params.keySet().iterator();
+
+            while (var5.hasNext()) {
+                int key = ((Integer) var5.next()).intValue();
+                Object value = this.params.get(Integer.valueOf(key));
+                if (!(value instanceof String)) {
+                    if (key == 23) {
+                        skills.put(Integer.valueOf(4), value);
+                        skills.put(Integer.valueOf(11), Integer.valueOf(61));
+                    } else if (key >= 749 && key < 797) {
+                        if (key % 2 == 0) {
+                            nextLevel = ((Integer) value).intValue();
+                        } else {
+                            nextSkill = ((Integer) value).intValue();
+                        }
+
+                        if (nextLevel != -1 && nextSkill != -1) {
+                            skills.put(Integer.valueOf(nextSkill), Integer.valueOf(nextLevel));
+                            nextLevel = -1;
+                            nextSkill = -1;
+                        }
+                    }
+                }
+            }
+
+            return skills;
+        }
+    }
+
+    public static void printParams(Store cache, String outputFile) {
+        try {
+            File file = new File(outputFile);
+            File parent = file.getParentFile();
+
+            if (parent != null && !parent.exists()) {
+                parent.mkdirs();
+            }
+
+            if (!file.exists()) {
+                file.createNewFile();
+            }
+
+            try (PrintWriter writer = new PrintWriter(new BufferedWriter(new FileWriter(file)))) {
+
+                int size = Utils.getItemDefinitionsSize(cache);
+
+                for (int id = 0; id < size; id++) {
+                    ItemDefinition item = new ItemDefinition(cache, id, false);
+                    item.loadItemDefinition(cache);
+
+                    if (!item.loaded) {
+                        continue;
+                    }
+
+                    if (item.params == null || item.params.isEmpty()) {
+                        continue;
+                    }
+
+                    writer.println("===== ITEM ID: " + id + " =====");
+
+                    for (Object entryObj : item.params.entrySet()) {
+                        Map.Entry<Integer, Object> entry = (Map.Entry<Integer, Object>) entryObj;
+                        writer.println("KEY: " + entry.getKey() + ", VALUE: " + entry.getValue());
+                    }
+
+                    writer.println();
+                }
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void setDefaultOptions() {
+        this.ops = new String[]{null, null, "Take", null, null};
+        this.iops = new String[]{null, null, null, null, "Drop"};
+    }
+
+    public static void print(Store cache, String outputFile) {
+        try {
+            File file = new File(outputFile);
+            File parent = file.getParentFile();
+            if (parent != null && !parent.exists()) {
+                parent.mkdirs();
+            }
+            if (!file.exists()) {
+                file.createNewFile();
+            }
+
+            try (PrintWriter writer = new PrintWriter(new BufferedWriter(new FileWriter(file)))) {
+
+                int size = Utils.getItemDefinitionsSize(cache);
+
+                for (int id = 0; id < size; id++) {
+                    ItemDefinition item = new ItemDefinition(cache, id, false);
+                    item.loadItemDefinition(cache);
+
+                    if (!item.loaded) {
+                        continue;
+                    }
+
+                    Class<?> clazz = item.getClass();
+                    Field[] fields = clazz.getDeclaredFields();
+
+                    boolean wroteSomething = false;
+                    StringBuilder buffer = new StringBuilder();
+
+                    buffer.append("========== ITEM ").append(item.id).append(" ==========\n");
+
+                    for (Field field : fields) {
+                        if (Modifier.isStatic(field.getModifiers())) {
+                            continue;
+                        }
+
+                        field.setAccessible(true);
+
+                        Object value;
+                        try {
+                            value = field.get(item);
+                        } catch (Exception e) {
+                            continue;
+                        }
+
+                        if (value == null) continue;
+                        if (value instanceof Integer && ((Integer) value) == 0) continue;
+                        if (value instanceof Integer && ((Integer) value) == -1) continue;
+                        if (value instanceof Boolean && !((Boolean) value)) continue;
+                        if (value instanceof String && ((String) value).isEmpty()) continue;
+                        if (value instanceof int[] && ((int[]) value).length == 0) continue;
+                        if (value instanceof byte[] && ((byte[]) value).length == 0) continue;
+                        if (value instanceof Object[] && ((Object[]) value).length == 0) continue;
+                        if (value instanceof Map && ((Map<?, ?>) value).isEmpty()) continue;
+
+                        String valueString;
+
+                        if (value instanceof int[]) {
+                            valueString = Arrays.toString((int[]) value);
+                        } else if (value instanceof byte[]) {
+                            valueString = Arrays.toString((byte[]) value);
+                        } else if (value instanceof Object[]) {
+                            valueString = Arrays.toString((Object[]) value);
+                        } else if (value instanceof Map) {
+                            Map<?, ?> map = (Map<?, ?>) value;
+                            StringBuilder mapStr = new StringBuilder("{");
+                            for (Map.Entry<?, ?> entry : map.entrySet()) {
+                                mapStr.append(entry.getKey()).append("=").append(entry.getValue()).append(", ");
+                            }
+                            if (!map.isEmpty()) {
+                                mapStr.setLength(mapStr.length() - 2);
+                            }
+                            mapStr.append("}");
+                            valueString = mapStr.toString();
+                        } else {
+                            valueString = value.toString();
+                        }
+
+                        buffer.append(field.getName()).append(" = ").append(valueString).append("\n");
+                        wroteSomething = true;
+                    }
+
+                    if (wroteSomething) {
+                        writer.println(buffer.toString());
+                    }
+                }
+
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void write(Store store)
+    {
+        store.getIndexes()[19].putFile(this.getArchiveId(), this.getFileId(), this.encode());
+    }
+
+    public Object clone() {
+        try {
+            return super.clone();
+        } catch (CloneNotSupportedException var2) {
+            var2.printStackTrace();
+            return null;
+        }
+    }
 }

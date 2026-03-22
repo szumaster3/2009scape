@@ -38,22 +38,22 @@ object `Afro(14650-14699)` {
                 this.name = name
                 invModelId = 45467
                 zoom2d = 728
-                xan2d = 30
-                yan2d = 180
-                zan2d = 0
-                xOffset2d = 0
-                yOffset2d = 1
+                xAngle2D = 30
+                yAngle2D = 180
+                zAngle2D = 0
+                xOffset2D = 0
+                yOffset2D = 1
                 stackable = 0
                 cost = 50
-                membersOnly = true
+                members = true
                 maleEquipModelId1 = 45470
                 femaleEquipModelId1 = 45471
-                primaryMaleDialogueHead = 45468
-                primaryFemaleDialogueHead = 45469
-                unnoted = false
-                teamId = 0
-                groundOptions = arrayOfNulls<String>(5).apply { this[2] = "Take" }
-                inventoryOptions = arrayOfNulls<String>(5).apply { this[1] = "Wear"; this[4] = "Drop" }
+                manhead = 45468
+                womanhead = 45469
+                stockMarket = false
+                team = 0
+                ops = arrayOfNulls<String>(5).apply { this[2] = "Take" }
+                iops = arrayOfNulls<String>(5).apply { this[1] = "Wear"; this[4] = "Drop" }
                 changeModelColor(6805, recol1d)
                 changeModelColor(6794, recol2d)
             }

@@ -73,7 +73,7 @@ class ItemPacker private constructor(private val startId: Int = 0) {
 
             item.write(store)
             copiedItems.add(item)
-            println("Packed ${item.name ?: "unknown"}:${item.id}")
+            println("Packed item ${item.id}:${item.name ?: "unknown"}")
             if (!task.isEdit) currentId++
         }
 
@@ -91,20 +91,20 @@ class ItemPacker private constructor(private val startId: Int = 0) {
 
         val item = ItemDefinition(store, itemId, false).apply {
             builder()
-            this.noteId = noteId
+            this.certlink = noteId
         }
 
         item.write(store)
 
         val note = ItemDefinition(store, noteId, false).apply {
             name = item.name
-            this.noteId = itemId
-            notedTemplateId = 799
+            this.certlink = itemId
+            certtemplate = 799
         }
 
         note.write(store)
 
-        println("Packed ${item.name ?: "unknown"}:${item.id} + noted:${note.id}")
+        println("Packed item ${item.id}:${item.name ?: "unknown"} | Packed cert ${note.id}")
 
         currentId += 2
         return this

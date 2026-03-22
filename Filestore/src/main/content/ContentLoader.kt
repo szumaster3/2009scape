@@ -64,11 +64,11 @@ object ContentLoader {
 
     private fun print() {
         val store = Cache.getStore()
-        LocDefinition.print(store,        "dumps/object_dumps.txt")
-        ItemDefinition.print(store,       "dumps/item_dumps.txt")
-        ItemDefinition.printParams(store, "dumps/item_params.txt")
-        BasDefinition.print(store,        "dumps/bas_dumps.txt")
-        NpcDefinition.print(store,        "dumps/npc_dumps.txt")
+        LocDefinition.print(store,        "../Dumps/object_dumps.txt")
+        ItemDefinition.print(store,       "../Dumps/item_dumps.txt")
+        ItemDefinition.printParams(store, "../Dumps/item_params.txt")
+        BasDefinition.print(store,        "../Dumps/bas_dumps.txt")
+        NpcDefinition.print(store,        "../Dumps/npc_dumps.txt")
     }
 
     private fun dump() {

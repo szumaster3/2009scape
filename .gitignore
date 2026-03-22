@@ -80,3 +80,4 @@ settings.properties
 Config/target/**
 Tools/
 Tools/settings.properties
+Dumps/**

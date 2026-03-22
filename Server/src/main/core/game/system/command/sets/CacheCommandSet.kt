@@ -4,10 +4,7 @@ import com.google.gson.GsonBuilder
 import com.google.gson.JsonArray
 import com.google.gson.JsonObject
 import core.ServerConstants
-import core.api.animateInterface
-import core.api.sendItemOnInterface
-import core.api.sendModelOnInterface
-import core.api.sendString
+import core.api.*
 import core.cache.Cache
 import core.cache.def.impl.*
 import core.game.system.command.Privilege
@@ -32,6 +29,48 @@ import kotlin.reflect.jvm.isAccessible
 class CacheCommandSet : CommandSet(Privilege.ADMIN) {
 
     override fun defineCommands() {
+
+        /*
+         * Command for looping incremental interface animation.
+         */
+
+        define(
+            name = "ianimloop",
+            privilege = Privilege.ADMIN,
+            usage = "::ianimloop <interface_id> <component_id> <start_anim_id>",
+            description = "Run incrementing animation loop on an iface comp every 2 ticks."
+        ) { player, args ->
+            if (args.size < 4) {
+                reject(player, "Usage: ::ianimloop <interface_id> <component_id> <start_anim_id>")
+                return@define
+            }
+
+            val iface     = args[1].toIntOrNull()
+            val component = args[2].toIntOrNull()
+            val startAnim = args[3].toIntOrNull()
+
+            if (iface == null || component == null || startAnim == null || startAnim < 0) {
+                reject(player, "Iface, component and anim Id must be valid ints!")
+                return@define
+            }
+
+            GameWorld.Pulser.submit(
+                object : Pulse(2, player) {
+                    var currentAnim = startAnim
+
+                    override fun pulse(): Boolean {
+                        if (player == null) return true
+
+                        animateInterface(player, iface, component, currentAnim)
+                        player.debug("anim: $currentAnim")
+
+                        currentAnim++
+
+                        return false
+                    }
+                }
+            )
+        }
 
         /*
          * Command for animating interface component.

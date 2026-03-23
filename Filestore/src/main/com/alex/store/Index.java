@@ -212,6 +212,10 @@ public final class Index {
         return this.putFile(archiveId, fileId, 2, data, null, true, true, -1, -1);
     }
 
+    public boolean putFile(int archiveId, int fileId, byte[] data, int[] xtea) {
+        return this.putFile(archiveId, fileId, 2, data, xtea, true, true, -1, -1);
+    }
+
     public boolean removeFile(int archiveId, int fileId) {
         return this.removeFile(archiveId, fileId, 2, null);
     }

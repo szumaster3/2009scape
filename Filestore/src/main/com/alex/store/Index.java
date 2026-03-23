@@ -4,7 +4,7 @@ import com.alex.io.InputStream;
 import com.alex.io.OutputStream;
 import com.alex.utils.Utils;
 import com.alex.util.crc32.CRC32HGenerator;
-import com.alex.util.whirlpool.Whirlpool;
+import com.alex.util.crypto.Whirlpool;
 
 public final class Index {
     private final MainFile mainFile;

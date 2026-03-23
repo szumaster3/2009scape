@@ -1,4 +1,4 @@
-package com.alex.util.whirlpool;
+package com.alex.util.crypto;
 
 import java.util.Arrays;
 

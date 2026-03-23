@@ -27,6 +27,16 @@
             <artifactId>Constants</artifactId>
             <version>1.0.0</version>
         </dependency>
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>2.9.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-compress</artifactId>
+            <version>1.25.0</version>
+        </dependency>
     </dependencies>
 
     <build>

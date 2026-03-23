@@ -2,7 +2,7 @@ package com.alex.store;
 
 import com.alex.io.OutputStream;
 import com.alex.utils.Utils;
-import com.alex.util.whirlpool.Whirlpool;
+import com.alex.util.crypto.Whirlpool;
 
 import java.io.IOException;
 import java.io.RandomAccessFile;

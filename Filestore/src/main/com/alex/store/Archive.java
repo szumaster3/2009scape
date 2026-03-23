@@ -7,7 +7,7 @@ import com.alex.util.bzip2.BZip2Decompressor;
 import com.alex.util.crc32.CRC32HGenerator;
 import com.alex.util.gzip.GZipCompressor;
 import com.alex.util.gzip.GZipDecompressor;
-import com.alex.util.whirlpool.Whirlpool;
+import com.alex.util.crypto.Whirlpool;
 
 public class Archive {
     private final int id;

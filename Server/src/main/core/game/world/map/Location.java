@@ -561,8 +561,15 @@ public final class Location extends Node {
         int stepX = dir.getStepX();
         int stepY = dir.getStepY();
 
-        if (stepX != 0) output.add(transform(stepX, 0, 0));
-        if (stepY != 0) output.add(transform(0, stepY, 0));
+        // if (stepX != 0) output.add(transform(stepX, 0, 0));
+        // if (stepY != 0) output.add(transform(0, stepY, 0));
+
+        // When moving diagonally, melee attacks must be validated
+        // via adjacent orthogonal tiles (X first, then Y), since
+        // diagonal attacks are not allowed.
+
+        if (stepX != 0) output.add(transform(-stepX, 0, 0));
+        if (stepY != 0) output.add(transform(0, -stepY, 0));
         return output;
     }
 

@@ -57,7 +57,7 @@ public final class NpcDefinition implements Cloneable {
     public int hitBarId = -1;
     public int cursor2;
     public int attackCursor = -1;
-    public int combatLevel = -1;
+    public int combatLevel = 0;
     public int rotationspeed = 32;
     public byte spawndirection = 7;
     public int bastypeid = -1;
@@ -414,7 +414,7 @@ public final class NpcDefinition implements Cloneable {
             stream.writeByte(93);
         }
 
-        if (combatLevel != 0) {
+        if (combatLevel != -1) {
             stream.writeByte(95);
             stream.writeShort(combatLevel);
         }
@@ -641,12 +641,9 @@ public final class NpcDefinition implements Cloneable {
                     buffer.append("========== NPC ").append(npc.id).append(" ==========\n");
 
                     for (Field field : fields) {
-                        if (Modifier.isStatic(field.getModifiers())) {
-                            continue;
-                        }
+                        if (Modifier.isStatic(field.getModifiers())) continue;
 
                         field.setAccessible(true);
-
                         Object value;
                         try {
                             value = field.get(npc);
@@ -661,15 +658,25 @@ public final class NpcDefinition implements Cloneable {
                         if (value instanceof String && ((String) value).isEmpty()) continue;
                         if (value instanceof int[] && ((int[]) value).length == 0) continue;
                         if (value instanceof byte[] && ((byte[]) value).length == 0) continue;
+                        if (value instanceof short[] && ((short[]) value).length == 0) continue;
                         if (value instanceof Object[] && ((Object[]) value).length == 0) continue;
                         if (value instanceof Map && ((Map<?, ?>) value).isEmpty()) continue;
+                        if (value instanceof String[] && ((String[]) value).length == 0) continue;
 
                         String valueString;
-
                         if (value instanceof int[]) {
                             valueString = Arrays.toString((int[]) value);
                         } else if (value instanceof byte[]) {
                             valueString = Arrays.toString((byte[]) value);
+                        } else if (value instanceof short[]) {
+                            short[] arr = (short[]) value;
+                            int[] unsignedArr = new int[arr.length];
+                            for (int i = 0; i < arr.length; i++) {
+                                unsignedArr[i] = arr[i] & 0xFFFF;
+                            }
+                            valueString = Arrays.toString(unsignedArr);
+                        } else if (value instanceof String[]) {
+                            valueString = Arrays.toString((String[]) value);
                         } else if (value instanceof Object[]) {
                             valueString = Arrays.toString((Object[]) value);
                         } else if (value instanceof Map) {
@@ -678,9 +685,7 @@ public final class NpcDefinition implements Cloneable {
                             for (Map.Entry<?, ?> entry : map.entrySet()) {
                                 mapStr.append(entry.getKey()).append("=").append(entry.getValue()).append(", ");
                             }
-                            if (!map.isEmpty()) {
-                                mapStr.setLength(mapStr.length() - 2);
-                            }
+                            if (!map.isEmpty()) mapStr.setLength(mapStr.length() - 2);
                             mapStr.append("}");
                             valueString = mapStr.toString();
                         } else {
@@ -691,9 +696,7 @@ public final class NpcDefinition implements Cloneable {
                         wroteSomething = true;
                     }
 
-                    if (wroteSomething) {
-                        writer.println(buffer.toString());
-                    }
+                    if (wroteSomething) writer.println(buffer.toString());
                 }
 
             }

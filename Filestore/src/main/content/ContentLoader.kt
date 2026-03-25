@@ -11,6 +11,7 @@ import com.alex.tools.dump.SpriteDumper
 import com.alex.tools.pack.ModelPacker
 import com.alex.tools.pack.SpritePacker
 import content.items.*
+import content.npcs.`GuildHallOfficer(8591)`
 import content.objects.`Obelisk(42004)`
 import java.nio.file.Paths
 
@@ -20,7 +21,7 @@ object ContentLoader {
         runCatching {
             Cache.init()
             load()
-            // print()
+            print()
             // dumpMaps()
         }.onFailure { e -> e.printStackTrace() }
     }
@@ -63,7 +64,7 @@ object ContentLoader {
     }
 
     private fun npcs() {
-
+        `GuildHallOfficer(8591)`.add()
     }
 
     private fun print() {

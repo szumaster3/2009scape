@@ -8592,4 +8592,5 @@ object NPCs {
     const val KARMA_THE_CHAMELEON_8588 = 8588
     const val KARMA_THE_CHAMELEON_8589 = 8589
     const val GEOFFREY_8590 = 8590
+    const val GUILD_HALL_OFFICER_8591 = 8591
 }

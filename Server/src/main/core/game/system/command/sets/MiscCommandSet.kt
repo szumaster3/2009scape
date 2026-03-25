@@ -526,6 +526,50 @@ class MiscCommandSet : CommandSet(Privilege.ADMIN) {
         }
 
         /*
+         * Command for setting all achievement diaries to a selected difficulty.
+         */
+
+        define(
+            name = "diarylevel",
+            privilege = Privilege.ADMIN,
+            usage = "::diarylevel <0-2>",
+            description = "Sets all diaries to a specific level (0=Easy, 1=Medium, 2=Hard)."
+        ) { player, args ->
+
+            val level = if (args.size < 2) {
+                null
+            } else {
+                args[1].toIntOrNull()
+            }
+
+            if (level == null || level !in 0..2) {
+                player.debug("Usage: ::diarylevel <0=Easy, 1=Medium, 2=Hard>")
+                return@define
+            }
+
+            player.achievementDiaryManager.diaries.forEach { diary ->
+                diary.taskCompleted.forEachIndexed { lvl, tasks ->
+                    tasks.indices.forEach { taskIndex ->
+                        diary.resetTask(player, lvl, taskIndex)
+                    }
+                }
+                for (lvl in 0..level) {
+                    diary.taskCompleted[lvl].indices.forEach { taskIndex ->
+                        diary.finishTask(player, lvl, taskIndex)
+                    }
+                }
+            }
+
+            val name = when(level) {
+                0 -> "Easy"
+                1 -> "Medium"
+                2 -> "Hard"
+                else -> "Unknown"
+            }
+            player.debug("All diaries set to $name tier.")
+        }
+
+        /*
          * Command for completing all achievement diaries.
          */
 

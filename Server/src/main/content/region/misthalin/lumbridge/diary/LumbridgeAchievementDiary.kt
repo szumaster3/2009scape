@@ -1,12 +1,11 @@
 package content.region.misthalin.lumbridge.diary
 
 import content.data.GameAttributes
-import content.global.dialogue.TownCrierRulesDialogue
+import content.global.dialogue.TownCrierDialogue
 import content.global.skill.magic.TeleportMethod
 import content.global.skill.magic.spells.ModernSpells
 import content.region.misthalin.draynor.cutscene.TelescopeCutscene.EndDialogue
 import content.region.misthalin.draynor.dialogue.WiseOldManDialogue
-import content.region.misthalin.lumbridge.dialogue.DoomsayerDialogue
 import content.region.misthalin.lumbridge.dialogue.DukeHoracioDialogue
 import content.region.misthalin.lumbridge.dialogue.LumbridgeGuideDialogue
 import content.region.misthalin.lumbridge.quest.priest.dialogue.FatherUhrneyDialogue
@@ -485,7 +484,7 @@ class LumbridgeAchievementDiary : DiaryEventHookBase(DiaryType.LUMBRIDGE) {
                     )
                 }
             }
-            is TownCrierRulesDialogue -> {
+            is TownCrierDialogue -> {
                 if (inBorders(player, DRAYNOR_MARKET_AREA) && event.currentStage == 70) {
                     finishTask(
                         player,

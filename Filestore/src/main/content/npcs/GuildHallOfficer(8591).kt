@@ -13,7 +13,9 @@ object `GuildHallOfficer(8591)` {
             name = "Guild Hall officer"
             size = 1
             modelIndices = intArrayOf(45498)
-            headmodels = intArrayOf(38642,45497)
+            headmodels = intArrayOf(39706,45497)
+            recol_s = shortArrayOf(6798, 6165)
+            recol_d = shortArrayOf(6252, 41279.toShort())
             options = arrayOf("Talk-to", null, null, null, null)
             resizeX = 128
             resizeY = 128

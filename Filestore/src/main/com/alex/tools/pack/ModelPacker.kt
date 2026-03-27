@@ -10,26 +10,32 @@ object ModelPacker {
         get() = Cache.getStore()!!.indexes[7]
 
     @JvmStatic
-    fun add() {
+    fun add()
+    {
         val baseFolder = File("../Assets/models/")
         if (!baseFolder.exists() || !baseFolder.isDirectory) return
-        val files = baseFolder.walk()
+
+        val dataList = baseFolder.walk()
             .filter { it.isFile && it.extension.lowercase() == "dat" }
+            .mapNotNull {
+                val id = it.nameWithoutExtension.toIntOrNull() ?: return@mapNotNull null
+                id to it.readBytes()
+            }
+            .sortedBy { it.first }
             .toList()
 
-        val sortedFiles = files.sortedBy { it.nameWithoutExtension.toIntOrNull() ?: Int.MAX_VALUE }
-        val dataList = sortedFiles.map { file ->
-            val id = file.nameWithoutExtension.toInt()
-            val data = file.readBytes()
-            id to data
-        }
-        dataList.forEach { (id, data) ->
+        for ((id, data) in dataList)
+        {
             try {
-                modelIndex.putFile(id, 0, data)
+                modelIndex.putFile(id, 0, 2, data, null, false, false, -1, -1)
                 println("Packed model $id")
             } catch (ex: Exception) {
-                println("Failed to pack model $id: ${ex.message}")
+                println("Failed model $id: ${ex.message}")
             }
         }
+
+        modelIndex.rewriteTable()
+        modelIndex.resetCachedFiles()
     }
+
 }

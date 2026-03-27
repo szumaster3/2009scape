@@ -66,8 +66,8 @@ class LocDefinition {
     var ambientSoundMaxDelay = 0
     var animationId = 0
 
-    var unknownAnimationField = -1
-    var unknownField1 = -1
+    var unknownAnimationField = 0
+    var unknownField1 = 0
     var hideMinimap = false
     var mapFunction = -1
     var supportItems = 0
@@ -417,10 +417,13 @@ class LocDefinition {
             }
         }
 
-        if (unknownAnimationField != 0 || unknownField1 != 0) {
+        val hasAnimation = unknownAnimationField != 255
+        val hasField = unknownField1 != 65535
+
+        if (hasAnimation || hasField) {
             write(100) {
-                writeByte(unknownAnimationField)
-                writeUnsignedShort(unknownField1)
+                writeByte(if (hasAnimation) unknownAnimationField else 0)
+                writeUnsignedShort(if (hasField) unknownField1 else 65535)
             }
         }
 

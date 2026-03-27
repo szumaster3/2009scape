@@ -3395,7 +3395,7 @@
     "attack_level": "38"
   },
   {
-    "examine": "A gnome trader that stocks combat gear. ",
+    "examine": "A gnome trader that stocks combat gear.",
     "name": "Gnome shop keeper",
     "defence_level": "1",
     "safespot": null,
@@ -7662,7 +7662,7 @@
     "attack_level": "130"
   },
   {
-    "examine": "Dead man walking. ",
+    "examine": "Dead man walking.",
     "melee_animation": "5578",
     "range_animation": "5578",
     "combat_audio": "931,923,922",
@@ -7682,7 +7682,7 @@
     "attack_level": "5"
   },
   {
-    "examine": "Dead man walking. ",
+    "examine": "Dead man walking.",
     "melee_animation": "5578",
     "range_animation": "5578",
     "combat_audio": "931,923,922",
@@ -7702,7 +7702,7 @@
     "attack_level": "10"
   },
   {
-    "examine": "Dead man walking. ",
+    "examine": "Dead man walking.",
     "melee_animation": "5578",
     "range_animation": "5578",
     "combat_audio": "931,923,922",
@@ -7722,7 +7722,7 @@
     "attack_level": "15"
   },
   {
-    "examine": "Dead man walking. ",
+    "examine": "Dead man walking.",
     "melee_animation": "5578",
     "range_animation": "5578",
     "combat_audio": "931,923,922",
@@ -7742,7 +7742,7 @@
     "attack_level": "45"
   },
   {
-    "examine": "Dead man walking. ",
+    "examine": "Dead man walking.",
     "melee_animation": "5578",
     "range_animation": "5578",
     "combat_audio": "931,923,922",
@@ -7762,7 +7762,7 @@
     "attack_level": "45"
   },
   {
-    "examine": "Dead man walking. ",
+    "examine": "Dead man walking.",
     "melee_animation": "5578",
     "range_animation": "5578",
     "combat_audio": "931,923,922",
@@ -8610,7 +8610,7 @@
     "attack_level": "32"
   },
   {
-    "examine": "It's a tree gnome. ",
+    "examine": "It's a tree gnome.",
     "name": "Remsai",
     "safespot": null,
     "id": "474"
@@ -9019,7 +9019,7 @@
     "attack_level": "1"
   },
   {
-    "examine": "Manages money momentarily. ",
+    "examine": "Manages money momentarily.",
     "melee_animation": "0",
     "range_animation": "0",
     "magic_level": "1",
@@ -9163,7 +9163,7 @@
   },
   {
     "examine": "The animated spirit of Rashiliya the Zombie Queen.",
-    "name": "Rashiliyia ",
+    "name": "Rashiliyia",
     "defence_level": "1",
     "safespot": null,
     "strength_level": "1",
@@ -19291,7 +19291,7 @@
     "attack_level": "1"
   },
   {
-    "examine": "He's guarding the storeroom. ",
+    "examine": "He's guarding the storeroom.",
     "combat_audio": "511,513,512",
     "magic_level": "1",
     "name": "Guard",
@@ -19306,7 +19306,7 @@
     "attack_level": "1"
   },
   {
-    "examine": "He's guarding the storeroom. ",
+    "examine": "He's guarding the storeroom.",
     "combat_audio": "511,513,512",
     "magic_level": "1",
     "name": "Guard",
@@ -19321,7 +19321,7 @@
     "attack_level": "1"
   },
   {
-    "examine": "He's guarding the storeroom. ",
+    "examine": "He's guarding the storeroom.",
     "combat_audio": "511,513,512",
     "magic_level": "1",
     "name": "Guard",
@@ -19336,7 +19336,7 @@
     "attack_level": "1"
   },
   {
-    "examine": "He's guarding the storeroom. ",
+    "examine": "He's guarding the storeroom.",
     "combat_audio": "511,513,512",
     "magic_level": "1",
     "name": "Guard",
@@ -19351,7 +19351,7 @@
     "attack_level": "1"
   },
   {
-    "examine": "He's guarding the storeroom. ",
+    "examine": "He's guarding the storeroom.",
     "combat_audio": "511,513,512",
     "magic_level": "1",
     "name": "Guard",
@@ -19366,7 +19366,7 @@
     "attack_level": "1"
   },
   {
-    "examine": "He's guarding the storeroom. ",
+    "examine": "He's guarding the storeroom.",
     "combat_audio": "511,513,512",
     "magic_level": "1",
     "death_animation": "",
@@ -21764,7 +21764,7 @@
     "attack_level": "1"
   },
   {
-    "examine": "Your challenge awaits! ",
+    "examine": "Your challenge awaits!",
     "melee_animation": "390",
     "range_animation": "0",
     "magic_level": "1",
@@ -33990,7 +33990,7 @@
     "attack_level": "1"
   },
   {
-    "examine": "An ogre shaman ",
+    "examine": "An ogre shaman.",
     "name": "Uglug Nar",
     "defence_level": "1",
     "safespot": null,
@@ -35972,7 +35972,7 @@
     "attack_level": "1"
   },
   {
-    "examine": "Banks gnomish things. ",
+    "examine": "Banks gnomish things.",
     "melee_animation": "0",
     "range_animation": "0",
     "magic_level": "1",
@@ -35990,7 +35990,7 @@
     "attack_level": "1"
   },
   {
-    "examine": "Banks gnomish things. ",
+    "examine": "Banks gnomish things.",
     "melee_animation": "0",
     "range_animation": "0",
     "magic_level": "1",
@@ -38924,7 +38924,7 @@
     "attack_level": "1"
   },
   {
-    "examine": "She can look after my money. ",
+    "examine": "She can look after my money.",
     "combat_style": "",
     "melee_animation": "0",
     "range_animation": "0",
@@ -41923,7 +41923,7 @@
     "attack_level": "1"
   },
   {
-    "examine": "She can look after my money. ",
+    "examine": "She can look after my money.",
     "magic_level": "1",
     "defence_animation": "0",
     "magic_animation": "0",
@@ -41939,7 +41939,7 @@
     "attack_level": "1"
   },
   {
-    "examine": "She can look after my money. ",
+    "examine": "She can look after my money.",
     "magic_level": "1",
     "defence_animation": "0",
     "magic_animation": "0",
@@ -82113,7 +82113,7 @@
     "attack_level": "1"
   },
   {
-    "examine": "She can look after my money. ",
+    "examine": "She can look after my money.",
     "melee_animation": "0",
     "range_animation": "0",
     "magic_level": "1",
@@ -90793,7 +90793,7 @@
     "attack_level": "1"
   },
   {
-    "examine": "An archeologist. ",
+    "examine": "An archeologist.",
     "name": "Anna Jones",
     "defence_level": "1",
     "safespot": null,
@@ -102507,7 +102507,7 @@
     "attack_level": "1"
   },
   {
-    "examine": "A huge war chief. ",
+    "examine": "A huge war chief.",
     "melee_animation": "422",
     "range_animation": "422",
     "attack_speed": "5",

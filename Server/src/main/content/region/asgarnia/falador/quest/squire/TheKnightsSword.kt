@@ -20,11 +20,11 @@ class TheKnightsSword : Quest(Quests.THE_KNIGHTS_SWORD, 22, 21, 1, Vars.VARP_QUE
         var line = 11
         when (stage) {
             0 -> {
-                line(player, "I can start this quest by speaking to the !!Squire?? in the", line++, true)
-                line(player, "courtyard of the !!White Knights' Castle?? in !!southern Falador??", line++, true)
-                line(player, "To complete this quest I need:", line++, true)
-                line(player,"!!Level 10 Mining??", line++, true)
-                line(player, "and to be unafraid of !!Level 57 Ice Warriors??.", line++, true)
+                line(player, "I can start this quest by speaking to the !!Squire?? in the", line++)
+                line(player, "courtyard of the !!White Knights' Castle?? in !!southern Falador??", line++)
+                line(player, "To complete this quest I need:", line++)
+                line(player,"!!Level 10 Mining??", line++)
+                line(player, "and to be unafraid of !!Level 57 Ice Warriors??.", line++)
             }
 
             10 -> {

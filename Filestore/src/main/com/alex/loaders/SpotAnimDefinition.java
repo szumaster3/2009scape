@@ -273,7 +273,7 @@ public final class SpotAnimDefinition {
                             for (int i = 0; i < def.retex_s.length; i++) {
                                 if (def.retex_s[i] != def.retex_d[i]) {
                                     if (!header) {
-                                        sb.append("-- retextures --\n");
+                                        sb.append("===== RETEXTURES =====\n");
                                         header = true;
                                     }
 

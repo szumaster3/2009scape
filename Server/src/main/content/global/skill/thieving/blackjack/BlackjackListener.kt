@@ -21,7 +21,7 @@ class BlackjackListener : InteractionListener {
                 return@on true
             }
 
-            BlackjackService.lure(player, npc)
+            BlackjackUtils.lure(player, npc)
             return@on true
         }
 
@@ -31,7 +31,7 @@ class BlackjackListener : InteractionListener {
             val opt = getUsedOption(player)
             if (!isAdmin && !hasRequirement(player, Quests.THE_FEUD)) return@on false
 
-            BlackjackService.notify(player, npc)
+            BlackjackUtils.notify(player, npc)
 
             if(hasTimerActive<BlackjackUnconsciousTimer>(npc)) {
                 return@on true
@@ -42,7 +42,7 @@ class BlackjackListener : InteractionListener {
                 return@on true
             }
 
-            BlackjackService.knockOut(player, npc)
+            BlackjackUtils.knockOut(player, npc)
             return@on true
         }
     }

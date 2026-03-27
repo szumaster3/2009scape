@@ -1,6 +1,6 @@
 package content.global.skill.thieving.pickpocket
 
-import content.global.skill.thieving.blackjack.BlackjackService
+import content.global.skill.thieving.blackjack.BlackjackUtils
 import content.global.skill.thieving.pickpocket.loot.FremennikCitizenLootTable
 import core.api.*
 import core.api.utils.WeightBasedTable
@@ -55,8 +55,8 @@ class PickpocketListener : InteractionListener {
                 return@on true
             }
 
-            val (delay, animation) = if (BlackjackService.canPickpocket(npc)) {
-                BlackjackService.onPickpocket(npc)
+            val (delay, animation) = if (BlackjackUtils.canPickpocket(npc)) {
+                BlackjackUtils.onPickpocket(npc)
                 1 to Animation(Animations.HUMAN_BURYING_BONES_827)
             } else {
                 2 to Animation(Animations.HUMAN_PICKPOCKETING_881)

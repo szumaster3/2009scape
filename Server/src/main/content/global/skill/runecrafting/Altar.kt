@@ -7,6 +7,7 @@ import core.cache.def.impl.ItemDefinition
 import core.game.node.entity.player.Player
 import core.game.node.scenery.Scenery
 import shared.consts.Quests
+import shared.consts.Scenery as Objects
 
 /**
  * Represents an altar used in the runecrafting skill.
@@ -18,20 +19,20 @@ enum class Altar(
     val ruin: MysteriousRuins?,
     val rune: Rune?
 ) {
-    AIR(shared.consts.Scenery.AIR_ALTAR_2478, shared.consts.Scenery.AIR_ALTAR_EXIT_2465, shared.consts.Scenery.AIR_RIFT_7139, MysteriousRuins.AIR, Rune.AIR),
-    MIND(shared.consts.Scenery.MIND_ALTAR_2479, shared.consts.Scenery.MIND_ALTAR_EXIT_2466, shared.consts.Scenery.MIND_RIFT_7140, MysteriousRuins.MIND, Rune.MIND),
-    WATER(shared.consts.Scenery.WATER_ALTAR_2480, shared.consts.Scenery.WATER_ALTAR_EXIT_2467, shared.consts.Scenery.WATER_RIFT_7137, MysteriousRuins.WATER, Rune.WATER),
-    EARTH(shared.consts.Scenery.EARTH_ALTAR_2481, shared.consts.Scenery.EARTH_ALTAR_EXIT_2468, shared.consts.Scenery.EARTH_RIFT_7130, MysteriousRuins.EARTH, Rune.EARTH),
-    FIRE(shared.consts.Scenery.FIRE_ALTAR_2482, shared.consts.Scenery.FIRE_ALTAR_EXIT_2469, shared.consts.Scenery.FIRE_RIFT_7129, MysteriousRuins.FIRE, Rune.FIRE),
-    BODY(shared.consts.Scenery.BODY_ALTAR_2483, shared.consts.Scenery.BODY_ALTAR_EXIT_2470, shared.consts.Scenery.BODY_RIFT_7131, MysteriousRuins.BODY, Rune.BODY),
-    COSMIC(shared.consts.Scenery.COSMIC_ALTAR_2484, shared.consts.Scenery.COSMIC_ALTAR_EXIT_2471, shared.consts.Scenery.COSMIC_RIFT_7132, MysteriousRuins.COSMIC, Rune.COSMIC),
-    CHAOS(shared.consts.Scenery.CHAOS_ALTAR_2487, shared.consts.Scenery.CHAOS_ALTAR_EXIT_2474, shared.consts.Scenery.CHAOS_RIFT_7134, MysteriousRuins.CHAOS, Rune.CHAOS),
-    ASTRAL(shared.consts.Scenery.ALTAR_17010, 0, 0, null, Rune.ASTRAL),
-    NATURE(shared.consts.Scenery.NATURE_ALTAR_2486, shared.consts.Scenery.NATURE_ALTAR_EXIT_2473, shared.consts.Scenery.NATURE_RIFT_7133, MysteriousRuins.NATURE, Rune.NATURE),
-    LAW(shared.consts.Scenery.LAW_ALTAR_2485, shared.consts.Scenery.LAW_PORTAL_EXIT_2472, shared.consts.Scenery.LAW_RIFT_7135, MysteriousRuins.LAW, Rune.LAW),
-    DEATH(shared.consts.Scenery.DEATH_ALTAR_2488, shared.consts.Scenery.DEATH_ALTAR_EXIT_2475, shared.consts.Scenery.DEATH_RIFT_7136, MysteriousRuins.DEATH, Rune.DEATH),
-    BLOOD(shared.consts.Scenery.BLOOD_ALTAR_30624, shared.consts.Scenery.BLOOD_ALTAR_EXIT_2477, shared.consts.Scenery.BLOOD_RIFT_7141, MysteriousRuins.BLOOD, Rune.BLOOD),
-    OURANIA(shared.consts.Scenery.OURANIA_ALTAR_26847, 0, 0, null, null);
+    AIR(Objects.AIR_ALTAR_2478, Objects.AIR_ALTAR_EXIT_2465, Objects.AIR_RIFT_7139, MysteriousRuins.AIR, Rune.AIR),
+    MIND(Objects.MIND_ALTAR_2479, Objects.MIND_ALTAR_EXIT_2466, Objects.MIND_RIFT_7140, MysteriousRuins.MIND, Rune.MIND),
+    WATER(Objects.WATER_ALTAR_2480, Objects.WATER_ALTAR_EXIT_2467, Objects.WATER_RIFT_7137, MysteriousRuins.WATER, Rune.WATER),
+    EARTH(Objects.EARTH_ALTAR_2481, Objects.EARTH_ALTAR_EXIT_2468, Objects.EARTH_RIFT_7130, MysteriousRuins.EARTH, Rune.EARTH),
+    FIRE(Objects.FIRE_ALTAR_2482, Objects.FIRE_ALTAR_EXIT_2469, Objects.FIRE_RIFT_7129, MysteriousRuins.FIRE, Rune.FIRE),
+    BODY(Objects.BODY_ALTAR_2483, Objects.BODY_ALTAR_EXIT_2470, Objects.BODY_RIFT_7131, MysteriousRuins.BODY, Rune.BODY),
+    COSMIC(Objects.COSMIC_ALTAR_2484, Objects.COSMIC_ALTAR_EXIT_2471, Objects.COSMIC_RIFT_7132, MysteriousRuins.COSMIC, Rune.COSMIC),
+    CHAOS(Objects.CHAOS_ALTAR_2487, Objects.CHAOS_ALTAR_EXIT_2474, Objects.CHAOS_RIFT_7134, MysteriousRuins.CHAOS, Rune.CHAOS),
+    ASTRAL(Objects.ALTAR_17010, 0, 0, null, Rune.ASTRAL),
+    NATURE(Objects.NATURE_ALTAR_2486, Objects.NATURE_ALTAR_EXIT_2473, Objects.NATURE_RIFT_7133, MysteriousRuins.NATURE, Rune.NATURE),
+    LAW(Objects.LAW_ALTAR_2485, Objects.LAW_PORTAL_EXIT_2472, Objects.LAW_RIFT_7135, MysteriousRuins.LAW, Rune.LAW),
+    DEATH(Objects.DEATH_ALTAR_2488, Objects.DEATH_ALTAR_EXIT_2475, Objects.DEATH_RIFT_7136, MysteriousRuins.DEATH, Rune.DEATH),
+    BLOOD(Objects.BLOOD_ALTAR_30624, Objects.BLOOD_ALTAR_EXIT_2477, Objects.BLOOD_RIFT_7141, MysteriousRuins.BLOOD, Rune.BLOOD),
+    OURANIA(Objects.OURANIA_ALTAR_26847, 0, 0, null, null);
 
     companion object {
         private val altarByScenery = values().associateBy { it.scenery }

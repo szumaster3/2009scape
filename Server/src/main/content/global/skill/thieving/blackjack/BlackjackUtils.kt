@@ -18,7 +18,7 @@ import core.game.node.entity.impl.PulseType
 import core.game.world.map.RegionManager
 import core.tools.secondsToTicks
 
-object BlackjackService {
+object BlackjackUtils {
 
     /**
      * Attempt to lure the NPC.

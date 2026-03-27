@@ -19,6 +19,7 @@ import core.game.world.map.Location
 import core.game.world.update.flag.context.Animation
 import core.plugin.ClassScanner.definePlugin
 import core.plugin.Initializable
+import shared.consts.Items
 import shared.consts.Sounds
 
 @Initializable
@@ -622,7 +623,7 @@ class AgilityPyramidCourse : AgilityCourse {
     override fun createInstance(player: Player): AgilityCourse = AgilityPyramidCourse(player)
 
     companion object {
-        private val PYRAMID_TOP = Item(6970)
+        private val PYRAMID_TOP = Item(Items.PYRAMID_TOP_6970)
 
         private const val CONFIG_ID = 640
 

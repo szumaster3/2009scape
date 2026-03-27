@@ -25,7 +25,7 @@ object EssenceTeleport {
     private val LOCATIONS = arrayOf(Location.create(2911, 4832, 0), Location.create(2913, 4837, 0), Location.create(2930, 4850, 0), Location.create(2894, 4811, 0), Location.create(2896, 4845, 0), Location.create(2922, 4820, 0), Location.create(2931, 4813, 0))
     private const val CURSE_PROJECTILE = shared.consts.Graphics.CURSE_PROJECTILE_109
     private val ANIMATION = Animation(Animations.ATTACK_437)
-    private val OLD_ANIMATION = Animation(198)
+    private val OLD_ANIMATION = Animation(Animations.GNOME_SPELL_198)
     private val TP_CAST_GFX = Graphics(shared.consts.Graphics.CURSE_CAST_108)
     private val TELEPORT_GFX = Graphics(shared.consts.Graphics.CURSE_IMPACT_110, 100)
 

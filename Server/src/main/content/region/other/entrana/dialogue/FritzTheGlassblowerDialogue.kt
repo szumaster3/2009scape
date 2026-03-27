@@ -45,8 +45,8 @@ class FritzTheGlassblowerDialogue(player: Player? = null) : Dialogue(player) {
             13 -> npc(FaceAnim.HALF_GUILTY, "my house for that; it's the one directly west of here.", "Next we collect sand from the sandpit that you'll also", "find just west of here, there are other located in", "Yanille and Shilo Village.").also { stage++ }
             14 -> npc(FaceAnim.HALF_GUILTY, "You'll need a bucket to cary it in. Tell you what, you", "can have this old one of mine.").also { stage++ }
             15 -> {
-                if (!player.inventory.add(Item(1925))) {
-                    GroundItemManager.create(GroundItem(Item(1925), player.location, player))
+                if (!player.inventory.add(Item(Items.BUCKET_1925))) {
+                    GroundItemManager.create(GroundItem(Item(Items.BUCKET_1925), player.location, player))
                 }
                 player.getSavedData().globalData.setFritzGlass(true)
                 npc(FaceAnim.HALF_GUILTY, "Bring the sand and the soda ash back here and melt", "them together in the furnace, and there you have it -", "molten glass!")

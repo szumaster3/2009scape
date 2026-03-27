@@ -8,6 +8,7 @@ import core.game.node.item.GroundItem
 import core.game.node.item.GroundItemManager
 import core.game.node.item.Item
 import core.plugin.Initializable
+import shared.consts.Items
 import shared.consts.NPCs
 import shared.consts.Quests
 
@@ -25,7 +26,7 @@ class ApothecaryDialogue(player: Player? = null) : Dialogue(player) {
             return true
         }
         if (player.getQuestRepository().getQuest(Quests.ROMEO_JULIET).getStage(player) == 50) {
-            return if (!player.inventory.contains(753, 1)) {
+            return if (!player.inventory.contains(Items.CADAVA_BERRIES_753, 1)) {
                 npc("Keep searching for those Cadava berries. They're needed", "for the potion.")
                 stage = 507
                 true
@@ -36,8 +37,8 @@ class ApothecaryDialogue(player: Player? = null) : Dialogue(player) {
             }
         }
         if (player.getQuestRepository().getQuest(Quests.ROMEO_JULIET).getStage(player) == 60) {
-            if (!player.inventory.contains(756, 1) && !player.bank.contains(756, 1)) {
-                return if (player.inventory.contains(753, 1)) {
+            if (!player.inventory.contains(Items.CADAVA_POTION_756, 1) && !player.bank.contains(Items.CADAVA_POTION_756, 1)) {
+                return if (player.inventory.contains(Items.CADAVA_BERRIES_753, 1)) {
                     npc("Well done. You have the berries.")
                     stage = 637
                     true
@@ -90,7 +91,7 @@ class ApothecaryDialogue(player: Player? = null) : Dialogue(player) {
             }
 
             10 -> {
-                if (player.inventory.containItems(223, 225)) {
+                if (player.inventory.containItems(Items.RED_SPIDERS_EGGS_223, Items.LIMPWURT_ROOT_225)) {
                     npc("Certainly, just hand over the ingredients and 5 coins.")
                     stage = 50
                     return true
@@ -103,7 +104,7 @@ class ApothecaryDialogue(player: Player? = null) : Dialogue(player) {
             }
 
             50 -> {
-                if (!player.inventory.contains(995, 5)) {
+                if (!player.inventory.contains(Items.COINS_995, 5)) {
                     end()
                     player.packetDispatch.sendMessage("You need 5 gold coins to do that.")
                     return true
@@ -220,7 +221,7 @@ class ApothecaryDialogue(player: Player? = null) : Dialogue(player) {
 
             507 -> end()
             637 -> {
-                interpreter.sendItemMessage(753, "You hand over the berries.")
+                interpreter.sendItemMessage(Items.CADAVA_BERRIES_753, "You hand over the berries.")
                 stage = 638
             }
 
@@ -235,7 +236,7 @@ class ApothecaryDialogue(player: Player? = null) : Dialogue(player) {
                 if (!player.inventory.add(CADAVA_POTION)) {
                     GroundItemManager.create(GroundItem(CADAVA_POTION, player.location, player))
                 }
-                interpreter.sendItemMessage(756, "The Apothecary gives you a Cadava potion.")
+                interpreter.sendItemMessage(Items.CADAVA_POTION_756, "The Apothecary gives you a Cadava potion.")
                 stage = 640
             }
 
@@ -250,10 +251,10 @@ class ApothecaryDialogue(player: Player? = null) : Dialogue(player) {
     override fun getIds(): IntArray = intArrayOf(NPCs.APOTHECARY_638)
 
     companion object {
-        private val POTION_ITEMS = arrayOf(Item(223), Item(225), Item(995, 5))
-        private val POTION = Item(115)
-        private val NULL_POTION = Item(195, 1)
-        private val CADAVA_BERRIES = Item(753)
-        private val CADAVA_POTION = Item(756)
+        private val POTION_ITEMS = arrayOf(Item(Items.RED_SPIDERS_EGGS_223), Item(Items.LIMPWURT_ROOT_225), Item(Items.COINS_995, 5))
+        private val POTION = Item(Items.STRENGTH_POTION3_115)
+        private val NULL_POTION = Item(Items.POTION_195, 1)
+        private val CADAVA_BERRIES = Item(Items.CADAVA_BERRIES_753)
+        private val CADAVA_POTION = Item(Items.CADAVA_POTION_756)
     }
 }

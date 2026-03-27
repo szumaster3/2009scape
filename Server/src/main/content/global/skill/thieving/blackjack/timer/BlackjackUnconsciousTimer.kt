@@ -1,6 +1,6 @@
 package content.global.skill.thieving.blackjack.timer
 
-import content.global.skill.thieving.blackjack.BlackjackService
+import content.global.skill.thieving.blackjack.BlackjackUtils
 import content.global.skill.thieving.blackjack.BlackjackType
 import core.game.node.entity.Entity
 import core.game.node.entity.npc.NPC
@@ -40,7 +40,7 @@ class BlackjackUnconsciousTimer : RSTimer(
     override fun getTimer(vararg args: Any): RSTimer {
         val blackjackType = args.getOrNull(0) as? BlackjackType ?: BlackjackType.ORDINARY
         val timer = BlackjackUnconsciousTimer()
-        timer.remainingTicks = BlackjackService.getStunTicks(blackjackType)
+        timer.remainingTicks = BlackjackUtils.getStunTicks(blackjackType)
         timer.pickpocketsLeft = args.getOrNull(1) as? Int ?: 2
         return timer
     }

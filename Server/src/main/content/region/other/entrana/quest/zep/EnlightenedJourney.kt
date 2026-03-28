@@ -19,9 +19,9 @@ class EnlightenedJourney : Quest(Quests.ENLIGHTENED_JOURNEY, 55, 54, 1, Vars.VAR
         super.drawJournal(player, stage)
         var line = 11
         if (stage == 0) {
-            line(player, "I can start this quest by speaking to !!Auguste?? on", line++, true)
-            line(player, "!!Entrana??.", line++, true)
-            line(player, "Minimum Requirements:", line++, true)
+            line(player, "I can start this quest by speaking to !!Auguste?? on", line++)
+            line(player, "!!Entrana??.", line++)
+            line(player, "Minimum Requirements:", line++)
 
             val requirements = listOf(
                 Triple(Skills.CRAFTING, 36, "Crafting"),
@@ -35,11 +35,11 @@ class EnlightenedJourney : Quest(Quests.ENLIGHTENED_JOURNEY, 55, 54, 1, Vars.VAR
                 } else {
                     "!!Level $level $displayName??"
                 }
-                line(player, text, line++, true)
+                line(player, text, line++)
             }
 
             val questPointsText = if (getQuestPoints(player) >= 21) "---21 Quest Points/--" else "!!21 Quest Points??"
-            line(player, questPointsText, line++, true)
+            line(player, questPointsText, line++)
             line++
         }
 

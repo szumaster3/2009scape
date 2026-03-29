@@ -8,6 +8,7 @@ import core.game.dialogue.FaceAnim
 import core.game.dialogue.Topic
 import core.game.node.entity.npc.NPC
 import core.game.node.entity.player.Player
+import core.game.node.entity.skill.Skills
 import core.game.node.item.Item
 import core.plugin.Initializable
 import core.tools.DARK_RED
@@ -18,13 +19,13 @@ import shared.consts.NPCs
 import shared.consts.Quests
 
 /**
- * Represents the Professor dialogue.
+ * Represents the Observatory Professor dialogue.
  *
  * # Relations:
  * - [Observatory quest][content.region.kandarin.gnome_stronghold.quest.itgronigen.Observatory]
  */
 @Initializable
-class ProfessorDialogue(player: Player? = null) : Dialogue(player) {
+class ObservatoryProfessorDialogue(player: Player? = null) : Dialogue(player) {
 
     override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
@@ -100,7 +101,7 @@ class ProfessorDialogue(player: Player? = null) : Dialogue(player) {
         return true
     }
 
-    override fun newInstance(player: Player?): Dialogue = ProfessorDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = ObservatoryProfessorDialogue(player)
 
     override fun getIds(): IntArray = intArrayOf(NPCs.OBSERVATORY_PROFESSOR_488)
 }
@@ -300,6 +301,9 @@ private class ProfessorDialogueFile : DialogueFile() {
             96 -> player("it was...").also { stage++ }
             97 -> {
                 end()
+                if (isQuestComplete(player!!, Quests.OBSERVATORY_QUEST)) {
+                    return
+                }
                 openDialogue(player!!, ProfessorConstellationsDialogue())
             }
         }
@@ -307,31 +311,36 @@ private class ProfessorDialogueFile : DialogueFile() {
 }
 
 private class ProfessorConstellationsDialogue : DialogueFile() {
+
+    // RSC
+    // private fun xp(level: Int): Double = (level * 25 + 125).toDouble()
+
+    val xpReward = 875.0
+
+    val constellations = mapOf(
+        1 to "Aquarius",
+        2 to "Capricorn",
+        3 to "Sagittarius",
+        4 to "Scorpio",
+        6 to "Libra",
+        7 to "Virgo",
+        8 to "Leo",
+        10 to "Cancer",
+        11 to "Gemini",
+        12 to "Taurus",
+        14 to "Aries",
+        15 to "Pisces"
+    )
+
+    val stageToConstellation = mapOf(
+        1 to 1, 2 to 2, 3 to 3, 4 to 4,
+        6 to 6, 7 to 7, 8 to 8,
+        10 to 10, 11 to 11, 12 to 12,
+        14 to 14, 15 to 15
+    )
+
     override fun handle(componentID: Int, buttonID: Int) {
         npc = NPC(NPCs.OBSERVATORY_PROFESSOR_488)
-
-        val constellations = mapOf(
-            1 to "Aquarius",
-            2 to "Capricorn",
-            3 to "Sagittarius",
-            4 to "Scorpio",
-            6 to "Libra",
-            7 to "Virgo",
-            8 to "Leo",
-            10 to "Cancer",
-            11 to "Gemini",
-            12 to "Taurus",
-            14 to "Aries",
-            15 to "Pisces"
-        )
-
-        val stageToConstellation = mapOf(
-            1 to 1, 2 to 2, 3 to 3, 4 to 4,
-            6 to 6, 7 to 7, 8 to 8,
-            10 to 10, 11 to 11, 12 to 12,
-            14 to 14, 15 to 15
-        )
-
         when (stage) {
             0 -> showTopics(
                 Topic("Aquarius", 1, true),
@@ -379,27 +388,30 @@ private class ProfessorConstellationsDialogue : DialogueFile() {
             18 -> {
                 val chosenId = getAttribute(player!!, GameAttributes.OBSERVATORY_CONSTELLATION, -1)
                 val explanation = when (chosenId) {
+                    // 0 previous <-
                     1 -> "That's Aquarius, the water-bearer."
                     2 -> "That's Capricorn, the goat."
                     3 -> "That's Sagittarius, the centaur."
                     4 -> "That's Scorpio, the scorpion."
+                    // 5 next ->
                     6 -> "That's Libra, the scales."
                     7 -> "That's Virgo, the virtuous."
                     8 -> "That's Leo, the lion."
+                    // 9 next | previous <->
                     10 -> "That's Cancer, the crab."
                     11 -> "That's Gemini, the twins."
                     12 -> "That's Taurus, the bull."
+                    // 13 next ->
                     14 -> "That's Aries, the ram."
                     15 -> "That's Pisces, the fish."
                     else -> "I'm afraid not. Have another look. Remember, you can check the star charts on the walls for reference."
                 }
 
-                if (chosenId in constellations.keys) {
-                    npcl(FaceAnim.HALF_GUILTY, explanation)
-                    stage = 19 + (chosenId - 1)
+                npcl(FaceAnim.HALF_GUILTY, explanation)
+                stage = if (chosenId in constellations.keys) {
+                    19 + (chosenId - 1)
                 } else {
-                    npcl(FaceAnim.HALF_GUILTY, explanation)
-                    stage = END_DIALOGUE
+                    END_DIALOGUE
                 }
             }
 
@@ -422,12 +434,28 @@ private class ProfessorConstellationsDialogue : DialogueFile() {
                 rewardMessage?.let { npcl(it) }
                 stage = 100
             }
-
             100 -> {
+                val chosenId = getAttribute(player!!, GameAttributes.OBSERVATORY_CONSTELLATION, -1)
+                when (chosenId)
+                {
+                     1 -> addItemOrDrop(player!!, Items.WATER_RUNE_555, 25)
+                     2 -> rewardXP(player!!, Skills.STRENGTH, xpReward)
+                     3 -> addItemOrDrop(player!!, Items.MAPLE_LONGBOW_851)
+                     4 -> addItemOrDrop(player!!, Items.WEAPON_POISON_187)
+                     6 -> addItemOrDrop(player!!, Items.LAW_RUNE_563, 3)
+                     7 -> rewardXP(player!!, Skills.DEFENCE, xpReward)
+                     8 -> rewardXP(player!!, Skills.HITPOINTS, xpReward)
+                    10 -> addItemOrDrop(player!!, Items.AMULET_OF_DEFENCE_1729)
+                    11 -> addItemOrDrop(player!!, Items.BLACK_2H_SWORD_1313)
+                    12 -> addItemOrDrop(player!!, Items.SUPER_STRENGTH1_161)
+                    14 -> rewardXP(player!!, Skills.ATTACK, xpReward)
+                    15 -> addItemOrDrop(player!!, Items.TUNA_362, 3)
+                }
                 end()
                 removeAttribute(player!!, GameAttributes.OBSERVATORY_CONSTELLATION)
                 finishQuest(player!!, Quests.OBSERVATORY_QUEST)
             }
+
         }
     }
 

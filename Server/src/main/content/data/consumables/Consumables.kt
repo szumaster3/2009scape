@@ -409,6 +409,7 @@ enum class Consumables {
             consumables = consumablesMap
             potions = potionsList
         }
+        @JvmStatic
         fun getConsumableById(itemId: Int): Consumables? = consumables[itemId]
     }
 }

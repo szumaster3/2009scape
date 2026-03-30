@@ -36,7 +36,7 @@ import shared.consts.*;
 import static core.api.ContentAPIKt.playAudio;
 
 /**
- * The type Giant mole npc.
+ * The Giant mole npc.
  */
 @Initializable
 public final class GiantMoleNPC extends AbstractNPC {

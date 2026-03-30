@@ -68,6 +68,7 @@ enum class LightSources(val level: Int, val emptyId: Int, val fullId: Int = -1, 
         /**
          * Returns any active light source.
          */
+        @JvmStatic
         fun getActiveLightSource(player: Player): LightSources? =
             values().firstOrNull { isActive(player, it) }
 
@@ -75,6 +76,7 @@ enum class LightSources(val level: Int, val emptyId: Int, val fullId: Int = -1, 
          * Checks if the player has any active light source.
          * @param player The player to check.
          */
+        @JvmStatic
         fun hasActiveLightSource(player: Player): Boolean =
             getActiveLightSource(player) != null
     }

@@ -68,7 +68,7 @@ object ContentLoader {
 
     private fun sprites() {
         SpritePacker.add()
-        // SpritePacker.packLogo()
+        SpritePacker.packLogo()
     }
 
     private fun npcs() {

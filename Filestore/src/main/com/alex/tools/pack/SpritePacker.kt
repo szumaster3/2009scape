@@ -76,7 +76,7 @@ object SpritePacker {
     }
 
     fun packLogo() {
-        val folder = File("../Assets/sprites/logo/")
+        val folder = File("../Assets/logo/")
         if (!folder.exists()) return
         val image = folder.listFiles()
             ?.firstOrNull { it.extension.equals("png", true) }

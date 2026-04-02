@@ -2,6 +2,7 @@ package content.global.skill.magic.spells.modern
 
 import content.global.skill.magic.spells.ModernSpells
 import content.global.skill.magic.spells.SpellProjectile
+import content.region.kandarin.feldip.quest.zogre.npc.ZogreNPC
 import core.game.node.Node
 import core.game.node.entity.Entity
 import core.game.node.entity.combat.BattleState
@@ -17,7 +18,10 @@ import core.game.world.update.flag.context.Graphics
 import core.plugin.Initializable
 import core.plugin.Plugin
 import shared.consts.Animations
+import shared.consts.NPCs
 import shared.consts.Sounds
+import java.util.*
+
 
 /**
  * The Crumble undead spell.
@@ -41,10 +45,21 @@ class CrumbleUndeadSpell : CombatSpell(
 
     override fun cast(entity: Entity, target: Node): Boolean {
         val npc = target as? NPC
-        if (npc == null || npc.task == null || !npc.task.undead) {
+        if (npc == null) {
+            return false
+        }
+
+        val ogres = npc.id in ZogreNPC.IDS || npc.id == NPCs.SLASH_BASH_2060
+
+        if (ogres) {
+            return super.cast(entity, target)
+        }
+
+        if (npc.task?.undead != true) {
             (entity as? Player)?.packetDispatch?.sendMessage("This spell only affects the undead.")
             return false
         }
+
         return super.cast(entity, target)
     }
 

@@ -47,7 +47,8 @@ class ZogreNPC : NPCBehavior(*IDS) {
 
 
     companion object {
-        private val IDS =
+        @JvmField
+        val IDS =
             intArrayOf(
                 NPCs.ZOGRE_2044,
                 NPCs.ZOGRE_2045,

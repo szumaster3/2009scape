@@ -30,7 +30,7 @@ class HarralanderTarMakePlugin : InteractionListener {
                     override fun getAll(index: Int): Int = amountInInventory(player, used.id)
                 }
             handler.open()
-            repositionChild(player, Components.SKILL_MULTI1_309, 2, 210, 15)
+            sendRepositionOnInterface(player, Components.SKILL_MULTI1_309, 2, 210, 15)
             return@onUseWith true
         }
     }

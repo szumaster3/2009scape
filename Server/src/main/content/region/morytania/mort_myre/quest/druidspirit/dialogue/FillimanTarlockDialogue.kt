@@ -139,7 +139,7 @@ class FillimanTarlockDialogue(player: Player? = null) : Dialogue(player) {
 
             74 -> npcl(FaceAnim.NEUTRAL, "Sure, but please look after this one.").also { stage++ }
             75 -> sendDialogue("The spirit of Filliman Tarlock gives you", "another bloom spell.").also {
-                addItem(player, Items.DRUIDIC_SPELL_2968)
+                addItemOrDrop(player, Items.DRUIDIC_SPELL_2968)
                 stage = END_DIALOGUE
             }
             80 -> sendDialogue("You show the fungus to Filliman.").also { stage++ }
@@ -209,7 +209,7 @@ class FillimanTarlockDialogue(player: Player? = null) : Dialogue(player) {
                     npcl(FaceAnim.NEUTRAL, "No, you've already got one!").also { stage = END_DIALOGUE }
                 } else {
                     npcl(FaceAnim.NEUTRAL, "Sure, but look after this one.")
-                    addItem(player, Items.DRUIDIC_SPELL_2968)
+                    addItemOrDrop(player, Items.DRUIDIC_SPELL_2968)
                     stage = END_DIALOGUE
                 }
             }

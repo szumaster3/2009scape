@@ -1,6 +1,6 @@
 package core.game.dialogue
 
-import core.api.repositionChild
+import core.api.sendRepositionOnInterface
 import core.api.sendItemZoomOnInterface
 import core.api.sendString
 import core.game.node.entity.player.Player
@@ -89,14 +89,14 @@ open class SkillDialogueHandler(val player: Player, val type: SkillDialogue?, va
 
                 sendString(player, "<br><br><br><br>${item.name}", Components.SKILL_MULTI1_309, 6)
                 sendItemZoomOnInterface(player, Components.SKILL_MULTI1_309, 2, item.id, 160)
-                repositionChild(player, Components.SKILL_MULTI1_309, 0, 12, 15)
-                repositionChild(player, Components.SKILL_MULTI1_309, 1, 431, 15)
-                repositionChild(player, Components.SKILL_MULTI1_309, 2, 210, 32)
-                repositionChild(player, Components.SKILL_MULTI1_309, 3, 60, 35)
-                repositionChild(player, Components.SKILL_MULTI1_309, 4, 60, 35)
-                repositionChild(player, Components.SKILL_MULTI1_309, 5, 60, 35)
-                repositionChild(player, Components.SKILL_MULTI1_309, 6, 60, 35)
-                repositionChild(player, Components.SKILL_MULTI1_309, 7, 8, 12)
+                sendRepositionOnInterface(player, Components.SKILL_MULTI1_309, 0, 12, 15)
+                sendRepositionOnInterface(player, Components.SKILL_MULTI1_309, 1, 431, 15)
+                sendRepositionOnInterface(player, Components.SKILL_MULTI1_309, 2, 210, 32)
+                sendRepositionOnInterface(player, Components.SKILL_MULTI1_309, 3, 60, 35)
+                sendRepositionOnInterface(player, Components.SKILL_MULTI1_309, 4, 60, 35)
+                sendRepositionOnInterface(player, Components.SKILL_MULTI1_309, 5, 60, 35)
+                sendRepositionOnInterface(player, Components.SKILL_MULTI1_309, 6, 60, 35)
+                sendRepositionOnInterface(player, Components.SKILL_MULTI1_309, 7, 8, 12)
             }
 
             /**
@@ -128,13 +128,13 @@ open class SkillDialogueHandler(val player: Player, val type: SkillDialogue?, va
                 val item = handler.data[0] as Item
                 sendItemZoomOnInterface(player, Components.SKILL_MULTI1_SMALL_582, 2, item.id, 160)
                 sendString(player, "<br><br><br><br>${item.name}", Components.SKILL_MULTI1_SMALL_582, 5)
-                repositionChild(player, Components.SKILL_MULTI1_SMALL_582, 0, 12, 15)
-                repositionChild(player, Components.SKILL_MULTI1_SMALL_582, 1, 431, 15)
-                repositionChild(player, Components.SKILL_MULTI1_SMALL_582, 2, 207, 23)
-                repositionChild(player, Components.SKILL_MULTI1_SMALL_582, 3, 60, 35)
-                repositionChild(player, Components.SKILL_MULTI1_SMALL_582, 4, 60, 35)
-                repositionChild(player, Components.SKILL_MULTI1_SMALL_582, 5, 60, 35)
-                repositionChild(player, Components.SKILL_MULTI1_SMALL_582, 6, 8, 12)
+                sendRepositionOnInterface(player, Components.SKILL_MULTI1_SMALL_582, 0, 12, 15)
+                sendRepositionOnInterface(player, Components.SKILL_MULTI1_SMALL_582, 1, 431, 15)
+                sendRepositionOnInterface(player, Components.SKILL_MULTI1_SMALL_582, 2, 207, 23)
+                sendRepositionOnInterface(player, Components.SKILL_MULTI1_SMALL_582, 3, 60, 35)
+                sendRepositionOnInterface(player, Components.SKILL_MULTI1_SMALL_582, 4, 60, 35)
+                sendRepositionOnInterface(player, Components.SKILL_MULTI1_SMALL_582, 5, 60, 35)
+                sendRepositionOnInterface(player, Components.SKILL_MULTI1_SMALL_582, 6, 8, 12)
             }
 
             override fun getAmount(handler: SkillDialogueHandler, buttonId: Int): Int = when (buttonId) {
@@ -151,8 +151,8 @@ open class SkillDialogueHandler(val player: Player, val type: SkillDialogue?, va
                 var item: Item
                 for (i in handler.data.indices) {
                     item = handler.data[i] as Item
-                    repositionChild(player, Components.SKILL_MAKE_303, 0, 12, 15)
-                    repositionChild(player, Components.SKILL_MAKE_303, 1, 431, 15)
+                    sendRepositionOnInterface(player, Components.SKILL_MAKE_303, 0, 12, 15)
+                    sendRepositionOnInterface(player, Components.SKILL_MAKE_303, 1, 431, 15)
 
                     if (i == 0) {
                         sendString(player, "<br><br><br><br><br>" + handler.getName(item), Components.SKILL_MAKE_303, 7)
@@ -188,8 +188,8 @@ open class SkillDialogueHandler(val player: Player, val type: SkillDialogue?, va
                 var item: Item? = null
                 for (i in 0..2) {
                     item = handler.data[i] as Item
-                    repositionChild(player, Components.SKILL_MAKE_304, 0, 12, 13)
-                    repositionChild(player, Components.SKILL_MAKE_304, 1, 431, 13)
+                    sendRepositionOnInterface(player, Components.SKILL_MAKE_304, 0, 12, 13)
+                    sendRepositionOnInterface(player, Components.SKILL_MAKE_304, 1, 431, 13)
                     player.packetDispatch.sendItemZoomOnInterface(item.id, 170, Components.SKILL_MAKE_304, 2 + i)
                     player.packetDispatch.sendString(
                         "<br><br><br><br>" + item.name, Components.SKILL_MAKE_304, 304 - 296 + i * 4
@@ -222,8 +222,8 @@ open class SkillDialogueHandler(val player: Player, val type: SkillDialogue?, va
                 var item: Item? = null
                 for (i in 0..3) {
                     item = handler.data[i] as Item
-                    repositionChild(player, Components.SKILL_MAKE_305, 0, 12, 15)
-                    repositionChild(player, Components.SKILL_MAKE_305, 1, 431, 15)
+                    sendRepositionOnInterface(player, Components.SKILL_MAKE_305, 0, 12, 15)
+                    sendRepositionOnInterface(player, Components.SKILL_MAKE_305, 1, 431, 15)
                     player.packetDispatch.sendItemZoomOnInterface(item.id, 160, Components.SKILL_MAKE_305, 2 + i)
                     sendString(player, "<br><br><br><br>" + item.name, Components.SKILL_MAKE_305, 305 - 296 + i * 4)
                 }
@@ -270,8 +270,8 @@ open class SkillDialogueHandler(val player: Player, val type: SkillDialogue?, va
                     player.packetDispatch.sendItemZoomOnInterface(item.id, 160, Components.SKILL_MAKE_306, 2 + i)
                     PacketRepository.send(RepositionChild::class.java, ChildPositionContext(player, Components.SKILL_MAKE_306, 2 + i, positions[i][0], positions[i][1]))
                 }
-                repositionChild(player, Components.SKILL_MAKE_306, 0, 12, 15)
-                repositionChild(player, Components.SKILL_MAKE_306, 1, 431, 15)
+                sendRepositionOnInterface(player, Components.SKILL_MAKE_306, 0, 12, 15)
+                sendRepositionOnInterface(player, Components.SKILL_MAKE_306, 1, 431, 15)
             }
 
             override fun getIndex(handler: SkillDialogueHandler?, buttonId: Int): Int {

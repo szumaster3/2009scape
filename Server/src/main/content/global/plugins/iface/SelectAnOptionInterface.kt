@@ -1,6 +1,6 @@
 package content.global.plugins.iface
 
-import core.api.repositionChild
+import core.api.sendRepositionOnInterface
 import core.game.interaction.InterfaceListener
 import shared.consts.Components
 
@@ -12,7 +12,7 @@ class SelectAnOptionInterface : InterfaceListener {
             val ys = intArrayOf(5, 32, 32, 3, 36, 36)
 
             for (i in indices.indices) {
-                repositionChild(player, Components.SELECT_AN_OPTION_140, indices[i], xs[i], ys[i])
+                sendRepositionOnInterface(player, Components.SELECT_AN_OPTION_140, indices[i], xs[i], ys[i])
             }
             return@onOpen true
         }

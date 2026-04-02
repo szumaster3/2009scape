@@ -58,7 +58,7 @@ class FurClothingInterface : InterfaceListener {
         onOpen(FUR_CLOTHING_COMPONENT_ID) { player, _ ->
             // 1190
             InterfaceContainer.generateItems(player, ITEMS, OPTIONS, FUR_CLOTHING_COMPONENT_ID, 26, 6, 11, 482)
-            repositionChild(player, FUR_CLOTHING_COMPONENT_ID, 26, 32, 97)
+            sendRepositionOnInterface(player, FUR_CLOTHING_COMPONENT_ID, 26, 32, 97)
 
             val checkedFurs = arrayListOf<String>()
             for (clothing in FurClothing.values()) {

@@ -84,6 +84,7 @@ private constructor() : MapZone("Multicombat", true) {
         // Poh.
         register(ZoneBorders(1885, 5093, 1882, 5090))
         register(ZoneBorders(1949, 5093, 1946, 5090))
+        registerRegion(10140);
     }
 
     override fun enter(e: Entity): Boolean {

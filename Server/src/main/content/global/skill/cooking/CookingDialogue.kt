@@ -141,7 +141,7 @@ class CookingDialogue(vararg val args: Any) : DialogueFile() {
     fun display() {
         val p = player ?: return
 
-        repositionChild(p, Components.SKILL_COOKMANY_307, 2, 215, 27)
+        sendRepositionOnInterface(p, Components.SKILL_COOKMANY_307, 2, 215, 27)
         sendItemZoomOnInterface(p, Components.SKILL_COOKMANY_307, 2, initial, 160)
         sendString(p, "<br><br><br><br>    ${getItemName(initial)}", Components.SKILL_COOKMANY_307, 6)
 
@@ -150,7 +150,7 @@ class CookingDialogue(vararg val args: Any) : DialogueFile() {
         val ys = intArrayOf(15, 15, 12, 27, 27, 27, 27)
 
         for (i in indices.indices) {
-            repositionChild(p, Components.SKILL_COOKMANY_307, indices[i], xs[i], ys[i])
+            sendRepositionOnInterface(p, Components.SKILL_COOKMANY_307, indices[i], xs[i], ys[i])
         }
 
         openChatbox(p, Components.SKILL_COOKMANY_307)

@@ -5,6 +5,7 @@ import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
 import core.game.node.item.Item
 import core.game.system.task.Pulse
+import core.game.world.update.flag.context.Animation
 import shared.consts.Animations
 import shared.consts.Items
 import shared.consts.Scenery
@@ -13,7 +14,9 @@ import shared.consts.Sounds
 class SapCollectPlugin : InteractionListener {
 
     companion object {
-        private val treeIDs = intArrayOf(Scenery.TREE_1276, Scenery.TREE_1277, Scenery.TREE_1278, Scenery.TREE_1280, Scenery.EVERGREEN_1315, Scenery.EVERGREEN_1316, Scenery.EVERGREEN_1318, Scenery.EVERGREEN_1319, Scenery.TREE_1330, Scenery.TREE_1331, Scenery.TREE_1332, Scenery.TUTORIAL_TREE_3033, Scenery.TREE_3034, Scenery.TREE_3035, Scenery.TREE_3036, Scenery.TREE_3879, Scenery.TREE_3881, Scenery.TREE_3882, Scenery.TREE_3883, Scenery.TREE_10041, Scenery.TREE_14308, Scenery.TREE_14309, Scenery.TREE_30132, Scenery.TREE_30133, Scenery.TREE_37477, Scenery.TREE_37478, Scenery.TREE_37652)
+        private val treeIDs = intArrayOf(Scenery.TREE_1276, Scenery.TREE_1277, Scenery.TREE_1278, Scenery.TREE_1280, Scenery.EVERGREEN_1315, Scenery.EVERGREEN_1316, Scenery.EVERGREEN_1318, Scenery.EVERGREEN_1319, Scenery.TREE_1330, Scenery.TREE_1331, Scenery.TREE_1332, Scenery.TREE_3034, Scenery.TREE_3035, Scenery.TREE_3036, Scenery.TREE_3879, Scenery.TREE_3881, Scenery.TREE_3882, Scenery.TREE_3883, Scenery.TREE_10041, Scenery.TREE_14308, Scenery.TREE_14309, Scenery.TREE_30132, Scenery.TREE_30133, Scenery.TREE_37477, Scenery.TREE_37478, Scenery.TREE_37652)
+        private val ANIMATION = Animation(Animations.BUCKET_AND_KNIFE_TREE_WAX_2009)
+
     }
 
     override fun defineListeners() {
@@ -32,15 +35,15 @@ class SapCollectPlugin : InteractionListener {
                 object : Pulse(2) {
                     override fun pulse(): Boolean {
                         if (removeItem(player, Items.BUCKET_1925)) {
-                            animate(player, Animations.BUCKET_AND_KNIFE_TREE_WAX_2009)
-                            playAudio(player, Sounds.COLLECT_SAP_1896)
-                            sendMessage(player, "You cut the tree and allow its sap to drip down into your bucket.")
-                            addItem(player, Items.BUCKET_OF_SAP_4687)
+                            animate(player, ANIMATION)
+                            if (addItem(player, Items.BUCKET_OF_SAP_4687)) {
+                                sendMessage(player, "You cut the tree and allow its sap to drip down into your bucket.")
+                            }
                             return true
                         }
                         return false
                     }
-                },
+                }
             )
             return@onUseWith true
         }
@@ -50,17 +53,14 @@ class SapCollectPlugin : InteractionListener {
          */
 
         on(Items.BUCKET_OF_SAP_4687, IntType.ITEM, "empty") { player, node ->
-            val bucket = node.asItem() ?: return@on false
-            val slot = bucket.slot
+            val item = node as Item
 
-            if (slot < 0) {
+            if (item.slot < 0) {
                 return@on false
             }
 
-            if (removeItem(player, bucket)) {
-                replaceSlot(player, slot, Item(Items.BUCKET_1925))
-                sendMessage(player, "You empty the contents of the bucket on the floor.")
-            }
+            replaceSlot(player, item.slot, Item(Items.BUCKET_1925))
+            sendMessage(player, "You empty the contents of the bucket on the floor.")
 
             return@on true
         }

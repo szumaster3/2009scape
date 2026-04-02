@@ -168,8 +168,8 @@
     "examine": "A small tin whistle.",
     "durability": null,
     "name": "Magic whistle",
-    "weight": "0.5",
     "tradeable": "false",
+    "weight": "0.5",
     "archery_ticket_price": "0",
     "id": "16"
   },
@@ -2614,6 +2614,11 @@
     "archery_ticket_price": "0",
     "id": "272",
     "equipment_slot": "5"
+  },
+  {
+    "examine": "This stuff looks nasty.",
+    "name": "Poison",
+    "id": "273"
   },
   {
     "destroy_message": "You'll have to make more in Draynor Manor.",
@@ -36859,6 +36864,20 @@
     "id": "3844",
     "bonuses": "4,4,4,4,4,4,4,4,4,4,4,0,5,0,0",
     "equipment_slot": "5"
+  },
+  {
+    "examine": "A daily journal.",
+    "name": "Journal",
+    "tradeable": "false",
+    "weight": "0.5",
+    "id": "3845"
+  },
+  {
+    "examine": "Someone's Diary.",
+    "name": "Diary",
+    "tradeable": "false",
+    "weight": "0.5",
+    "id": "3846"
   },
   {
     "examine": "Looks like some kind of manual.",

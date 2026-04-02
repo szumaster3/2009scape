@@ -83,27 +83,27 @@ class MazePlugin : InteractionListener {
         /*
          * Handles the interaction with the chest in the maze.
          */
-
         on(Scenery.CHEST_3635, IntType.SCENERY, "open") { player, node ->
-            val ticksLeft = getAttribute(player, GameAttributes.MAZE_ATTRIBUTE_TICKS_LEFT, 0)
-            val chestsOpened = getAttribute(player, GameAttributes.MAZE_ATTRIBUTE_CHESTS_OPEN, 0)
-
-            if (ticksLeft > 0 && chestsOpened < 10) {
-                animate(player, Animations.HUMAN_OPEN_CHEST_536)
-                val reward = mazeDropTable.roll().first()
-                val rewardName = getItemName(reward.id).lowercase()
-                val message = when (reward.id) {
-                    Items.ATTACK_POTION2_123 -> "You've found an attack potion!"
-                    Items.STRENGTH_POTION2_117 -> "You've found a strength potion!"
-                    Items.DEFENCE_POTION2_135 -> "You've found a defence potion!"
-                    else -> "You've found some $rewardName!"
+            if (getAttribute(player, GameAttributes.MAZE_ATTRIBUTE_TICKS_LEFT, 0) > 0 && getAttribute(player, GameAttributes.MAZE_ATTRIBUTE_CHESTS_OPEN, 0) < 10) {
+                animate(player, 536)
+                //          val actualScenery = RegionManager.getObject(node.location.z, node.location.x, node.location.y, 3626)
+                val tableRoll = mazeDropTable.roll()
+                addItemOrBank(player, tableRoll[0].id, tableRoll[0].amount)
+                when (tableRoll[0].id){
+                    Items.AIR_RUNE_556 -> sendItemDialogue(player, Items.AIR_RUNE_556, "You've found some air runes!")
+                    Items.WATER_RUNE_555 -> sendItemDialogue(player, Items.WATER_RUNE_555, "You've found some water runes!")
+                    Items.EARTH_RUNE_557 -> sendItemDialogue(player, Items.EARTH_RUNE_557, "You've found some earth runes!")
+                    Items.FIRE_RUNE_554 -> sendItemDialogue(player, Items.FIRE_RUNE_554, "You've found some fire runes!")
+                    Items.BRONZE_ARROW_882 -> sendItemDialogue(player, Items.BRONZE_ARROW_882, "You've found some bronze arrows!")
+                    Items.BRONZE_BOLTS_877 -> sendItemDialogue(player, Items.BRONZE_BOLTS_877, "You've found some bronze bolts!")
+                    Items.IRON_ARROW_884 -> sendItemDialogue(player, Items.IRON_ARROW_884, "You've found some iron arrows!")
+                    Items.ATTACK_POTION2_123 -> sendItemDialogue(player, Items.ATTACK_POTION2_123, "You've found an attack potion!")
+                    Items.STRENGTH_POTION2_117 -> sendItemDialogue(player, Items.STRENGTH_POTION2_117, "You've found a strength potion!")
+                    Items.DEFENCE_POTION2_135 -> sendItemDialogue(player, Items.DEFENCE_POTION2_135, "You've found a defence potion!")
                 }
-                replaceScenery(node.asScenery(), node.id + 1, -1)
-                sendItemDialogue(player, reward.id, message)
-                addItemOrBank(player, reward.id, reward.amount)
-                player.incrementAttribute(GameAttributes.MAZE_ATTRIBUTE_CHESTS_OPEN, 1)
+                setAttribute(player, GameAttributes.MAZE_ATTRIBUTE_CHESTS_OPEN, getAttribute(player, GameAttributes.MAZE_ATTRIBUTE_CHESTS_OPEN, 0))
             } else {
-                sendMessage(player, "You find nothing of interest.")
+                sendMessage(player,"You find nothing of interest.")
             }
             return@on true
         }

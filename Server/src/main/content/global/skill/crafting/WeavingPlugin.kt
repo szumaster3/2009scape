@@ -90,8 +90,8 @@ class WeavingPlugin : InteractionListener {
                     }
                 }
             }.open()
-            repositionChild(player, Components.SKILL_MAKE_304, 2, 56, 32)
-            repositionChild(player, Components.SKILL_MAKE_304, 3, 207, 32)
+            sendRepositionOnInterface(player, Components.SKILL_MAKE_304, 2, 56, 32)
+            sendRepositionOnInterface(player, Components.SKILL_MAKE_304, 3, 207, 32)
             return@on true
         }
     }

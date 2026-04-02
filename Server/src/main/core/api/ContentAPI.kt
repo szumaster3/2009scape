@@ -3877,7 +3877,7 @@ fun sendInterfaceConfig(
  * @param positionX The new X coordinate.
  * @param positionY The new Y coordinate.
  */
-fun repositionChild(
+fun sendRepositionOnInterface(
     player: Player,
     interfaceId: Int,
     childId: Int,

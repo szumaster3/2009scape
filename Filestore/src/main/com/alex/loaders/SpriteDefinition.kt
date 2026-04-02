@@ -12,86 +12,113 @@ import java.nio.ByteBuffer
  * @author Graham
  * @author Discardedx2
  */
-class SpriteDefinition
-@JvmOverloads
-constructor(
+class SpriteDefinition @JvmOverloads constructor(
     width: Int,
-    height: Int,
-    size: Int = 1,
+    height: Int, size: Int = 1
 ) {
+
     private val width: Int
     private val height: Int
     private val frames: Array<BufferedImage?>
 
     init {
         require(size >= 1)
-
         this.width = width
         this.height = height
         this.frames = arrayOfNulls(size)
     }
 
+    fun getSprite(id: Int): BufferedImage? = frames[id]
+
+    fun setFrame(id: Int, frame: BufferedImage) {
+        require(frame.width == width && frame.height == height) {
+            "Frame size mismatch"
+        }
+        frames[id] = frame
+    }
+
+    fun size(): Int = frames.size
+
     @Throws(IOException::class)
     fun encode(): ByteBuffer {
         val bout = ByteArrayOutputStream()
         val os = DataOutputStream(bout)
-        os.use { os ->
-            val palette: MutableList<Int> = ArrayList()
+
+        os.use {
+
+            val palette = ArrayList<Int>()
             palette.add(0)
 
+            val frameData = mutableListOf<Pair<Array<IntArray>, Boolean>>()
+
             for (image in frames) {
-                if (image!!.width != width || image.height != height) throw IOException("All frames must be the same size.")
+                requireNotNull(image)
+
+                val indices = Array(width) { IntArray(height) }
+                var hasAlpha = false
+
+                for (x in 0 until width) {
+                    for (y in 0 until height) {
+
+                        val argb = image.getRGB(x, y)
+                        val alpha = (argb ushr 24) and 0xFF
+
+                        if (alpha == 0) {
+                            indices[x][y] = 0
+                            continue
+                        }
+
+                        val rgb = argb and 0xFFFFFF
+                        hasAlpha = hasAlpha || (alpha != 255)
+
+                        var index = palette.indexOf(rgb)
+                        if (index == -1) {
+                            if (palette.size >= 256) {
+                                throw IOException("Too many colours in this sprite!")
+                            }
+                            palette.add(rgb)
+                            index = palette.size - 1
+                        }
+
+                        indices[x][y] = index
+                    }
+                }
+
+                frameData.add(indices to hasAlpha)
+            }
+
+            for ((indices, hasAlpha) in frameData) {
 
                 var flags = FLAG_VERTICAL
-
-                for (x in 0 until width) {
-                    for (y in 0 until height) {
-                        val argb = image.getRGB(x, y)
-                        val alpha = (argb shr 24) and 0xFF
-                        var rgb = argb and 0xFFFFFF
-                        if (rgb == 0) rgb = 1
-
-                        if (alpha != 0 && alpha != 255) flags = flags or FLAG_ALPHA
-
-                        if (!palette.contains(rgb)) {
-                            if (palette.size >= 256) throw IOException("Too many colours in this sprite!")
-                            palette.add(rgb)
-                        }
-                    }
-                }
+                if (hasAlpha) flags = flags or FLAG_ALPHA
 
                 os.write(flags)
+
+                // indices
                 for (x in 0 until width) {
                     for (y in 0 until height) {
-                        val argb = image.getRGB(x, y)
-                        val alpha = (argb shr 24) and 0xFF
-                        var rgb = argb and 0xFFFFFF
-                        if (rgb == 0) rgb = 1
-
-                        if ((flags and FLAG_ALPHA) == 0 && alpha == 0) {
-                            os.write(0)
-                        } else {
-                            os.write(palette.indexOf(rgb))
-                        }
+                        os.write(indices[x][y])
                     }
                 }
 
-                if ((flags and FLAG_ALPHA) != 0) {
+                // alpha
+                if (hasAlpha) {
                     for (x in 0 until width) {
                         for (y in 0 until height) {
-                            val argb = image.getRGB(x, y)
-                            val alpha = (argb shr 24) and 0xFF
+                            val rgb = frames[0]!!.getRGB(x, y)
+                            val alpha = (rgb ushr 24) and 0xFF
                             os.write(alpha)
                         }
                     }
                 }
             }
 
+            // palette
             for (i in 1 until palette.size) {
                 val rgb = palette[i]
-                os.write((rgb shr 16).toByte().toInt())
-                os.write((rgb shr 8).toByte().toInt())
-                os.write(rgb.toByte().toInt())
+                os.write((rgb shr 16) and 0xFF)
+                os.write((rgb shr 8) and 0xFF)
+                os.write(rgb and 0xFF)
             }
 
             os.writeShort(width)
@@ -107,36 +134,20 @@ constructor(
 
             os.writeShort(frames.size)
 
-            val bytes = bout.toByteArray()
-            return ByteBuffer.wrap(bytes)
+            return ByteBuffer.wrap(bout.toByteArray())
         }
     }
 
-    fun getSprite(id: Int): BufferedImage? = frames[id]
-
-    fun setFrame(
-        id: Int,
-        frame: BufferedImage,
-    ) {
-        require(
-            !(frame.width != width || frame.height != height),
-        ) { "The frame's dimensions do not match with the sprite's dimensions." }
-
-        frames[id] = frame
-    }
-
-    fun size(): Int = frames.size
-
     companion object {
-        const val FLAG_VERTICAL: Int = 0x01
 
-        const val FLAG_ALPHA: Int = 0x02
+        const val FLAG_VERTICAL = 0x01
+        const val FLAG_ALPHA = 0x02
 
-        @JvmStatic
         fun decode(buffer: ByteBuffer): SpriteDefinition? {
-            try {
+            return try {
+
                 buffer.position(buffer.limit() - 2)
-                val size = buffer.getShort().toInt() and 0xFFFF
+                val size = buffer.short.toInt() and 0xFFFF
 
                 val offsetsX = IntArray(size)
                 val offsetsY = IntArray(size)
@@ -144,108 +155,83 @@ constructor(
                 val subHeights = IntArray(size)
 
                 buffer.position(buffer.limit() - size * 8 - 7)
-                val width = buffer.getShort().toInt() and 0xFFFF
-                val height = buffer.getShort().toInt() and 0xFFFF
-                val palette = IntArray((buffer.get().toInt() and 0xFF) + 1)
 
-                val set = SpriteDefinition(width, height, size)
+                val width = buffer.short.toInt() and 0xFFFF
+                val height = buffer.short.toInt() and 0xFFFF
+                val paletteSize = (buffer.get().toInt() and 0xFF) + 1
 
-                for (i in 0 until size) {
-                    offsetsX[i] = buffer.getShort().toInt() and 0xFFFF
-                }
-                for (i in 0 until size) {
-                    offsetsY[i] = buffer.getShort().toInt() and 0xFFFF
-                }
-                for (i in 0 until size) {
-                    subWidths[i] = buffer.getShort().toInt() and 0xFFFF
-                }
-                for (i in 0 until size) {
-                    subHeights[i] = buffer.getShort().toInt() and 0xFFFF
-                }
-
-                buffer.position(buffer.limit() - size * 8 - 7 - (palette.size - 1) * 3)
+                val palette = IntArray(paletteSize)
                 palette[0] = 0
-                for (index in 1 until palette.size) {
-                    palette[index] = getMedium(buffer)
-                    if (palette[index] == 0) palette[index] = 1
+
+                val sprite = SpriteDefinition(width, height, size)
+
+                for (i in 0 until size) offsetsX[i] = buffer.short.toInt() and 0xFFFF
+                for (i in 0 until size) offsetsY[i] = buffer.short.toInt() and 0xFFFF
+                for (i in 0 until size) subWidths[i] = buffer.short.toInt() and 0xFFFF
+                for (i in 0 until size) subHeights[i] = buffer.short.toInt() and 0xFFFF
+
+                buffer.position(buffer.limit() - size * 8 - 7 - (paletteSize - 1) * 3)
+
+                for (i in 1 until paletteSize) {
+                    val r = buffer.get().toInt() and 0xFF
+                    val g = buffer.get().toInt() and 0xFF
+                    val b = buffer.get().toInt() and 0xFF
+                    palette[i] = (r shl 16) or (g shl 8) or b
                 }
 
                 buffer.position(0)
-                for (id in 0 until size) {
-                    val subWidth = subWidths[id]
-                    val subHeight = subHeights[id]
-                    val offsetX = offsetsX[id]
-                    val offsetY = offsetsY[id]
-                    if (subWidth > 1000 || subHeight > 1000 || width > 1000 || height > 1000) continue
-                    set.frames[id] = BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB)
-                    val image = set.frames[id]
-                    val indices = Array(subWidth) { IntArray(subHeight) }
+
+                for (i in 0 until size) {
+
+                    val img = BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB)
+                    val subW = subWidths[i]
+                    val subH = subHeights[i]
+                    val offX = offsetsX[i]
+                    val offY = offsetsY[i]
+
+                    val indices = Array(subW) { IntArray(subH) }
 
                     val flags = buffer.get().toInt() and 0xFF
 
-                    if (image != null) {
-                        if ((flags and FLAG_VERTICAL) != 0) {
-                            for (x in 0 until subWidth) {
-                                for (y in 0 until subHeight) {
-                                    indices[x][y] = buffer.get().toInt() and 0xFF
-                                }
-                            }
-                        } else {
-                            for (y in 0 until subHeight) {
-                                for (x in 0 until subWidth) {
-                                    try {
-                                        indices[x][y] = buffer.get().toInt() and 0xFF
-                                    } catch (_: Exception) {
-                                    }
-                                }
+                    for (x in 0 until subW) {
+                        for (y in 0 until subH) {
+                            indices[x][y] = buffer.get().toInt() and 0xFF
+                        }
+                    }
+
+                    if ((flags and FLAG_ALPHA) != 0) {
+                        for (x in 0 until subW) {
+                            for (y in 0 until subH) {
+                                val alpha = buffer.get().toInt() and 0xFF
+                                val idx = indices[x][y]
+                                val rgb = palette[idx]
+
+                                val argb = (alpha shl 24) or rgb
+                                img.setRGB(x + offX, y + offY, argb)
                             }
                         }
+                    } else {
+                        for (x in 0 until subW) {
+                            for (y in 0 until subH) {
+                                val idx = indices[x][y]
 
-                        if ((flags and FLAG_ALPHA) != 0) {
-                            if ((flags and FLAG_VERTICAL) != 0) {
-                                for (x in 0 until subWidth) {
-                                    for (y in 0 until subHeight) {
-                                        val alpha = buffer.get().toInt() and 0xFF
-                                        image.setRGB(x + offsetX, y + offsetY, alpha shl 24 or palette[indices[x][y]])
-                                    }
-                                }
-                            } else {
-                                for (y in 0 until subHeight) {
-                                    for (x in 0 until subWidth) {
-                                        val alpha = buffer.get().toInt() and 0xFF
-                                        try {
-                                            image.setRGB(
-                                                x + offsetX,
-                                                y + offsetY,
-                                                alpha shl 24 or palette[indices[x][y]]
-                                            )
-                                        } catch (_: Exception) {
-                                        }
-                                    }
-                                }
-                            }
-                        } else {
-                            for (x in 0 until subWidth) {
-                                for (y in 0 until subHeight) {
-                                    val index = indices[x][y]
-                                    if (index == 0) {
-                                        image.setRGB(x + offsetX, y + offsetY, 0)
-                                    } else {
-                                        image.setRGB(x + offsetX, y + offsetY, -0x1000000 or palette[index])
-                                    }
+                                if (idx == 0) {
+                                    img.setRGB(x + offX, y + offY, 0x00000000)
+                                } else {
+                                    img.setRGB(x + offX, y + offY, 0xFF000000.toInt() or palette[idx])
                                 }
                             }
                         }
                     }
-                }
-                return set
-            } catch (_: Exception) {
-            }
-            return null
-        }
 
-        private fun getMedium(buf: ByteBuffer): Int =
-            ((buf.get().toInt() and 0xFF) shl 16) or ((buf.get().toInt() and 0xFF) shl 8) or (buf.get()
-                .toInt() and 0xFF)
+                    sprite.frames[i] = img
+                }
+
+                sprite
+
+            } catch (e: Exception) {
+                null
+            }
+        }
     }
 }

@@ -8,12 +8,14 @@ import com.alex.tools.dump.ModelDumper
 import com.alex.tools.dump.SpriteDumper
 import com.alex.tools.pack.ModelPacker
 import com.alex.tools.pack.SpritePacker
+import com.alex.util.DefinitionLink
 import content.interfaces.`AreaTask(259)`
 import content.interfaces.`CarpetInfo(835)`
 import content.interfaces.`GuildHallOverlay(834)`
 import content.items.*
 import content.npcs.`GuildHallOfficer(8591)`
 import content.objects.`Obelisk(42004)`
+import java.io.File
 import java.nio.file.Paths
 
 object ContentLoader {
@@ -87,8 +89,7 @@ object ContentLoader {
             "idk_dumps.txt"       to IdkDefinition::print,
             "param_dumps.txt"     to ParamDefinition::print,
             "seq_dumps.txt"       to SeqDefinition::print,
-            "spot_anim_dumps.txt" to SpotAnimDefinition::print,
-            "struct_dumps.txt"    to StructDefinition::print
+            "struct_dumps.txt"    to StructDefinition::print,
         )
 
         dumps.forEach { (def, printer) ->
@@ -100,6 +101,11 @@ object ContentLoader {
     private fun dump() {
         SpriteDumper.dump()
         ModelDumper.dump()
+    }
+
+    private fun link() {
+        val dumper = DefinitionLink(Cache.getStore())
+        dumper.run(File("../Dumps/linked_definitions.txt"))
     }
 
     private fun maps() {

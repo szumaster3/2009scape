@@ -109,7 +109,7 @@ public final class NpcDefinition implements Cloneable {
         }
     }
 
-    private void decode(InputStream stream, int opcode) {
+    public void decode(InputStream stream, int opcode) {
         switch (opcode) {
             case 1: {
                 int count = stream.readUnsignedByte();

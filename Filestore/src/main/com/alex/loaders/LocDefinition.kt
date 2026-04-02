@@ -93,7 +93,7 @@ class LocDefinition {
         loaded = true
     }
 
-    private fun decode(opcode: Int, buffer: InputStream) {
+    public fun decode(opcode: Int, buffer: InputStream) {
         when (opcode) {
 
             1, 5 -> {

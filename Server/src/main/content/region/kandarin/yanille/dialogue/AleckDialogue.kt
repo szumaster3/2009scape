@@ -1,15 +1,10 @@
 package content.region.kandarin.yanille.dialogue
 
-import content.region.kandarin.west_ardougne.diary.dialogue.AleckDiaryDialogue
-import core.api.openDialogue
 import core.api.openNpcShop
 import core.game.dialogue.Dialogue
-import core.game.dialogue.IfTopic
 import core.game.dialogue.Topic
 import core.game.node.entity.npc.NPC
 import core.game.node.entity.player.Player
-import core.game.node.entity.player.link.diary.Diary
-import core.game.node.entity.player.link.diary.DiaryType
 import core.plugin.Initializable
 import core.tools.END_DIALOGUE
 import shared.consts.NPCs

@@ -93,16 +93,6 @@ class FruitAndBerryPicker : OptionHandler() {
                     if (plantable == Plantable.POISON_IVY_SEED && patch.patch == FarmingPatch.CHAMPIONS_GUILD_BUSH) {
                         player.achievementDiaryManager.finishTask(player, DiaryType.VARROCK, 2, 0)
                     }
-
-                    if (plantable == Plantable.WATERMELON_SEED) {
-                        player.achievementDiaryManager.finishTask(player, DiaryType.ARDOUGNE, 1, 5)
-                    }
-
-                    if ((plantable == Plantable.PAPAYA_SAPLING && patch.patch == FarmingPatch.TREE_GNOME_VILLAGE_FRUIT_TREE) ||
-                        plantable == Plantable.PALM_SAPLING && patch.patch == FarmingPatch.TREE_GNOME_VILLAGE_FRUIT_TREE) {
-                        player.achievementDiaryManager.finishTask(player, DiaryType.ARDOUGNE, 2, 14)
-                    }
-
                     return patch.getFruitOrBerryCount() == 0
                 }
             },

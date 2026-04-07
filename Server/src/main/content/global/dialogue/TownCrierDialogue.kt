@@ -1,13 +1,10 @@
 package content.global.dialogue
 
 import content.global.plugins.item.books_and_scrolls.impl.GeneralRuleBook
-import content.region.kandarin.west_ardougne.diary.dialogue.TownCrierDiaryDialogue
 import core.api.*
 import core.game.dialogue.*
 import core.game.node.entity.player.Player
 import core.game.node.entity.player.info.Rights
-import core.game.node.entity.player.link.diary.Diary
-import core.game.node.entity.player.link.diary.DiaryType
 import core.game.world.GameWorld
 import core.game.world.GameWorld.settings
 import core.plugin.Initializable

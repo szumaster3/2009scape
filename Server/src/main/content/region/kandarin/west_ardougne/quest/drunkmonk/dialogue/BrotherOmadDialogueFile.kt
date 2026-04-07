@@ -209,7 +209,6 @@ class BrotherOmadDialogueFile : DialogueFile() {
 
                         25 -> if (questComplete) {
                             finishQuest(player!!, Quests.MONKS_FRIEND)
-                            finishDiaryTask(player!!, DiaryType.ARDOUGNE, 0, 14)
                         }
                     }
                     count++

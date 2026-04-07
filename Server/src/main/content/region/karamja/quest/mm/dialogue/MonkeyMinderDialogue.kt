@@ -1,16 +1,13 @@
 package content.region.karamja.quest.mm.dialogue
 
-import core.api.finishDiaryTask
 import core.api.lock
 import core.api.openOverlay
 import core.api.teleport
 import core.game.dialogue.DialogueFile
 import core.game.dialogue.FaceAnim
-import core.game.node.entity.player.link.diary.DiaryType
 import core.game.system.task.Pulse
 import core.game.world.GameWorld
 import core.game.world.map.Location
-import core.tools.END_DIALOGUE
 import shared.consts.Components
 
 class MonkeyMinderDialogue : DialogueFile() {
@@ -34,7 +31,6 @@ class MonkeyMinderDialogue : DialogueFile() {
                         override fun pulse(): Boolean {
                             openOverlay(player!!, Components.FADE_FROM_BLACK_170)
                             teleport(player!!, Location(2605, 3280, 0))
-                            finishDiaryTask(player!!, DiaryType.ARDOUGNE, 2, 8)
                             return true
                         }
                     },

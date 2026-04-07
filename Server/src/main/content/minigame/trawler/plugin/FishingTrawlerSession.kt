@@ -351,9 +351,6 @@ class FishingTrawlerSession(
     override fun areaEnter(entity: Entity) {
         super.areaEnter(entity)
         log(this::class.java, Log.FINE, "ENTERED FTZ")
-        if(entity is Player){
-            finishDiaryTask(entity, DiaryType.ARDOUGNE, 0, 5)
-        }
     }
 
     override fun areaLeave(

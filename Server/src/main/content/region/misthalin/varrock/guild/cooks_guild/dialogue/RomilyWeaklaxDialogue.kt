@@ -101,6 +101,7 @@ class RomilyWeaklaxDialogue(player: Player? = null) : Dialogue(player) {
                         npc("Thank you! If you could bring me the other $deficit pies, that'd be great!")
                         setAttribute(player, GameAttributes.DIARY_VARROCK_ROMILY_WEAKLAX_PIE_AMOUNT, deficit)
                         finishDiaryTask(player, DiaryType.VARROCK,2, VarrockAchievementDiary.Companion.HardTasks.GIVE_WEAKLAX_A_PIE)
+                        setVarbit(player,4032,1,true)
                     }
                 }
                 player.inventory.remove(Item(pieId, piesInInventory))

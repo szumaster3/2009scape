@@ -101,14 +101,7 @@ class SmithingPulse(
 
         if (bar == Bars.BLURITE_CROSSBOW_LIMBS && withinDistance(player, Location(3000, 3145, 0), 10)) {
             finishDiaryTask(player, DiaryType.FALADOR, 1, 9)
-        }
-
-        if (bar == Bars.STEEL_LONGSWORD && withinDistance(player, Location.create(3112, 9688, 0))) {
-            finishDiaryTask(player, DiaryType.LUMBRIDGE, 2, 0)
-        }
-
-        if (bar == Bars.ADAMANT_MEDIUM_HELM && withinDistance(player, Location.create(3247, 3404, 0))) {
-            finishDiaryTask(player, DiaryType.VARROCK, 2, 3)
+            setVarbit(player, 5715,1, true)
         }
 
         amount--

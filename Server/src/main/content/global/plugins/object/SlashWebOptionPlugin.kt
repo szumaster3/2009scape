@@ -68,6 +68,7 @@ class SlashWebOptionPlugin : OptionHandler() {
 
             if (scenery.id == shared.consts.Scenery.SPIDERWEB_29354) {
                 finishDiaryTask(player, DiaryType.VARROCK, 0, VarrockAchievementDiary.Companion.EasyTasks.SEWERS_CUT_COBWEB)
+                setVarbit(player, 4005,1,true)
             }
 
             if (scenery.id == shared.consts.Scenery.SPIDERWEB_29354 &&
@@ -75,6 +76,7 @@ class SlashWebOptionPlugin : OptionHandler() {
                 player.location.y <= 9897
             ) {
                 finishDiaryTask(player, DiaryType.VARROCK, 1, VarrockAchievementDiary.Companion.MediumTasks.SEWER_GATHER_RED_SPIDERS_EGGS)
+                setVarbit(player, 4010, 1, true)
             }
         } else {
             sendMessage(player, "You fail to cut through it.")

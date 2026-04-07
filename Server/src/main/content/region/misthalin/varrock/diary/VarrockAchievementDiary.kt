@@ -27,8 +27,6 @@ import shared.consts.*
 
 class VarrockAchievementDiary : DiaryEventHookBase(DiaryType.VARROCK) {
     companion object {
-        private const val ATTRIBUTE_CRAFT_AIR_BATTLESTAFF = "diary:varrock:craft-air-battlestaff"
-
         private val VARROCK_ROOF_AREA = ZoneBorders(3201, 3467, 3225, 3497, 3, true)
         private val SOS_LEVEL_2_AREA = ZoneBorders(2040, 5241, 2046, 5246)
         private val CHAMPIONS_GUILD_AREA = ZoneBorders(3188, 3361, 3194, 3362)
@@ -62,7 +60,7 @@ class VarrockAchievementDiary : DiaryEventHookBase(DiaryType.VARROCK) {
         }
 
         object MediumTasks {
-            const val APOTHECARY_MAKE_STRENGTH_POTION = 0
+            const val APOTHECARY_MAKE_STRENGTH_POTION = 0 // done
             const val CHAMPIONS_GUILD_VISIT = 1
             const val TAKE_DAGONHAI_CHAOS_PORTAL_SHORTCUT = 2
             const val RAT_POLE_FULL_RAT_COMPLEMENT = 3
@@ -109,21 +107,25 @@ class VarrockAchievementDiary : DiaryEventHookBase(DiaryType.VARROCK) {
                     VARROCK_ROOF_AREA,
                     DiaryLevel.EASY,
                     EasyTasks.FIND_HIGHEST_POINT,
+                    4004
                 ),
                 DiaryAreaTask(
                     SOS_LEVEL_2_AREA,
                     DiaryLevel.EASY,
                     EasyTasks.VISIT_SOS_LEVEL2,
+                    3990
                 ),
                 DiaryAreaTask(
                     CHAMPIONS_GUILD_AREA,
                     DiaryLevel.MEDIUM,
                     MediumTasks.CHAMPIONS_GUILD_VISIT,
+                    4007
                 ),
                 DiaryAreaTask(
                     EARTH_ALTAR_AREA,
                     DiaryLevel.EASY,
                     EasyTasks.ENTER_EARTH_ALTAR,
+                    3999
                 ),
             )
 
@@ -136,6 +138,7 @@ class VarrockAchievementDiary : DiaryEventHookBase(DiaryType.VARROCK) {
                             player,
                             DiaryLevel.EASY,
                             EasyTasks.BARBARIAN_VILLAGE_CATCH_TROUT,
+                            4002
                         )
                 }
             }
@@ -147,6 +150,7 @@ class VarrockAchievementDiary : DiaryEventHookBase(DiaryType.VARROCK) {
                             player,
                             DiaryLevel.HARD,
                             HardTasks.SMITH_ADAMANT_MED_HELM_SOUTHEAST,
+                            4030
                         )
                 }
             }
@@ -158,6 +162,7 @@ class VarrockAchievementDiary : DiaryEventHookBase(DiaryType.VARROCK) {
                             player,
                             DiaryLevel.EASY,
                             EasyTasks.MINE_IRON_SOUTHEAST,
+                            3988
                         )
                 }
             }
@@ -170,6 +175,7 @@ class VarrockAchievementDiary : DiaryEventHookBase(DiaryType.VARROCK) {
                                 player,
                                 DiaryLevel.EASY,
                                 EasyTasks.LUMBERYARD_CHOP_DYING_TREE,
+                                3992
                             )
                         }
                 }
@@ -182,6 +188,7 @@ class VarrockAchievementDiary : DiaryEventHookBase(DiaryType.VARROCK) {
                             player,
                             DiaryLevel.EASY,
                             EasyTasks.PATERDOMUS_MINE_LIMESTONE,
+                            4001
                         )
                 }
             }
@@ -193,6 +200,7 @@ class VarrockAchievementDiary : DiaryEventHookBase(DiaryType.VARROCK) {
                             player,
                             DiaryLevel.MEDIUM,
                             MediumTasks.CRAFT_EARTH_TIARA,
+                            4017
                         )
                 }
             }
@@ -207,6 +215,7 @@ class VarrockAchievementDiary : DiaryEventHookBase(DiaryType.VARROCK) {
                         player,
                         DiaryLevel.EASY,
                         EasyTasks.AUBURY_TELEPORT_ESSENCE_MINE,
+                        3987
                     )
                 }
             }
@@ -217,6 +226,7 @@ class VarrockAchievementDiary : DiaryEventHookBase(DiaryType.VARROCK) {
                         player,
                         DiaryLevel.MEDIUM,
                         MediumTasks.DIGSITE_PENDANT_TELEPORT,
+                        4016
                     )
                 }
             }
@@ -231,6 +241,7 @@ class VarrockAchievementDiary : DiaryEventHookBase(DiaryType.VARROCK) {
                         player,
                         DiaryLevel.EASY,
                         EasyTasks.EDGEVILLE_ENTER_DUNGEON_SOUTH,
+                        3996
                     )
                 }
             }
@@ -241,6 +252,7 @@ class VarrockAchievementDiary : DiaryEventHookBase(DiaryType.VARROCK) {
                         player,
                         DiaryLevel.HARD,
                         HardTasks.USE_MOSS_GIANT_PIPE_SHORTCUT,
+                        4027
                     )
                 }
             }
@@ -252,6 +264,7 @@ class VarrockAchievementDiary : DiaryEventHookBase(DiaryType.VARROCK) {
                     player,
                     DiaryLevel.MEDIUM,
                     MediumTasks.OZIACH_BROWSE_STORE,
+                    4026
                 )
             }
         }
@@ -261,6 +274,7 @@ class VarrockAchievementDiary : DiaryEventHookBase(DiaryType.VARROCK) {
                 player,
                 DiaryLevel.HARD,
                 HardTasks.BARBARIAN_VILLAGE_TELEPORT_USING_SKULL_SCEPTRE,
+                4039
             )
         }
     }
@@ -277,6 +291,7 @@ class VarrockAchievementDiary : DiaryEventHookBase(DiaryType.VARROCK) {
                             player,
                             DiaryLevel.HARD,
                             HardTasks.EDGEVILLE_MAKE_WAKA_CANOE,
+                            4037
                         )
                     }
                 }
@@ -293,6 +308,7 @@ class VarrockAchievementDiary : DiaryEventHookBase(DiaryType.VARROCK) {
                             player,
                             DiaryLevel.EASY,
                             EasyTasks.BUY_VARROCK_HERALD,
+                            3993
                         )
                     }
                 }
@@ -303,6 +319,7 @@ class VarrockAchievementDiary : DiaryEventHookBase(DiaryType.VARROCK) {
                         player,
                         DiaryLevel.EASY,
                         EasyTasks.ELSIE_TELL_A_STORY,
+                        4000
                     )
                 }
             }
@@ -312,6 +329,7 @@ class VarrockAchievementDiary : DiaryEventHookBase(DiaryType.VARROCK) {
                         player,
                         DiaryLevel.HARD,
                         HardTasks.OBTAIN_NEW_SET_OF_FAMILY_CREST_GAUNTLETS,
+                        4036
                     )
                 }
             }
@@ -321,6 +339,7 @@ class VarrockAchievementDiary : DiaryEventHookBase(DiaryType.VARROCK) {
                         player,
                         DiaryLevel.HARD,
                         HardTasks.SPEAK_TO_ORLANDO_SMITH_153_KUDOS,
+                        4031
                     )
                 }
             }
@@ -335,20 +354,8 @@ class VarrockAchievementDiary : DiaryEventHookBase(DiaryType.VARROCK) {
                         player,
                         DiaryLevel.EASY,
                         EasyTasks.GIVE_STRAY_DOG_A_BONE,
+                        3994
                     )
-                }
-            }
-        }
-        when {
-            inBorders(player, AIR_OBELISK_AREA) -> {
-                if (event.used == Items.BATTLESTAFF_1391 && event.with == Items.AIR_ORB_573) {
-                    whenTaskRequirementFulfilled(player, ATTRIBUTE_CRAFT_AIR_BATTLESTAFF) {
-                        finishTask(
-                            player,
-                            DiaryLevel.HARD,
-                            HardTasks.CRAFT_AIR_BATTLESTAFF,
-                        )
-                    }
                 }
             }
         }
@@ -362,6 +369,7 @@ class VarrockAchievementDiary : DiaryEventHookBase(DiaryType.VARROCK) {
                         player,
                         DiaryLevel.EASY,
                         EasyTasks.THESSALIA_BROWSE_CLOTHES,
+                        3986
                     )
                 }
             }
@@ -383,19 +391,8 @@ class VarrockAchievementDiary : DiaryEventHookBase(DiaryType.VARROCK) {
                 player,
                 DiaryLevel.MEDIUM,
                 MediumTasks.CAST_VARROCK_TELEPORT_SPELL,
+                4019
             )
-        }
-        when {
-            inBorders(player, AIR_OBELISK_AREA) -> {
-                if (event.spellBook == SpellBookManager.SpellBook.MODERN && event.spellId == 49) {
-                    fulfillTaskRequirement(
-                        player,
-                        DiaryLevel.HARD,
-                        HardTasks.CRAFT_AIR_BATTLESTAFF,
-                        ATTRIBUTE_CRAFT_AIR_BATTLESTAFF,
-                    )
-                }
-            }
         }
     }
 
@@ -405,6 +402,7 @@ class VarrockAchievementDiary : DiaryEventHookBase(DiaryType.VARROCK) {
                 player,
                 DiaryLevel.MEDIUM,
                 MediumTasks.DIAL_FAIRY_RING_WEST,
+                4025
             )
         }
     }
@@ -417,6 +415,7 @@ class VarrockAchievementDiary : DiaryEventHookBase(DiaryType.VARROCK) {
                         player,
                         DiaryLevel.HARD,
                         HardTasks.PICK_POISON_IVY_FARMING_PATCH,
+                        4028
                     )
                 }
             }
@@ -426,11 +425,12 @@ class VarrockAchievementDiary : DiaryEventHookBase(DiaryType.VARROCK) {
     override fun onDialogueOpened(player: Player, event: DialogueOpenEvent) {
         when (event.dialogue) {
             is CuratorHaigHalenDialogue -> {
-                if (getQuestPoints(player) == 50) {
+                if (getQuestPoints(player) >= 50) {
                     finishTask(
                         player,
                         DiaryLevel.EASY,
                         EasyTasks.SPEAK_TO_HAIG_HALEN_50QP,
+                        3998
                     )
                 }
             }

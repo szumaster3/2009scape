@@ -75,6 +75,7 @@ class WeavingPlugin : InteractionListener {
                                 !hasDiaryTaskComplete(player, DiaryType.FALADOR, 1, 0)
                             ) {
                                 finishDiaryTask(player, DiaryType.FALADOR, 1, 0)
+                                setVarbit(player, 5706, 1, true)
                             }
                         }
 

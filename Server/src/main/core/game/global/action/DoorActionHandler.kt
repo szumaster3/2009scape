@@ -147,22 +147,8 @@ object DoorActionHandler {
                         return false
                     }
                     if (entity is Player) {
-                        val player = entity as? Player ?: return false
-                        if (scenery.id == 2112 && withinDistance(player, Location(3046, 9756, 0), 10)) {
-                            finishDiaryTask(player, DiaryType.FALADOR, 2, 6)
-                        }
-
-                        if (scenery.id == 35549 || scenery.id == 35551 && player.viewport.region!!.id == 13106) {
-                            finishDiaryTask(player, DiaryType.LUMBRIDGE, 0, 4)
-                        }
-
-                        if (scenery.id == 2406 && withinDistance(player, Location.create(3202, 3169, 0))) {
-                            finishDiaryTask(player, DiaryType.LUMBRIDGE, 1, 6)
-                        }
-
                         entity.asPlayer().logoutListeners.remove("autowalk")
                     }
-
                     scenery.charge = 1000
                     if (second != null) {
                         second.charge = 1000

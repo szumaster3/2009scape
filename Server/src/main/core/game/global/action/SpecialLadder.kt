@@ -1,6 +1,7 @@
 package core.game.global.action
 
 import core.api.finishDiaryTask
+import core.api.setVarbit
 import core.game.node.entity.player.Player
 import core.game.node.entity.player.link.diary.DiaryType
 import core.game.world.map.Location
@@ -140,6 +141,7 @@ enum class SpecialLadder(private val location: Location, private val destination
     RAT_PITS_PORT_SARIM_LADDER_DOWN(Location.create(3018, 3232, 0), Location.create(2962, 9650, 0)) {
         override fun checkAchievement(player: Player) {
             finishDiaryTask(player, DiaryType.FALADOR, 1, 11)
+            setVarbit(player, 5717, 1, true)
         }
     },
     RAT_PITS_ARDOUGNE_LADDER_UP(Location.create(2661, 9641, 0), Location.create(2562, 3320, 0)),
@@ -153,6 +155,7 @@ enum class SpecialLadder(private val location: Location, private val destination
     SEERS_VILLAGE_SPINNING_HOUSE_ROOFTOP_UP(Location.create(2715, 3472, 1), Location.create(2714, 3472, 3)) {
         override fun checkAchievement(player: Player) {
             finishDiaryTask(player, DiaryType.SEERS_VILLAGE, 1, 3)
+            setVarbit(player, 5797, 1, true)
         }
     },
     SHADOW_DUNGEON_UP(Location.create(2629, 5072, 0), Location.create(2548, 3421, 0)),

@@ -520,7 +520,10 @@ object CraftingDefinition {
                     "The tanner tans ${if (availableAmount > 1) "$availableAmount ${itemName}s" else itemName} for you."
                 )
 
-                if (def == SOFT_LEATHER) finishDiaryTask(player, DiaryType.LUMBRIDGE, 1, 2)
+                if (def == SOFT_LEATHER) {
+                    finishDiaryTask(player, DiaryType.LUMBRIDGE, 1, 2)
+                    setVarbit(player, 4974, 1, true)
+                }
             }
         }
     }

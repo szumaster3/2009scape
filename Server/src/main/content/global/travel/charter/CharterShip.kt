@@ -95,10 +95,23 @@ private class CharterPulse(private val player: Player, private val charter: Char
         }
 
         when (charter) {
-            CharterShip.MUSA_POINT_TO_PORT_SARIM -> finishDiaryTask(player, DiaryType.KARAMJA, 0, 3)
-            CharterShip.BRIMHAVEN_TO_ARDOUGNE -> finishDiaryTask(player, DiaryType.KARAMJA, 0, 4)
-            CharterShip.CAIRN_ISLAND_TO_PORT_KHAZARD -> finishDiaryTask(player, DiaryType.KARAMJA, 1, 6)
-            CharterShip.PORT_SARIM_TO_ENTRANA -> finishDiaryTask(player, DiaryType.FALADOR, 0, 14)
+            CharterShip.MUSA_POINT_TO_PORT_SARIM -> {
+                finishDiaryTask(player, DiaryType.KARAMJA, 0, 3)
+                setVarbit(player, 3569,1,true)
+
+            }
+            CharterShip.BRIMHAVEN_TO_ARDOUGNE -> {
+                finishDiaryTask(player, DiaryType.KARAMJA, 0, 4)
+                setVarbit(player, 3570,1, true)
+            }
+            CharterShip.CAIRN_ISLAND_TO_PORT_KHAZARD -> {
+                finishDiaryTask(player, DiaryType.KARAMJA, 1, 6)
+                setVarbit(player, 3585,1, true)
+            }
+            CharterShip.PORT_SARIM_TO_ENTRANA -> {
+                finishDiaryTask(player, DiaryType.FALADOR, 0, 14)
+                setVarbit(player, 5705,1, true)
+            }
             CharterShip.ARDOUGNE_TO_BRIMHAVEN -> finishDiaryTask(player, DiaryType.ARDOUGNE, 0, 10)
             else -> {}
         }

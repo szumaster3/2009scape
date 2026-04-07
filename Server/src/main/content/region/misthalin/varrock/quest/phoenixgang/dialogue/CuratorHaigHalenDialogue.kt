@@ -21,9 +21,6 @@ class CuratorHaigHalenDialogue(player: Player? = null) : Dialogue(player) {
     override fun handle(interfaceId: Int, buttonId: Int): Boolean {
         when (stage) {
             START_DIALOGUE -> npcl(FaceAnim.NEUTRAL, "Welcome to Varrock Museum!").also {
-                if (getQuestPoints(player) >= 50 && !hasDiaryTaskComplete(player, DiaryType.VARROCK, 0, 12)) {
-                    finishDiaryTask(player, DiaryType.VARROCK, 0, 12)
-                }
                 if (getQuestStage(player, Quests.THE_DIG_SITE) == 1 && inInventory(player, Items.UNSTAMPED_LETTER_682)) { stage = 11 }
                 stage++
             }

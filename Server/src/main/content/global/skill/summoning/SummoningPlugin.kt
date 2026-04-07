@@ -35,6 +35,7 @@ class SummoningPlugin : InteractionListener {
             val faladorZone = ZoneBorders(3011, 3222, 3017, 3229, 0).insideBorder(player) || ZoneBorders(3011, 3220, 3015, 3221, 0).insideBorder(player)
             if (player.familiarManager.hasFamiliar() && familiar is IbisNPC && faladorZone) {
                 finishDiaryTask(player, DiaryType.FALADOR, 2, 9)
+                setVarbit(player, 5727,1, true)
             }
             return@on true
         }

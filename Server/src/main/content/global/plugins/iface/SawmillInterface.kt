@@ -92,11 +92,26 @@ class SawmillInterface : ComponentPlugin() {
         addItem(player, plank.plank, amount)
 
         when {
-            plank == PlankType.WOOD ->
-                finishDiaryTask(player, DiaryType.VARROCK, 0, VarrockAchievementDiary.Companion.EasyTasks.MAKE_PLANK_SAWMILL)
+            plank == PlankType.WOOD -> {
+                finishDiaryTask(
+                    player,
+                    DiaryType.VARROCK,
+                    0,
+                    VarrockAchievementDiary.Companion.EasyTasks.MAKE_PLANK_SAWMILL
+                )
+                setVarbit(player, 3989, 1, true)
+            }
 
-            plank == PlankType.MAHOGANY && amount >= 20 ->
-                finishDiaryTask(player, DiaryType.VARROCK, 1, VarrockAchievementDiary.Companion.MediumTasks.SAWMILL_BUY_20_MAHOGANY_PLANKS)
+            plank == PlankType.MAHOGANY && amount >= 20 -> {
+                finishDiaryTask(
+                    player,
+                    DiaryType.VARROCK,
+                    1,
+                    VarrockAchievementDiary.Companion.MediumTasks.SAWMILL_BUY_20_MAHOGANY_PLANKS
+                )
+                setVarbit(player, 4021, 1, true)
+
+            }
         }
     }
 }

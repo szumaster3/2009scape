@@ -86,6 +86,7 @@ class KaramjaAchievementDiary : DiaryEventHookBase(DiaryType.KARAMJA) {
                 zoneBorders = CAIRN_ISLE_AREA,
                 diaryLevel = DiaryLevel.EASY,
                 taskId = EasyTasks.CAIRN_ISLE_VISIT,
+                3571
             ),
         )
 
@@ -96,6 +97,7 @@ class KaramjaAchievementDiary : DiaryEventHookBase(DiaryType.KARAMJA) {
                     player = player,
                     level = DiaryLevel.MEDIUM,
                     task = MediumTasks.COOK_SPIDER_ON_STICK,
+                    3584
                 )
             }
         }
@@ -106,6 +108,7 @@ class KaramjaAchievementDiary : DiaryEventHookBase(DiaryType.KARAMJA) {
                     player = player,
                     level = DiaryLevel.EASY,
                     task = EasyTasks.BRIMHAVEN_MINE_GOLD,
+                    3568
                 )
             }
 
@@ -114,6 +117,7 @@ class KaramjaAchievementDiary : DiaryEventHookBase(DiaryType.KARAMJA) {
                     player = player,
                     level = DiaryLevel.MEDIUM,
                     task = MediumTasks.MINE_RED_TOPAZ,
+                    3596
                 )
             }
 
@@ -122,7 +126,7 @@ class KaramjaAchievementDiary : DiaryEventHookBase(DiaryType.KARAMJA) {
                     player = player,
                     level = DiaryLevel.EASY,
                     task = EasyTasks.PICK_5_BANANAS,
-                    attribute = ATTRIBUTE_BANANA_PICKED,
+                    varbitId= 3566,
                     maxProgress = 5,
                 )
             }
@@ -136,6 +140,7 @@ class KaramjaAchievementDiary : DiaryEventHookBase(DiaryType.KARAMJA) {
                             player = player,
                             level = DiaryLevel.EASY,
                             task = EasyTasks.USE_FISHING_SPOTS_BANANA_PLANTATION,
+                            3572
                         )
                     }
                 }
@@ -148,6 +153,7 @@ class KaramjaAchievementDiary : DiaryEventHookBase(DiaryType.KARAMJA) {
                             player = player,
                             level = DiaryLevel.MEDIUM,
                             task = MediumTasks.CUT_MAHOGANY_TREE,
+                            3587
                         )
                     }
 
@@ -156,6 +162,7 @@ class KaramjaAchievementDiary : DiaryEventHookBase(DiaryType.KARAMJA) {
                             player = player,
                             level = DiaryLevel.MEDIUM,
                             task = MediumTasks.CUT_TEAK_TREE,
+                            3586
                         )
                     }
                 }
@@ -170,6 +177,7 @@ class KaramjaAchievementDiary : DiaryEventHookBase(DiaryType.KARAMJA) {
                     player = player,
                     level = DiaryLevel.HARD,
                     task = HardTasks.BRIMHAVEN_DUNGEON_KILL_METAL_DRAGON,
+                    3609
                 )
             }
 
@@ -178,6 +186,7 @@ class KaramjaAchievementDiary : DiaryEventHookBase(DiaryType.KARAMJA) {
                     player = player,
                     level = DiaryLevel.EASY,
                     task = EasyTasks.POTHOLE_DUNGEON_KILL_JOGRE,
+                    3575
                 )
             }
 
@@ -186,6 +195,7 @@ class KaramjaAchievementDiary : DiaryEventHookBase(DiaryType.KARAMJA) {
                     player = player,
                     level = DiaryLevel.HARD,
                     task = HardTasks.KHARAZI_JUNGLE_KILL_DEATHWING,
+                    3605
                 )
             }
 
@@ -194,6 +204,7 @@ class KaramjaAchievementDiary : DiaryEventHookBase(DiaryType.KARAMJA) {
                     player = player,
                     level = DiaryLevel.HARD,
                     task = HardTasks.FIGHT_CAVE_KILL_KET_ZEK,
+                    3601
                 )
             }
         }
@@ -207,7 +218,7 @@ class KaramjaAchievementDiary : DiaryEventHookBase(DiaryType.KARAMJA) {
                         player = player,
                         level = DiaryLevel.EASY,
                         task = EasyTasks.PICK_5_SEAWEED,
-                        attribute = ATTRIBUTE_SEAWEED_PICKED,
+                        varbitId = 3573,
                         maxProgress = 5,
                     )
                 }
@@ -217,7 +228,7 @@ class KaramjaAchievementDiary : DiaryEventHookBase(DiaryType.KARAMJA) {
                         player = player,
                         level = DiaryLevel.HARD,
                         task = HardTasks.PICK_5_PALM_LEAVES,
-                        attribute = ATTRIBUTE_PALM_LEAF_PICKED,
+                        varbitId = 3607,
                         maxProgress = 5,
                     )
                 }
@@ -232,6 +243,7 @@ class KaramjaAchievementDiary : DiaryEventHookBase(DiaryType.KARAMJA) {
                     player = player,
                     level = DiaryLevel.EASY,
                     task = MediumTasks.BRIMHAVEN_DUNGEON_CLIMB_STAIRS,
+                    3595
                 )
             }
 
@@ -241,6 +253,7 @@ class KaramjaAchievementDiary : DiaryEventHookBase(DiaryType.KARAMJA) {
                         player = player,
                         level = DiaryLevel.MEDIUM,
                         task = MediumTasks.BRIMHAVEN_GROW_HEALTHY_FRUIT_TREE,
+                        3591
                     )
                 }
             }
@@ -250,6 +263,7 @@ class KaramjaAchievementDiary : DiaryEventHookBase(DiaryType.KARAMJA) {
                     player,
                     DiaryLevel.MEDIUM,
                     MediumTasks.TRAP_HORNED_GRAAHK,
+                    3592
                 )
             }
         }

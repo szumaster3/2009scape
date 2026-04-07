@@ -65,6 +65,7 @@ class WizardTowerListener : InteractionListener {
             sendMessage(player, "You taunt the demon, making it growl.")
             face(demon, player, 3)
             finishDiaryTask(player, DiaryType.LUMBRIDGE, 1, LumbridgeAchievementDiary.Companion.EasyTasks.WIZARDS_TOWER_TAUNT_DEMON)
+            setVarbit(player, 4985, 1, true)
             emote(player, Emotes.RASPBERRY)
             return@on true
         }

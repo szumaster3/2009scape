@@ -6,6 +6,7 @@ import content.global.skill.summoning.familiar.Familiar
 import content.global.skill.summoning.familiar.FamiliarSpecial
 import core.api.finishDiaryTask
 import core.api.sendMessage
+import core.api.setVarbit
 import core.game.container.impl.EquipmentContainer
 import core.game.interaction.NodeUsageEvent
 import core.game.interaction.UseWithHandler
@@ -124,6 +125,7 @@ class ForgeRegentNPC @JvmOverloads constructor(owner: Player? = null, id: Int = 
                         SceneryBuilder.add(`object`, log.life, FireMakingPlugin.getAsh(player, log, `object`))
                         if (player.viewport.region!!.id == 10806) {
                             finishDiaryTask(player, DiaryType.SEERS_VILLAGE, 1, 9)
+                            setVarbit(player, 5803,1,true)
                         }
                         return true
                     }

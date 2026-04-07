@@ -96,9 +96,12 @@ class PickpocketListener : InteractionListener {
                 when {
                     inBorders(player, ZoneBorders(3201, 3456, 3227, 3468)) && npc.id == NPCs.GUARD_5920 -> {
                         finishDiaryTask(player, DiaryType.VARROCK, 1, 12)
+                        setVarbit(player, 4018,1, true)
+
                     }
                     inBorders(player, ZoneBorders(2934, 3399, 3399, 3307)) && npc.id in intArrayOf(NPCs.GUARD_9, NPCs.GUARD_3230, NPCs.GUARD_3228, NPCs.GUARD_3229) -> {
                         finishDiaryTask(player, DiaryType.FALADOR, 1, 6)
+                        setVarbit(player, 5712, 1, true)
                     }
                     npc.id == NPCs.MASTER_FARMER_2234 || npc.id == NPCs.MASTER_FARMER_2235 -> {
                         finishDiaryTask(player, DiaryType.ARDOUGNE, 1, 12)

@@ -1,9 +1,6 @@
 package content.region.kandarin.seers_village.plugin
 
-import core.api.MapArea
-import core.api.finishDiaryTask
-import core.api.removeAttribute
-import core.api.setAttribute
+import core.api.*
 import core.game.node.entity.Entity
 import core.game.node.entity.player.Player
 import core.game.node.entity.player.link.diary.DiaryType
@@ -87,6 +84,7 @@ class MysteriousStatue : MapArea {
         ) {
             clearProgress(player)
             finishDiaryTask(player, DiaryType.SEERS_VILLAGE, 0, 1)
+            setVarbit(player, 5783, 1, true)
         }
     }
 

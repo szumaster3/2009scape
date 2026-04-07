@@ -19,10 +19,6 @@ import shared.consts.Scenery
 
 class FaladorAchievementDiary : DiaryEventHookBase(DiaryType.FALADOR) {
     companion object {
-        private const val ATTRIBUTE_PINK_DYE_FROM_BETTY = "diary:falador:pink-dye-from-betty"
-        private const val ATTRIBUTE_BLACK_CHAINBODY_PURCHASED = "diary:falador:black-chain-bought"
-        private const val ATTRIBUTE_FEED_RIDGELEY_WITH_CHEESE = "diary:falador:feed-ridgeley-with-cheese"
-
         private val FALADOR_PARTY_ROOM = 12084
         private val PORT_SARIM_CHURCH_ALTAR = 11825
         private val MINING_GUILD_AREA = ZoneBorders(3016, 9731, 3055, 9756)
@@ -35,14 +31,55 @@ class FaladorAchievementDiary : DiaryEventHookBase(DiaryType.FALADOR) {
         private val CHEMIST_AREA = ZoneBorders(2929, 3213, 2936, 3207)
         private val PORT_SARIM_FLOWER_PATCH_AREA = ZoneBorders(3053, 3306, 3056, 3309)
 
-        private val PROSELYTE_FULL_ARMOR_MALE = intArrayOf(Items.PROSELYTE_SALLET_9672, Items.PROSELYTE_HAUBERK_9674, Items.PROSELYTE_CUISSE_9676)
-        private val PROSELYTE_FULL_ARMOR_FEMALE = intArrayOf(Items.PROSELYTE_SALLET_9672, Items.PROSELYTE_HAUBERK_9674, Items.PROSELYTE_TASSET_9678)
-        private val PARTY_BALLOONS = intArrayOf(Scenery.PARTY_BALLOON_115, Scenery.PARTY_BALLOON_116, Scenery.PARTY_BALLOON_117, Scenery.PARTY_BALLOON_118, Scenery.PARTY_BALLOON_119, Scenery.PARTY_BALLOON_120, Scenery.PARTY_BALLOON_121, Scenery.PARTY_BALLOON_122)
+        private val PROSELYTE_FULL_ARMOR_MALE =
+            intArrayOf(Items.PROSELYTE_SALLET_9672, Items.PROSELYTE_HAUBERK_9674, Items.PROSELYTE_CUISSE_9676)
+        private val PROSELYTE_FULL_ARMOR_FEMALE =
+            intArrayOf(Items.PROSELYTE_SALLET_9672, Items.PROSELYTE_HAUBERK_9674, Items.PROSELYTE_TASSET_9678)
+        private val PARTY_BALLOONS = intArrayOf(
+            Scenery.PARTY_BALLOON_115,
+            Scenery.PARTY_BALLOON_116,
+            Scenery.PARTY_BALLOON_117,
+            Scenery.PARTY_BALLOON_118,
+            Scenery.PARTY_BALLOON_119,
+            Scenery.PARTY_BALLOON_120,
+            Scenery.PARTY_BALLOON_121,
+            Scenery.PARTY_BALLOON_122
+        )
         private val PARK_DUCKS = intArrayOf(NPCs.DUCK_46, NPCs.DUCK_2693)
-        private val BLACK_KNIGHTS = intArrayOf(NPCs.BLACK_KNIGHT_178, NPCs.BLACK_KNIGHT_179, NPCs.BLACK_KNIGHT_2698, NPCs.BLACK_KNIGHT_2777, NPCs.BLACK_KNIGHT_6189, NPCs.ELITE_BLACK_KNIGHT_8324, NPCs.ELITE_BLACK_KNIGHT_8325, NPCs.ELITE_BLACK_KNIGHT_8326, NPCs.ELITE_BLACK_KNIGHT_8327, NPCs.ELITE_BLACK_KNIGHT_8330)
-        private val SKELETAL_WYVERNS = intArrayOf(NPCs.SKELETAL_WYVERN_3068, NPCs.SKELETAL_WYVERN_3069, NPCs.SKELETAL_WYVERN_3070, NPCs.SKELETAL_WYVERN_3071)
-        private val ICE_GIANTS = intArrayOf(NPCs.ICE_GIANT_111, NPCs.ICE_GIANT_3072, NPCs.ICE_GIANT_4685, NPCs.ICE_GIANT_4686, NPCs.ICE_GIANT_4687)
-        private val CAPES = intArrayOf(Items.BLACK_CAPE_1019, Items.RED_CAPE_1007, Items.BLUE_CAPE_1021, Items.YELLOW_CAPE_1023, Items.GREEN_CAPE_1027, Items.PURPLE_CAPE_1029, Items.ORANGE_CAPE_1031)
+        private val BLACK_KNIGHTS = intArrayOf(
+            NPCs.BLACK_KNIGHT_178,
+            NPCs.BLACK_KNIGHT_179,
+            NPCs.BLACK_KNIGHT_2698,
+            NPCs.BLACK_KNIGHT_2777,
+            NPCs.BLACK_KNIGHT_6189,
+            NPCs.ELITE_BLACK_KNIGHT_8324,
+            NPCs.ELITE_BLACK_KNIGHT_8325,
+            NPCs.ELITE_BLACK_KNIGHT_8326,
+            NPCs.ELITE_BLACK_KNIGHT_8327,
+            NPCs.ELITE_BLACK_KNIGHT_8330
+        )
+        private val SKELETAL_WYVERNS = intArrayOf(
+            NPCs.SKELETAL_WYVERN_3068,
+            NPCs.SKELETAL_WYVERN_3069,
+            NPCs.SKELETAL_WYVERN_3070,
+            NPCs.SKELETAL_WYVERN_3071
+        )
+        private val ICE_GIANTS = intArrayOf(
+            NPCs.ICE_GIANT_111,
+            NPCs.ICE_GIANT_3072,
+            NPCs.ICE_GIANT_4685,
+            NPCs.ICE_GIANT_4686,
+            NPCs.ICE_GIANT_4687
+        )
+        private val CAPES = intArrayOf(
+            Items.BLACK_CAPE_1019,
+            Items.RED_CAPE_1007,
+            Items.BLUE_CAPE_1021,
+            Items.YELLOW_CAPE_1023,
+            Items.GREEN_CAPE_1027,
+            Items.PURPLE_CAPE_1029,
+            Items.ORANGE_CAPE_1031
+        )
 
         object EasyTasks {
             const val PORT_SARIM_SARAH_BUY_FARMING_AMULET = 0
@@ -98,22 +135,25 @@ class FaladorAchievementDiary : DiaryEventHookBase(DiaryType.FALADOR) {
                     WHITE_KNIGHTS_CASTLE_ROOF_AREA,
                     DiaryLevel.EASY,
                     EasyTasks.WHITE_KNIGHTS_CASTLE_CLIMB_TO_TOP,
+                    5694
                 ),
                 DiaryAreaTask(
                     MINING_GUILD_AREA,
                     DiaryLevel.HARD,
                     HardTasks.ENTER_MINING_GUILD,
+                    5724
                 ),
                 DiaryAreaTask(
                     DARK_WIZARDS_TOWER_ROOF_AREA,
                     DiaryLevel.HARD,
                     HardTasks.DARK_WIZARDS_TOWER_ASCEND_IN_FULL_PROSELYTE_ARMOR,
+                    5718
                 ) { player ->
                     allInEquipment(player, *PROSELYTE_FULL_ARMOR_MALE) ||
-                        allInEquipment(
-                            player,
-                            *PROSELYTE_FULL_ARMOR_FEMALE,
-                        )
+                            allInEquipment(
+                                player,
+                                *PROSELYTE_FULL_ARMOR_FEMALE,
+                            )
                 },
             )
 
@@ -125,6 +165,7 @@ class FaladorAchievementDiary : DiaryEventHookBase(DiaryType.FALADOR) {
                         player,
                         DiaryLevel.EASY,
                         EasyTasks.POP_PARTY_BALLOON,
+                        5703
                     )
                 }
             }
@@ -136,6 +177,7 @@ class FaladorAchievementDiary : DiaryEventHookBase(DiaryType.FALADOR) {
                             player,
                             DiaryLevel.EASY,
                             EasyTasks.PORT_SARIM_RECHARGE_PRAYER_POINTS,
+                            5704
                         )
                     }
                 }
@@ -151,6 +193,7 @@ class FaladorAchievementDiary : DiaryEventHookBase(DiaryType.FALADOR) {
                         player,
                         DiaryLevel.EASY,
                         EasyTasks.RISING_SUN_BUY_A_STATBOOST,
+                        5692
                     )
                 }
             }
@@ -167,6 +210,7 @@ class FaladorAchievementDiary : DiaryEventHookBase(DiaryType.FALADOR) {
                                 player,
                                 DiaryLevel.HARD,
                                 HardTasks.CUT_DOWN_GROWN_YEW_OR_MAGIC_TREE,
+                                5721
                             )
                         }
                     }
@@ -180,6 +224,7 @@ class FaladorAchievementDiary : DiaryEventHookBase(DiaryType.FALADOR) {
                             player,
                             DiaryLevel.MEDIUM,
                             MediumTasks.SMITH_BLURITE_CROSSBOW_LIMBS_ON_THURGOS_ANVIL,
+                            5715
                         )
                 }
             }
@@ -191,6 +236,7 @@ class FaladorAchievementDiary : DiaryEventHookBase(DiaryType.FALADOR) {
                             player,
                             DiaryLevel.EASY,
                             EasyTasks.MAKE_AIR_TIARA,
+                            5702
                         )
                 }
             }
@@ -198,11 +244,12 @@ class FaladorAchievementDiary : DiaryEventHookBase(DiaryType.FALADOR) {
     }
 
     override fun onNpcKilled(player: Player, event: NPCKillEvent) {
-        if(event.npc.id in BLACK_KNIGHTS) {
+        if (event.npc.id in BLACK_KNIGHTS) {
             finishTask(
                 player,
                 DiaryLevel.MEDIUM,
                 MediumTasks.INCREASE_WHITE_KNIGHT_REPUTATION,
+                5709
             )
         }
 
@@ -213,6 +260,7 @@ class FaladorAchievementDiary : DiaryEventHookBase(DiaryType.FALADOR) {
                         player,
                         DiaryLevel.EASY,
                         EasyTasks.PARK_KILL_A_DUCK,
+                        5700
                     )
                 }
             }
@@ -222,11 +270,14 @@ class FaladorAchievementDiary : DiaryEventHookBase(DiaryType.FALADOR) {
                     player,
                     DiaryLevel.HARD,
                     HardTasks.ICE_DUNGEON_KILL_SKELETAL_WYVERN,
+                    5726
                 )
+
                 in ICE_GIANTS -> finishTask(
                     player,
                     DiaryLevel.MEDIUM,
                     MediumTasks.ICE_DUNGEON_KILL_ICE_GIANT,
+                    5710
                 )
             }
         }
@@ -239,8 +290,8 @@ class FaladorAchievementDiary : DiaryEventHookBase(DiaryType.FALADOR) {
                     player,
                     DiaryLevel.EASY,
                     EasyTasks.WAYNE_BUY_AND_WEAR_BLACK_CHAINBODY,
-                    ATTRIBUTE_BLACK_CHAINBODY_PURCHASED,
-                )
+                    5693
+                )//Todo
             }
 
             inBorders(player, SARAHS_FARMING_SHOP_AREA) && (event.itemId == Items.AMULET_OF_FARMING8_12622) -> {
@@ -248,21 +299,8 @@ class FaladorAchievementDiary : DiaryEventHookBase(DiaryType.FALADOR) {
                     player,
                     DiaryLevel.EASY,
                     EasyTasks.PORT_SARIM_SARAH_BUY_FARMING_AMULET,
+                    5691
                 )
-            }
-        }
-    }
-
-    override fun onItemEquipped(player: Player, event: ItemEquipEvent) {
-        when {
-            inBorders(player, WAYNES_CHAINS_AREA) && (event.itemId == Items.BLACK_CHAINBODY_1107) -> {
-                whenTaskRequirementFulfilled(player, ATTRIBUTE_BLACK_CHAINBODY_PURCHASED) {
-                    finishTask(
-                        player,
-                        DiaryLevel.EASY,
-                        EasyTasks.WAYNE_BUY_AND_WEAR_BLACK_CHAINBODY,
-                    )
-                }
             }
         }
     }
@@ -273,6 +311,7 @@ class FaladorAchievementDiary : DiaryEventHookBase(DiaryType.FALADOR) {
                 player,
                 DiaryLevel.HARD,
                 HardTasks.DIAL_FAIRY_RING_MUDSKIPPER_POINT,
+                5708
             )
         }
     }
@@ -284,6 +323,7 @@ class FaladorAchievementDiary : DiaryEventHookBase(DiaryType.FALADOR) {
                     player,
                     DiaryLevel.MEDIUM,
                     MediumTasks.CHEMISTS_LIGHT_BULLSEYE_LANTERN,
+                    5711
                 )
             }
         }
@@ -305,30 +345,29 @@ class FaladorAchievementDiary : DiaryEventHookBase(DiaryType.FALADOR) {
                         player,
                         DiaryLevel.MEDIUM,
                         MediumTasks.PORT_SARIM_NORTHERN_PATCH_PLACE_SCARECROW,
+                        5713
                     )
                 }
             }
         }
 
         if (event.used == Items.PINK_DYE_6955 && event.with in CAPES) {
-            whenTaskRequirementFulfilled(player, ATTRIBUTE_PINK_DYE_FROM_BETTY) {
-                finishTask(
-                    player,
-                    DiaryLevel.HARD,
-                    HardTasks.PORT_SARIM_BETTY_DYE_CAPE_PINK,
-                )
-            }
+            fulfillTaskRequirement(
+                player,
+                DiaryLevel.HARD,
+                HardTasks.PORT_SARIM_BETTY_DYE_CAPE_PINK,
+                5722
+            )
         }
 
         if (event.used == Items.CHEESE_1985 && event.with == Scenery.TREADMILL_11677) {
             runTask(player, 1) {
-                whenTaskRequirementFulfilled(player, ATTRIBUTE_FEED_RIDGELEY_WITH_CHEESE) {
-                    finishTask(
-                        player,
-                        DiaryLevel.EASY,
-                        EasyTasks.FEED_RIDGELEY_AT_HAIRDRESSERS,
-                    )
-                }
+                fulfillTaskRequirement(
+                    player,
+                    DiaryLevel.EASY,
+                    EasyTasks.FEED_RIDGELEY_AT_HAIRDRESSERS,
+                    5697
+                )
             }
         }
     }

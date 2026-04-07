@@ -180,6 +180,7 @@ class EstateAgentDialogue(player: Player? = null) : Dialogue(player) {
                 )
                 if (inBorders(player, getRegionBorders(REGION_VARROCK_NE)) && !hasDiaryTaskComplete(player, DiaryType.VARROCK, 0, 11)) {
                     finishDiaryTask(player, DiaryType.VARROCK, 0, 11)
+                    setVarbit(player, 3997, 1 ,true)
                 }
                 stage = END_DIALOGUE
             }
@@ -212,6 +213,7 @@ class EstateAgentDialogue(player: Player? = null) : Dialogue(player) {
                 npc("Your house has been redecorated.")
                 if (inBorders(player, getRegionBorders(REGION_VARROCK_NE)) && !hasDiaryTaskComplete(player, DiaryType.VARROCK, 2, 7)) {
                     finishDiaryTask(player, DiaryType.VARROCK, 2, 7)
+                    setVarbit(player, 4034, 1, true)
                 }
                 stage = END_DIALOGUE
             }

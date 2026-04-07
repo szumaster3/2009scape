@@ -173,6 +173,8 @@ class PitfallPlugin : InteractionListener {
             sendMessage(player, "You've caught a $name!")
             if (pitId == shared.consts.Scenery.COLLAPSED_TRAP_19231)
                 finishDiaryTask(player, DiaryType.KARAMJA, 1, 13)
+                setVarbit(player, 3592,1,true)
+
             return@on true
         }
     }

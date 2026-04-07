@@ -1,9 +1,6 @@
 package content.global.skill.farming
 
-import core.api.finishDiaryTask
-import core.api.log
-import core.api.rewardXP
-import core.api.sendMessage
+import core.api.*
 import core.cache.def.impl.SceneryDefinition
 import core.game.interaction.OptionHandler
 import core.game.node.Node
@@ -49,7 +46,10 @@ class HealthChecker : OptionHandler() {
             PatchType.FRUIT_TREE_PATCH -> {
                 patch.setCurrentState(patch.getCurrentState() - 14)
                 sendMessage(player, "You examine the tree for signs of disease and find that it is in perfect health.")
-                if (fPatch == FarmingPatch.BRIMHAVEN_FRUIT_TREE) finishDiaryTask(player, DiaryType.KARAMJA, 1, 12)
+                if (fPatch == FarmingPatch.BRIMHAVEN_FRUIT_TREE) {
+                    finishDiaryTask(player, DiaryType.KARAMJA, 1, 12)
+                    setVarbit(player, 3591, 1, true)
+                }
             }
             PatchType.SPIRIT_TREE_PATCH -> {
                 patch.setCurrentState(patch.getCurrentState() - 24)

@@ -240,6 +240,7 @@ class FishbowlOptionPlugin : OptionHandler() {
                 }
                 sendMessage(player, "...and you catch a Tiny $msg!")
                 finishDiaryTask(player, DiaryType.SEERS_VILLAGE, 1, 10)
+                setVarbit(player, 5804,1, true)
                 return true
             } else {
                 sendMessage(player, "You need something to put your catch in!")

@@ -2,6 +2,7 @@ package content.global.plugins.npc
 
 import core.api.finishDiaryTask
 import core.api.hasDiaryTaskComplete
+import core.api.setVarbit
 import core.game.node.entity.Entity
 import core.game.node.entity.npc.AbstractNPC
 import core.game.node.entity.player.Player
@@ -22,6 +23,7 @@ class HighwayManNPC(id: Int = 0, location: Location? = null) : AbstractNPC(id, l
                 val player = killer.asPlayer()
                 if (!hasDiaryTaskComplete(player, DiaryType.FALADOR, 0, 10)) {
                     finishDiaryTask(player, DiaryType.FALADOR, 0, 10)
+                    setVarbit(player, 5701,1, true)
                 }
             }
         }

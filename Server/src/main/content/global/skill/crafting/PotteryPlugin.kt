@@ -174,7 +174,8 @@ class PotteryPlugin : InteractionListener {
                 }
             CraftingDefinition.Pottery.POT ->
                 if (withinDistance(player, Location(3086, 3410, 0))) {
-                    finishDiaryTask(player, DiaryType.LUMBRIDGE, 0, LumbridgeAchievementDiary.Companion.BeginnerTasks.BARBARIAN_VILLAGE_FIRE_A_POT)
+                    finishDiaryTask(player, DiaryType.LUMBRIDGE, 0, LumbridgeAchievementDiary.Companion.BeginnerTasks.BARBARIAN_VILLAGE_MAKE_A_POT)
+                    setVarbit(player, 4956, 1, true)
                 }
             else -> {}
         }
@@ -185,10 +186,14 @@ class PotteryPlugin : InteractionListener {
             CraftingDefinition.Pottery.BOWL ->
                 if (withinDistance(player, Location(3085, 3408, 0)) && getAttribute(player, "diary:varrock:spun-bowl", false)) {
                     finishDiaryTask(player, DiaryType.VARROCK, 0, VarrockAchievementDiary.Companion.EasyTasks.BARBARIAN_VILLAGE_SPIN_A_BOWL)
+                    setVarbit(player,3995,1,true)
+
+
                 }
             CraftingDefinition.Pottery.POT ->
                 if (withinDistance(player, Location(3085, 3408, 0))) {
                     finishDiaryTask(player, DiaryType.LUMBRIDGE, 0, LumbridgeAchievementDiary.Companion.BeginnerTasks.BARBARIAN_VILLAGE_FIRE_A_POT)
+                    setVarbit(player,4957,1,true)
                 }
             else -> {}
         }

@@ -18,6 +18,7 @@ class WhatLiesBelowListener : InteractionListener {
         on(Scenery.PORTAL_23095, IntType.SCENERY, "use") { player, _ ->
             player.teleport(Location(2270, 4836, 1))
             finishDiaryTask(player, DiaryType.VARROCK, 1, 2)
+            setVarbit(player, 4008,1,true)
             return@on true
         }
 

@@ -81,6 +81,7 @@ class LunarSpell : SpellListener("lunar") {
                     }
                     if (!hasDiaryTaskComplete(player, DiaryType.FREMENNIK, 2, 6)) {
                         finishDiaryTask(player, DiaryType.FREMENNIK, 2 , 6)
+                        setVarbit(player, 5675,1, true)
                     }
                     return false
                 }

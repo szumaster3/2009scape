@@ -2,10 +2,7 @@ package content.global.skill.agility.shortcuts
 
 import content.global.skill.agility.AgilityHandler
 import content.global.skill.agility.AgilityShortcut
-import core.api.animateScenery
-import core.api.finishDiaryTask
-import core.api.playAudio
-import core.api.sendMessage
+import core.api.*
 import core.game.node.Node
 import core.game.node.entity.player.Player
 import core.game.node.entity.player.link.diary.DiaryType
@@ -61,6 +58,7 @@ class MossGiantRopeShortcut : AgilityShortcut(intArrayOf(2322, 2323), 10, 0.0, "
                     "You skillfully swing across.",
                 )
                 finishDiaryTask(player, DiaryType.KARAMJA, 0, 1)
+                setVarbit(player, 3567,1, true)
                 return true
             }
         })

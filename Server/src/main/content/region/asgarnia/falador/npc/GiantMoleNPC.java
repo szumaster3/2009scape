@@ -34,6 +34,7 @@ import core.tools.RandomFunction;
 import shared.consts.*;
 
 import static core.api.ContentAPIKt.playAudio;
+import static core.api.ContentAPIKt.setVarbit;
 
 /**
  * The Giant mole npc.
@@ -202,6 +203,7 @@ public final class GiantMoleNPC extends AbstractNPC {
 
                     if (!player.getAchievementDiaryManager().getDiary(DiaryType.FALADOR).isComplete(0, 5)) {
                         player.getAchievementDiaryManager().getDiary(DiaryType.FALADOR).updateTask(player, 0, 5, true);
+                        setVarbit(player, 5696, 1, true);
                     }
                     return null;
                 });

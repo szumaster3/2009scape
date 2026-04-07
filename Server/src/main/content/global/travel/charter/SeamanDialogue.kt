@@ -78,6 +78,7 @@ class SeamanDialogue(player: Player? = null) : Dialogue(player) {
                 npc(FaceAnim.HALF_GUILTY, "Yes, why not - jump aboard then.")
                 if (!hasDiaryTaskComplete(player, DiaryType.FALADOR, 1, 10)) {
                     finishDiaryTask(player, DiaryType.FALADOR, 1, 10)
+                    setVarbit(player, 5716, 1, true)
                 }
                 travel()
                 stage = 7

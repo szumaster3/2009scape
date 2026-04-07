@@ -163,9 +163,14 @@ class RunecraftPulse(
                 rewardXP(player, Skills.RUNECRAFTING, xp)
 
                 // Diary checks
-                if (altar == Altar.NATURE) finishDiaryTask(player, DiaryType.KARAMJA, 2, 3)
-                if (altar == Altar.AIR && craftedRunes.amount >= 196) finishDiaryTask(player, DiaryType.FALADOR, 2, FaladorAchievementDiary.Companion.HardTasks.CRAFT_196_AIR_RUNES_AT_ONCE)
-                if (altar == Altar.WATER && rune == Rune.WATER) finishDiaryTask(player, DiaryType.LUMBRIDGE, 1, LumbridgeAchievementDiary.Companion.EasyTasks.SWAMP_WATER_ALTAR_CRAFT_RUNE)
+                if (altar == Altar.NATURE) {
+                    finishDiaryTask(player, DiaryType.KARAMJA, 2, 3)
+                    setVarbit(player, 3603, 1, true)
+                }
+                if (altar == Altar.AIR && craftedRunes.amount >= 196) {
+                    finishDiaryTask(player, DiaryType.FALADOR, 2, FaladorAchievementDiary.Companion.HardTasks.CRAFT_196_AIR_RUNES_AT_ONCE)
+                    setVarbit(player, 5720, 1, true)
+                }
             }
         } else {
             if (removeItem(player, item)) {

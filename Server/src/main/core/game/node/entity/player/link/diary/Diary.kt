@@ -39,40 +39,6 @@ class Diary(
     val taskCompleted: Array<BooleanArray> = Array(type.achievements.size) { BooleanArray(25) }
 
     /**
-     * Updates the diary interface with the current completion status of each level.
-     *
-     * @param player The player whose diary interface will be updated.
-     */
-    fun drawStatus(player: Player) {
-        // Do nothing if no levels have been started.
-        if (!isStarted) return
-
-        // Display area name with overall completion color.
-        sendString(
-            player,
-            "${if (isComplete) GREEN else YELLOW}${type.displayName}",
-            Components.AREA_TASK_259,
-            type.childIds[0]
-        )
-
-        // Display status for each individual level.
-        for (i in 0..2) {
-            val statusColor = when {
-                isComplete(i) -> GREEN
-                isStarted(i) -> YELLOW
-                else -> "<col=FF0000>"
-            }
-
-            sendString(
-                player,
-                "$statusColor${getLevel(i)}",
-                Components.AREA_TASK_259,
-                type.childIds[i + 1]
-            )
-        }
-    }
-
-    /**
      * Opens the achievement diary interface for the given player and displays all tasks.
      *
      * @param player The player for whom the diary interface is opened.
@@ -182,8 +148,6 @@ class Diary(
             sendMessage(player, "$msg Speak to $npcName to claim your reward.")
             sendDialogue(player, "$msg Speak to $npcName to claim your reward.")
         }
-
-        drawStatus(player)
     }
 
     /**
@@ -215,23 +179,6 @@ class Diary(
         taskCompleted[level][index] = false
         if (!isStarted(level)) levelStarted[level] = false
         if (!isComplete(level)) levelRewarded[level] = false
-        drawStatus(player)
-    }
-
-    /**
-     * Checks whether a given diary level has been completed.
-     *
-     * @param level The diary level to check.
-     * @return True if the level is complete, false otherwise.
-     */
-    fun checkComplete(level: DiaryLevel): Boolean {
-        return if (level == DiaryLevel.BEGINNER && type != DiaryType.LUMBRIDGE) {
-            false
-        } else if (level == DiaryLevel.BEGINNER) {
-            completedLevels.contains(level.ordinal)
-        } else {
-            completedLevels.contains(level.ordinal - 1)
-        }
     }
 
     /**

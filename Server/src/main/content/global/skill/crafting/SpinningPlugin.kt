@@ -113,6 +113,7 @@ class SpinningPlugin : InteractionListener, InterfaceListener {
                 if (spun >= 4) {
                     setAttribute(player, "/save:diary:seers:bowstrings-spun", 5)
                     finishDiaryTask(player, DiaryType.SEERS_VILLAGE, 0, 4)
+                    setVarbit(player, 5786, 5, true)
                 } else {
                     setAttribute(player, "/save:diary:seers:bowstrings-spun", spun + 1)
                 }

@@ -172,6 +172,7 @@ class ShiloVillagePlugin : InteractionListener {
                     sendDialogueLines(player, "You feel tired from the journey, but at least you didn't have to walk", "all that distance.")
                     if(isShilo){
                         finishDiaryTask(player, DiaryType.KARAMJA, 1, KaramjaAchievementDiary.Companion.MediumTasks.USE_VIGROY_HAJEDY_CARTS)
+                        setVarbit(player, 3582,1, true)
                     }
                     return@queueScript stopExecuting(player)
                 }

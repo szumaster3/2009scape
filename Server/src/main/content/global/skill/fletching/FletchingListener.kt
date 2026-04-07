@@ -101,13 +101,6 @@ class FletchingListener : InteractionListener {
 
                             addItem(player, entry.id, entry.amount)
                             rewardXP(player, Skills.FLETCHING, entry.xp)
-
-                            // Seers diary
-                            val bankZone = ZoneBorders(2721, 3493, 2730, 3487)
-                            if (bankZone.insideBorder(player) && entry.id == Items.MAGIC_SHORTBOW_U_72) {
-                                finishDiaryTask(player, DiaryType.SEERS_VILLAGE, 2, 2)
-                            }
-
                             delayClock(player, Clocks.SKILLING, 3)
 
                             remaining--
@@ -177,10 +170,10 @@ class FletchingListener : InteractionListener {
                             if (
                                 enum == FletchingDefinition.Strings.MAGIC_SHORTBOW &&
                                 (ZoneBorders(2721, 3489, 2724, 3493, 0).insideBorder(player) ||
-                                        ZoneBorders(2727, 3487, 2730, 3490, 0).insideBorder(player)) &&
-                                player.getAttribute("diary:seers:fletch-magic-short-bow", false)
+                                        ZoneBorders(2727, 3487, 2730, 3490, 0).insideBorder(player))
                             ) {
                                 finishDiaryTask(player, DiaryType.SEERS_VILLAGE, 2, 2)
+                                setVarbit(player, 5810,1, true)
                             }
                         }
 

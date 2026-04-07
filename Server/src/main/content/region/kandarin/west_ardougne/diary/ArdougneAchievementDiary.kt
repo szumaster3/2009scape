@@ -120,12 +120,14 @@ class ArdougneAchievementDiary : DiaryEventHookBase(DiaryType.ARDOUGNE) {
                     COMBAT_TRAINING_CAMP_AREA,
                     DiaryLevel.EASY,
                     EasyTasks.ENTER_COMBAT_TRAINING_CAMP,
+                    -1
                 )
                 ,
                 DiaryAreaTask(
                     POISON_ARROW_AREA,
                     DiaryLevel.EASY,
                     EasyTasks.BUY_SKEWERED_KEBAB_AT_POISON_ARROW,
+                    -1
                 )
             )
 
@@ -134,7 +136,8 @@ class ArdougneAchievementDiary : DiaryEventHookBase(DiaryType.ARDOUGNE) {
             finishTask(
                 player,
                 DiaryLevel.EASY,
-                EasyTasks.USE_ALTAR_IN_WEST_ARD
+                EasyTasks.USE_ALTAR_IN_WEST_ARD,
+                        -1
             )
         }
     }
@@ -146,6 +149,7 @@ class ArdougneAchievementDiary : DiaryEventHookBase(DiaryType.ARDOUGNE) {
                     player,
                     DiaryLevel.EASY,
                     EasyTasks.USE_NOTICEBOARD_NEAR_OBSERVATORY,
+                    -1
                 )
             }
             CASTLE_WAR_REGION -> if(event.target.id in intArrayOf(Scenery.ZAMORAK_PORTAL_4388, Scenery.GUTHIX_PORTAL_4408, Scenery.SARADOMIN_PORTAL_4387)  && event.option == "enter") {
@@ -153,17 +157,20 @@ class ArdougneAchievementDiary : DiaryEventHookBase(DiaryType.ARDOUGNE) {
                     player,
                     DiaryLevel.EASY,
                     EasyTasks.ENTER_CASTLE_WARS_WAITING_ROOM,
+                    -1
                 )
                 finishTask(
                     player,
                     DiaryLevel.HARD,
                     HardTasks.BE_ON_WINNING_SIDE_IN_CASTLE_WARS,
+                    -1
                 )
                 if(hasRequirement(player, Quests.CATAPULT_CONSTRUCTION)) {
                     finishTask(
                         player,
                         DiaryLevel.HARD,
-                        HardTasks.USE_CATAPULT_IN_CASTLE_WARS_AFTER_CONSTRUCTION
+                        HardTasks.USE_CATAPULT_IN_CASTLE_WARS_AFTER_CONSTRUCTION,
+                                -1
                     )
                 }
             }
@@ -178,6 +185,7 @@ class ArdougneAchievementDiary : DiaryEventHookBase(DiaryType.ARDOUGNE) {
                         player,
                         DiaryLevel.EASY,
                         EasyTasks.TALK_TO_CIVILIAN_ABOUT_CAT,
+                        -1
                     )
                 }
             }
@@ -188,6 +196,7 @@ class ArdougneAchievementDiary : DiaryEventHookBase(DiaryType.ARDOUGNE) {
                         player,
                         DiaryLevel.EASY,
                         EasyTasks.TALK_TO_TINDEL_MERCHANT_ABOUT_SWORDS,
+                        -1
                     )
                 }
             }
@@ -198,6 +207,7 @@ class ArdougneAchievementDiary : DiaryEventHookBase(DiaryType.ARDOUGNE) {
                         player,
                         DiaryLevel.EASY,
                         EasyTasks.VIEW_HUNTER_EQUIPMENT_IN_ALECKS_SHOP,
+                        -1
                     )
                 }
             }
@@ -208,7 +218,9 @@ class ArdougneAchievementDiary : DiaryEventHookBase(DiaryType.ARDOUGNE) {
                         player,
                         DiaryLevel.EASY,
                         EasyTasks.GET_CIVILIAN_TO_THROW_TOMATO,
+                        -1
                     )
+
                 }
             }
         }
@@ -220,6 +232,7 @@ class ArdougneAchievementDiary : DiaryEventHookBase(DiaryType.ARDOUGNE) {
                 player,
                 DiaryLevel.HARD,
                 HardTasks.KILL_OWN_JADE_VINE_AFTER_BACK_TO_MY_ROOTS,
+                -1
             )
         }
 
@@ -230,6 +243,7 @@ class ArdougneAchievementDiary : DiaryEventHookBase(DiaryType.ARDOUGNE) {
                         player,
                         DiaryLevel.EASY,
                         EasyTasks.KILL_UNICOW_IN_TOWER_OF_LIFE,
+                        -1
                     )
                 }
                 if (event.npc.id == NPCs.SWORDCHICK_5595) {
@@ -237,6 +251,7 @@ class ArdougneAchievementDiary : DiaryEventHookBase(DiaryType.ARDOUGNE) {
                         player,
                         DiaryLevel.MEDIUM,
                         MediumTasks.KILL_SWORDCHICK_IN_TOWER_OF_LIFE,
+                        -1
                     )
                 }
                 if (event.npc.id == NPCs.FROGEEL_5593) {
@@ -244,6 +259,7 @@ class ArdougneAchievementDiary : DiaryEventHookBase(DiaryType.ARDOUGNE) {
                         player,
                         DiaryLevel.HARD,
                         HardTasks.KILL_FROGEEL_IN_TOWER_OF_LIFE,
+                        -1
                     )
                 }
             }
@@ -254,7 +270,8 @@ class ArdougneAchievementDiary : DiaryEventHookBase(DiaryType.ARDOUGNE) {
                     finishTask(
                         player,
                         DiaryLevel.EASY,
-                        EasyTasks.KILL_SOMETHING_ON_KHAZARD_BATTLEFIELD
+                        EasyTasks.KILL_SOMETHING_ON_KHAZARD_BATTLEFIELD,
+                                -1
                     )
                 }
             }
@@ -263,7 +280,8 @@ class ArdougneAchievementDiary : DiaryEventHookBase(DiaryType.ARDOUGNE) {
                 finishTask(
                     player,
                     DiaryLevel.HARD,
-                    HardTasks.KILL_SHADOW_WARRIOR_IN_LEGENDS_GUILD_BASEMENT
+                    HardTasks.KILL_SHADOW_WARRIOR_IN_LEGENDS_GUILD_BASEMENT,
+                            -1
                 )
             }
         }
@@ -275,6 +293,7 @@ class ArdougneAchievementDiary : DiaryEventHookBase(DiaryType.ARDOUGNE) {
                 player,
                 DiaryLevel.EASY,
                 EasyTasks.SELL_SILK_TO_TRADER,
+                -1
             )
         }
     }
@@ -285,6 +304,7 @@ class ArdougneAchievementDiary : DiaryEventHookBase(DiaryType.ARDOUGNE) {
                 player,
                 DiaryLevel.EASY,
                 EasyTasks.BUY_WATER_VIAL_FROM_GENERAL_STORE,
+                -1
             )
         }
     }
@@ -297,6 +317,7 @@ class ArdougneAchievementDiary : DiaryEventHookBase(DiaryType.ARDOUGNE) {
                         player,
                         DiaryLevel.EASY,
                         EasyTasks.USE_RING_OF_DUELING_TO_CASTLE_WARS,
+                        -1
                     )
                 }
             }
@@ -307,6 +328,7 @@ class ArdougneAchievementDiary : DiaryEventHookBase(DiaryType.ARDOUGNE) {
                         player,
                         DiaryLevel.HARD,
                         HardTasks.USE_MAGIC_GUILD_PORTAL_TO_THORMACS_TOWER,
+                        -1
                     )
                 }
             }
@@ -317,6 +339,7 @@ class ArdougneAchievementDiary : DiaryEventHookBase(DiaryType.ARDOUGNE) {
                         player,
                         DiaryLevel.EASY,
                         EasyTasks.WIZARD_CROMPERTY_TELEPORT_TO_ESSENCE_MINE,
+                        -1
                     )
                 }
         }
@@ -330,6 +353,7 @@ class ArdougneAchievementDiary : DiaryEventHookBase(DiaryType.ARDOUGNE) {
                         player,
                         DiaryLevel.MEDIUM,
                         MediumTasks.MINE_COAL_EAST_OF_ARD,
+                        -1
                     )
                 }
             }
@@ -340,6 +364,7 @@ class ArdougneAchievementDiary : DiaryEventHookBase(DiaryType.ARDOUGNE) {
                         player,
                         DiaryLevel.HARD,
                         HardTasks.CATCH_RED_SALAMANDER_OUTSIDE_OURANIA_ALTAR,
+                        -1
                     )
                 }
             }
@@ -351,6 +376,7 @@ class ArdougneAchievementDiary : DiaryEventHookBase(DiaryType.ARDOUGNE) {
                             player,
                             DiaryLevel.MEDIUM,
                             MediumTasks.CATCH_FISH_AT_FISHING_PLATFORM,
+                            -1
                         )
                     }
                 }
@@ -362,6 +388,7 @@ class ArdougneAchievementDiary : DiaryEventHookBase(DiaryType.ARDOUGNE) {
                         player,
                         DiaryLevel.HARD,
                         HardTasks.STEAL_BLOOD_RUNES_FROM_CHAOS_DRUID_TOWER,
+                        -1
                     )
                 }
             }
@@ -373,6 +400,7 @@ class ArdougneAchievementDiary : DiaryEventHookBase(DiaryType.ARDOUGNE) {
                     player,
                     DiaryLevel.MEDIUM,
                     MediumTasks.STEAL_NATURE_RUNE_FROM_CHEST,
+                    -1
                 )
             }
         }
@@ -385,6 +413,7 @@ class ArdougneAchievementDiary : DiaryEventHookBase(DiaryType.ARDOUGNE) {
                     player,
                     DiaryLevel.EASY,
                     EasyTasks.TALK_TO_HEAD_SERVANT_AT_SERVANTS_GUILD,
+                    -1
                 )
             }
             is EzekialLovecraftDialogue -> {
@@ -392,6 +421,7 @@ class ArdougneAchievementDiary : DiaryEventHookBase(DiaryType.ARDOUGNE) {
                     player,
                     DiaryLevel.MEDIUM,
                     MediumTasks.SELL_RUBIUM_TO_EZEKIAL_LOVECRAFT,
+                    -1
                 )
             }
         }
@@ -403,6 +433,7 @@ class ArdougneAchievementDiary : DiaryEventHookBase(DiaryType.ARDOUGNE) {
                 player,
                 DiaryLevel.MEDIUM,
                 MediumTasks.ENTER_UNICORN_PEN_USING_FAIRY_RINGS,
+                -1
             )
         }
     }
@@ -415,6 +446,7 @@ class ArdougneAchievementDiary : DiaryEventHookBase(DiaryType.ARDOUGNE) {
                         player,
                         DiaryLevel.EASY,
                         EasyTasks.USE_SUMMONING_OBELISK,
+                        -1
                     )
                 }
             }

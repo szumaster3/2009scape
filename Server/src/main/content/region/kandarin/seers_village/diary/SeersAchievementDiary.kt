@@ -91,6 +91,7 @@ class SeersAchievementDiary : DiaryEventHookBase(DiaryType.SEERS_VILLAGE) {
                 player,
                 DiaryLevel.HARD,
                 HardTasks.ENTER_SEERS_COURTHOUSE_WITH_PIETY,
+                5809
             )
         }
     }
@@ -101,6 +102,7 @@ class SeersAchievementDiary : DiaryEventHookBase(DiaryType.SEERS_VILLAGE) {
                 player,
                 DiaryLevel.HARD,
                 HardTasks.CHARGE_5_WATER_ORBS_AT_ONCE,
+                5816
             )
         }
 
@@ -111,7 +113,7 @@ class SeersAchievementDiary : DiaryEventHookBase(DiaryType.SEERS_VILLAGE) {
                         player,
                         DiaryLevel.EASY,
                         EasyTasks.PICK_5_FLAX,
-                        ATTRIBUTE_FLAX_PICKED,
+                        5782,
                         5,
                     )
                 }
@@ -123,7 +125,7 @@ class SeersAchievementDiary : DiaryEventHookBase(DiaryType.SEERS_VILLAGE) {
                         player,
                         DiaryLevel.HARD,
                         HardTasks.CUT_5_YEW_LOGS,
-                        ATTRIBUTE_CUT_YEW_COUNT,
+                        5806,
                         5,
                     )
                 }
@@ -135,6 +137,7 @@ class SeersAchievementDiary : DiaryEventHookBase(DiaryType.SEERS_VILLAGE) {
                         player,
                         DiaryLevel.EASY,
                         EasyTasks.SINCLAIR_MANSION_USE_CHURN,
+                        5791
                     )
                 }
             }
@@ -146,6 +149,7 @@ class SeersAchievementDiary : DiaryEventHookBase(DiaryType.SEERS_VILLAGE) {
                             player,
                             DiaryLevel.EASY,
                             EasyTasks.CATCH_MACKEREL,
+                            5784
                         )
                     }
 
@@ -154,18 +158,17 @@ class SeersAchievementDiary : DiaryEventHookBase(DiaryType.SEERS_VILLAGE) {
                             player,
                             DiaryLevel.MEDIUM,
                             MediumTasks.CATHERBY_CATCH_AND_COOK_BASS,
-                            ATTRIBUTE_BASS_CAUGHT,
+                            5801
                         )
                     }
 
                     Items.BASS_365 -> {
-                        whenTaskRequirementFulfilled(player, ATTRIBUTE_BASS_CAUGHT) {
-                            finishTask(
-                                player,
-                                DiaryLevel.MEDIUM,
-                                MediumTasks.CATHERBY_CATCH_AND_COOK_BASS,
-                            )
-                        }
+                        fulfillTaskRequirement(
+                            player,
+                            DiaryLevel.MEDIUM,
+                            MediumTasks.CATHERBY_CATCH_AND_COOK_BASS,
+                            5801
+                        )
                     }
 
                     Items.RAW_SHARK_383 -> {
@@ -173,7 +176,7 @@ class SeersAchievementDiary : DiaryEventHookBase(DiaryType.SEERS_VILLAGE) {
                             player,
                             DiaryLevel.HARD,
                             HardTasks.CATHERBY_CATCH_5_SHARKS,
-                            ATTRIBUTE_SHARK_CAUGHT_COUNT,
+                            5814,
                             5,
                         )
                     }
@@ -184,7 +187,7 @@ class SeersAchievementDiary : DiaryEventHookBase(DiaryType.SEERS_VILLAGE) {
                                 player,
                                 DiaryLevel.HARD,
                                 HardTasks.CATHERBY_COOK_5_SHARKS_WITH_COOKING_GAUNTLETS,
-                                ATTRIBUTE_SHARK_COOKED_COUNT,
+                                5815,
                                 5,
                             )
                         }
@@ -201,7 +204,7 @@ class SeersAchievementDiary : DiaryEventHookBase(DiaryType.SEERS_VILLAGE) {
                         player,
                         DiaryLevel.MEDIUM,
                         MediumTasks.DEFEAT_EACH_ELEMENTAL_TYPE,
-                        ATTRIBUTE_ELEMENTAL_KILL_FLAGS,
+                        5795,
                         1 shl (event.npc.id - NPCs.FIRE_ELEMENTAL_1019),
                         0xF,
                     )
@@ -214,7 +217,7 @@ class SeersAchievementDiary : DiaryEventHookBase(DiaryType.SEERS_VILLAGE) {
                         player,
                         DiaryLevel.MEDIUM,
                         MediumTasks.RANGING_GUILD_KILL_EACH_TOWER_GUARD,
-                        ATTRIBUTE_ARCHER_KILL_FLAGS,
+                        5796,
                         1 shl (event.npc.id - NPCs.TOWER_ARCHER_688),
                         0xF,
                     )
@@ -232,6 +235,7 @@ class SeersAchievementDiary : DiaryEventHookBase(DiaryType.SEERS_VILLAGE) {
                             player,
                             DiaryLevel.HARD,
                             HardTasks.RANGING_GUILD_TELEPORT,
+                            5811
                         )
                     }
                 }
@@ -247,6 +251,7 @@ class SeersAchievementDiary : DiaryEventHookBase(DiaryType.SEERS_VILLAGE) {
                         player,
                         DiaryLevel.HARD,
                         HardTasks.LIGHT_MAGIC_LOG,
+                        5808
                     )
                 }
             }
@@ -254,19 +259,16 @@ class SeersAchievementDiary : DiaryEventHookBase(DiaryType.SEERS_VILLAGE) {
     }
 
     override fun onInteracted(player: Player, event: InteractionEvent) {
-        when {
-            inBorders(player, SEERS_COAL_TRUCKS_AREA) -> {
-                whenTaskRequirementFulfilled(player, ATTRIBUTE_COAL_TRUCK_FULL) {
-                    if (event.option == "remove-coal") {
-                        finishTask(
-                            player,
-                            DiaryLevel.MEDIUM,
-                            MediumTasks.TRANSPORT_FULL_LOAD_OF_COAL,
-                        )
-                    }
-                }
-            }
-        }
+        if (!inBorders(player, SEERS_COAL_TRUCKS_AREA)) return
+
+        if (event.option != "remove-coal") return
+
+        fulfillTaskRequirement(
+            player,
+            DiaryLevel.MEDIUM,
+            MediumTasks.TRANSPORT_FULL_LOAD_OF_COAL,
+            5794
+        )
     }
 
     override fun onDialogueOptionSelected(player: Player, event: DialogueOptionSelectionEvent) {
@@ -277,22 +279,7 @@ class SeersAchievementDiary : DiaryEventHookBase(DiaryType.SEERS_VILLAGE) {
                         player,
                         DiaryLevel.EASY,
                         EasyTasks.SIR_GALAHAD_MAKE_TEA,
-                    )
-                }
-            }
-        }
-    }
-
-    override fun onAttributeSet(player: Player, event: AttributeSetEvent) {
-        when (event.attribute) {
-            "/save:coal-truck-inventory" -> {
-                if (event.value !is Int) return
-                if (event.value >= 120) {
-                    fulfillTaskRequirement(
-                        player,
-                        DiaryLevel.MEDIUM,
-                        MediumTasks.TRANSPORT_FULL_LOAD_OF_COAL,
-                        ATTRIBUTE_COAL_TRUCK_FULL,
+                        5785
                     )
                 }
             }
@@ -306,6 +293,7 @@ class SeersAchievementDiary : DiaryEventHookBase(DiaryType.SEERS_VILLAGE) {
                     player,
                     DiaryLevel.HARD,
                     HardTasks.HIGH_ALCH_MAGIC_SHORTBOW_INSIDE_BANK,
+                    5812
                 )
             }
         }
@@ -317,6 +305,7 @@ class SeersAchievementDiary : DiaryEventHookBase(DiaryType.SEERS_VILLAGE) {
                 player,
                 DiaryLevel.HARD,
                 HardTasks.DIAL_FAIRY_RING_MCGRUBORS_WOOD,
+                5807
             )
         }
     }
@@ -327,6 +316,7 @@ class SeersAchievementDiary : DiaryEventHookBase(DiaryType.SEERS_VILLAGE) {
                 player,
                 DiaryLevel.EASY,
                 EasyTasks.BUY_CANDLE,
+                5793
             )
         }
         if (event.itemId in RANGING_GUILD_STOCK && player.viewport.region!!.id == 10549) {
@@ -334,6 +324,7 @@ class SeersAchievementDiary : DiaryEventHookBase(DiaryType.SEERS_VILLAGE) {
                 player,
                 DiaryLevel.MEDIUM,
                 MediumTasks.RANGING_GUILD_BUY_SOMETHING_FOR_TICKETS,
+                5802
             )
         }
     }
@@ -345,6 +336,7 @@ class SeersAchievementDiary : DiaryEventHookBase(DiaryType.SEERS_VILLAGE) {
                     player,
                     DiaryLevel.EASY,
                     EasyTasks.PRAY_AT_ALTAR,
+                    5792
                 )
             }
         }
@@ -356,6 +348,7 @@ class SeersAchievementDiary : DiaryEventHookBase(DiaryType.SEERS_VILLAGE) {
                 player,
                 DiaryLevel.MEDIUM,
                 MediumTasks.THORMAC_SORCERER_TALK_ABOUT_MYSTIC_STAVES,
+                5805
             )
         }
     }
@@ -371,6 +364,7 @@ class SeersAchievementDiary : DiaryEventHookBase(DiaryType.SEERS_VILLAGE) {
                 player,
                 DiaryLevel.MEDIUM,
                 MediumTasks.TELEPORT_TO_CAMELOT,
+                5800
             )
         }
     }

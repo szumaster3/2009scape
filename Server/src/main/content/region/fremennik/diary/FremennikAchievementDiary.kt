@@ -86,26 +86,23 @@ class FremennikAchievementDiary : DiaryEventHookBase(DiaryType.FREMENNIK) {
                     WINDSWEPT_TREE_AREA,
                     DiaryLevel.EASY,
                     EasyTasks.MAINLAND_FIND_HIGHEST_TREE,
+                    5650
                 ),
             )
 
-    override fun onAttributeSet(
-        player: Player,
-        event: AttributeSetEvent,
-    ) {
-        when (event.attribute) {
-            "/save:$ATTRIBUTE_BARBARIAN_FISHING_TRAINING" -> {
-                if (event.value !is Boolean) return
-                if (event.value) {
-                    finishTask(
-                        player,
-                        DiaryLevel.EASY,
-                        EasyTasks.OTTO_GODBLESSED_LEARN_BARBARIAN_FISHING,
-                    )
-                }
-            }
-        }
-    }
+    // when (event.attribute) {
+    //            "/save:$ATTRIBUTE_BARBARIAN_FISHING_TRAINING" -> {
+    //                if (event.value !is Boolean) return
+    //                if (event.value) {
+    //                    finishTask(
+    //                        player,
+    //                        DiaryLevel.EASY,
+    //                        EasyTasks.OTTO_GODBLESSED_LEARN_BARBARIAN_FISHING,
+    //                        5652
+    //                    )
+    //                }
+    //            }
+    //        }
 
     override fun onDialogueOpened(
         player: Player,
@@ -117,6 +114,7 @@ class FremennikAchievementDiary : DiaryEventHookBase(DiaryType.FREMENNIK) {
                     player,
                     DiaryLevel.EASY,
                     EasyTasks.BARBARIAN_ASSAULT_VIEW_REWARDS,
+                    5651
                 )
             }
 
@@ -125,6 +123,7 @@ class FremennikAchievementDiary : DiaryEventHookBase(DiaryType.FREMENNIK) {
                     player,
                     DiaryLevel.EASY,
                     EasyTasks.FIND_HUNTING_EXPERT,
+                    5654
                 )
             }
         }
@@ -141,6 +140,7 @@ class FremennikAchievementDiary : DiaryEventHookBase(DiaryType.FREMENNIK) {
                         player,
                         DiaryLevel.MEDIUM,
                         MediumTasks.LEARN_HISTORY_FROM_CHIEFTAIN_BRUNDT,
+                        5658
                     )
                 }
             }
@@ -158,18 +158,21 @@ class FremennikAchievementDiary : DiaryEventHookBase(DiaryType.FREMENNIK) {
                         player,
                         DiaryLevel.EASY,
                         EasyTasks.PIER_CATCH_FISH,
+                        5655
                     )
                 } else if (event.itemId == Items.CHEESE_1985) {
                     finishTask(
                         player,
                         DiaryLevel.MEDIUM,
                         MediumTasks.MAKE_CHEESE_WITH_CHURN,
+                        5664
                     )
                 } else if (event.source.id == Scenery.FISH_STALL_4277) {
                     finishTask(
                         player,
                         DiaryLevel.MEDIUM,
                         MediumTasks.STEAL_FISH_FROM_STALL,
+                        5668
                     )
                 }
         }
@@ -186,9 +189,9 @@ class FremennikAchievementDiary : DiaryEventHookBase(DiaryType.FREMENNIK) {
                         player,
                         DiaryLevel.EASY,
                         EasyTasks.KILL_5_ROCK_CRABS,
-                        ATTRIBUTE_ROCK_CRAB_KILLCOUNT,
-                        5,
-                    )
+                        5649,
+                        1,
+                    )//todo
                 }
 
             11164 ->
@@ -197,6 +200,7 @@ class FremennikAchievementDiary : DiaryEventHookBase(DiaryType.FREMENNIK) {
                         player,
                         DiaryLevel.EASY,
                         EasyTasks.SLAYER_CAVE_KILL_CAVE_CRAWLER,
+                        5648
                     )
                 }
 
@@ -206,6 +210,7 @@ class FremennikAchievementDiary : DiaryEventHookBase(DiaryType.FREMENNIK) {
                         player,
                         DiaryLevel.EASY,
                         EasyTasks.KILL_ADULT_BLACK_UNICORN,
+                        5657
                     )
                 }
 
@@ -215,9 +220,9 @@ class FremennikAchievementDiary : DiaryEventHookBase(DiaryType.FREMENNIK) {
                         player,
                         DiaryLevel.HARD,
                         HardTasks.KILL_3_DAGANNOTHS,
-                        ATTRIBUTE_DAGANNOTHS_KILLCOUNT,
-                        3,
-                    )
+                        5669,
+                        1,
+                    )//todo
                 }
 
             6995 ->
@@ -226,6 +231,7 @@ class FremennikAchievementDiary : DiaryEventHookBase(DiaryType.FREMENNIK) {
                         player,
                         DiaryLevel.HARD,
                         HardTasks.KILL_MITHRIL_DRAGON,
+                        5676
                     )
                 }
 
@@ -235,6 +241,7 @@ class FremennikAchievementDiary : DiaryEventHookBase(DiaryType.FREMENNIK) {
                         player,
                         DiaryLevel.MEDIUM,
                         MediumTasks.KILL_ICE_TROLL_WHILE_WEARING_YAK_ARMOR,
+                        5663
                     )
                 }
         }
@@ -251,7 +258,7 @@ class FremennikAchievementDiary : DiaryEventHookBase(DiaryType.FREMENNIK) {
                         player,
                         DiaryLevel.EASY,
                         EasyTasks.PICK_3_SEAWEED,
-                        ATTRIBUTE_SEAWEED_PICKED,
+                        5653,
                         3,
                     )
                 }
@@ -267,6 +274,7 @@ class FremennikAchievementDiary : DiaryEventHookBase(DiaryType.FREMENNIK) {
                 player,
                 DiaryLevel.MEDIUM,
                 MediumTasks.DIAL_FAIRY_RING_MOUNTAINTOP,
+                5665
             )
         }
     }
@@ -282,6 +290,7 @@ class FremennikAchievementDiary : DiaryEventHookBase(DiaryType.FREMENNIK) {
                         player,
                         DiaryLevel.EASY,
                         EasyTasks.GATE_OBELISK_RECHARGE_POINTS,
+                        5656
                     )
                 }
         }
@@ -298,6 +307,7 @@ class FremennikAchievementDiary : DiaryEventHookBase(DiaryType.FREMENNIK) {
                         player,
                         DiaryLevel.MEDIUM,
                         MediumTasks.BROWSE_BOOT_COLORS_YRSA,
+                        5666
                     )
                 }
         }
@@ -314,6 +324,7 @@ class FremennikAchievementDiary : DiaryEventHookBase(DiaryType.FREMENNIK) {
                         player,
                         DiaryLevel.HARD,
                         HardTasks.LUNAR_ISLE_MINE_PURE_ESSENCE,
+                        5672
                     )
                 }
 
@@ -329,6 +340,7 @@ class FremennikAchievementDiary : DiaryEventHookBase(DiaryType.FREMENNIK) {
                         player,
                         DiaryLevel.MEDIUM,
                         MediumTasks.HUNT_SABRE_TOOTHED_KYATT,
+                        5667
                     )
                 }
         }
@@ -338,6 +350,7 @@ class FremennikAchievementDiary : DiaryEventHookBase(DiaryType.FREMENNIK) {
                 player,
                 DiaryLevel.MEDIUM,
                 MediumTasks.TOWER_GUARDS_WATCH_SHOUTING_MATCH,
+                5659
             )
         }
 
@@ -346,6 +359,7 @@ class FremennikAchievementDiary : DiaryEventHookBase(DiaryType.FREMENNIK) {
                 player,
                 DiaryLevel.MEDIUM,
                 MediumTasks.INTERACT_WITH_PET_ROCK,
+                5660
             )
         }
     }
@@ -367,6 +381,7 @@ class FremennikAchievementDiary : DiaryEventHookBase(DiaryType.FREMENNIK) {
                         player,
                         DiaryLevel.MEDIUM,
                         MediumTasks.MAKE_3_VIALS,
+                        5661
                     )
                 }
             }

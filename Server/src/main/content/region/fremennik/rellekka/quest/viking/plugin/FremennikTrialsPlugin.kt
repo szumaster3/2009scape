@@ -617,6 +617,7 @@ class FremennikTrialsPlugin : InteractionListener {
             val reward = when {
                 hasRing && fish == Items.RAW_BASS_363 -> {
                     finishDiaryTask(player, DiaryType.FREMENNIK, 1, 4)
+                    setVarbit(player, 5662,1, true)
                     if (hasBoots) Items.ENCHANTED_LYRE3_6126 else Items.ENCHANTED_LYRE2_6125
                 }
 

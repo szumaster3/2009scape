@@ -140,6 +140,7 @@ class KaramjaGrapple : OptionHandler() {
                     34 -> {
                         player.unlock()
                         finishDiaryTask(player, DiaryType.KARAMJA, 2, 6)
+                        setVarbit(player, 3606,1, true)
                         handleObjects(false, player)
                         AgilityHandler.checkGrappleBreak(player)
                         player.logoutListeners.remove("karamja-grapple")

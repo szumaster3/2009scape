@@ -150,6 +150,7 @@ class GliderPulse(
                 setVarp(player, Vars.VARP_IFACE_GLIDER_CONFIG_153, 0)
                 if (!crash && glider == GnomeGlider.GANDIUS) {
                     finishDiaryTask(player, DiaryType.KARAMJA, 1, 11)
+                    setVarbit(player, 3590,1,true)
                 }
                 return true
             }

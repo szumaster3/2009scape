@@ -162,7 +162,10 @@ object CharterShipUtils {
                         sendMessage(player, "You pay the fare and sail to $destName.")
                         clearLogoutListener(player, "charter-pulse")
                         when(destination){
-                            SHIPYARD.destination -> finishDiaryTask(player, DiaryType.KARAMJA, 1, 17)
+                            SHIPYARD.destination -> {
+                                finishDiaryTask(player, DiaryType.KARAMJA, 1, 17)
+                                setVarbit(player, 3597,1,true)
+                            }
                         }
                         return@queueScript stopExecuting(player)
                     }

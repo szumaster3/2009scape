@@ -1,29 +1,40 @@
 package core.game.diary
 
+import core.api.getVarbit
 import core.api.inBorders
+import core.api.setVarbit
 import core.game.node.entity.player.Player
 import core.game.world.map.zone.ZoneBorders
 
-/**
- * Represents a diary task.
- *
- * @property zoneBorders Area where the task applies.
- * @property diaryLevel Diary level this task belongs to.
- * @property taskId Unique task identifier.
- * @property condition Optional predicate that must be true for completion.
- */
 class DiaryAreaTask(
     val zoneBorders: ZoneBorders,
     val diaryLevel: DiaryLevel,
     val taskId: Int,
+    val varbitId: Int,
+    val requiredAmount: Int = 1,
     private val condition: ((Player) -> Boolean)? = null,
 ) {
-    /**
-     * Executes [then] if player is inside [zoneBorders] and meets [condition] (if any).
-     */
+
+    fun getProgress(player: Player): Int =
+        getVarbit(player, varbitId)
+
+    fun isCompleted(player: Player): Boolean =
+        getProgress(player) >= requiredAmount
+
     fun whenSatisfied(player: Player, then: () -> Unit) {
         val inZone = inBorders(player, zoneBorders)
         val meetsCondition = condition?.invoke(player) ?: true
-        if (inZone && meetsCondition) then()
+
+        if (!inZone || !meetsCondition) return
+        if (isCompleted(player)) return
+
+        val current = getProgress(player)
+        val newValue = (current + 1).coerceAtMost(requiredAmount)
+
+        setVarbit(player, varbitId, newValue, true)
+
+        if (newValue >= requiredAmount) {
+            then()
+        }
     }
 }

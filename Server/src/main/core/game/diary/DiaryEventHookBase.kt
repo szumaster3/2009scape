@@ -18,31 +18,28 @@ abstract class DiaryEventHookBase(
 ) : MapArea, LoginListener {
 
     protected companion object {
-        /**
-         * Executes [handler] if the entity is a valid player (non-artificial).
-         */
-        private fun <T> forEligibleEntityDo(entity: Entity, event: T, handler: (Player, T) -> Unit) {
+        private fun <T> forEligibleEntityDo(
+            entity: Entity,
+            event: T,
+            handler: (Player, T) -> Unit
+        ) {
             if (entity !is Player || entity.isArtificial) return
             handler(entity, event)
         }
     }
 
-    /**
-     * Internal event handler delegating to the diary event logic.
-     */
     class EventHandler<T : core.game.event.Event>(
         private val owner: DiaryEventHookBase,
         private val handler: (Player, T) -> Unit,
     ) : EventHook<T> {
-        override fun process(entity: Entity, event: T) = forEligibleEntityDo(entity, event, handler)
+        override fun process(entity: Entity, event: T) =
+            forEligibleEntityDo(entity, event, handler)
     }
 
-    /**
-     * Diary area tasks associated with this hook.
-     */
     open val areaTasks get() = arrayOf<DiaryAreaTask>()
 
-    override fun defineAreaBorders(): Array<ZoneBorders> = areaTasks.map { it.zoneBorders }.toTypedArray()
+    override fun defineAreaBorders(): Array<ZoneBorders> =
+        areaTasks.map { it.zoneBorders }.toTypedArray()
 
     override fun areaEnter(entity: Entity) {
         if (entity !is Player || entity.isArtificial) return
@@ -68,8 +65,7 @@ abstract class DiaryEventHookBase(
         player.hook(Event.UsedWith, EventHandler(this, ::onUsedWith))
         player.hook(Event.PickedUp, EventHandler(this, ::onPickedUp))
         player.hook(Event.InterfaceOpened, EventHandler(this, ::onInterfaceOpened))
-        player.hook(Event.AttributeSet, EventHandler(this, ::onAttributeSet))
-        player.hook(Event.AttributeRemoved, EventHandler(this, ::onAttributeRemoved))
+        player.hook(Event.InterfaceClosed, EventHandler(this, ::onInterfaceClosed))
         player.hook(Event.VarbitSet, EventHandler(this, ::onVarbitSet))
         player.hook(Event.VarbitRemoved, EventHandler(this, ::onVarbitRemoved))
         player.hook(Event.SpellCast, EventHandler(this, ::onSpellCast))
@@ -84,97 +80,79 @@ abstract class DiaryEventHookBase(
         player.hook(Event.PrayerPointsRecharged, EventHandler(this, ::onPrayerPointsRecharged))
     }
 
-    /**
-     * Marks a diary task as complete if not already done.
-     *
-     * @param player The player completing the task.
-     * @param level The diary level of the task.
-     * @param task The task ID.
-     * @param attribute Attribute key tracking task progress.
-     */
-    protected fun fulfillTaskRequirement(
-        player: Player,
-        level: DiaryLevel,
-        task: Int,
-        attribute: String,
-    ) {
-        if (getAttribute(player, attribute, false)) return
-        player.achievementDiaryManager.updateTask(player, diaryType, findIndexFor(level), task, false)
-        setAttribute(player, "/save:$attribute", true)
+    protected fun fulfillTaskRequirement(player: Player, level: DiaryLevel, task: Int, varbitId: Int) {
+        if (getVarbit(player, varbitId) >= 1) return
+
+        setVarbit(player, varbitId, 1, true)
+
+        finishTask(player, level, task, varbitId)
     }
 
-    /**
-     * Executes [then] if the player has the specified attribute set, then removes it.
-     *
-     * @param player The player to check.
-     * @param attribute The attribute key.
-     * @param then Action to perform if condition met.
-     */
-    protected fun whenTaskRequirementFulfilled(
-        player: Player,
-        attribute: String,
-        then: () -> Unit,
-    ) {
-        if (getAttribute(player, attribute, false)) {
-            then()
-            removeAttribute(player, attribute)
-        }
-    }
-
-    /**
-     * Increments progress on a task; completes it if max progress reached.
-     */
     protected fun progressIncrementalTask(
         player: Player,
         level: DiaryLevel,
         task: Int,
-        attribute: String,
+        varbitId: Int,
         maxProgress: Int,
     ) {
         if (isTaskCompleted(player, level, task)) return
-        val newValue = getAttribute(player, attribute, 0) + 1
-        setAttribute(player, "/save:$attribute", newValue)
-        if (newValue < maxProgress) {
-            player.achievementDiaryManager.updateTask(player, diaryType, findIndexFor(level), task, false)
+
+        val current = getVarbit(player, varbitId)
+        if (current >= maxProgress) return
+
+        val newValue = (current + 1).coerceAtMost(maxProgress)
+        setVarbit(player, varbitId, newValue, true)
+
+        if (newValue >= maxProgress) {
+            finishTask(player, level, task, varbitId)
         } else {
-            finishTask(player, level, task)
-            removeAttribute(player, attribute)
+            player.achievementDiaryManager.updateTask(
+                player, diaryType, findIndexFor(level), task, false
+            )
         }
     }
 
-    /**
-     * Updates flagged task progress via bitwise logic; completes task when target reached.
-     */
     protected fun progressFlaggedTask(
         player: Player,
         level: DiaryLevel,
         task: Int,
-        attribute: String,
+        varbitId: Int,
         bit: Int,
         targetValue: Int,
     ) {
         if (isTaskCompleted(player, level, task)) return
-        val oldValue = getAttribute(player, attribute, 0)
+
+        val oldValue = getVarbit(player, varbitId)
         val newValue = oldValue or bit
-        if (newValue != targetValue) {
-            if ((oldValue and bit) != 0) return
-            setAttribute(player, "/save:$attribute", newValue)
-            player.achievementDiaryManager.updateTask(player, diaryType, findIndexFor(level), task, false)
+
+        if (newValue == oldValue) return
+
+        setVarbit(player, varbitId, newValue, true)
+
+        if (newValue == targetValue) {
+            finishTask(player, level, task, varbitId)
         } else {
-            finishTask(player, level, task)
-            removeAttribute(player, attribute)
+            player.achievementDiaryManager.updateTask(
+                player, diaryType, findIndexFor(level), task, false
+            )
         }
     }
 
-    /**
-     * Marks a diary task as finished.
-     */
-    protected fun finishTask(player: Player, level: DiaryLevel, task: Int) {
-        player.achievementDiaryManager.finishTask(player, diaryType, findIndexFor(level), task)
+    protected fun finishTask(player: Player, level: DiaryLevel, task: Int, varbitId: Int, completedValue: Int = 1) {
+        setVarbit(player, varbitId, completedValue, true)
+
+        player.achievementDiaryManager.finishTask(
+            player,
+            diaryType,
+            findIndexFor(level),
+            task
+        )
     }
 
     private fun isTaskCompleted(player: Player, level: DiaryLevel, task: Int): Boolean =
-        player.achievementDiaryManager.hasCompletedTask(diaryType, findIndexFor(level), task)
+        player.achievementDiaryManager.hasCompletedTask(
+            diaryType, findIndexFor(level), task
+        )
 
     private fun findIndexFor(level: DiaryLevel): Int {
         val levelName = level.name.lowercase().replaceFirstChar { it.uppercase() }
@@ -183,16 +161,16 @@ abstract class DiaryEventHookBase(
         return idx
     }
 
-    /**
-     * Called when player enters diary area; completes tasks.
-     */
     protected open fun onAreaVisited(player: Player) {
         areaTasks.forEach {
-            it.whenSatisfied(player) { finishTask(player, it.diaryLevel, it.taskId) }
+            it.whenSatisfied(player) {
+                finishTask(player, it.diaryLevel, it.taskId, it.varbitId)
+            }
         }
     }
 
     protected open fun onAreaLeft(player: Player) {}
+
     protected open fun onResourceProduced(player: Player, event: ResourceProducedEvent) {}
     protected open fun onNpcKilled(player: Player, event: NPCKillEvent) {}
     protected open fun onTeleported(player: Player, event: TeleportEvent) {}
@@ -207,8 +185,6 @@ abstract class DiaryEventHookBase(
     protected open fun onPickedUp(player: Player, event: PickUpEvent) {}
     protected open fun onInterfaceOpened(player: Player, event: InterfaceOpenEvent) {}
     protected open fun onInterfaceClosed(player: Player, event: InterfaceCloseEvent) {}
-    protected open fun onAttributeSet(player: Player, event: AttributeSetEvent) {}
-    protected open fun onAttributeRemoved(player: Player, event: AttributeRemoveEvent) {}
     protected open fun onVarbitSet(player: Player, event: VarbitSetEvent) {}
     protected open fun onVarbitRemoved(player: Player, event: VarbitRemoveEvent) {}
     protected open fun onSpellCast(player: Player, event: SpellCastEvent) {}

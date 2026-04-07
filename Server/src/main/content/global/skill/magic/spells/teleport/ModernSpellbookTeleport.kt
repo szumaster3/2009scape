@@ -77,7 +77,6 @@ class ModernSpellbookTeleport : SpellListener("modern") {
                 Location.create(2758, 3478, 0)
             }
             sendTeleport(player = player, xp = 55.5, location = dest)
-            finishDiaryTask(player, DiaryType.SEERS_VILLAGE, 1, 5)
         }
 
         /*

@@ -107,6 +107,7 @@ class UnderwallTunnelShortcut : InteractionListener {
                 {
                     player.animate(Animation(ANIMATIONS[2]))
                     finishDiaryTask(player, DiaryType.VARROCK, 1, VarrockAchievementDiary.Companion.MediumTasks.USE_GE_UNDER_WALL_SHORTCUT)
+                    setVarbit(player, 4014, 1, true)
                 }
 
                 return@queueScript stopExecuting(player)

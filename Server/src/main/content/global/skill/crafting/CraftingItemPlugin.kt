@@ -214,6 +214,7 @@ class CraftingItemPlugin : InteractionListener {
 
                         if (product.productId == Items.AIR_BATTLESTAFF_1397) {
                             finishDiaryTask(player, DiaryType.VARROCK, 2, 6)
+                            setVarbit(player, 4033, 1, true)
                         } else {
                             return@runTask
                         }

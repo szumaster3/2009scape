@@ -1,5 +1,6 @@
 package content.region.misthalin.varrock.dialogue
 
+import core.api.setVarbit
 import core.game.dialogue.Dialogue
 import core.game.node.entity.npc.NPC
 import core.game.node.entity.player.Player
@@ -117,6 +118,7 @@ class ApothecaryDialogue(player: Player? = null) : Dialogue(player) {
                 player.inventory.add(POTION)
                 end()
                 player.achievementDiaryManager.finishTask(player, DiaryType.VARROCK, 1, 0)
+                setVarbit(player,4003, 1,true)
             }
 
             11 -> {

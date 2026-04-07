@@ -200,6 +200,7 @@ class LecternPlugin : OptionHandler() {
                                 )
                             ) {
                                 finishDiaryTask(player, DiaryType.VARROCK, 2, VarrockAchievementDiary.Companion.HardTasks.MAKE_VARROCK_TELEPORT_TABLET_OR_MAHOGANY_LECTERN)
+                                setVarbit(player, 4035, 1, true)
                             }
                             return@queueScript stopExecuting(player)
                         }

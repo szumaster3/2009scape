@@ -138,6 +138,7 @@ class FaladorGrapple : OptionHandler() {
                                     closeOverlay(player)
                                     closeInterface(player)
                                     finishDiaryTask(player, DiaryType.FALADOR, 1, 2)
+                                    setVarbit(player, 5723, 1, true)
                                     AgilityHandler.checkGrappleBreak(player)
                                     player.logoutListeners.remove("falador-grapple")
                                     return true

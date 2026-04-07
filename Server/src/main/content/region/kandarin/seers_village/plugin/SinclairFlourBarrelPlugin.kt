@@ -56,6 +56,7 @@ class SinclairFlourBarrelPlugin : InteractionListener {
             if (flourCount >= MAX_FLOUR_COUNT) {
                 setAttribute(player, "/save:diary:seers:sinclair-flour", DIARY_TASK_ID)
                 finishDiaryTask(player, DiaryType.SEERS_VILLAGE, DIARY_TASK_INDEX, DIARY_TASK_ID)
+                setVarbit(player, 5788, 5, true)
             } else {
                 setAttribute(player, "/save:diary:seers:sinclair-flour", flourCount + 1)
             }

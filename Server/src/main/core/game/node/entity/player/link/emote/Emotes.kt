@@ -188,6 +188,7 @@ enum class Emotes(
             if (isEligibleForSalute(player)) {
                 forceEmote(player, Animation(Animations.HUMAN_SALUTE_2112), Graphics(-1))
                 finishDiaryTask(player, DiaryType.FALADOR, 1, 8)
+                setVarbit(player, 5714,1, true)
             } else {
                 super.play(player)
             }

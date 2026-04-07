@@ -1,6 +1,5 @@
 package content.region.kandarin.west_ardougne.quest.sheepherder.dialogue
 
-import content.region.kandarin.west_ardougne.diary.dialogue.DoctorOrbonDiaryDialogue
 import content.region.kandarin.west_ardougne.quest.sheepherder.SheepHerder
 import core.api.*
 import core.game.dialogue.Dialogue
@@ -26,7 +25,6 @@ class DoctorOrbonDialogue(player: Player? = null) : Dialogue(player) {
             player("Hello doctor. I need to acquire some protective clothing", "so that I can dispose of some escaped sheep infected", "with the plague.")
         } else {
             end()
-            openDialogue(player, DoctorOrbonDiaryDialogue())
         }
         return true
     }

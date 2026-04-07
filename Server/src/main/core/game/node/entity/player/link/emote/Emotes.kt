@@ -324,9 +324,6 @@ enum class Emotes(
     ) {
         override fun play(player: Player) {
             playJingle(player, 302)
-            if(!hasDiaryTaskComplete(player, DiaryType.ARDOUGNE, 2, 10)) {
-                finishDiaryTask(player, DiaryType.ARDOUGNE, 2, 10)
-            }
             super.play(player)
         }
     },

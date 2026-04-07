@@ -39,11 +39,6 @@ class EnchantedKeyPlugin : InteractionListener {
             }
 
             sendChat(player, "Predem abducto!")
-
-            if (hasRequirement(player, Quests.MEETING_HISTORY)) {
-                finishDiaryTask(player, DiaryType.ARDOUGNE, 1, 9)
-            }
-
             return@on true
         }
     }

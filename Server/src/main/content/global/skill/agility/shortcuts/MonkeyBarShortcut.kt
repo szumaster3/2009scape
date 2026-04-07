@@ -85,9 +85,6 @@ class MonkeyBarShortcut : AgilityShortcut {
                             0.0,
                             null,
                         )
-                        if (!hasDiaryTaskComplete(player, DiaryType.ARDOUGNE, 2, 12)) {
-                            finishDiaryTask(player, DiaryType.ARDOUGNE, 2 , 12)
-                        }
                     } else if (count == 2) {
                         if (failed) {
                             player.appearance.setAnimations()

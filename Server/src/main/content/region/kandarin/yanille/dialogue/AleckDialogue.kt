@@ -28,7 +28,6 @@ class AleckDialogue(player: Player? = null) : Dialogue(player) {
             0 -> npc("Hello, hello, and a most warm welcome to my Hunter", "Emporium. We have everything the discerning Hunter", "could need.").also { stage++ }
             1 -> npc("Would you like me to show you our range of", "equipment? Or was there something specific you were", "after?").also { stage++ }
             2 -> showTopics(
-                IfTopic("Talk about achievement diary", openDialogue(player, AleckDiaryDialogue()), Diary.canClaimLevelRewards(player!!, DiaryType.ARDOUGNE, 2)),
                 Topic("Ok, let's see what you've got.",4),
                 Topic("I'm not interested, thanks.",end()),
                 Topic("Who's that guy over there?",30)

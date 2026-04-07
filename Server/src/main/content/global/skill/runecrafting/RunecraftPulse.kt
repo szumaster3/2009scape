@@ -187,7 +187,6 @@ class RunecraftPulse(
                     }
                     rewardXP(player, Skills.RUNECRAFTING, rune.experience * 2)
                     addItem(player, rune.rune.id)
-                    finishDiaryTask(player, DiaryType.ARDOUGNE, 1, 3)
                 }
             }
         }

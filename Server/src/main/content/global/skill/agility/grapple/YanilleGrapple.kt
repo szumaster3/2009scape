@@ -129,9 +129,6 @@ class YanilleGrapple : OptionHandler() {
                                     closeInterface(player)
                                     AgilityHandler.checkGrappleBreak(player)
                                     player.logoutListeners.remove("yanille-grapple")
-                                    if (!hasDiaryTaskComplete(player, DiaryType.ARDOUGNE, 1, 2)) {
-                                        finishDiaryTask(player, DiaryType.ARDOUGNE, 1 , 2)
-                                    }
                                     return true
                                 }
                             }

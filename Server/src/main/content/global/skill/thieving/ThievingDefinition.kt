@@ -164,9 +164,6 @@ object ThievingDefinition {
                         }."
                     )
                     player.dispatch(ResourceProducedEvent(item.id, item.amount, node, 0))
-                    if (!hasDiaryTaskComplete(player, DiaryType.ARDOUGNE, 0, 1) && player.viewport.region?.id == 10547) {
-                        finishDiaryTask(player, DiaryType.ARDOUGNE, 0 , 1)
-                    }
                     delayClock(player, Clocks.SKILLING, 2)
                     return@queueScript stopExecuting(player)
                 }
@@ -297,9 +294,6 @@ object ThievingDefinition {
             if (success) {
                 rewardXP(player, Skills.THIEVING, experience)
                 handleAutowalkDoor(player, door.asScenery())
-                if(door.id == shared.consts.Scenery.DOOR_34812) {
-                    finishDiaryTask(player, DiaryType.ARDOUGNE, 0, 11)
-                }
                 escape(player)
             }
             sendMessage(player, "You attempt to pick the lock.")

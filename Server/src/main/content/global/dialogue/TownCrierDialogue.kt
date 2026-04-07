@@ -33,39 +33,20 @@ class TownCrierDialogue(player: Player? = null) : Dialogue(player) {
         val npcId = npc?.id ?: -1
         when (stage) {
             0 -> {
-                if (npcId == NPCs.TOWN_CRIER_6138 && player?.let { Diary.canClaimLevelRewards(it, DiaryType.ARDOUGNE, 1) } == true) {
-                    options(
-                        "Tell me about Player Moderators.",
-                        "Tell me about the Rules of " + settings!!.name + ".",
-                        "Can you give me a handy tip please?",
-                        "Talk about achievement diary",
-                        "Nothing thanks."
-                    ).also { stage++ }
-                } else {
-                    options(
+                options(
                         "Tell me about Player Moderators.",
                         "Tell me about the Rules of " + settings!!.name + ".",
                         "Can you give me a handy tip please?",
                         "Nothing thanks."
                     ).also { stage++ }
-                }
+
             }
             1 -> {
-                if(npcId == NPCs.TOWN_CRIER_6138 && player?.let { Diary.canClaimLevelRewards(it, DiaryType.ARDOUGNE, 1) } == true) {
-                    when (buttonId) {
-                        1 -> npc(FaceAnim.HALF_ASKING, "Of course. What would you like to know?").also { stage = 50 }
-                        2 -> npc("At once. Take a look at my book here.").also { stage = 70 }
-                        3 -> player(FaceAnim.HALF_ASKING, "Can you give me a handy tip please?").also { stage = 100 }
-                        4 -> npc(FaceAnim.HALF_ASKING,"Of course. What would you like to know?").also { stage = 5 }
-                        5 -> player("Nothing thanks.").also { stage = END_DIALOGUE }
-                    }
-                } else {
-                    when (buttonId) {
-                        1 -> npc(FaceAnim.HALF_ASKING, "Of course. What would you like to know?").also { stage = 50 }
-                        2 -> npc("At once. Take a look at my book here.").also { stage = 70 }
-                        3 -> player(FaceAnim.HALF_ASKING, "Can you give me a handy tip please?").also { stage = 100 }
-                        4 -> player("Nothing thanks.").also { stage = END_DIALOGUE }
-                    }
+                when (buttonId) {
+                    1 -> npc(FaceAnim.HALF_ASKING, "Of course. What would you like to know?").also { stage = 50 }
+                    2 -> npc("At once. Take a look at my book here.").also { stage = 70 }
+                    3 -> player(FaceAnim.HALF_ASKING, "Can you give me a handy tip please?").also { stage = 100 }
+                    4 -> player("Nothing thanks.").also { stage = END_DIALOGUE }
                 }
             }
             2 -> options("Tell me about Player Moderators.", "Tell me about the Rules of " + settings!!.name + ".", "Can you give me a handy tip please?", "Nothing thanks.").also { stage++ }
@@ -76,10 +57,6 @@ class TownCrierDialogue(player: Player? = null) : Dialogue(player) {
                 4 -> player("Nothing thanks.").also { stage++ }
             }
             4 -> npc("Nice meeting you.").also { stage = END_DIALOGUE }
-            5 -> {
-                end()
-                openDialogue(player, TownCrierDiaryDialogue())
-            }
             50 -> options("What is a Player Moderator?", "What can Player Moderators do?", "How do I become a Player Moderator?", "What can Player Moderators not do?", "Nothing thanks.").also { stage++ }
             51 -> when (buttonId) {
                 1 -> player("What is a Player Moderator?").also { stage = 150 }

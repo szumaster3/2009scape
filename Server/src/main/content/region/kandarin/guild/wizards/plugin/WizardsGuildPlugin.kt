@@ -36,9 +36,6 @@ class WizardsGuildPlugin : InteractionListener {
                 return@on true
             }
             DoorActionHandler.handleAutowalkDoor(player, node.asScenery())
-            if(hasDiaryTaskComplete(player, DiaryType.ARDOUGNE, 2, 2)) {
-                finishDiaryTask(player, DiaryType.ARDOUGNE, 2, 2)
-            }
             return@on true
         }
 

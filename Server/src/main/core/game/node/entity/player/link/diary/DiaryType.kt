@@ -391,7 +391,8 @@ enum class DiaryType(
         "To start marking off tasks in your journal, speak to<br><br>any seer in Seers' Village, Stankers by the coal<br><br>trucks or Sir Kay in Camelot.",
         intArrayOf(NPCs.SEER_388, NPCs.STANKERS_383, NPCs.SIR_KAY_241)
 
-    ),
+    );
+    /*
     ARDOUGNE(
         "Ardougne",
         intArrayOf(31,34,35,36),
@@ -493,6 +494,7 @@ enum class DiaryType(
         "To start making off tasks in your journal, speak to Doctor<br><br>Orbon in East Ardougne's church, Ardougne's town crier in<br><br>the marketplace, or Aleck in Yannile.",
         intArrayOf(NPCs.DOCTOR_ORBON_290, NPCs.TOWN_CRIER_6138, NPCs.ALECK_5110)
     );
+    */
 
     /**
      * Returns the NPC id associated with a diary level.

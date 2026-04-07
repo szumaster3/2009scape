@@ -46,9 +46,6 @@ class TotemPoleOptionPlugin : InteractionListener {
                             .append("while big net Fishing.")
                     }.toString(),
                 )
-                if(hasDiaryTaskComplete(player, DiaryType.ARDOUGNE, 2, 0)) {
-                    finishDiaryTask(player, DiaryType.ARDOUGNE, 2, 0)
-                }
             } else {
                 sendMessage(player, "You can't do that.")
                 log(

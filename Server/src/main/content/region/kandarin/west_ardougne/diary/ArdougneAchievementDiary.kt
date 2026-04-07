@@ -1,4 +1,4 @@
-package content.region.kandarin.west_ardougne.diary
+/*package content.region.kandarin.west_ardougne.diary
 
 import content.global.skill.gather.fishing.Fish
 import content.global.skill.magic.TeleportMethod
@@ -454,3 +454,5 @@ class ArdougneAchievementDiary : DiaryEventHookBase(DiaryType.ARDOUGNE) {
     }
 
 }
+
+ */

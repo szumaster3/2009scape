@@ -182,6 +182,7 @@ class Diary(
             sendMessage(player, "$msg Speak to $npcName to claim your reward.")
             sendDialogue(player, "$msg Speak to $npcName to claim your reward.")
         }
+        drawStatus(player)
     }
 
     /**
@@ -213,6 +214,7 @@ class Diary(
         taskCompleted[level][index] = false
         if (!isStarted(level)) levelStarted[level] = false
         if (!isComplete(level)) levelRewarded[level] = false
+        drawStatus(player)
     }
 
     /**

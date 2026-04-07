@@ -222,20 +222,6 @@ internal object GameAttributes {
     // Player safety training centre access.
     const val PLAYER_SAFETY_TRAINING_CENTRE_ACCESS = "/save:training-centre-access-unlocked"
 
-    // Agile top.
-    const val BARBARIAN_OUTPOST_GUNNJORN_TALK = "/save:gunnjorn:first-talk"
-    const val BARBARIAN_OUTPOST_COURSE_LAPS = "/save:barbarian_outpost:obstacle_count"
-    const val BARBARIAN_OUTPOST_PERFECT_LAPS = "/save:barbarian_outpost:perfect_laps_counter"
-    const val BARBARIAN_OUTPOST_LAST_OBSTACLE = "barbarian-outpost-obstacle"
-    const val BARBARIAN_OUTPOST_COURSE_REWARD = "/save:barbarian_course_reward:unlocked"
-
-    // Agile legs.
-    const val GNOME_STRONGHOLD_GNOME_TALK = "/save:gnome:first-talk"
-    const val GNOME_STRONGHOLD_COURSE_LAPS = "/save:gnome_stronghold:obstacle_count"
-    const val GNOME_STRONGHOLD_PERFECT_LAPS = "/save:gnome_stronghold:perfect_laps_counter"
-    const val GNOME_STRONGHOLD_LAST_OBSTACLE = "gnome-stronghold-obstacle"
-    const val GNOME_STRONGHOLD_COURSE_REWARD = "/save:gnome_stronghold_reward:unlocked"
-
     // Holy Grail quest.
     const val BLACK_KNIGHT_TITAN = "/save:failed_to_kill_titan"
 

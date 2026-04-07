@@ -9,7 +9,6 @@ import com.alex.tools.dump.SpriteDumper
 import com.alex.tools.pack.ModelPacker
 import com.alex.tools.pack.SpritePacker
 import com.alex.util.DefinitionLink
-import content.interfaces.`AreaTask(259)`
 import content.interfaces.`CarpetInfo(835)`
 import content.interfaces.`GuildHallOverlay(834)`
 import content.items.*
@@ -41,7 +40,6 @@ object ContentLoader {
     }
 
     private fun interfaces() {
-        `AreaTask(259)`.add()
         `GuildHallOverlay(834)`.add()
         `CarpetInfo(835)`.add()
     }

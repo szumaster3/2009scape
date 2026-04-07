@@ -18,8 +18,6 @@ class ReduceWeightItemPlugin : InteractionListener {
     }
 
     private fun items() {
-        applyWeight(Items.AGILE_TOP_14647,      -12.0)
-        applyWeight(Items.AGILE_LEGS_14648,     -10.0)
         applyWeight(Items.BOOTS_OF_LIGHTNESS_88,-4.534)
     }
 

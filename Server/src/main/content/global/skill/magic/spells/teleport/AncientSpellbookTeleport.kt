@@ -28,6 +28,8 @@ class AncientSpellbookTeleport : SpellListener("ancient") {
             val runes = emptyArray<Item>()
             requires(player, 0, runes)
             sendTeleport(player, 0.0, "Edgeville", Location.create(3095, 3513, 0), runes, isHome = true)
+            finishDiaryTask(player, DiaryType.VARROCK, 2,11)
+            setVarbit(player, 4038,1, true)
         }
 
         onCast(AncientSpells.PADDEWWA_TELEPORT, NONE) { player, _ ->
@@ -100,11 +102,6 @@ class AncientSpellbookTeleport : SpellListener("ancient") {
         }
 
         if (player.teleporter.send(dest, teleportType)) {
-            if (loc == Location.create(3087, 3495, 0)) {
-                finishDiaryTask(player, DiaryType.VARROCK, 2, VarrockAchievementDiary.Companion.HardTasks.EDGEVILLE_TELEPORT_USING_ANCIENT_MAGICKS)
-                setVarbit(player, 4038,1, true)
-            }
-
             player.setAttribute("teleport:items", runes)
             player.setAttribute("magic-delay", GameWorld.ticks + 5)
             addXP(player, xp)

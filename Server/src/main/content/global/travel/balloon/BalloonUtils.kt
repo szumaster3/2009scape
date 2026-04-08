@@ -243,7 +243,7 @@ object BalloonUtils {
     private fun keyTop(routeId: Int, step: Int) = "zep_balloon_top_${routeId}_$step"
     private fun keyBottom(routeId: Int, step: Int) = "zep_balloon_bottom_${routeId}_$step"
 
-    private val allChildren = (78..286).toSet()
+    private val allChildren = (78..237).toSet()
 
     /**
      * Resets all interface models for balloon screen.

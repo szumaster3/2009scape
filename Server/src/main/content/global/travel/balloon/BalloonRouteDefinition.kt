@@ -74,7 +74,7 @@ class BalloonRouteBuilder(private val p: Player, private val c: Int){
         x: Int = 200,
         y: Int = 300
     ) {
-        slots.forEach { slot ->
+        slots.forEach { slot ->// zoom 2567
             animated(slot, model, anim, angle, x, y)
         }
     }
@@ -233,17 +233,59 @@ object BalloonRouteDefinition {
         models(113 to 19521, 93 to 19519, 114 to 19521, 94 to 19519)
         // Evergreens
         models(135 to 19570, 115 to 19569, 95 to 19568, 137 to 19570, 117 to 19569, 97 to 19568)
-        eagles(122, 161, 163, 182, 170, 174, 157, 216, 233)
         // Clouds
-        models(198 to 19525, 199 to 19524, 200 to 19526, 144 to 19525, 145 to 19524, 146 to 19526, 205 to 19525, 206 to 19524, 207 to 19526, 187 to 19525, 188 to 19524, 189 to 19526, 192 to 19525, 193 to 19524, 194 to 19526)
+        models(198 to 19525, 199 to 19524, 200 to 19526, 144 to 19525, 145 to 19524, 146 to 19526, 206 to 19525, 207 to 19524, 208 to 19526, 188 to 19525, 189 to 19524, 190 to 19526, 193 to 19525, 194 to 19524, 195 to 19526)
+        // Eagles
+        eagles(122, 161, 163, 170, 174, 157, 216, 232)
     }
 
     fun varrock_1(p: Player, c: Int) = balloonScreen(p, c) {
         models(40 to 19738, 45 to 19739, 50 to 19740, 55 to 19741)
+        eagles(139, angle = 2100, x = 200, y = 300)
+        models(119 to 19570, 98 to 19569, 79 to 19568)
+        models(101 to 19521, 81 to 19519)
+        models(122 to 19570, 102 to 19569, 82 to 19568)
+        models(103 to 19521, 83 to 19519)
+        models(200 to 19525, 201 to 19524, 202 to 19526)
+        models(224 to 19525, 225 to 19524, 226 to 19526)
+
+        // House
+        models(85 to 19753, 105 to 19744, 125 to 19744, 145 to 19749)
+        models(86 to 19760, 106 to 19763, 126 to 19745, 146 to 19750, 166 to 19755)
+        models(87 to 19759, 107 to 19764, 127 to 19746, 147 to 19751, 167 to 19756)
+        models(88 to 19760, 108 to 19765, 128 to 19745, 148 to 19752, 168 to 19757)
+        models(89 to 19761, 109 to 19743, 129 to 19743, 149 to 19754)
+
+        eagles(218,214,209,190,214,154)
+
+        animated(187, 19781, 373, 2100, 0, 1500)
+        animated(192, 19781, 373, 2100, 0, 1500)
+        animated(236, 19781, 373, 2100, 0, 1500)
+
+        models(171 to 19525, 172 to 19524, 173 to 19526)
+        models(215 to 19525, 216 to 19524, 217 to 19526)
+
+        models(113 to 19521, 93 to 19519)
+        models(134 to 19570, 114 to 19569, 94 to 19568)
+        models(135 to 19570, 115 to 19569, 95 to 19568)
+        models(137 to 19570, 117 to 19569, 97 to 19568)
     }
 
     fun varrock_2(p: Player, c: Int) = balloonScreen(p, c) {
         models(40 to 19742, 45 to 19732, 50 to 19733, 55 to 19734)
+        models(119 to 19570, 98 to 19569, 79 to 19568)
+        models(120 to 19570, 100 to 19569, 80 to 19568)
+        models(101 to 19521, 81 to 19519)
+        eagles(141,199,225,230)
+        models(198 to 19526)
+        models(201 to 19525, 202 to 19526)
+        // Tower
+        models(83 to 19729, 84 to 19729, 85 to 19729, 86 to 19729, 87 to 19729, 88 to 19729, 89 to 19729, 90 to 19729, 91 to 19729, 92 to 19729, 93 to 19729, 94 to 19729)
+        models(103 to 19729, 104 to 19729, 105 to 19729, 106 to 19729, 107 to 19729, 108 to 19729, 109 to 19729, 110 to 19729, 111 to 19729, 112 to 19729, 113 to 19729, 114 to 19729)
+        models(123 to 19729, 124 to 19729, 125 to 19730, 126 to 19729, 127 to 19729, 128 to 19730, 129 to 19729, 130 to 19729, 131 to 19730, 132 to 19729, 133 to 19729, 134 to 19729)
+        models(143 to 19724, 144 to 19724, 145 to 19724, 146 to 19724, 147 to 19724, 148 to 19724, 149 to 19724, 150 to 19724, 151 to 19724, 152 to 19724, 153 to 19724, 154 to 19724)
+        models(163 to 19725, 164 to 19726, 167 to 19725, 168 to 19726, 171 to 19725, 172 to 19726)
+        model(97, 19567)
     }
 
     /*
@@ -251,6 +293,11 @@ object BalloonRouteDefinition {
      */
 
     fun grand_tree_0(p: Player, c: Int) = balloonScreen(p, c) {
+        models(40 to 19742, 45 to 19732, 50 to 19733, 55 to 19734)
+        model(138, 19572)
+        models(118 to 19607, 119 to 19611)
+        models(99 to 19608, 98 to 19608, 100 to 19612)
+        models(78 to 19609, 79 to 19609, 80 to 19609, 81 to 19613)
 
     }
 

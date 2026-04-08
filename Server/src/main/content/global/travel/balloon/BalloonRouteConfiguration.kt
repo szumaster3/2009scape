@@ -94,12 +94,12 @@ object BalloonRouteConfiguration {
                 RouteStage(
                     sequence = listOf(5,5,5,5,5,5,9,9,6,6,6,6,5,5,4,5,5,5,5),
                     overlay = BalloonRouteDefinition::varrock_1,
-                    position = BalloonPosition(0, 0)
+                    position = BalloonPosition(179, 159)
                 ),
                 RouteStage(
                     sequence = listOf(5,5,5,4,5,6,6,4,5,6,6,4,5,10,5,10,5,6),
                     overlay = BalloonRouteDefinition::varrock_2,
-                    position = BalloonPosition(0, 0)
+                    position = BalloonPosition(179, 159)
                 )
             )
         )
@@ -130,18 +130,18 @@ object BalloonRouteConfiguration {
             stages = listOf(
                 RouteStage(
                     sequence = listOf(5,5,5,5,5,5,5,6,5,5,5,5,5,5,5,5,5,5,5,5),
-                    { _, _ -> },
-                    BalloonPosition(0, 0)
+                    overlay = BalloonRouteDefinition::grand_tree_0,
+                    BalloonPosition(178,158)
                 ),
                 RouteStage(
                     sequence = listOf(9,6,9,6,9,5,5,9,6,5,4,5,5,10,5,6,5,5,5),
-                    { _, _ -> },
-                    BalloonPosition(0, 0)
+                    overlay = BalloonRouteDefinition::grand_tree_1,
+                    position = BalloonPosition(159,139)
                 ),
                 RouteStage(
                     sequence = listOf(9,9,9,5,5,6,9,5,5,5,5,5,10,5,10,6,5,5,6),
-                    { _, _ -> },
-                    BalloonPosition(0, 0)
+                    overlay = BalloonRouteDefinition::grand_tree_2,
+                    position = BalloonPosition(159,139)
                 )
             )
         )

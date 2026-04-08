@@ -130,7 +130,7 @@ object BalloonRouteDefinition {
         eagles(177, angle = 2100, x = 200, y = 300)
         eagles(209, angle = 2576, x = 200, y = 300)
         // Clouds
-        models(155 to 19525, 156 to 19526, 210 to 19525, 211 to 19524, 212 to 19524, 213 to 19524, 214 to 19526, 227 to 19525, 228 to 19524, 229 to 19526, 172 to 19525, 173 to 19524, 174 to 19526)
+        models(155 to 19525, 156 to 19526, 210 to 19525, 211 to 19524, 212 to 19524, 213 to 19526, 227 to 19525, 228 to 19524, 229 to 19526, 172 to 19525, 173 to 19524, 174 to 19526)
         // Stars
         animated(175, 19781, 373, 2100, 0, 1500)
         animated(230, 19781, 373, 2100, 0, 1500)
@@ -299,7 +299,12 @@ object BalloonRouteDefinition {
         models(118 to 19607, 119 to 19611)
         models(99 to 19608, 98 to 19608, 100 to 19612)
         models(78 to 19609, 79 to 19609, 80 to 19609, 81 to 19613)
+        models(201 to 19525, 202 to 19524, 203 to 19526)
+        models(186 to 19525, 187 to 19524, 188 to 19526)
+        eagles(191,229,237)
+        models(230 to 19525, 231 to 19524, 232 to 19526)
 
+        models(192 to 19525, 193 to 19524, 194 to 19524, 195 to 19524, 196 to 19526)
     }
 
     fun grand_tree_1(p: Player, c: Int) = balloonScreen(p, c) {

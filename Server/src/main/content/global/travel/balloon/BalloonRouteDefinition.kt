@@ -68,7 +68,7 @@ class BalloonRouteBuilder(private val p: Player, private val c: Int){
      */
     fun eagles(
         vararg slots: Int,
-        model: Int = 19780,
+        model: Int = 19780,//-1white
         anim: Int = 341,
         angle: Int = 2100,
         x: Int = 200,
@@ -314,9 +314,31 @@ object BalloonRouteDefinition {
     }
 
     fun grand_tree_1(p: Player, c: Int) = balloonScreen(p, c) {
-        models(40 to 19534, 45 to 19536, 50 to 19537, 55 to 19538)
+        models(40 to 19634, 45 to 19636, 50 to 19637, 55 to 19638)
         models(79 to 19522)
         models(80 to 19639, 100 to 19640, 120 to 19642, 140 to 19643)
+        models(101 to 19521, 81 to 19519)
+        models(82 to 19639, 102 to 19640, 122 to 19642, 142 to 19643)
+        models(103 to 19521, 83 to 19519)
+        models(84 to 19639, 104 to 19640, 124 to 19642, 144 to 19643)
+        models(87 to 19639, 107 to 19640, 127 to 19641, 147 to 19642, 167 to 19643)
+        models(128 to 19580, 129 to 19578, 130 to 19582, 108 to 19579, 109 to 19576, 110 to 19581, 88 to 19575, 89 to 19574, 90 to 19577)
+        models(111 to 19521, 91 to 19519)
+        models(92 to 19639, 112 to 19640, 132 to 19641, 152 to 19642, 172 to 19643)
+        models(94 to 19599, 114 to 19600, 134 to 19601)
+        models(95 to 19599, 115 to 19600, 135 to 19601)
+        models(96 to 19523, 116 to 19528, 136 to 19529)
+        models(97 to 19523, 117 to 19528, 137 to 19529)
+        eagles(219,183,154,196,197,149,150)
+        animated(181, 19781, 373, 2100, 0, 1500)
+        animated(220, 19781, 373, 2100, 0, 1500)
+        models(200 to 19525, 201 to 19526)
+        models(203 to 19525, 204 to 19524, 205 to 19526)
+        animated(224, 19781, 373, 2100, 0, 1500)
+        models(208 to 19525, 209 to 19526)
+        animated(228, 19781, 373, 2100, 0, 1500)
+        models(191 to 19525, 192 to 19526)
+        models(214 to 19525, 215 to 19524, 216 to 19524, 217 to 19526)
     }
 
     fun grand_tree_2(p: Player, c: Int) = balloonScreen(p, c) {

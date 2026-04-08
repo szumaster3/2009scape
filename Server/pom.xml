@@ -7,13 +7,6 @@
 
     <modelVersion>4.0.0</modelVersion>
 
-    <parent>
-        <groupId>org.rsps</groupId>
-        <artifactId>530-Source</artifactId>
-        <version>1.0.0</version>
-        <relativePath>../pom.xml</relativePath>
-    </parent>
-
     <groupId>org.rsps</groupId>
     <artifactId>Server</artifactId>
     <version>1.0.0</version>
@@ -118,6 +111,14 @@
             <version>2.9.0</version>
             <scope>compile</scope>
         </dependency>
+        <!-- https://gitlab.com/single-player/constants -->
+        <dependency>
+            <groupId>org.rsps</groupId>
+            <artifactId>Constants</artifactId>
+            <version>[1.0.0,)</version>
+            <scope>compile</scope>
+        </dependency>
+
     </dependencies>
 
     <build>
@@ -144,6 +145,30 @@
                         <phase>package</phase>
                         <goals>
                             <goal>single</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-install-plugin</artifactId>
+                <version>3.0.1</version>
+                <executions>
+                    <execution>
+                        <id>install-constants</id>
+                        <phase>clean</phase>
+                        <configuration>
+                            <file>${project.basedir}/libs/Constants-1.0.0.jar</file>
+                            <repositoryLayout>default</repositoryLayout>
+                            <groupId>org.rsps</groupId>
+                            <artifactId>Constants</artifactId>
+                            <version>1.0</version>
+                            <packaging>jar</packaging>
+                            <generatePom>true</generatePom>
+                        </configuration>
+                        <goals>
+                            <goal>install-file</goal>
                         </goals>
                     </execution>
                 </executions>
@@ -287,5 +312,29 @@
             </plugin>
         </plugins>
     </build>
+
+ <repositories>
+    <repository>
+      <id>maven_central</id>
+      <name>Maven Central</name>
+      <url>https://repo.maven.apache.org/maven2/</url>
+    </repository>
+    <repository>
+      <id>gitlab-maven</id>
+      <url>https://gitlab.com/api/v4/projects/81106313/packages/maven</url>
+    </repository>
+  </repositories>
+  <distributionManagement>
+    <repository>
+      <id>gitlab-maven</id>
+      <url>https://gitlab.com/api/v4/projects/81106313/packages/maven</url>
+    </repository>
+
+    <snapshotRepository>
+      <id>gitlab-maven</id>
+      <url>https://gitlab.com/api/v4/projects/81106313/packages/maven</url>
+    </snapshotRepository>
+  </distributionManagement>
+
 
 </project>

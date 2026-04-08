@@ -100,7 +100,6 @@ object BalloonUtils {
 
         setAttribute(player, keyTop(routeId, step), top)
         setAttribute(player, keyBottom(routeId, step), bottom)
-        println("MOVE: $move dx=${move.dx} dy=${move.dy}")
     }
 
     /**

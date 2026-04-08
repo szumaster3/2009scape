@@ -241,7 +241,7 @@ object BalloonRouteDefinition {
 
     fun varrock_1(p: Player, c: Int) = balloonScreen(p, c) {
         models(40 to 19738, 45 to 19739, 50 to 19740, 55 to 19741)
-        eagles(139, angle = 2100, x = 200, y = 300)
+        eagles(139)
         models(119 to 19570, 98 to 19569, 79 to 19568)
         models(101 to 19521, 81 to 19519)
         models(122 to 19570, 102 to 19569, 82 to 19568)
@@ -285,6 +285,7 @@ object BalloonRouteDefinition {
         models(123 to 19729, 124 to 19729, 125 to 19730, 126 to 19729, 127 to 19729, 128 to 19730, 129 to 19729, 130 to 19729, 131 to 19730, 132 to 19729, 133 to 19729, 134 to 19729)
         models(143 to 19724, 144 to 19724, 145 to 19724, 146 to 19724, 147 to 19724, 148 to 19724, 149 to 19724, 150 to 19724, 151 to 19724, 152 to 19724, 153 to 19724, 154 to 19724)
         models(163 to 19725, 164 to 19726, 167 to 19725, 168 to 19726, 171 to 19725, 172 to 19726)
+        models(163 to 19727, 164 to 19728, 167 to 19727, 168 to 19728, 171 to 19727, 172 to 19728)
         model(97, 19567)
     }
 
@@ -293,7 +294,7 @@ object BalloonRouteDefinition {
      */
 
     fun grand_tree_0(p: Player, c: Int) = balloonScreen(p, c) {
-        models(40 to 19742, 45 to 19732, 50 to 19733, 55 to 19734)
+        models(40 to 19560, 45 to 19561, 50 to 19562, 55 to 19562)
         model(138, 19572)
         models(118 to 19607, 119 to 19611)
         models(99 to 19608, 98 to 19608, 100 to 19612)
@@ -302,11 +303,11 @@ object BalloonRouteDefinition {
     }
 
     fun grand_tree_1(p: Player, c: Int) = balloonScreen(p, c) {
-
+        models(40 to 19534, 45 to 19536, 50 to 19537, 55 to 19538)
     }
 
     fun grand_tree_2(p: Player, c: Int) = balloonScreen(p, c) {
-
+        models(40 to 19713, 45 to 19714, 50 to 19715, 55 to 19716)
     }
 
     /*
@@ -314,14 +315,15 @@ object BalloonRouteDefinition {
      */
 
     fun castle_wars_0(p: Player, c: Int) = balloonScreen(p, c) {
+        models(40 to 19583, 45 to 19588, 50 to 19588, 55 to 19589)
 
     }
 
     fun castle_wars_1(p: Player, c: Int) = balloonScreen(p, c) {
-
+        models(40 to 19590, 45 to 19591, 50 to 19592, 55 to 19593)
     }
 
     fun castle_wars_2(p: Player, c: Int) = balloonScreen(p, c) {
-
+        models(40 to 19594, 45 to 19584, 50 to 19585, 55 to 19586)
     }
 }

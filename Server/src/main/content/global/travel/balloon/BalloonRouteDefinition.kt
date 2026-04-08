@@ -301,10 +301,16 @@ object BalloonRouteDefinition {
         models(78 to 19609, 79 to 19609, 80 to 19609, 81 to 19613)
         models(201 to 19525, 202 to 19524, 203 to 19526)
         models(186 to 19525, 187 to 19524, 188 to 19526)
-        eagles(191,229,237)
+        eagles(191, 229, 237, 144, 130)
         models(230 to 19525, 231 to 19524, 232 to 19526)
-
-        models(192 to 19525, 193 to 19524, 194 to 19524, 195 to 19524, 196 to 19526)
+        models(192 to 19525, 193 to 19524, 194 to 19524, 195 to 19526)
+        animated(214, 19781, 373, 2100, 0, 1500)
+        animated(85, 19717, 373)
+        animated(94, 19717, 373)
+        models(97 to 19616, 93 to 19616)
+        models(84 to 19615, 104 to 19617)
+        models(89 to 19622)
+        models(90 to 19615, 110 to 19617)
     }
 
     fun grand_tree_1(p: Player, c: Int) = balloonScreen(p, c) {
@@ -321,7 +327,6 @@ object BalloonRouteDefinition {
 
     fun castle_wars_0(p: Player, c: Int) = balloonScreen(p, c) {
         models(40 to 19583, 45 to 19588, 50 to 19588, 55 to 19589)
-
     }
 
     fun castle_wars_1(p: Player, c: Int) = balloonScreen(p, c) {

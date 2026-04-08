@@ -343,6 +343,17 @@ object BalloonRouteDefinition {
 
     fun grand_tree_2(p: Player, c: Int) = balloonScreen(p, c) {
         models(40 to 19713, 45 to 19714, 50 to 19715, 55 to 19716)
+
+        models(78 to 19654)
+        models(99 to 19650)
+        models(98 to 19651)
+        models(79 to 19665)
+        eagles(178)
+        models(198 to 19525, 199 to 19524, 200 to 19526)
+        models(80 to 19676)
+        models(100 to 19652)
+        models(120 to 19666)
+        model(97, 19567)
     }
 
     /*
@@ -359,5 +370,6 @@ object BalloonRouteDefinition {
 
     fun castle_wars_2(p: Player, c: Int) = balloonScreen(p, c) {
         models(40 to 19594, 45 to 19584, 50 to 19585, 55 to 19586)
+        model(97, 19567)
     }
 }

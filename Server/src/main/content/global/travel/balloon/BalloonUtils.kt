@@ -80,28 +80,18 @@ object BalloonUtils {
         sendModelOnInterface(player, Components.ZEP_INTERFACE_470, top, -1)
         sendModelOnInterface(player, Components.ZEP_INTERFACE_470, bottom, -1)
 
-        if (bottom == 98 || bottom == 113) bottom += 2
-
-        if (move == BalloonMove.EMERGENCY_TUG) {// Diagonal correction.
+        repeat(move.dx) {
             top = moveEast(top)
             bottom = moveEast(bottom)
+        }
 
-            top = moveSouth(top)
-            bottom = moveSouth(bottom)
-        } else {
-            repeat(move.dx) {
-                top = moveEast(top)
-                bottom = moveEast(bottom)
-            }
-
-            repeat(kotlin.math.abs(move.dy)) {
-                if (move.dy < 0) {
-                    top = moveNorth(top)
-                    bottom = moveNorth(bottom)
-                } else {
-                    top = moveSouth(top)
-                    bottom = moveSouth(bottom)
-                }
+        repeat(kotlin.math.abs(move.dy)) {
+            if (move.dy < 0) {
+                top = moveNorth(top)
+                bottom = moveNorth(bottom)
+            } else {
+                top = moveSouth(top)
+                bottom = moveSouth(bottom)
             }
         }
 
@@ -110,6 +100,7 @@ object BalloonUtils {
 
         setAttribute(player, keyTop(routeId, step), top)
         setAttribute(player, keyBottom(routeId, step), bottom)
+        println("MOVE: $move dx=${move.dx} dy=${move.dy}")
     }
 
     /**
@@ -168,7 +159,7 @@ object BalloonUtils {
     /**
      * Moves model one tile south in interface grid space.
      */
-    private fun moveSouth(child: Int) = child - 19
+    private fun moveSouth(child: Int) = child - 20
 
     /**
      * Represents available balloon movement actions.
@@ -177,8 +168,8 @@ object BalloonUtils {
         SANDBAG(1, -2),
         LOGS(1, -1),
         RELAX(1, 0),
-        TUG(0, 1),
-        EMERGENCY_TUG(0, 2)
+        TUG(1, 1),
+        EMERGENCY_TUG(1, 2)
     }
 
     /**

@@ -315,6 +315,8 @@ object BalloonRouteDefinition {
 
     fun grand_tree_1(p: Player, c: Int) = balloonScreen(p, c) {
         models(40 to 19534, 45 to 19536, 50 to 19537, 55 to 19538)
+        models(79 to 19522)
+        models(80 to 19639, 100 to 19640, 120 to 19642, 140 to 19643)
     }
 
     fun grand_tree_2(p: Player, c: Int) = balloonScreen(p, c) {

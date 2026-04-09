@@ -11,7 +11,6 @@ public enum Decoration {
     ROCK(13406, Items.DECORATIVE_ROCK_8169, 5, 100, new Item[]{new Item(Items.LIMESTONE_BRICK_3420, 5)}),
     POND(13407, Items.POND_8170, 10, 100, new Item[]{new Item(Items.SOFT_CLAY_1761, 10)}),
     IMP_STATUE(13408, Items.IMP_STATUE_8171, 15, 150, new Item[]{new Item(Items.LIMESTONE_BRICK_3420, 5), new Item(Items.SOFT_CLAY_1761, 5)}),
-    SMALL_OBELISK(42004, Items.SUMMONING_OBELISK_14644, 41, 676, new Item[]{new Item(Items.MARBLE_BLOCK_8786), new Item(Items.SPIRIT_SHARDS_12183, 1000), new Item(Items.CRIMSON_CHARM_12160, 10), new Item(Items.BLUE_CHARM_12163, 10)}),
     DUNGEON_ENTRANCE(13409, Items.DUNGEON_ENTRANCE_8172, 70, 500, new Item[]{new Item(Items.MARBLE_BLOCK_8786)}),
 
     BIG_DEAD_TREE(13411, Items.TREE_8173, 5, 31, new int[]{BuildingUtils.WATERING_CAN}, new Item[]{new Item(Items.BAGGED_DEAD_TREE_8417)}),

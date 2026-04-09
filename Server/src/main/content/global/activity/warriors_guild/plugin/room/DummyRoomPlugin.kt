@@ -30,8 +30,12 @@ class DummyRoomPlugin : OptionHandler() {
         SLASH(Scenery(shared.consts.Scenery.DUMMY_15625, 2858, 3554, 0), -1, WeaponInterface.BONUS_SLASH),
         CRUSH(Scenery(shared.consts.Scenery.DUMMY_15628, 2859, 3549, 0, 10, 2), -1, WeaponInterface.BONUS_CRUSH),
         CONTROLLED(Scenery(shared.consts.Scenery.DUMMY_15627, 2855, 3552, 0, 10, 3), WeaponInterface.STYLE_CONTROLLED, -1),
-        DEFENCE(Scenery(shared.consts.Scenery.DUMMY_15630, 2855, 3550, 0, 10, 3), WeaponInterface.STYLE_DEFENSIVE, -1,),
-        AGGRESSIVE(Scenery(shared.consts.Scenery.DUMMY_15626, 2860, 3553, 0, 10, 1), WeaponInterface.STYLE_AGGRESSIVE, -1,),
+        DEFENCE(Scenery(shared.consts.Scenery.DUMMY_15630, 2855, 3550, 0, 10, 3), WeaponInterface.STYLE_DEFENSIVE, -1),
+        AGGRESSIVE(
+            Scenery(shared.consts.Scenery.DUMMY_15626, 2860, 3553, 0, 10, 1),
+            WeaponInterface.STYLE_AGGRESSIVE,
+            -1,
+        ),
         ACCURATE(Scenery(shared.consts.Scenery.DUMMY_15624, 2856, 3554, 0), WeaponInterface.STYLE_ACCURATE, -1),
     }
 
@@ -63,7 +67,7 @@ class DummyRoomPlugin : OptionHandler() {
                     delay = 4
                     var animation = Animation.create(4164)
                     animation.setObject(dummy!!.scenery)
-                    getRegionChunk(dummy!!.scenery.location).flag(AnimateObjectUpdateFlag(animation),)
+                    getRegionChunk(dummy!!.scenery.location).flag(AnimateObjectUpdateFlag(animation))
                     activeDummy = false
                     if (controlled != null) {
                         animation = Animation.create(4164)

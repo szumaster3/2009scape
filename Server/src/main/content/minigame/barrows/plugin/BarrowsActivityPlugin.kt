@@ -45,7 +45,7 @@ class BarrowsActivityPlugin : ActivityPlugin("Barrows", false, false, false) {
      * handling tunnel visibility for the minimap.
      */
     override fun locationUpdate(e: Entity, last: Location) {
-        if (e is Player && e.getViewport().region!!.id == 14231) {
+        if (e is Player && e.viewport.region!!.id == 14231) {
             var tunnel = false
             for (border in MINI_TUNNELS) {
                 if (border.insideBorder(e)) {
@@ -117,12 +117,12 @@ class BarrowsActivityPlugin : ActivityPlugin("Barrows", false, false, false) {
             if (!logout && player.getAttribute("barrow:looted", false)) {
                 for (i in 0..5) {
                     removeAttribute(player, "brother:$i")
-                    player.getSavedData().activityData.barrowBrothers[i] = false
+                    player.getSavedData().activityData.barrowsBrothers[i] = false
                 }
                 removeAttribute(player, "barrow:looted")
                 shuffleCatacombs(player)
-                player.getSavedData().activityData.barrowTunnelIndex = RandomFunction.random(6)
-                player.getSavedData().activityData.barrowKills = 0
+                player.getSavedData().activityData.barrowsTunnelIndex = RandomFunction.random(6)
+                player.getSavedData().activityData.barrowsBrothersKillCount = 0
                 PlayerCamera(player).reset()
             }
         }
@@ -140,7 +140,7 @@ class BarrowsActivityPlugin : ActivityPlugin("Barrows", false, false, false) {
             player = killer.owner
         }
         if (player != null && e is NPC) {
-            player.getSavedData().activityData.barrowKills += 1
+            player.getSavedData().activityData.barrowsBrothersKillCount += 1
             sendConfiguration(player)
         }
         return false
@@ -162,7 +162,7 @@ class BarrowsActivityPlugin : ActivityPlugin("Barrows", false, false, false) {
                 ClimbActionHandler.climb(
                     e,
                     ClimbActionHandler.CLIMB_UP,
-                    BarrowsCrypt.getCrypt(player.getSavedData().activityData.barrowTunnelIndex).exitLocation,
+                    BarrowsCrypt.getCrypt(player.getSavedData().activityData.barrowsTunnelIndex).exitLocation,
                 )
                 return true
             }
@@ -182,7 +182,7 @@ class BarrowsActivityPlugin : ActivityPlugin("Barrows", false, false, false) {
                 Objects.DOOR_6714, Objects.DOOR_6733 -> {
                     DoorActionHandler.handleAutowalkDoor(e, target)
                     if (RandomFunction.random(15) == 0) {
-                        val brothers = player.getSavedData().activityData.barrowBrothers
+                        val brothers = player.getSavedData().activityData.barrowsBrothers
                         val alive = (0..5).filter { i -> !brothers[i] }.toIntArray()
                         if (alive.isNotEmpty()) {
                             var index = 0
@@ -229,8 +229,8 @@ class BarrowsActivityPlugin : ActivityPlugin("Barrows", false, false, false) {
 
                 Objects.CHEST_6774 -> {
                     player.lock(1)
-                    val brother = player.getSavedData().activityData.barrowTunnelIndex
-                    if (!player.getSavedData().activityData.barrowBrothers[brother] &&
+                    val brother = player.getSavedData().activityData.barrowsTunnelIndex
+                    if (!player.getSavedData().activityData.barrowsBrothers[brother] &&
                         !player.getAttribute(
                             "brother:$brother",
                             false,
@@ -238,7 +238,7 @@ class BarrowsActivityPlugin : ActivityPlugin("Barrows", false, false, false) {
                     ) {
                         BarrowsCrypt
                             .getCrypt(brother)
-                            .spawnBrother(player, getTeleportLocation(target.getCenterLocation(), 4))
+                            .spawnBrother(player, getTeleportLocation(target.centerLocation, 4))
                     }
                     setAttribute(player, "barrow:opened_chest", true)
                     sendConfiguration(player)
@@ -365,7 +365,7 @@ class BarrowsActivityPlugin : ActivityPlugin("Barrows", false, false, false) {
                         }
                         var drain = 8
 
-                        for (killed in p.getSavedData().activityData.barrowBrothers) {
+                        for (killed in p.getSavedData().activityData.barrowsBrothers) {
                             if (killed) {
                                 drain += 1
                             }
@@ -397,13 +397,13 @@ class BarrowsActivityPlugin : ActivityPlugin("Barrows", false, false, false) {
          */
         fun sendConfiguration(player: Player) {
             val data = player.getSavedData().activityData
-            var config = data.barrowKills shl 17
-            for (i in data.barrowBrothers.indices) {
-                if (data.barrowBrothers[i]) {
+            var config = data.barrowsBrothersKillCount shl 17
+            for (i in data.barrowsBrothers.indices) {
+                if (data.barrowsBrothers[i]) {
                     config = config or (1 shl i)
                 }
             }
-            if (player.getAttribute<Boolean>("barrow:opened_chest", false)) {
+            if (player.getAttribute("barrow:opened_chest", false)) {
                 config = config or (1 shl 16)
             }
             setVarp(player, 453, config)

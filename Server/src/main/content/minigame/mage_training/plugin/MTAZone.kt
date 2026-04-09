@@ -15,7 +15,7 @@ import shared.consts.Vars
 
 open class MTAZone(name: String?, val items: Array<Item>) : MapZone(name.toString(), false, ZoneRestriction.RANDOM_EVENTS, ZoneRestriction.FOLLOWERS) {
 
-    var type: MTAType? = null
+    var type: MTARoomType? = null
 
     init {
         zoneType = ZoneType.SAFE.id
@@ -25,7 +25,7 @@ open class MTAZone(name: String?, val items: Array<Item>) : MapZone(name.toStrin
         if (entity is Player) {
             val player = entity.asPlayer() ?: return true
             if (type == null) {
-                type = MTAType.forZone(this)
+                type = MTARoomType.forZone(this)
             }
             type?.let {
                 player.interfaceManager.openOverlay(it.overlay)

@@ -18,44 +18,20 @@ import shared.consts.Vars
 /**
  * Represents a room type in the Magic Training Arena (MTA) minigame.
  */
-enum class MTAType(
-    val sceneryId: Int,
-    val overlay: Component,
-    val varbit: Int,
-    private val startLocation: Location? = null,
-    private val endLocation: Location,
-    val mtaZone: MTAZone,
-) {
-    TELEKINETIC(
-        Scenery.TELEKINETIC_TP_10778,
-        Component(Components.MAGICTRAINING_TELE_198),
-        Vars.VARBIT_MTA_TELEKINETIC_POINTS_1485,
-        null,
-        Location.create(3363, 3316, 0),
-        TelekineticTheatrePlugin()
-    ) {
+enum class MTARoomType(val sceneryId: Int, val overlay: Component, val varbit: Int, private val startLocation: Location? = null, private val endLocation: Location, val mtaZone: MTAZone)
+{
+    TELEKINETIC(Scenery.TELEKINETIC_TP_10778, Component(Components.MAGICTRAINING_TELE_198), Vars.VARBIT_MTA_TELEKINETIC_POINTS_1485, null, Location.create(3363, 3316, 0), TelekineticTheatrePlugin()) {
         override fun hasRequirement(player: Player): Boolean {
             val magicLevel = getStatLevel(player, Skills.MAGIC)
             if (magicLevel < 33) {
-                sendDialogueLines(
-                    player,
-                    "You need to be able to cast the Telekinetic Grab spell in order to",
-                    "enter.",
-                )
+                sendDialogueLines(player, "You need to be able to cast the Telekinetic Grab spell in order to", "enter.")
                 return false
             }
             return true
         }
     },
 
-    ALCHEMISTS(
-        Scenery.ALCHEMISTS_TP_10780,
-        Component(Components.MAGICTRAINING_ALCH_STATS_194),
-        Vars.VARBIT_MTA_ALCHEMIST_POINTS_1489,
-        Location(3366, 9623, 2),
-        Location(3363, 3320, 0),
-        AlchemistPlaygroundPlugin.ZONE
-    ) {
+    ALCHEMISTS(Scenery.ALCHEMISTS_TP_10780, Component(Components.MAGICTRAINING_ALCH_STATS_194), Vars.VARBIT_MTA_ALCHEMIST_POINTS_1489, Location(3366, 9623, 2), Location(3363, 3320, 0), AlchemistPlaygroundPlugin.ZONE) {
         override fun hasRequirement(player: Player): Boolean {
             val magicLevel = getStatLevel(player, Skills.MAGIC)
             if (magicLevel < 21) {
@@ -72,7 +48,7 @@ enum class MTAType(
         override fun exit(player: Player) {
             val earn = player.getAttribute("alch-earn", 0)
             if (earn != 0) {
-                val coins = Item(995, earn)
+                val coins = Item(Items.COINS_995, earn)
                 if (player.bank.hasSpaceFor(coins)) {
                     player.bank.add(coins)
                 }
@@ -82,14 +58,7 @@ enum class MTAType(
         }
     },
 
-    ENCHANTERS(
-        Scenery.ENCHANTERS_TP_10779,
-        Component(Components.MAGICTRAINING_ENCHANT_195),
-        Vars.VARBIT_MTA_ENCHANTMENT_POINTS_1488,
-        Location(3363, 9649, 0),
-        Location(3361, 3318, 0),
-        EnchantmentChamberPlugin.ZONE
-    ) {
+    ENCHANTERS(Scenery.ENCHANTERS_TP_10779, Component(Components.MAGICTRAINING_ENCHANT_195), Vars.VARBIT_MTA_ENCHANTMENT_POINTS_1488, Location(3363, 9649, 0), Location(3361, 3318, 0), EnchantmentChamberPlugin.ZONE) {
         override fun hasRequirement(player: Player): Boolean {
             val magicLevel = getStatLevel(player, Skills.MAGIC)
             if (magicLevel < 7) {
@@ -100,14 +69,7 @@ enum class MTAType(
         }
     },
 
-    GRAVEYARD(
-        Scenery.GRAVEYARD_TP_10781,
-        Component(Components.MAGICTRAINING_GRAVE_196),
-        Vars.VARBIT_MTA_GRAVEYARD_POINTS_1486,
-        Location(3363, 9639, 1),
-        Location(3365, 3318, 0),
-        CreatureGraveyardPlugin.ZONE
-    ) {
+    GRAVEYARD(Scenery.GRAVEYARD_TP_10781, Component(Components.MAGICTRAINING_GRAVE_196), Vars.VARBIT_MTA_GRAVEYARD_POINTS_1486, Location(3363, 9639, 1), Location(3365, 3318, 0), CreatureGraveyardPlugin.ZONE) {
         override fun hasRequirement(player: Player): Boolean {
             val magicLevel = getStatLevel(player, Skills.MAGIC)
             if (magicLevel < 15) {
@@ -127,15 +89,8 @@ enum class MTAType(
     }, ;
 
     fun enter(player: Player) {
-        if (!player.getSavedData().activityData.isStartedMta ||
-            !anyInInventory(player, *ProgressHat.hatIds) &&
-            !anyInEquipment(player, *ProgressHat.hatIds)
-        ) {
-            sendDialogueLines(
-                player,
-                "You need a Pizazz Progress Hat in order to enter. Talk to the",
-                "Entrance Guardian if you don't have one.",
-            )
+        if (!player.getSavedData().activityData.startMageTrainingArena || !anyInInventory(player, *ProgressHat.hatIds) && !anyInEquipment(player, *ProgressHat.hatIds)) {
+            sendDialogueLines(player, "You need a Pizazz Progress Hat in order to enter. Talk to the", "Entrance Guardian if you don't have one.")
             return
         }
 
@@ -161,10 +116,10 @@ enum class MTAType(
     fun getZone(): MTAZone = mtaZone
 
     companion object {
-        private val zoneCache: MutableSet<MTAType> = HashSet(values().toList())
+        private val zoneCache: MutableSet<MTARoomType> = HashSet(values().toList())
 
         /**
-         * Gets the [MTAType] for the given [MTAZone].
+         * Gets the [MTARoomType] for the given [MTAZone].
          *
          * @param mtaZone The zone to check.
          * @return The MTA type for this zone.
@@ -173,7 +128,7 @@ enum class MTAType(
         fun forZone(mtaZone: MTAZone) = zoneCache.firstOrNull { it.getZone() === mtaZone } ?: TELEKINETIC
 
         /**
-         * Gets the [MTAType] by scenery object id.
+         * Gets the [MTARoomType] by scenery object id.
          *
          * @param id The object id to match.
          * @return The matching MTA type.

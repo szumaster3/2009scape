@@ -64,7 +64,7 @@ class BarrowBrotherNPC(
     override fun finalizeDeath(killer: Entity) {
         super.finalizeDeath(killer)
         if (killer === player) {
-            player.getSavedData().activityData.barrowBrothers[brotherIndex] = true
+            player.getSavedData().activityData.barrowsBrothers[brotherIndex] = true
             BarrowsActivityPlugin.sendConfiguration(player)
         }
     }
@@ -75,7 +75,7 @@ class BarrowBrotherNPC(
             player.hintIconManager.clear()
         }
         removeAttribute(player, "barrow:npc")
-        removeAttribute(player, "brother:" + brotherIndex)
+        removeAttribute(player, "brother:$brotherIndex")
         clearHintIcon(player)
     }
 

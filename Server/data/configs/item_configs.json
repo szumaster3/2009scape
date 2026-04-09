@@ -48711,14 +48711,14 @@
   },
   {
     "shop_price": "200",
-    "examine": "An acorn has been sown and watered in this plant pot.",
+    "examine": "An acorn has been sown in this plant pot.",
     "durability": null,
     "name": "Oak seedling",
     "archery_ticket_price": "0",
     "id": "5358"
   },
   {
-    "examine": "A willow tree seed has been sown and watered in this plant pot",
+    "examine": "A willow tree seed has been sown in this plant pot.",
     "durability": null,
     "name": "Willow seedling",
     "weight": "0.9",
@@ -48726,7 +48726,7 @@
     "id": "5359"
   },
   {
-    "examine": "A maple tree has been sown (and watered) in this plant pot.",
+    "examine": "A maple tree seed has been sown in this plant pot.",
     "durability": null,
     "name": "Maple seedling",
     "weight": "0.9",
@@ -48734,7 +48734,7 @@
     "id": "5360"
   },
   {
-    "examine": "A yew seed has been sown in the plant pot",
+    "examine": "A yew tree seed has been sown in this plant pot.",
     "durability": null,
     "name": "Yew seedling",
     "weight": "1",
@@ -48750,7 +48750,7 @@
     "id": "5362"
   },
   {
-    "examine": "A spirit seedling is growing in this pot. It has been sown and watered.",
+    "examine": "A spirit tree seed has been sown in this plant pot.",
     "durability": null,
     "name": "Spirit seedling",
     "archery_ticket_price": "0",
@@ -48765,7 +48765,7 @@
     "id": "5364"
   },
   {
-    "examine": "A willow tree seed has been sown and watered in this plant pot",
+    "examine": "A willow tree seed has been sown and watered in this plant pot.",
     "durability": null,
     "name": "Willow seedling",
     "weight": "0.9",
@@ -48773,7 +48773,7 @@
     "id": "5365"
   },
   {
-    "examine": "A maple tree has been sown (and watered) in this plant pot.",
+    "examine": "A maple tree seed has been sown and watered in this plant pot.",
     "durability": null,
     "name": "Maple seedling",
     "weight": "0.9",
@@ -48781,7 +48781,7 @@
     "id": "5366"
   },
   {
-    "examine": "A yew seed has been sown in the plant pot",
+    "examine": "A yew tree seed has been sown and watered in this plant pot.",
     "durability": null,
     "name": "Yew seedling",
     "weight": "1",
@@ -48797,7 +48797,7 @@
     "id": "5368"
   },
   {
-    "examine": "A spirit seedling is growing in this pot. It has been sown and watered.",
+    "examine": "A spirit tree seed has been sown and watered in this plant pot.",
     "durability": null,
     "name": "Spirit seedling",
     "archery_ticket_price": "0",
@@ -49786,7 +49786,7 @@
     "id": "5482"
   },
   {
-    "examine": "A curry seed has been sown in this plant pot.",
+    "examine": "A curry tree seed has been sown in this plant pot.",
     "durability": null,
     "name": "Curry seedling",
     "weight": "0.9",
@@ -49794,7 +49794,7 @@
     "id": "5483"
   },
   {
-    "examine": "A pineapple tree has been sown in this plant pot.",
+    "examine": "A pineapple plant seed has been sown in this plant pot.",
     "durability": null,
     "name": "Pineapple seedling",
     "weight": "0.9",
@@ -49802,7 +49802,7 @@
     "id": "5484"
   },
   {
-    "examine": "This needs watering before it will grow.",
+    "examine": "A papaya tree seed has been sown in this plant pot.",
     "durability": null,
     "name": "Papaya seedling",
     "weight": "0.9",
@@ -49810,7 +49810,7 @@
     "id": "5485"
   },
   {
-    "examine": "This sapling is ready to be replanted in a fruit tree patch.",
+    "examine": "A palm tree seed has been sown in this plant pot.",
     "durability": null,
     "name": "Palm seedling",
     "weight": "0.66",
@@ -49818,7 +49818,7 @@
     "id": "5486"
   },
   {
-    "examine": "A calquat tree has been sown and watered in this plant pot.",
+    "examine": "A calquat tree seed has been sown in this plant pot.",
     "durability": null,
     "name": "Calquat seedling",
     "weight": "0.9",
@@ -49826,7 +49826,7 @@
     "id": "5487"
   },
   {
-    "examine": "An apple tree has been sown and watered in this plant pot.",
+    "examine": "An apple tree seed has been sown and watered in this plant pot.",
     "durability": null,
     "name": "Apple seedling",
     "weight": "0.9",
@@ -49849,7 +49849,7 @@
     "id": "5490"
   },
   {
-    "examine": "A curry seed has been sown and watered in this plant pot.",
+    "examine": "A curry tree seed has been sown and watered in this plant pot.",
     "durability": null,
     "name": "Curry seedling",
     "weight": "0.9",
@@ -49857,7 +49857,7 @@
     "id": "5491"
   },
   {
-    "examine": "A pineapple tree has been sown and watered in this plant pot.",
+    "examine": "A pineapple plant seed has been sown and watered in this plant pot.",
     "durability": null,
     "name": "Pineapple seedling",
     "weight": "0.9",
@@ -49865,7 +49865,7 @@
     "id": "5492"
   },
   {
-    "examine": "This needs watering before it will grow.",
+    "examine": "A papaya tree seed has been sown and watered in this plant pot.",
     "durability": null,
     "name": "Papaya seedling",
     "weight": "0.9",
@@ -49873,7 +49873,7 @@
     "id": "5493"
   },
   {
-    "examine": "This sapling is ready to be replanted in a fruit tree patch.",
+    "examine": "A palm tree seed has been sown and watered in this plant pot.",
     "durability": null,
     "name": "Palm seedling",
     "weight": "0.66",
@@ -49881,7 +49881,7 @@
     "id": "5494"
   },
   {
-    "examine": "A calquat tree has been sown and watered in this plant pot.",
+    "examine": "A calquat tree seed has been sown and watered in this plant pot.",
     "durability": null,
     "name": "Calquat seedling",
     "weight": "0.9",

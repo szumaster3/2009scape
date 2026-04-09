@@ -18,125 +18,157 @@ class EnlightenedJourney : Quest(Quests.ENLIGHTENED_JOURNEY, 55, 54, 1, Vars.VAR
     override fun drawJournal(player: Player, stage: Int) {
         super.drawJournal(player, stage)
         var line = 11
-        if (stage == 0) {
-            line(player, "I can start this quest by speaking to !!Auguste?? on", line++)
-            line(player, "!!Entrana??.", line++)
-            line(player, "Minimum Requirements:", line++)
 
-            val requirements = listOf(
-                Triple(Skills.CRAFTING, 36, "Crafting"),
-                Triple(Skills.FARMING, 30, "Farming"),
-                Triple(Skills.FIREMAKING, 20, "Firemaking")
-            )
+        fun drawRequirements() {
+            line(player, "I need to gather the materials Auguste required:", line++, true)
+            line(player, "three sheets of papyrus", line++, amountInInventory(player, Items.PAPYRUS_970) >= 3)
+            line(player, "a ball of wool", line++, inInventory(player, Items.BALL_OF_WOOL_1759))
+            line(player, "a full sack of potatoes", line++, inInventory(player, Items.POTATOES10_5438))
+            line(player, "one unlit candle.", line++, inInventory(player, Items.CANDLE_36))
+            line++
+        }
 
-            for ((skill, level, displayName) in requirements) {
-                val text = if (getStatLevel(player, skill) >= level) {
-                    "---Level $level $displayName/--"
-                } else {
-                    "!!Level $level $displayName??"
+        fun hasAllMaterials(): Boolean {
+            return amountInInventory(player, Items.PAPYRUS_970) >= 3 &&
+                    inInventory(player, Items.BALL_OF_WOOL_1759) &&
+                    inInventory(player, Items.POTATOES10_5438) &&
+                    inInventory(player, Items.CANDLE_36)
+        }
+
+        when (stage) {
+
+            0 -> {
+                line(player, "I can start this quest by speaking to !!Auguste?? on", line++)
+                line(player, "!!Entrana??.", line++)
+                line(player, "Minimum Requirements:", line++)
+
+                val requirements = listOf(
+                    Triple(Skills.CRAFTING, 36, "Crafting"),
+                    Triple(Skills.FARMING, 30, "Farming"),
+                    Triple(Skills.FIREMAKING, 20, "Firemaking")
+                )
+
+                for ((skill, level, name) in requirements) {
+                    val text = if (getStatLevel(player, skill) >= level) {
+                        "---Level $level $name/--"
+                    } else {
+                        "!!Level $level $name??"
+                    }
+                    line(player, text, line++)
                 }
-                line(player, text, line++)
+
+                val qp = if (getQuestPoints(player) >= 21) {
+                    "---21 Quest Points/--"
+                } else {
+                    "!!21 Quest Points??"
+                }
+
+                line(player, qp, line++)
+                line++
             }
 
-            val questPointsText = if (getQuestPoints(player) >= 21) "---21 Quest Points/--" else "!!21 Quest Points??"
-            line(player, questPointsText, line++)
-            line++
-        }
+            1 -> {
+                line(player, "I have agreed to help Auguste build an !!air balloon??.", line++, true)
+                line(player, "I have no idea what he's talking about.", line++, true)
+                line(player, "Auguste thinks if he pumps hot air into a sack it will rise and", line++, true)
+                line(player, "take us along with it.", line++, true)
+                line(player, "But we're going to run some tests first. Thank goodness.", line++, true)
+                line++
+            }
 
-        if (stage == 1) {
-            line(player, "I have agreed to help Auguste build an !!air balloon??.", line++, true)
-            line(player, "I have no idea what he's talking about.", line++, true)
-            line(player, "Auguste thinks if he pumps hot air into a sack it will rise and", line++, true)
-            line(player, "take us along with it.", line++, true)
-            line(player, "But we're going to run some tests first. Thank goodness.", line++, true)
-            line++
-        }
+            2 -> {
+                if (hasAllMaterials()) {
+                    line(player, "I gathered all the materials Auguste required:", line++, true)
+                    line(player, "three sheets of papyrus, a ball of wool,", line++, true)
+                    line(player, "a full sack of potatoes and one unlit candle.", line++, true)
+                    line++
+                } else {
+                    drawRequirements()
+                }
+            }
 
-        if (stage == 2 &&
-            amountInInventory(player, Items.PAPYRUS_970) >= 3 &&
-            inInventory(player, Items.BALL_OF_WOOL_1759) &&
-            inInventory(player, Items.POTATOES10_5438) &&
-            inInventory(player, Items.CANDLE_36)
-        ) {
-            line(player, "I gathered all the materials Auguste required:", line++, true)
-            line(player, "three sheets of papyrus, a ball of wool,", line++, true)
-            line(player, "a full sack of potatoes and one unlit candle.", line++, true)
-        }
-        else
-        {
-            line(player, "I need to gather the materials Auguste required:", line++, stage == 100)
-            line(player, "three sheets of papyrus", line++, amountInInventory(player, Items.PAPYRUS_970) >= 3 || stage == 100)
-            line(player, "a ball of wool", line++, inInventory(player, Items.BALL_OF_WOOL_1759)|| stage == 100)
-            line(player, "a full sack of potatoes", line++, inInventory(player, Items.POTATOES10_5438)|| stage == 100)
-            line(player, "one unlit candle.", line++, inInventory(player, Items.CANDLE_36)|| stage == 100)
-            line++
-        }
+            3 -> {
+                drawRequirements()
 
-        if (stage == 3) {
-            line(player, "I need to gather the materials Auguste required:", line++, true)
-            line(player, "three sheets of papyrus", line++, true)
-            line(player, "a ball of wool", line++, true)
-            line(player, "a full sack of potatoes", line++, true)
-            line(player, "one unlit candle.", line++, true)
-            line++
+                val hasBalloon = inInventory(player, Items.ORIGAMI_BALLOON_9934)
+                line(
+                    player,
+                    if (!hasBalloon) "I need to make an !!origami balloon??."
+                    else "I made an !!origami balloon??.",
+                    line++
+                )
 
-            line(player, if(!inInventory(player, Items.ORIGAMI_BALLOON_9934)) "I need to make an !!origami balloon??." else "I made an !!origami balloon??.", line++)
-            line(player, "Auguste said I could make these any time I want if", line++, true)
-            line(player, "I have the materials.", line++, true)
-            line++
-        }
+                line(player, "Auguste said I could make these any time I want if", line++, true)
+                line(player, "I have the materials.", line++, true)
+                line++
+            }
 
-        if (stage == 4) {
-            line(player, "I need to gather the materials Auguste required:", line++, true)
-            line(player, "three sheets of papyrus", line++, true)
-            line(player, "a ball of wool", line++, true)
-            line(player, "a full sack of potatoes", line++, true)
-            line(player, "one unlit candle.", line++, true)
-            line++
+            4 -> {
+                drawRequirements()
 
-            line(player, if(!inInventory(player, Items.ORIGAMI_BALLOON_9934)) "I need to make an !!origami balloon??." else "I made an !!origami balloon??.", line++, true)
-            line(player, "Auguste said I could make these any time I want if", line++, true)
-            line(player, "I have the materials.", line++, true)
-            line++
-            line(player, "Auguste conducted the first experiment.", line++)
-            line(player, "There was an awful lot of fire.", line++)
-            line++
-        }
-        if (stage == 5) {
-            line(player, "I need to gather the materials Auguste required:", line++, true)
-            line(player, "three sheets of papyrus", line++, true)
-            line(player, "a ball of wool", line++, true)
-            line(player, "a full sack of potatoes", line++, true)
-            line(player, "one unlit candle.", line++, true)
-            line++
+                val hasBalloon = inInventory(player, Items.ORIGAMI_BALLOON_9934)
+                line(
+                    player,
+                    if (!hasBalloon) "I need to make an !!origami balloon??."
+                    else "I made an !!origami balloon??.",
+                    line++, true
+                )
 
-            line(player, if(!inInventory(player, Items.ORIGAMI_BALLOON_9934)) "I need to make an !!origami balloon??." else "I made an !!origami balloon??.", line++)
-            line(player, "Auguste said I could make these any time I want if", line++, true)
-            line(player, "I have the materials.", line++, true)
-            line++
-            line(player, "Auguste conducted the first experiment.", line++, true)
-            line(player, "There was an awful lot of fire.", line++, true)
-            line++
-            line(player, "Auguste conducted the second experiment.", line++, true)
-            line(player, "A flash mob appeared. They seem to have a grudge against science.", line++, true)
-            line++
-        }
-        if (stage == 8) {
-            line(player, "I gave Auguste all the supplies and made the basket for the balloon.", line++, true)
-            line++
-            line(player, "The balloon is all made and looks impressive!", line++, true)
-            line(player, "Let's hope it doesn't end the way the experiments did.", line++, true)
-            line++
-            line(player, "Whew! We survived our first balloon flight.", line++, true)
-        }
-        if (stage == 100) {
-            line(player, "We successfully flew the first balloon to Taverley!", line++, true)
-            line++
-            line(player, "<col=FF0000>QUEST COMPLETE!</col>", line++, false)
-            line++
-            line(player, "I can now make !!Origami balloons??.", line++, false)
-            line(player, "I can also use the !!balloon transport system??.", line++, false)
-            line(player, "To go to new locations I should speak to !!Auguste?? on !!Entrana??.", line, false)
+                line(player, "Auguste said I could make these any time I want if", line++, true)
+                line(player, "I have the materials.", line++, true)
+                line++
+
+                line(player, "Auguste conducted the first experiment.", line++)
+                line(player, "There was an awful lot of fire.", line++)
+                line++
+            }
+
+            5 -> {
+                drawRequirements()
+
+                val hasBalloon = inInventory(player, Items.ORIGAMI_BALLOON_9934)
+                line(
+                    player,
+                    if (!hasBalloon) "I need to make an !!origami balloon??."
+                    else "I made an !!origami balloon??.",
+                    line++, true
+                )
+
+                line(player, "Auguste said I could make these any time I want if", line++, true)
+                line(player, "I have the materials.", line++, true)
+                line++
+
+                line(player, "Auguste conducted the first experiment.", line++, true)
+                line(player, "There was an awful lot of fire.", line++, true)
+                line++
+
+                line(player, "Auguste conducted the second experiment.", line++, true)
+                line(player, "A flash mob appeared. They seem to have a grudge against science.", line++, true)
+                line++
+            }
+
+            8 -> {
+                line(player, "I gave Auguste all the supplies and made the basket for the balloon.", line++, true)
+                line++
+
+                line(player, "The balloon is all made and looks impressive!", line++, true)
+                line(player, "Let's hope it doesn't end the way the experiments did.", line++, true)
+                line++
+
+                line(player, "Whew! We survived our first balloon flight.", line++, true)
+            }
+
+            100 -> {
+                line(player, "We successfully flew the first balloon to Taverley!", line++, true)
+                line++
+
+                line(player, "<col=FF0000>QUEST COMPLETE!</col>", line++)
+                line++
+
+                line(player, "I can now make !!Origami balloons??.", line++)
+                line(player, "I can also use the !!balloon transport system??.", line++)
+                line(player, "To go to new locations I should speak to !!Auguste?? on !!Entrana??.", line)
+            }
         }
     }
 

@@ -63,11 +63,8 @@ class LecternPlugin : OptionHandler() {
                 return false
             }
 
-            if (this == BONES_TO_PEACHES && !player.savedData.activityData.isBonesToPeaches) {
-                sendMessage(
-                    player,
-                    "You need the Bones to Peaches ability from Mage Training Arena first."
-                )
+            if (this == BONES_TO_PEACHES && !player.savedData.activityData.unlockBoneToPeachSpell) {
+                sendMessage(player, "You need the Bones to Peaches ability from Mage Training Arena first.")
                 return false
             }
 
@@ -215,10 +212,7 @@ class LecternPlugin : OptionHandler() {
         private fun removeItems(player: Player, items: List<Item>): Boolean {
             for (item in items) {
                 if (!removeItem(player, item)) {
-                    sendMessage(
-                        player,
-                        "You do not have ${item.definition?.name?.lowercase()} to make the tablet."
-                    )
+                    sendMessage(player, "You do not have ${item.definition?.name?.lowercase()} to make the tablet.")
                     return false
                 }
             }

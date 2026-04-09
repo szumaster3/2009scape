@@ -1,6 +1,6 @@
 package content.minigame.mage_training.plugin.rooms
 
-import content.minigame.mage_training.plugin.MTAType
+import content.minigame.mage_training.plugin.MTARoomType
 import content.minigame.mage_training.plugin.MTAZone
 import core.api.*
 import core.game.interaction.Option
@@ -71,7 +71,7 @@ class CreatureGraveyardPlugin :
     override fun death(e: Entity, killer: Entity): Boolean {
         if (e is Player) {
             val player = e.asPlayer() ?: return super.death(e, killer)
-            val varbitId = MTAType.GRAVEYARD.varbit
+            val varbitId = MTARoomType.GRAVEYARD.varbit
             val points = getVarbit(player, varbitId)
             val toRemove = points.coerceAtMost(10)
             if (toRemove > 0) {
@@ -99,7 +99,7 @@ class CreatureGraveyardPlugin :
             val rune = RandomFunction.getRandomElement(RUNES)
             val runeName = rune.name.lowercase()
             player.inventory.add(rune, player)
-            incrementPoints(player, MTAType.GRAVEYARD.ordinal, 1)
+            incrementPoints(player, MTARoomType.GRAVEYARD.ordinal, 1)
             rewardXP(player, Skills.MAGIC, 50.0)
             playAudio(player, Sounds.MTA_DEPOSIT_FRUIT_1663)
             sendDialogueLines(

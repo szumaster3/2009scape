@@ -1,5 +1,7 @@
 package content.region.kandarin.seers_village.quest.mcannon.dialogue
 
+import core.api.inInventory
+import core.api.removeItem
 import core.api.sendMessage
 import core.api.setVarp
 import core.game.dialogue.Dialogue
@@ -8,6 +10,7 @@ import core.game.node.entity.npc.NPC
 import core.game.node.entity.player.Player
 import core.game.node.entity.player.link.quest.Quest
 import core.game.node.item.Item
+import shared.consts.Items
 import shared.consts.NPCs
 import shared.consts.Quests
 
@@ -284,7 +287,7 @@ class NulodionDialogue(player: Player? = null) : Dialogue(player) {
                     }
 
                     41 -> {
-                        if (player.getSavedData().activityData.isLostCannon) {
+                        if (player.getSavedData().activityData.lostDwarfMulticannon) {
                             npc(FaceAnim.OLD_NORMAL, "There you go, take better care next time.")
                             stage = 43
                         }
@@ -298,7 +301,7 @@ class NulodionDialogue(player: Player? = null) : Dialogue(player) {
                     }
 
                     43 -> {
-                        player.getSavedData().activityData.isLostCannon = false
+                        player.getSavedData().activityData.lostDwarfMulticannon = false
                         for (i in CANNON_PIECES) {
                             player.inventory.add(i, player)
                         }
@@ -312,11 +315,11 @@ class NulodionDialogue(player: Player? = null) : Dialogue(player) {
                     }
 
                     111 -> {
-                        if (!player.inventory.contains(995, 750000)) {
+                        if (!inInventory(player, Items.COINS_995, 750000)) {
                             player("Oops, I don't have enough money.")
                             stage++
                         }
-                        if (player.inventory.remove(Item(995, 750000))) {
+                        if (removeItem(player, Item(Items.COINS_995, 750000))) {
                             for (i in CANNON_PIECES) {
                                 player.inventory.add(i, player)
                             }

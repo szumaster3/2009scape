@@ -7,7 +7,6 @@ import core.game.node.entity.Entity
 import core.game.node.entity.npc.NPC
 import core.game.node.entity.player.Player
 import core.game.node.scenery.Scenery
-import core.game.node.scenery.SceneryType
 import core.game.world.map.Location
 import core.game.world.map.RegionManager
 import core.game.world.map.zone.ZoneBorders
@@ -34,7 +33,6 @@ class PhoenixLair : MapArea {
         respawnTreesGlobal()
     }
 
-
     private fun respawnAllTrees() {
         val locationsPool = InPyreNeed.TREE_LOCATION_MAP.toMutableSet()
 
@@ -47,7 +45,7 @@ class PhoenixLair : MapArea {
             val newLoc = locationsPool.random()
             locationsPool.remove(newLoc)
 
-            addScenery(treeId, newLoc, 0, SceneryType.CentrepieceStraight)
+            addScenery(treeId, newLoc, 0, 10)
             currentTreeLocations[treeId] = newLoc
         }
     }

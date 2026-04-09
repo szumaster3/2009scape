@@ -1,6 +1,6 @@
 package content.minigame.mage_training.plugin.rooms
 
-import content.minigame.mage_training.plugin.MTAType
+import content.minigame.mage_training.plugin.MTARoomType
 import content.minigame.mage_training.plugin.MTAZone
 import core.api.getVarbit
 import core.api.playAudio
@@ -207,7 +207,7 @@ class TelekineticTheatrePlugin @JvmOverloads constructor(val player: Player? = n
             }
         }
         player.getSavedData().activityData.solvedMazes = solved
-        incrementPoints(player, MTAType.TELEKINETIC.ordinal, points)
+        incrementPoints(player, MTARoomType.TELEKINETIC.ordinal, points)
         this@TelekineticTheatrePlugin.update(player)
         player.setAttribute("camera", false)
         PacketRepository.send(
@@ -336,10 +336,10 @@ class TelekineticTheatrePlugin @JvmOverloads constructor(val player: Player? = n
         SECOND(Location(34, 49, 1), Location(22, 53, 1), Location(26, 48, 1), Location(13, 44, 1), Location(17, 48, 1), intArrayOf(54, 43, 12, 23)),
         THIRD(Location(54, 34, 1), Location(48, 22, 1), Location(45, 15, 1), Location(57, 22, 1), Location(53, 17, 1), intArrayOf(23, 12, 47, 58)),
         FOURTH(Location(50, 42, 1), Location(46, 49, 1), Location(57, 41, 1), Location(55, 49, 1), Location(50, 53, 1), intArrayOf(59, 48, 45, 56)),
-        FITH(Location(46, 32, 0), Location(45, 14, 0), Location(45, 23, 0), Location(47, 18, 0), Location(45, 13, 0), intArrayOf(19, 8, 40, 51)),
+        FIFTH(Location(46, 32, 0), Location(45, 14, 0), Location(45, 23, 0), Location(47, 18, 0), Location(45, 13, 0), intArrayOf(19, 8, 40, 51)),
         SIXTH(Location(26, 26, 0), Location(15, 16, 0), Location(23, 24, 0), Location(14, 20, 0), Location(14, 15, 0), intArrayOf(21, 10, 9, 10)),
         SEVENTH(Location(51, 52, 0), Location(40, 48, 0), Location(55, 50, 0), Location(39, 56, 0), Location(43, 51, 0), intArrayOf(57, 46, 37, 48)),
-        EIGTH(Location(31, 37, 2), Location(18, 54, 2), Location(28, 41, 2), Location(17, 54, 2), Location(19, 49, 2), intArrayOf(55, 44, 14, 25)),
+        EIGHTH(Location(31, 37, 2), Location(18, 54, 2), Location(28, 41, 2), Location(17, 54, 2), Location(19, 49, 2), intArrayOf(55, 44, 14, 25)),
         NINTH(Location(40, 16, 2), Location(20, 10, 2), Location(34, 15, 2), Location(11, 19, 2), Location(16, 14, 2), intArrayOf(20, 9, 10, 21)),
         TENTH(Location(27, 29, 1), Location(23, 20, 1), Location(31, 25, 1), Location(25, 16, 1), Location(23, 20, 1), intArrayOf(26, 15, 17, 28)),
     }

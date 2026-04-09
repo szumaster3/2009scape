@@ -56,7 +56,7 @@ class BonesConvertSpell : SpellListener("modern") {
             return
         }
 
-        if (!bananas && !player.savedData.activityData.isBonesToPeaches && !player.getAttribute("tablet-spell", false)) {
+        if (!bananas && !player.savedData.activityData.unlockBoneToPeachSpell && !player.getAttribute("tablet-spell", false)) {
             sendMessage(player, "You can only learn this spell from the Mage Training Arena.")
             return
         }

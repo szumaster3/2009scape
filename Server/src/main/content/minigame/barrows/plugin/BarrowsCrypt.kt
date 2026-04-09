@@ -16,11 +16,11 @@ import shared.consts.NPCs
 open class BarrowsCrypt(val index: Int, val npcId: Int, val enterLocation: Location, val exitLocation: Location) {
 
     fun openSarcophagus(player: Player, scenery: Scenery) {
-        if (index == player.getSavedData().activityData.barrowTunnelIndex) {
+        if (index == player.getSavedData().activityData.barrowsTunnelIndex) {
             player.dialogueInterpreter.open("barrow_tunnel", index)
             return
         }
-        if (player.getSavedData().activityData.barrowBrothers[index] ||
+        if (player.getSavedData().activityData.barrowsBrothers[index] ||
             player.getAttribute<Any?>("barrow:npc") != null
         ) {
             sendMessage(player, "You don't find anything.")

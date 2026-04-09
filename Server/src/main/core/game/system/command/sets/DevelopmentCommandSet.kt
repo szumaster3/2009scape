@@ -159,7 +159,7 @@ class DevelopmentCommandSet : CommandSet(Privilege.ADMIN) {
         define(name = "barehand", Privilege.ADMIN) { p, _ ->
             val newState = !getAttribute(p, GameAttributes.BARBARIAN_BAREHAND_FISHING, false)
             setAttribute(p, GameAttributes.BARBARIAN_BAREHAND_FISHING, newState)
-            p.savedData.activityData.isBarbarianFishingBarehand = newState
+            p.savedData.activityData.barbarianBarehandFishing = newState
             p.debug("Barehand fishing ${if (newState) "$GREEN enabled" else "$RED disabled"}</col>.")
         }
 

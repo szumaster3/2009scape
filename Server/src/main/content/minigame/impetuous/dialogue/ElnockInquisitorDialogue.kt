@@ -16,6 +16,7 @@ import shared.consts.NPCs
  */
 @Initializable
 class ElnockInquisitorDialogue(player: Player? = null) : Dialogue(player) {
+
     override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
         npc("Ah, good day, it's you again. What can I do for you?")
@@ -27,11 +28,7 @@ class ElnockInquisitorDialogue(player: Player? = null) : Dialogue(player) {
             0 -> if (!inInventory(player, Items.IMPLING_SCROLL_11273) && !inBank(player, Items.IMPLING_SCROLL_11273)) {
                 npc("Ah, I notice you don't own an impling collector's scroll.").also { stage = 34 }
             } else {
-                options(
-                    "Can you remind me how to catch implings again?",
-                    "Can I trade some jarred implings please?",
-                    "Do you have some spare equipment I can use?",
-                ).also { stage++ }
+                options("Can you remind me how to catch implings again?", "Can I trade some jarred implings please?", "Do you have some spare equipment I can use?").also { stage++ }
             }
 
             1 -> when (buttonId) {
@@ -52,11 +49,11 @@ class ElnockInquisitorDialogue(player: Player? = null) : Dialogue(player) {
             }
 
             30 -> {
-                if (!player.getSavedData().activityData.isElnockSupplies) {
-                    player.getSavedData().activityData.isElnockSupplies = true
-                    player.inventory.add(Item(10010), player)
-                    player.inventory.add(Item(11262, 1), player)
-                    player.inventory.add(Item(11260, 6), player)
+                if (!player.getSavedData().activityData.elnockNPCSupplies) {
+                    player.getSavedData().activityData.elnockNPCSupplies = true
+                    player.inventory.add(Item(Items.BUTTERFLY_NET_10010), player)
+                    player.inventory.add(Item(Items.IMP_REPELLENT_11262, 1), player)
+                    player.inventory.add(Item(Items.IMPLING_JAR_11260, 6), player)
                     npc("Here you go!")
                     stage++
                 } else {

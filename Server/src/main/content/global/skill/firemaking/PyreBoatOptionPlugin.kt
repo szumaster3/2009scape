@@ -55,7 +55,7 @@ class PyreBoatOptionPlugin : OptionHandler() {
         }
 
         val hasStarted = player.getAttribute(BarbarianTraining.PYRESHIP_START, false)
-        val hasCompleted = player.savedData.activityData.isBarbarianFiremakingPyre
+        val hasCompleted = player.savedData.activityData.barbarianPyreBoat
 
         if (!hasCompleted) {
             if (!hasStarted) {
@@ -157,13 +157,9 @@ class PyreBoatOptionPlugin : OptionHandler() {
             override fun stop() {
                 try {
                     player.unlock()
-                    if (!player.savedData.activityData.isBarbarianFiremakingPyre) {
-                        player.savedData.activityData.isBarbarianFiremakingPyre = true
-                        sendDialogueLines(
-                            player,
-                            "You feel you have learned more of barbarian ways. Otto might wish",
-                            "to talk to you more."
-                        )
+                    if (!player.savedData.activityData.barbarianPyreBoat) {
+                        player.savedData.activityData.barbarianPyreBoat = true
+                        sendDialogueLines(player, "You feel you have learned more of barbarian ways. Otto might wish", "to talk to you more.")
                     }
                     replace(Objects.PYRE_SITE_25286, scenery, player)
                 } finally {

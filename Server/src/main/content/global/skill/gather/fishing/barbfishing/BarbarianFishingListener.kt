@@ -96,7 +96,7 @@ class BarbarianFishingListener : InteractionListener {
                 "Otto might wish to talk to you more."
             )
             setAttribute(player, BarbarianTraining.FISHING_BASE, true)
-            player.savedData.activityData.isBarbarianFishingRod = true
+            player.savedData.activityData.barbarianFishing = true
         }
     }
 

@@ -29,7 +29,7 @@ class Patch(
     var compost = CompostType.NONE
     var protectionPaid = false
     var cropLives = 3
-    val checkablePatches = arrayOf(PatchType.TREE_PATCH, PatchType.BUSH_PATCH, PatchType.FRUIT_TREE_PATCH, PatchType.SPIRIT_TREE_PATCH, PatchType.CACTUS_PATCH)
+    val checkablePatches = arrayOf(PatchType.TREE_PATCH, PatchType.BUSH_PATCH, PatchType.FRUIT_TREE_PATCH, PatchType.SPIRIT_TREE_PATCH, PatchType.CACTUS_PATCH, PatchType.CALQUAT_TREE_PATCH)
 
     fun setNewHarvestAmount() {
         val compostMod =
@@ -210,7 +210,10 @@ class Patch(
                 if (isDead) setVisualState(getMushroomDeathValue())
                 else if (isDiseased && !isDead) setVisualState(getMushroomDiseaseValue())
             }
-
+            PatchType.CALQUAT_TREE_PATCH -> {
+                if(isDead) setVisualState(getCalquatDeathValue())
+                else if(isDiseased && !isDead) setVisualState(getCalquatDiseaseValue())
+            }
             else -> {}
         }
     }
@@ -322,13 +325,14 @@ class Patch(
 
     private fun getCactusDeathValue(): Int = (plantable?.value ?: 0) + currentGrowthStage + 16
 
-    private fun getMushroomDiseaseValue(): Int {
-        return (plantable?.value ?: 0) + currentGrowthStage + 11
-    }
+    private fun getCalquatDiseaseValue(): Int = (plantable?.value ?: 0) + currentGrowthStage + 14
 
-    private fun getMushroomDeathValue(): Int {
-        return (plantable?.value ?: 0) + currentGrowthStage + 16
-    }
+    private fun getCalquatDeathValue(): Int = (plantable?.value ?: 0) + currentGrowthStage + 21
+
+    private fun getMushroomDiseaseValue(): Int = (plantable?.value ?: 0) + currentGrowthStage + 11
+
+    private fun getMushroomDeathValue(): Int = (plantable?.value ?: 0) + currentGrowthStage + 16
+
 
     private fun getHerbDiseaseValue(): Int =
         if (plantable?.value ?: -1 <= 103) {
@@ -389,17 +393,8 @@ class Patch(
             isCheckHealth = true
         }
 
-        if ((
-                    patch.type == PatchType.FRUIT_TREE_PATCH ||
-                            patch.type == PatchType.BUSH_PATCH ||
-                            patch.type == PatchType.CACTUS_PATCH
-                    ) &&
-            plantable?.stages == currentGrowthStage
-        ) {
-            if ((patch.type == PatchType.BUSH_PATCH && getFruitOrBerryCount() < 4) ||
-                (patch.type == PatchType.FRUIT_TREE_PATCH && getFruitOrBerryCount() < 6) ||
-                (patch.type == PatchType.CACTUS_PATCH && getFruitOrBerryCount() < 3)
-            ) {
+        if ((patch.type == PatchType.FRUIT_TREE_PATCH || patch.type == PatchType.BUSH_PATCH || patch.type == PatchType.CACTUS_PATCH || patch.type == PatchType.CALQUAT_TREE_PATCH) && plantable?.stages == currentGrowthStage) {
+            if ((patch.type == PatchType.BUSH_PATCH && getFruitOrBerryCount() < 4) || (patch.type == PatchType.FRUIT_TREE_PATCH && getFruitOrBerryCount() < 6) || (patch.type == PatchType.CACTUS_PATCH && getFruitOrBerryCount() < 3) || (patch.type == PatchType.CALQUAT_TREE_PATCH && getFruitOrBerryCount() < 6)) {
                 setCurrentState(getCurrentState() + 1)
             }
         }
@@ -409,7 +404,7 @@ class Patch(
             }
         }
 
-        if (plantable?.stages ?: 0 > currentGrowthStage && !isGrown()) {
+        if ((plantable?.stages ?: 0) > currentGrowthStage && !isGrown()) {
             currentGrowthStage++
             setCurrentState(getCurrentState() + 1)
             isWatered = false
@@ -462,7 +457,7 @@ class Patch(
 
     fun getStageGrowthMinutes(): Int {
         var minutes = patch.type.stageGrowthTime
-        if (patch.type == PatchType.FRUIT_TREE_PATCH && isGrown()) {
+        if (patch.type == PatchType.FRUIT_TREE_PATCH || patch.type == PatchType.CALQUAT_TREE_PATCH && isGrown()) {
             minutes = 40
         }
         return minutes

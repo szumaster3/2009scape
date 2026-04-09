@@ -76,13 +76,7 @@ class FireMakingListener : InteractionListener {
          */
 
         onUseWith(IntType.ITEM, BARB_TOOLS, *LOG_IDS) { player, used, with ->
-
-            if (!player.savedData.activityData.isBarbarianFiremakingBow && getAttribute(
-                    player,
-                    BarbarianTraining.FM_START,
-                    false
-                )
-            ) {
+            if (!player.savedData.activityData.barbarianFiremaking && getAttribute(player, BarbarianTraining.FM_START, false)) {
                 sendDialogue(
                     player, "You must begin the relevant section of Otto Godblessed's barbarian training."
                 )
@@ -105,17 +99,8 @@ class FireMakingListener : InteractionListener {
 
     private fun checkRequirements(item: Item): String? = when {
         item.id == Items.DARK_BOW_11235 || item.id == Items.DARK_BOW_13405 -> "The innate darkness of the bow sucks all the heat from your firemaking attempt. You realise that this type of bow is useless for firelighting."
-
-        item.name.contains("CRYSTAL BOW", true) || item.name.contains(
-            "CRYSTAL SHIELD",
-            true
-        ) -> "The bow resists all attempts to light the fire. It seems that the sentient tools of the elves don't approve of you burning down forests."
-
-        item.id in listOf(
-            Items.COMP_OGRE_BOW_4827,
-            Items.OGRE_BOW_2883
-        ) -> "This bow is vast, clumsy and most of a tree. You realise that this type of bow is useless for firelighting."
-
+        item.name.contains("CRYSTAL BOW", true) || item.name.contains("CRYSTAL SHIELD", true) -> "The bow resists all attempts to light the fire. It seems that the sentient tools of the elves don't approve of you burning down forests."
+        item.id in listOf(Items.COMP_OGRE_BOW_4827, Items.OGRE_BOW_2883) -> "This bow is vast, clumsy and most of a tree. You realise that this type of bow is useless for firelighting."
         else -> null
     }
 

@@ -84,7 +84,7 @@ class WildernessPlugin : InteractionListener {
                 Scenery.LEVER_1814 -> openDialogue(player, WildernessLeverDialogue())
 
                 Scenery.LEVER_1815, Scenery.LEVER_5959, Scenery.LEVER_5960, Scenery.LEVER_9706, Scenery.LEVER_9707 -> {
-                    if (!player.savedData.activityData.hasKilledKolodion() && node.id == Scenery.LEVER_9706) {
+                    if (!player.savedData.activityData.hasCompletedMageArena() && node.id == Scenery.LEVER_9706) {
                         sendNPCDialogue(player, NPCs.KOLODION_905, "You're not allowed in there. Come downstairs if you want to enter my arena.")
                         return@on false
                     }

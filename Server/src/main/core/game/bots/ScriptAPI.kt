@@ -466,22 +466,15 @@ class ScriptAPI(private val bot: Player) {
      * @param loc the location to find a path to.
      * @author Ceikry
      */
-    private fun walkToIterator(loc: Location) {
+    private fun walkToIterator(loc: Location){
         var diffX = loc.x - bot.location.x
         var diffY = loc.y - bot.location.y
 
         val vec = Vector.betweenLocs(bot.location, loc)
         val norm = vec.normalized()
-        val tiles =
-            kotlin.math.min(kotlin.math.floor(vec.magnitude()).toInt(), ServerConstants.MAX_PATHFIND_DISTANCE - 1)
+        val tiles = kotlin.math.min(kotlin.math.floor(vec.magnitude()).toInt(), ServerConstants.MAX_PATHFIND_DISTANCE - 1)
         val loc = bot.location.transform(norm * tiles)
-        bot.pulseManager.run(
-            object : MovementPulse(bot, loc) {
-                override fun pulse(): Boolean {
-                    return true
-                }
-            }
-        )
+        bot.pulseManager.run(object : MovementPulse(bot, loc) { override fun pulse() : Boolean { return true } })
     }
 
     /**

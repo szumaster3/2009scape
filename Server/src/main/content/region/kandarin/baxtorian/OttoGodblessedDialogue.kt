@@ -1,6 +1,5 @@
 package content.region.kandarin.baxtorian
 
-import content.data.GameAttributes
 import core.api.*
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim
@@ -34,15 +33,15 @@ class OttoGodblessedDialogue(player: Player? = null) : Dialogue(player) {
                 player,
                 "Choose an option:",
                 "Please, supply me details of your cunning with harpoons.",
-                if (player.savedData.activityData.isBarbarianFishingRod)
+                if (player.savedData.activityData.barbarianFishing)
                     "What was that secret knowledge of Herblore we talked of?"
                 else
                     "Are there any ways to use a fishing rod which I might learn?",
-                if (player.savedData.activityData.isBarbarianFiremakingBow)
+                if (player.savedData.activityData.barbarianFiremaking)
                     "I have completed Firemaking with a bow. What follows this?"
                 else
                     "My mind is ready for your Firemaking wisdom, please instruct me.",
-                if (player.savedData.activityData.isBarbarianSmithingSpear)
+                if (player.savedData.activityData.barbarianSpearSmithing)
                     "Tell me more about the one-handed spears."
                 else
                     "Tell me more about the use of spears."
@@ -82,40 +81,40 @@ class OttoGodblessedDialogue(player: Player? = null) : Dialogue(player) {
                     player,
                     "Choose an option:",
                     "Please, supply me details of your cunning with harpoons.",
-                    if (player.savedData.activityData.isBarbarianFishingRod) "What was that secret knowledge of Herblore we talked of?" else "Are there any ways to use a fishing rod which I might learn?",
-                    if (player.savedData.activityData.isBarbarianFiremakingBow) "I have completed Firemaking with a bow. What follows this?" else if(player.getAttribute(
-                            BarbarianTraining.PYRESHIP_START, false) && !player.savedData.activityData.isBarbarianFiremakingPyre) "Could you tell me more of these spirits you continually refer to?" else "My mind is ready for your Firemaking wisdom, please instruct me.",
-                    if (player.savedData.activityData.isBarbarianSmithingSpear) "I've created a spear!" else "Tell me more about the use of spears."
+                    if (player.savedData.activityData.barbarianFishing) "What was that secret knowledge of Herblore we talked of?" else "Are there any ways to use a fishing rod which I might learn?",
+                    if (player.savedData.activityData.barbarianFiremaking) "I have completed Firemaking with a bow. What follows this?" else if(player.getAttribute(
+                            BarbarianTraining.PYRESHIP_START, false) && !player.savedData.activityData.barbarianPyreBoat) "Could you tell me more of these spirits you continually refer to?" else "My mind is ready for your Firemaking wisdom, please instruct me.",
+                    if (player.savedData.activityData.barbarianSpearSmithing) "I've created a spear!" else "Tell me more about the use of spears."
                 )
                 setAttribute(player, BarbarianTraining.BARBARIAN_TRAINING, true)
                 stage = 14
             }
             14 -> when (buttonId) {
                 1 -> player("Please, supply me details of your cunning with harpoons.").also { stage = 116 }
-                2 -> if (player.savedData.activityData.isBarbarianFishingRod || player.savedData.activityData.isBarbarianFishingBarehand || getAttribute(player, BarbarianTraining.FISHING_FULL, false)) {
+                2 -> if (player.savedData.activityData.barbarianFishing || player.savedData.activityData.barbarianBarehandFishing || getAttribute(player, BarbarianTraining.FISHING_FULL, false)) {
                     player("What was that secret knowledge of Herblore we talked of?")
                     stage = 110
                 } else {
                     player("Are there any ways to use a fishing rod which I might learn?")
                     stage = 100
                 }
-                3 -> if (!player.savedData.activityData.isBarbarianFiremakingPyre) {
+                3 -> if (!player.savedData.activityData.barbarianPyreBoat) {
                     npcl(FaceAnim.NEUTRAL, "The next stage is quite complex, so listen well...")
                     stage = 200
-                } else if(player.savedData.activityData.isBarbarianFiremakingBow) {
+                } else if(player.savedData.activityData.barbarianFiremaking) {
                     player("My mind is ready for your Firemaking wisdom, please instruct me.")
                     stage = 25
-                } else if(player.getAttribute(BarbarianTraining.PYRESHIP_START, false) && !player.savedData.activityData.isBarbarianFiremakingPyre){
+                } else if(player.getAttribute(BarbarianTraining.PYRESHIP_START, false) && !player.savedData.activityData.barbarianPyreBoat){
                     player("Could you tell me more of these spirits you continually refer to?")
                     stage = 212
                 } else {
                     player("My mind is ready for your Firemaking wisdom, please instruct me.")
                     stage = 15
                 }
-                4 -> if (player.savedData.activityData.isBarbarianSmithingSpear) {
+                4 -> if (player.savedData.activityData.barbarianSpearSmithing) {
                     npc(FaceAnim.NEUTRAL, "The manufacture of spears is now yours as a speciality.", "Use your skill well.")
                     stage = 300
-                } else if(player.savedData.activityData.isBarbarianSmithingSpear && player.getAttribute(
+                } else if(player.savedData.activityData.barbarianSpearSmithing && getAttribute(player,
                         BarbarianTraining.FISHING_FULL, false)) {
                     player(FaceAnim.HALF_ASKING,"What of the one handed spears of which you spoke?")
                     stage = 308
@@ -168,19 +167,21 @@ class OttoGodblessedDialogue(player: Player? = null) : Dialogue(player) {
 
             // Herblore
             110 -> if (!inInventory(player, Items.ATTACK_MIX2_11429)) {
-                npc("Do you have my potion?").also { stage++ }
-            } else if (player.savedData.activityData.isBarbarianHerbloreAttackMix && !getAttribute(player, BarbarianTraining.HERBLORE_FULL, false)) {
+                npc("Do you have my potion?")
+                stage = 111
+            } else if (player.savedData.activityData.barbarianHerblore && !getAttribute(player, BarbarianTraining.HERBLORE_FULL, false)) {
                 player("I feel I am missing some vital information about your", "need for this potion, though I often have this suspicion.")
                 stage = 114
             } else {
                 removeItem(player, Item(Items.ATTACK_MIX2_11429, 1))
+                setAttribute(player, BarbarianTraining.HERBLORE_START, true)
                 npc(FaceAnim.HAPPY, "I see you have my potion. I will say no more than that", "I am eternally grateful.")
                 stage = 113
             }
 
             111 -> player("What was it you needed again?").also { stage++ }
             112 -> npc("Bring me a lesser attack potion combined with fish roe.", "There is more importance in this than you will ever", "know.").also {
-                player.savedData.activityData.setBarbarianHerbloreAttackMix(true)
+                player.savedData.activityData.barbarianHerblore = true
                 stage = 20
             }
 
@@ -198,7 +199,7 @@ class OttoGodblessedDialogue(player: Player? = null) : Dialogue(player) {
             122 -> npc("Oh, my mind slipped for a moment, this method does", "indeed work with sharks - though in this case the action", "must be more of a frenzied thrashing of the arm than a", "wriggle.").also { stage++ }
             123 -> {
                 playerl(FaceAnim.NEUTRAL, "...and I thought Fishing was a safe way to pass the time.")
-                player.savedData.activityData.setBarbarianFishingBarehand(true)
+                player.savedData.activityData.barbarianBarehandFishing = true
                 stage = 20
             }
 
@@ -243,7 +244,7 @@ class OttoGodblessedDialogue(player: Player? = null) : Dialogue(player) {
             305 -> npcl(FaceAnim.NEUTRAL, "You may not progress in the use of spears until you have completed this mission.").also { stage = 20 }
             306 -> player(FaceAnim.HALF_ASKING, "Can i just use some metal on an anvil, or is there", "something else involved?").also { stage++ }
             307 -> npc(FaceAnim.NEUTRAL, "If you use our special barbarian anvil here, you will", "find it ideal. Other anvils are not sturdy enough or", "shaped appropriately for the forging work involved", "Make any of our spears and return.").also {
-                player.savedData.activityData.setBarbarianSmithingSpear(true)
+                player.savedData.activityData.barbarianSpearSmithing = true
                 stage = 20
             }
 
@@ -253,7 +254,7 @@ class OttoGodblessedDialogue(player: Player? = null) : Dialogue(player) {
             311 -> npc(FaceAnim.NEUTRAL, "Before you may use such a weapon in anger, you","must make an example. Only then will you fully", "understand the poise and techniques involved.").also { stage++ }
             312 -> player(FaceAnim.HALF_ASKING,"So I must create a hasta? I see. This makes sense.").also { stage++ }
             313 -> npc(FaceAnim.NEUTRAL, "Indeed. You may use our special anvil for this spear", "type too. The ways of black and dragon hastae are", "beyond our knowledge, however.").also {
-                player.savedData.activityData.setBarbarianSmithingHasta(true)
+                player.savedData.activityData.barbarianHastaeSmithing = true
                 stage = 20
             }
 
@@ -305,16 +306,14 @@ class OttoGodblessedDialogue(player: Player? = null) : Dialogue(player) {
      * @param player the player.
      */
     private fun toggleBarbarianFishing(player: Player) {
-        val barbFishing = player.getAttribute(GameAttributes.BARBARIAN_BAREHAND_FISHING, false)
+        val data = player.savedData.activityData
 
-        if (barbFishing) {
-            // Revert to default fishing
-            player.setAttribute(GameAttributes.BARBARIAN_BAREHAND_FISHING, false)
-            sendMessage(player, "You revert to default fishing techniques.")
+        data.barbarianBarehandFishing = !data.barbarianBarehandFishing
+
+        if (data.barbarianBarehandFishing) {
+            sendMessage(player, "You switch to barbarian fishing techniques.")
         } else {
-            // Switch to barbarian fishing
-            player.setAttribute(GameAttributes.BARBARIAN_BAREHAND_FISHING, true)
-            sendMessage(player, "You revert to barbarian fishing techniques.")
+            sendMessage(player, "You revert to standard fishing techniques.")
         }
     }
 

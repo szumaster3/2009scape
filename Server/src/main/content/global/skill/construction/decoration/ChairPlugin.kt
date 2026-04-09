@@ -9,7 +9,6 @@ import core.game.interaction.OptionHandler
 import core.game.node.Node
 import core.game.node.entity.player.Player
 import core.game.node.scenery.Scenery
-import core.game.node.scenery.SceneryType
 import core.game.system.task.Pulse
 import core.game.world.map.Direction
 import core.game.world.update.flag.context.Animation
@@ -33,7 +32,7 @@ class ChairPlugin : OptionHandler() {
         val scenery = node as? Scenery ?: return false
         val chair = Chairs.fromId(scenery.id) ?: return false
 
-        val animID = if (scenery.type == SceneryType.CentrepieceDiagonal) chair.anim + 1 else chair.anim
+        val animID = if (scenery.type == 11) chair.anim + 1 else chair.anim
         val sitAnimID = chair.sitAnim
 
         forceMove(player, player.location, scenery.location, 0, 30, Direction.NORTH, sitAnimID)

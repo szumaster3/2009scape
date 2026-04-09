@@ -89,7 +89,7 @@ class AgilityPyramidCourse : AgilityCourse {
                     "pyramid.",
                 )
                 player.properties.teleportLocation = Location.create(3364, 2830, 0)
-                player.getSavedData().activityData.isTopGrabbed = false
+                player.getSavedData().activityData.topGrabbed = false
             }
         }
         return true
@@ -514,7 +514,7 @@ class AgilityPyramidCourse : AgilityCourse {
         player: Player,
         scenery: Scenery,
     ) {
-        if (player.getSavedData().activityData.isTopGrabbed) {
+        if (player.getSavedData().activityData.topGrabbed) {
             player.packetDispatch.sendMessage("You've already claimed this!")
         } else {
             player.animate(Animation.create(3063))
@@ -527,7 +527,7 @@ class AgilityPyramidCourse : AgilityCourse {
                             return true
                         }
                         addConfig(player, 10869, 1, true)
-                        player.getSavedData().activityData.isTopGrabbed = true
+                        player.getSavedData().activityData.topGrabbed = true
                         player.inventory.add(PYRAMID_TOP, player)
                         player.dialogueInterpreter.sendItemMessage(PYRAMID_TOP, "You find a golden pyramid!")
                         playJingle(player, 151)

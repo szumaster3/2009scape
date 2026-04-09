@@ -22,8 +22,8 @@ class BarbarianSmithingPlugin : InteractionListener {
         onUseWith(IntType.SCENERY, BAR_ITEM_IDS, Scenery.BARBARIAN_ANVIL_25349) { player, used, _ ->
             val weapon = BarbarianWeapon.product[used.id] ?: return@onUseWith true
 
-            val canMakeSpear = player.savedData.activityData.isBarbarianSmithingSpear
-            val canMakeHasta = player.savedData.activityData.isBarbarianSmithingHasta
+            val canMakeSpear = player.savedData.activityData.barbarianSpearSmithing
+            val canMakeHasta = player.savedData.activityData.barbarianHastaeSmithing
 
             if (!canMakeSpear && !canMakeHasta) {
                 sendMessage(player, "You haven't learned to smith these weapons yet.")

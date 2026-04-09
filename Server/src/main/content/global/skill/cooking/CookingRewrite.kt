@@ -14,15 +14,19 @@ import shared.consts.Scenery as Objects
 
 class CookingRewrite : InteractionListener {
 
-    private val RAW_FOODS: IntArray = intArrayOf(
-        *CookableItems.values().map { it.raw }.toIntArray(),
-        Items.COOKED_MEAT_2142,
-        Items.RAW_BEEF_2132,
-        Items.RAW_BEAR_MEAT_2136,
-        Items.SEAWEED_401,
-        Items.BOWL_OF_WATER_1921,
-        Items.CUP_OF_WATER_4458
-    )
+    val RAW_FOODS: IntArray
+
+    init {
+        val list = CookableItems.values().map { it.raw }.toMutableList()
+        list.add(Items.COOKED_MEAT_2142)
+        list.add(Items.RAW_BEEF_2132)
+        list.add(Items.RAW_BEAR_MEAT_2136)
+        list.add(Items.BARLEY_6006)
+        list.add(Items.SEAWEED_401)
+        list.add(Items.BOWL_OF_WATER_1921)
+        list.add(Items.CUP_OF_WATER_4458)
+        RAW_FOODS = list.toIntArray()
+    }
 
     override fun defineListeners() {
         onUseWith(IntType.SCENERY, RAW_FOODS, *COOKING_OBJS) { player, used, with ->
@@ -40,16 +44,18 @@ class CookingRewrite : InteractionListener {
                     return@onUseWith true
                 }
 
-                Items.BREAD_DOUGH_2307, Items.UNCOOKED_CAKE_1889 -> {
+                Items.BREAD_DOUGH_2307, Items.UNCOOKED_CAKE_1889, Items.BARLEY_6006 -> {
                     if (!isRange) {
                         sendMessage(player, "You need to cook this on a range.")
                         return@onUseWith false
                     }
                 }
+
                 Items.BOWL_OF_WATER_1921 -> {
                     cook(player, obj, Items.BOWL_OF_WATER_1921, Items.BOWL_OF_HOT_WATER_4456, 1)
                     return@onUseWith true
                 }
+
                 Items.CUP_OF_WATER_4458 -> {
                     cook(player, obj, Items.CUP_OF_WATER_4458, Items.CUP_OF_HOT_WATER_4460, 1)
                     return@onUseWith true

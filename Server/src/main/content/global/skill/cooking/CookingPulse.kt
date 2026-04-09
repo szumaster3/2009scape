@@ -233,6 +233,10 @@ open class CookingPulse(
             return "You burn the ${food.name.lowercase()} into soda ash."
         }
 
+        if (product.id == Items.BARLEY_MALT_6008) {
+            return "The barley roasts into barley malt."
+        }
+
         // Handle boiling water
         if (product.id in listOf(Items.BOWL_OF_HOT_WATER_4456, Items.CUP_OF_HOT_WATER_4460)) {
             return if (burned) "You accidentally let the water boil over." else "You boil the water."

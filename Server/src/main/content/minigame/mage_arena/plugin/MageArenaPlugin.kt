@@ -45,7 +45,7 @@ class MageArenaPlugin: InteractionListener {
         }
 
         on(SPARKLING_POOL_SCENERY_IDS, IntType.SCENERY, "step-into") { player, node ->
-            val hasCompleteMageArena = player.getSavedData().activityData.hasKilledKolodion()
+            val hasCompleteMageArena = player.getSavedData().activityData.hasCompletedMageArena()
             if (node.id != Scenery.SPARKLING_POOL_2879) {
                 if (!hasCompleteMageArena) {
                     sendMessage(player, "You step into the pool.")

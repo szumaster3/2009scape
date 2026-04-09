@@ -9,7 +9,7 @@ import shared.consts.Components
 import shared.consts.Items
 import shared.consts.NPCs
 
-class ElnockInquisitorPlugin : InteractionListener {
+class ElnockOptionPlugin : InteractionListener {
     override fun defineListeners() {
         on(NPCs.ELNOCK_INQUISITOR_6070, IntType.NPC, "trade") { player, _ ->
             openInterface(player, Components.ELNOCK_EXCHANGE_540)
@@ -17,18 +17,14 @@ class ElnockInquisitorPlugin : InteractionListener {
         }
 
         on(NPCs.ELNOCK_INQUISITOR_6070, IntType.NPC, "quick-start") { player, _ ->
-            if (!player.savedData.activityData.isElnockSupplies) {
-                player.savedData.activityData.isElnockSupplies = true
+            if (!player.savedData.activityData.elnockNPCSupplies) {
+                player.savedData.activityData.elnockNPCSupplies = true
                 addItemOrDrop(player, Items.BUTTERFLY_NET_10010, 1)
                 addItemOrDrop(player, Items.IMP_REPELLENT_11262, 1)
                 addItemOrDrop(player, Items.IMPLING_JAR_11260, 6)
                 sendNPCDialogue(player, NPCs.ELNOCK_INQUISITOR_6070, "Here you go!")
             } else {
-                sendNPCDialogue(
-                    player,
-                    NPCs.ELNOCK_INQUISITOR_6070,
-                    "Since I have already given you some equipment for free, I'll be willing to sell you some now.",
-                )
+                sendNPCDialogue(player, NPCs.ELNOCK_INQUISITOR_6070, "Since I have already given you some equipment for free, I'll be willing to sell you some now.")
             }
             return@on true
         }

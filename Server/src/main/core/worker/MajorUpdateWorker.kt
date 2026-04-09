@@ -21,126 +21,87 @@ import java.util.*
 import kotlin.system.exitProcess
 
 /**
- * Responsible for executing the main server update loop.
+ * Primary game loop worker responsible for executing the **main server tick cycle**.
+ *
+ * This worker runs in a dedicated thread and performs all critical game operations
+ * on a fixed interval (~600ms).
+ *
+ * ## Handles:
+ *
+ * - Processing incoming packets.
+ * - Updating world pulses (tasks/events).
+ * - Running entity update sequences (players, NPCs, etc).
+ * - Flushing outgoing packets.
+ * - Managing player connectivity and fail-safe disconnections.
+ * - Executing daily/weekly reset logic.
+ *
+ * The update loop is tightly coupled with [GameWorld] and should be considered
+ * the **heartbeat of the server**.
+ *
+ * ### Tick Flow Overview
+ *
+ * Each cycle performs:
+ * 1. Network processing ([PacketProcessor])
+ * 2. Disconnection queue handling
+ * 3. Pulse/task updates ([GameWorld.Pulser])
+ * 4. Entity update sequence ([UpdateSequence])
+ * 5. Global tick increment
+ * 6. Plugin manager ticking ([Managers])
+ * 7. Packet flushing ([PacketWriteQueue])
+ *
+ * ### Offline Mode
+ * If [Server.networkReachability] is not reachable:
+ * - Only minimal ticking is performed.
+ * - No packet processing or entity updates occur.
+ *
+ * ### Safety Mechanisms
+ * - Players inactive without proper disconnect are forcefully removed.
+ * - Players exceeding ping timeout are disconnected.
+ *
+ * ### Restart Handling
+ * At midnight (00:00):
+ * - Daily and weekly entries are cleared.
+ * - Optional automatic server restart is triggered.
+ *
+ * @author Ceikry
  */
 class MajorUpdateWorker {
 
-    companion object {
-        private const val ENABLE_DEBUG_LOGGING = false
-        private const val CYCLE_TIME_NANOSECONDS = 600_000_000L
-        private const val SPINWAIT_TIME_NANOSECONDS = 20_000_000L
-        private const val ONE_MILLISECOND_IN_NANOSECONDS = 1_000_000L
-
-        /**
-         * Formats a Long value with commas for readability.
-         */
-        private fun Long.format(): String = "%,d".format(this)
-
-        /**
-         * Performs a spin-wait loop to maintain consistent tick timing.
-         */
-        private fun spinwait(deviation: Long, start: Long, end: Long): ElapsedCycle {
-            val consumed = max(0, (end - start) + deviation)
-            if (consumed >= CYCLE_TIME_NANOSECONDS) {
-                return ElapsedCycle(start, end, 0, 0, 0, 0, 0, System.nanoTime())
-            }
-
-            val sleepTimeNanos = CYCLE_TIME_NANOSECONDS - consumed
-            val toSleepMillis = if (sleepTimeNanos < SPINWAIT_TIME_NANOSECONDS) 0
-            else (sleepTimeNanos - SPINWAIT_TIME_NANOSECONDS) / ONE_MILLISECOND_IN_NANOSECONDS
-
-            val sleptNano = if (toSleepMillis > 0) {
-                val sleepStart = System.nanoTime()
-                Thread.sleep(toSleepMillis)
-                val sleepEnd = System.nanoTime()
-                max(0, sleepEnd - sleepStart)
-            } else 0L
-
-            val onSpinStart = System.nanoTime()
-            val exit = end + sleepTimeNanos
-            var spinCount = 0L
-
-            while (true) {
-                val now = System.nanoTime()
-                if (now >= exit) {
-                    return ElapsedCycle(
-                        start, end, spinCount, now - exit, toSleepMillis, sleptNano,
-                        max(0, now - onSpinStart), now
-                    )
-                }
-                Thread.onSpinWait()
-                spinCount++
-            }
-        }
-
-        /**
-         * Represents timing details of a single update cycle.
-         */
-        private data class ElapsedCycle(
-            val startNs: Long,
-            val endNs: Long,
-            val spinwaitCount: Long,
-            val deviationNs: Long,
-            val requestedSleepMs: Long,
-            val sleptNs: Long,
-            val onSpinWaitTimeNs: Long,
-            val exitNs: Long,
-        ) {
-            val elapsedNanoseconds: Long get() = max(0, endNs - startNs)
-            val sleptNanoseconds: Long get() = max(0, sleptNs + onSpinWaitTimeNs)
-            val totalNs: Long get() = max(0, exitNs - startNs)
-
-            override fun toString(): String {
-                return "ElapsedCycle(" +
-                        "startNs=${startNs.format()}, " +
-                        "endNs=${endNs.format()}, " +
-                        "spinwaitCount=${spinwaitCount.format()}, " +
-                        "deviationNs=${deviationNs.format()}, " +
-                        "requestedSleepMs=${requestedSleepMs.format()}, " +
-                        "sleptNs=${sleptNs.format()}, " +
-                        "onSpinWaitTimeNs=${onSpinWaitTimeNs.format()}, " +
-                        "exitNs=${exitNs.format()}, " +
-                        "elapsedNanoseconds=${elapsedNanoseconds.format()}, " +
-                        "sleptNanoseconds=${sleptNanoseconds.format()}, " +
-                        "totalNs=${totalNs.format()}" +
-                        ")"
-            }
-        }
-    }
-
     /**
-     * Check the worker loop is currently running.
+     * Indicates whether the worker loop is currently running.
      */
     var running: Boolean = false
 
     /**
-     * Check the worker thread has started.
+     * Indicates whether the worker thread has been started at least once.
      */
     var started = false
 
-    private var deviation: Long = 0
-
     /**
-     * Sequence of updates executed each tick.
+     * Handles entity update sequencing (players, NPCs, masks, etc.).
      */
     val sequence = UpdateSequence()
 
     /**
-     * Date formatter for checking daily resets.
+     * Time formatter used for daily reset checks (HHmmss).
      */
     val sdf = SimpleDateFormat("HHmmss")
 
     /**
-     * The main worker thread executing the update loop.
+     * Internal worker thread executing the main tick loop.
      */
     val worker = Thread {
         Thread.currentThread().name = "Major Update Worker"
         started = true
-        var start = System.nanoTime()
+
+        // Small startup delay to allow server systems to initialize
+        Thread.sleep(600L)
 
         while (running) {
             Grafana.startTick()
+            val start = System.currentTimeMillis()
 
+            // Server heartbeat hook
             Server.heartbeat()
 
             if (Server.networkReachability == NetworkReachability.REACHABLE) {
@@ -149,15 +110,16 @@ class MajorUpdateWorker {
                 tickOffline()
             }
 
-            /*
-             * Disconnect inactive players.
-             */
-
+            // Player safety checks (timeouts / invalid states)
             for (player in Repository.players.filter { !it.isArtificial }) {
+
+                // Ping timeout check (20 seconds)
                 if (System.currentTimeMillis() - player.session.lastPing > 20000L) {
                     player.session.lastPing = Long.MAX_VALUE
                     player.session.disconnect()
                 }
+
+                // Failsafe: player inactive but not queued for disconnect
                 if (!player.isActive &&
                     !Repository.disconnectionQueue.contains(player.name) &&
                     player.getAttribute("logged-in-fully", false)
@@ -166,32 +128,39 @@ class MajorUpdateWorker {
                     log(
                         MajorUpdateWorker::class.java,
                         Log.WARN,
-                        "Manually disconnecting ${player.name} because they were set as inactive without being disconnected. This is bad.",
+                        "Manually disconnecting ${player.name} due to invalid inactive state."
                     )
                 }
             }
 
-            /*
-             * Daily / weekly resets.
-             */
-
+            // Daily reset handling (midnight)
             if (sdf.format(Date()).toInt() == 0) {
+
+                // Weekly reset (Monday)
                 if (GameWorld.checkDay() == 1) {
                     ServerStore.clearWeeklyEntries()
                 }
+
                 ServerStore.clearDailyEntries()
+
+                // Optional scheduled restart
                 if (ServerConstants.DAILY_RESTART) {
                     for (player in Repository.players.filter { !it.isArtificial }) {
                         player.packetDispatch.sendSystemUpdate(500)
                     }
+
                     ServerConstants.DAILY_RESTART = false
+
                     submitWorldPulse(object : Pulse(100) {
                         var counter = 0
+
                         override fun pulse(): Boolean {
                             counter++
+
                             for (player in Repository.players.filter { !it.isArtificial }) {
                                 player.packetDispatch.sendSystemUpdate((5 - counter) * 100)
                             }
+
                             if (counter == 5) {
                                 exitProcess(0)
                             }
@@ -201,25 +170,27 @@ class MajorUpdateWorker {
                 }
             }
 
-            val end = System.nanoTime()
-            val elapsedCycle = spinwait(deviation, start, end)
-            Grafana.totalTickTime = (elapsedCycle.totalNs / 1_000_000).toInt()
+            val end = System.currentTimeMillis()
 
-            if (ENABLE_DEBUG_LOGGING) {
-                log(MajorUpdateWorker::class.java, Log.DEBUG, "Tick elapsed: $elapsedCycle")
-            }
-
-            deviation = elapsedCycle.deviationNs
-            start = elapsedCycle.exitNs
-
+            // Metrics collection
+            Grafana.totalTickTime = (end - start).toInt()
             Grafana.endTick()
+
+            // Maintain ~600ms tick rate
+            Thread.sleep(max(600 - (end - start), 0))
         }
 
         log(this::class.java, Log.FINE, "Update worker stopped.")
     }
 
     /**
-     * Performs minimal ticking when offline (no network).
+     * Executes a minimal tick cycle when the server is offline.
+     *
+     * This ensures:
+     * - Disconnection queue continues processing
+     * - Global tick counter still advances
+     *
+     * No gameplay logic or packet processing is performed.
      */
     fun tickOffline() {
         Repository.disconnectionQueue.update()
@@ -227,33 +198,46 @@ class MajorUpdateWorker {
     }
 
     /**
-     * Handles a full server tick.
+     * Executes the full tick update cycle.
      *
-     * Processes packets, updates the world, sequences, and managers.
-     *
-     * @param skipPulseUpdate If true, skips the world pulse update.
+     * @param skipPulseUpdate If true, skips updating [GameWorld.Pulser].
+     * Useful for controlled environments or debugging.
      */
     fun handleTickActions(skipPulseUpdate: Boolean = false) {
         try {
             val packetStart = System.currentTimeMillis()
+
+            // Process incoming packets
             PacketProcessor.processQueue()
             Grafana.packetProcessTime = (System.currentTimeMillis() - packetStart).toInt()
 
+            // Handle pending disconnections
             Repository.disconnectionQueue.update()
+
+            // Update world pulses/tasks
             if (!skipPulseUpdate) {
                 GameWorld.Pulser.updateAll()
             }
+
+            // Tick registered listeners
             GameWorld.tickListeners.forEach { it.tick() }
 
+            // Run entity update sequence
             sequence.start()
             sequence.run()
             sequence.end()
+
+            // Increment global tick counter
             GameWorld.pulse()
+
+            // Tick plugin managers
             Managers.tick()
+
         } catch (e: Exception) {
             e.printStackTrace()
         } finally {
             try {
+                // Flush outgoing packets
                 PacketWriteQueue.flush()
             } catch (e: Exception) {
                 e.printStackTrace()
@@ -263,6 +247,8 @@ class MajorUpdateWorker {
 
     /**
      * Starts the update worker thread.
+     *
+     * This method is safe to call only once.
      */
     fun start() {
         if (!started) {
@@ -273,6 +259,8 @@ class MajorUpdateWorker {
 
     /**
      * Stops the update worker thread.
+     *
+     * This will interrupt the thread and terminate the main loop.
      */
     fun stop() {
         running = false

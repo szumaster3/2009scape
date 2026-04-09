@@ -33,7 +33,7 @@ class RewardsGuardianDialogue(player: Player? = null) : Dialogue(player) {
         interfaceId: Int,
         buttonId: Int,
     ): Boolean {
-        if (!player.getSavedData().activityData.isStartedMta) {
+        if (!player.getSavedData().activityData.startMageTrainingArena) {
             when (stage) {
                 0 -> npc(FaceAnim.OLD_NORMAL, "Greetings. Have you spoken to my fellow Guardian", "downstairs?").also { stage++ }
                 1 -> player("Nope.").also { stage++ }

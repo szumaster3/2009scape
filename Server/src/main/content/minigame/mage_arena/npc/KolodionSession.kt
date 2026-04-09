@@ -9,7 +9,7 @@ import shared.consts.Graphics
 class KolodionSession(val player: Player) {
     private val kolodion =
         KolodionNPC(
-            KolodionNPC.KolodionType.values()[player.getSavedData().activityData.kolodionBoss].npcId,
+            KolodionNPC.KolodionType.values()[player.getSavedData().activityData.mageArenaBoss].npcId,
             Location(3106, 3934, 0),
             this,
         )

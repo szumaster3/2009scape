@@ -13,7 +13,6 @@ import core.game.node.Node
 import core.game.node.entity.npc.NPC
 import core.game.node.entity.player.Player
 import core.game.node.entity.skill.Skills
-import core.game.node.item.Item
 import core.game.world.GameWorld
 import core.game.world.map.path.Pathfinder
 import core.game.world.update.flag.context.Animation
@@ -261,8 +260,9 @@ class FishingListener : InteractionListener {
                 (inInventory(player, bh) || inEquipment(player, bh))
     }
 
-    private fun isBarehandEnabled(player: Player) =
-        player.getAttribute(GameAttributes.BARBARIAN_BAREHAND_FISHING, false)
+    private fun isBarehandEnabled(player: Player): Boolean {
+        return player.savedData.activityData.barbarianBarehandFishing
+    }
 
     private fun FishingOption.isHarpoonType() =
         this == FishingOption.Harpoon || this == FishingOption.SharkHarpoon

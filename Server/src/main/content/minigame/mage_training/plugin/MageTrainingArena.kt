@@ -29,7 +29,7 @@ class MageTrainingArena : OptionHandler() {
     override fun newInstance(arg: Any?): Plugin<Any> {
         SceneryDefinition.forId(Scenery.DOORWAY_10721).handlers["option:enter"] = this
         NPCDefinition.forId(NPCs.REWARDS_GUARDIAN_3103).handlers["option:trade-with"] = this
-        for (type in MTAType.values()) {
+        for (type in MTARoomType.values()) {
             if (type.mtaZone != null) {
                 ZoneBuilder.configure(type.mtaZone)
             }
@@ -56,7 +56,7 @@ class MageTrainingArena : OptionHandler() {
             }
 
             NPCs.REWARDS_GUARDIAN_3103 -> {
-                if (!player.getSavedData().activityData.isStartedMta) {
+                if (!player.getSavedData().activityData.startMageTrainingArena) {
                     openDialogue(player, NPCs.REWARDS_GUARDIAN_3103, this, true, true)
                 } else {
                     openInterface(player, Components.MAGICTRAINING_SHOP_197)
@@ -72,7 +72,7 @@ class MageTrainingArena : OptionHandler() {
 
         when (option) {
             "enter" -> {
-                val type = MTAType.forId(node.id)
+                val type = MTARoomType.forId(node.id)
                 if (type == null) {
                     player.debug("Can't find a suitable area to enter.")
                     return true

@@ -188,7 +188,7 @@ class VoidKnightDialogue(player: Player? = null) : Dialogue(player) {
             }
 
             30 -> end()
-            43 -> if (player.getSavedData().activityData.pestPoints < 150) {
+            43 -> if (player.getSavedData().activityData.pestControlPoints < 150) {
                 player("I don't have that many points at the moment.")
                 stage = 30
             } else {
@@ -197,7 +197,7 @@ class VoidKnightDialogue(player: Player? = null) : Dialogue(player) {
             }
 
             44 -> {
-                player.getSavedData().activityData.pestPoints -= 150
+                player.getSavedData().activityData.pestControlPoints -= 150
                 interpreter.sendItemMessage(reward, "The Void Knight hands over a " + reward.name + ".")
                 if (player.inventory.freeSlots() < 1) {
                     GroundItemManager.create(reward, player.location)

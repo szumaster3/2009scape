@@ -65,8 +65,10 @@ enum class Plantable(val itemID: Int, val displayName: String, val value: Int, v
     EVIL_TURNIP_SEED(Items.EVIL_TURNIP_SEED_12148, "evil turnip seed", 4, 1, 41.0, 46.0, 0.0, 42, PatchType.EVIL_TURNIP_PATCH, Items.EVIL_TURNIP_12134),
     ENRICHED_SEED(Items.ENRICHED_SNAPDRAGON_SEED_14506, "enriched snapdragon seed", 12, 4, 0.0, 0.0, 0.0, 65, PatchType.SPECIAL_PATCH, Items.ENRICHED_SNAPDRAGON_14487),
     AUGUSTE_SAPLING(Items.AUGUSTES_SAPLING_9932, "auguste's sapling", 15, 6, 25.0, 0.0, 1456.5, 30, PatchType.TREE_PATCH, Items.WILLOW_ROOTS_6045, Item(Items.APPLES5_5386)),
-    SPIRIT_SAPLING(Items.SPIRIT_SAPLING_5375, "spirit tree sapling", 8, 12, 199.5, 0.0, 19301.0, 83, PatchType.SPIRIT_TREE_PATCH, 0, Item(Items.MONKEY_NUTS_4012, 5), null, Item(Items.MONKEY_BAR_4014, 1), Item(Items.GROUND_TOOTH_9082, 1))
+    SPIRIT_SAPLING(Items.SPIRIT_SAPLING_5375, "spirit tree sapling", 8, 12, 199.5, 0.0, 19301.0, 83, PatchType.SPIRIT_TREE_PATCH, 0, Item(Items.MONKEY_NUTS_4012, 5), null, Item(Items.MONKEY_BAR_4014, 1), Item(Items.GROUND_TOOTH_9082, 1)),
+    CALQUAT_SAPLING(Items.CALQUAT_SAPLING_5503, "calquat tree sapling",  4, 8, 130.5, 48.5, 12096.0, 72, PatchType.CALQUAT_TREE_PATCH, Items.CALQUAT_FRUIT_5980, Item(Items.POISON_IVY_BERRIES_6018, 8)),
     ;
+
     constructor(itemID: Int, displayName: String, value: Int, stages: Int, plantingXP: Double, harvestXP: Double, checkHealthXP: Double, requiredLevel: Int, applicablePatch: PatchType, harvestItem: Int, protectionFlower: Plantable, ) :
             this(itemID, displayName, value, stages, plantingXP, harvestXP, checkHealthXP, requiredLevel, applicablePatch, harvestItem, null, protectionFlower)
 

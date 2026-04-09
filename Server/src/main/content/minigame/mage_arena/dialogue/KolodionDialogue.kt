@@ -26,11 +26,11 @@ class KolodionDialogue(player: Player? = null) : Dialogue(player) {
 
     override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
-        if (player.getSavedData().activityData.hasStartedKolodion()) {
+        if (player.getSavedData().activityData.hasStartedMageArena()) {
             player("Hi.")
             return true
         }
-        if (player.getSavedData().activityData.hasKilledKolodion()) {
+        if (player.getSavedData().activityData.hasCompletedMageArena()) {
             player("Hello, Kolodion.")
             return true
         }
@@ -39,14 +39,14 @@ class KolodionDialogue(player: Player? = null) : Dialogue(player) {
     }
 
     override fun handle(interfaceId: Int, buttonId: Int): Boolean {
-        if (player.getSavedData().activityData.hasStartedKolodion()) {
+        if (player.getSavedData().activityData.hasStartedMageArena()) {
             when (stage) {
                 0 -> npc("You return, young conjurer. You obviously have a", "taste for the dark side of magic.").also { stage++ }
                 1 -> end().also { startFight(player) }
             }
             return true
         }
-        if (player.getSavedData().activityData.hasReceivedKolodionReward()) {
+        if (player.getSavedData().activityData.hasReceivedMageArenaReward()) {
             when (stage) {
                 0 -> npc("Hey there, how are you? Are you enjoying the", "bloodshed?").also { stage++ }
                 1 -> player("I think I've had enough for now.").also { stage++ }
@@ -54,7 +54,7 @@ class KolodionDialogue(player: Player? = null) : Dialogue(player) {
                 3 -> end()
             }
             return true
-        } else if (player.getSavedData().activityData.hasKilledKolodion()) {
+        } else if (player.getSavedData().activityData.hasCompletedMageArena()) {
             when (stage) {
                 0 -> npc("Hello, you mage. You're a tough one.").also { stage++ }
                 1 -> player("What now?").also { stage++ }
@@ -109,7 +109,7 @@ class KolodionDialogue(player: Player? = null) : Dialogue(player) {
     }
 
     private fun startFight(player: Player) {
-        player.getSavedData().activityData.kolodionStage = 1
+        player.getSavedData().activityData.mageArenaStage = 1
         runTask(player, 1) {
             npc.face(player)
             animate(npc, Animation.create(Animations.HUMAN_CAST_SPELL_LONG_811))

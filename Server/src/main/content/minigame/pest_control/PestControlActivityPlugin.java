@@ -135,7 +135,7 @@ public final class PestControlActivityPlugin extends ActivityPlugin {
 				// default
 			} else if (success && p.getAttribute("pc_zeal", 0) >= 50) {
 				int amount = type.ordinal() + 2;
-				p.getSavedData().activityData.increasePestPoints(amount);
+				p.getSavedData().activityData.increasePestControlPoints(amount);
 				Item coins = new Item(995, p.getProperties().getCurrentCombatLevel() * 10);
 				if (!p.getInventory().add(coins)) {
 					GroundItemManager.create(coins, p);
@@ -264,7 +264,7 @@ public final class PestControlActivityPlugin extends ActivityPlugin {
 		p.getInterfaceManager().openOverlay(new Component(407));
 		updateTime(p);
 		updatePlayerCount();
-		p.getPacketDispatch().sendString("Points: " + p.getSavedData().activityData.getPestPoints(), 407, 16);
+		p.getPacketDispatch().sendString("Points: " + p.getSavedData().activityData.pestControlPoints, 407, 16);
 		p.getPacketDispatch().sendString(StringUtils.formatDisplayName(type.name()), 407, 3);
 	}
 

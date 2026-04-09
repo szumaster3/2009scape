@@ -20,10 +20,10 @@ class ChamberGuardianDialogue(player: Player? = null) : Dialogue(player) {
 
     override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
-        if (player.getSavedData().activityData.hasReceivedKolodionReward()) {
+        if (player.getSavedData().activityData.hasReceivedMageArenaReward()) {
             player(FaceAnim.FRIENDLY, "Hello again.")
             return true
-        } else if (player.getSavedData().activityData.hasKilledKolodion()) {
+        } else if (player.getSavedData().activityData.hasCompletedMageArena()) {
             npc(FaceAnim.HALF_ASKING, "Hello adventurer, have you made your choice?")
             return true
         }
@@ -32,7 +32,7 @@ class ChamberGuardianDialogue(player: Player? = null) : Dialogue(player) {
     }
 
     override fun handle(interfaceId: Int, buttonId: Int): Boolean {
-        if (player.getSavedData().activityData.hasReceivedKolodionReward()) {
+        if (player.getSavedData().activityData.hasReceivedMageArenaReward()) {
             when (stage) {
                 0 -> npc(FaceAnim.FRIENDLY, "Hello adventurer, are you looking for another staff?").also { stage++ }
                 1 -> options("What do you have to offer?", "No thanks.").also { stage++ }
@@ -43,7 +43,7 @@ class ChamberGuardianDialogue(player: Player? = null) : Dialogue(player) {
                 3 -> npc(FaceAnim.FRIENDLY, "Well let me know if you need one.").also { stage = END_DIALOGUE }
             }
             return true
-        } else if (player.getSavedData().activityData.hasKilledKolodion()) {
+        } else if (player.getSavedData().activityData.hasCompletedMageArena()) {
             when (stage) {
                 0 -> {
                     godType = GodType.getCape(player)
@@ -63,7 +63,7 @@ class ChamberGuardianDialogue(player: Player? = null) : Dialogue(player) {
                     godType?.let { god ->
                         if (inEquipmentOrInventory(player, god.capeId)) {
                             addItem(player, god.staffId, 1)
-                            player.getSavedData().activityData.kolodionStage = 3
+                            player.getSavedData().activityData.mageArenaStage = 3
                             sendItemDialogue(player, god.staffId, "The guardian hands you an ornate magic staff.")
                         }
                     }

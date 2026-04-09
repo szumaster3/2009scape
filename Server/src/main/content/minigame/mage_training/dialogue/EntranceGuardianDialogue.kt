@@ -26,15 +26,8 @@ class EntranceGuardianDialogue(player: Player? = null) : Dialogue(player) {
 
     override fun handle(interfaceId: Int, buttonId: Int): Boolean {
         when (stage) {
-            0 -> if (player.getSavedData().activityData.isStartedMta) {
-                options(
-                    "Can you tell me about this place again?",
-                    "Can you explain the different portals?",
-                    "About the progress hat...",
-                    "Thanks, bye!",
-                ).also {
-                    stage = 31
-                }
+            0 -> if (player.getSavedData().activityData.startMageTrainingArena) {
+                options("Can you tell me about this place again?", "Can you explain the different portals?", "About the progress hat...", "Thanks, bye!").also { stage = 31 }
             } else {
                 npc(FaceAnim.OLD_NORMAL, "Greetings. What wisdom do you seek?").also { stage++ }
             }
@@ -54,7 +47,7 @@ class EntranceGuardianDialogue(player: Player? = null) : Dialogue(player) {
             10 -> npc(FaceAnim.OLD_NORMAL, "room. With these points you may claim a variety of", "items from my fellow guardian up the stairs.").also { stage++ }
             11 -> player("How do you record the points I have earned?").also { stage++ }
             12 -> {
-                if (player.getSavedData().activityData.isStartedMta) {
+                if (player.getSavedData().activityData.startMageTrainingArena) {
                     npc(FaceAnim.OLD_NORMAL, "With the Pizazz Progress Hat I gave you, of course.").also { stage = 40 }
                 } else {
                     npc(FaceAnim.OLD_NORMAL, "You really are full of questions! You will need a special", "Pizzaz Progress Hat! I can give you one if you so", "wish to train here.").also { stage++ }
@@ -63,7 +56,7 @@ class EntranceGuardianDialogue(player: Player? = null) : Dialogue(player) {
 
             13 -> player("Yes Please!").also { stage++ }
             14 -> {
-                player.getSavedData().activityData.isStartedMta = true
+                player.getSavedData().activityData.startMageTrainingArena = true
                 ProgressHat.progress(player)
                 npc(FaceAnim.OLD_NORMAL, "Here you go. Talk to the hat to find out your current", "Pizzaz Points totals.")
                 stage++
@@ -113,15 +106,7 @@ class EntranceGuardianDialogue(player: Player? = null) : Dialogue(player) {
             40 -> player("OK.").also { stage++ }
             41 -> npc(FaceAnim.OLD_NORMAL, "Oh, and a word of warning: should you decide to log", "out whilst in any of the rooms in the arena, you will be", "teleported to the entrance and have any items that you", "picked up in the room removed.").also { stage = 30 }
             50 -> npc(FaceAnim.OLD_NORMAL, "They lead to four areas to train your magic: The", "Telekinetic Theatre, The Alchemists' Playground, The", "Enchanting Chamber, and The Creature Graveyard.").also { stage++ }
-            51 -> options(
-                "What's the Telekinetic Theatre?",
-                "What's the Alchemists' Playground?",
-                "What's the Enchanting CHamber?",
-                "What's the Creature Gaveyard?",
-                "Thanks, bye!",
-            ).also {
-                stage++
-            }
+            51 -> options("What's the Telekinetic Theatre?", "What's the Alchemists' Playground?", "What's the Enchanting CHamber?", "What's the Creature Gaveyard?", "Thanks, bye!").also { stage++ }
 
             52 -> when (buttonId) {
                 1 -> player("What's the Telekinetic Theatre?").also { stage = 60 }

@@ -52,14 +52,14 @@ class VisualCommand : CommandPlugin() {
             "maxkc" -> {
                 var i = 0
                 while (i < 6) {
-                    player!!.savedData.activityData.barrowBrothers[i] = true
+                    player!!.savedData.activityData.barrowsBrothers[i] = true
                     i++
                 }
                 val names = arrayOf("Ahrim", "Dharok", "Guthan", "Karil", "Torag", "Verac")
-                player!!.savedData.activityData.barrowKills = 50
+                player!!.savedData.activityData.barrowsBrothersKillCount = 50
                 sendMessage(
                     player,
-                    "Flagged all barrow brothers killed and 50 catacomb kills, current entrance: " + names[player.savedData.activityData.barrowTunnelIndex] + ".",
+                    "Flagged all barrow brothers killed and 50 catacomb kills, current entrance: " + names[player.savedData.activityData.barrowsTunnelIndex] + ".",
                 )
                 return true
             }

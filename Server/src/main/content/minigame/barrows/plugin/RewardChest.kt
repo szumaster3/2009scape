@@ -36,7 +36,7 @@ object RewardChest {
     fun reward(player: Player) {
         var barrowsRewardsIDs: MutableList<Int> = ArrayList()
         for (i in 0..5) {
-            if (player.savedData.activityData.barrowBrothers[i]) {
+            if (player.savedData.activityData.barrowsBrothers[i]) {
                 barrowsRewardsIDs.addAll(BARROWS_DROP_IDS[i])
             }
         }

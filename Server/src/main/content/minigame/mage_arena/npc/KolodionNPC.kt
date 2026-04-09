@@ -127,7 +127,7 @@ class KolodionNPC(id: Int = 0, location: Location? = null, session: KolodionSess
             npc.pulseManager.clear()
             npc.walkingQueue.reset()
             npc.impactHandler.disabledTicks = 50
-            player.getSavedData().activityData.kolodionBoss = newType.ordinal
+            player.getSavedData().activityData.mageArenaBoss = newType.ordinal
             if (newType == END) {
                 player.lock()
             }
@@ -164,7 +164,7 @@ class KolodionNPC(id: Int = 0, location: Location? = null, session: KolodionSess
                             }
                             7 -> {
                                 player.unlock()
-                                player.getSavedData().activityData.kolodionStage = 2
+                                player.getSavedData().activityData.mageArenaStage = 2
                                 player.properties.teleportLocation = Location(2540, 4717, 0)
                                 return true
                             }

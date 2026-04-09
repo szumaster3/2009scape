@@ -77,7 +77,7 @@ public final class PCRewardInterface extends ComponentPlugin {
 				return true;
 			default:
 				if (button >= 34 && button <= 86) {
-					if (player.getSavedData().activityData.getPestPoints() == 0) {
+					if (player.getSavedData().activityData.getPestControlPoints() == 0) {
 						player.getPacketDispatch().sendMessage("You don't have enough points.");
 						return true;
 					}
@@ -94,7 +94,7 @@ public final class PCRewardInterface extends ComponentPlugin {
 	 */
 	public static void open(final Player player) {
 		player.removeAttribute("pc-reward");
-		sendString(player, "Points: " + player.getSavedData().activityData.getPestPoints(), 105);
+		sendString(player, "Points: " + player.getSavedData().activityData.getPestControlPoints(), 105);
 		clear(player);
 		player.getInterfaceManager().open(new Component(267));
 	}
@@ -179,10 +179,10 @@ public final class PCRewardInterface extends ComponentPlugin {
 				continue;
 			}
 			if (reward.charm) {
-				sendString(player, (player.getSavedData().activityData.getPestPoints() < 2 ? RED + "You need 2 points." : GREEN + reward.getName()), reward.getHeader());
+				sendString(player, (player.getSavedData().activityData.getPestControlPoints() < 2 ? RED + "You need 2 points." : GREEN + reward.getName()), reward.getHeader());
 				continue;
 			}
-			sendString(player, (player.getSavedData().activityData.getPestPoints() < reward.getPoints() ? player.getSavedData().activityData.getPestPoints() < 1 ? RED + ("You need at least 1 point.") : RED + ("You need " + reward.getPoints() + " points.") : (GREEN + reward.getName())), reward.getHeader());
+			sendString(player, (player.getSavedData().activityData.getPestControlPoints() < reward.getPoints() ? player.getSavedData().activityData.getPestControlPoints() < 1 ? RED + ("You need at least 1 point.") : RED + ("You need " + reward.getPoints() + " points.") : (GREEN + reward.getName())), reward.getHeader());
 		}
 	}
 
@@ -296,8 +296,8 @@ public final class PCRewardInterface extends ComponentPlugin {
 		final int points = reward.getPoints(option);
 		String message;
 		player.getInterfaceManager().close();
-		if (player.getSavedData().activityData.getPestPoints() >= points) {
-			player.getSavedData().activityData.decreasePestPoints(points);
+		if (player.getSavedData().activityData.getPestControlPoints() >= points) {
+			player.getSavedData().activityData.decreasePestControlPoints(points);
 			if (reward.isSkillReward()) {
 				int experience = calculateExperience(player, reward.getSkill(), points);
 				player.getSkills().addExperience(reward.getSkill(), experience);
@@ -330,7 +330,7 @@ public final class PCRewardInterface extends ComponentPlugin {
 				}
 				message = "The Void Knight has given you a " + reward.getName() + ".";
 			}
-			player.getDialogueInterpreter().sendDialogue(message, "<col=571D07>Remaining Void Knight Commendation Points: " + player.getSavedData().activityData.getPestPoints());
+			player.getDialogueInterpreter().sendDialogue(message, "<col=571D07>Remaining Void Knight Commendation Points: " + player.getSavedData().activityData.getPestControlPoints());
 		}
 	}
 
@@ -499,7 +499,7 @@ public final class PCRewardInterface extends ComponentPlugin {
 		 * @return <code>True</code> if so.
 		 */
 		public boolean checkRequirements(final Player player, final int option) {
-			if (player.getSavedData().activityData.getPestPoints() < getPoints(option)) {
+			if (player.getSavedData().activityData.getPestControlPoints() < getPoints(option)) {
 				player.getPacketDispatch().sendMessage("You don't have enough points.");
 				return false;
 			}

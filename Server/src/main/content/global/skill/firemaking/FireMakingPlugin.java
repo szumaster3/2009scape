@@ -76,7 +76,7 @@ public final class FireMakingPlugin extends SkillPulse<Item> {
         if (fire == null) return false;
 
         if (mode == FiremakingMode.BARBARIAN) {
-            if (!player.getSavedData().activityData.isBarbarianFiremakingBow()
+            if (!player.getSavedData().activityData.getBarbarianFiremaking()
                     && getAttribute(player, BarbarianTraining.INSTANCE.getFM_START(), false)) {
                 sendDialogue(player,
                         "You must begin the relevant section of Otto Godblessed's barbarian training.");
@@ -193,7 +193,7 @@ public final class FireMakingPlugin extends SkillPulse<Item> {
         if (mode == FiremakingMode.BARBARIAN
                 && getAttribute(player, BarbarianTraining.INSTANCE.getFM_BASE(), false)) {
             removeAttribute(player, BarbarianTraining.INSTANCE.getFM_BASE());
-            player.getSavedData().activityData.setBarbarianFiremakingBow(true);
+            player.getSavedData().activityData.setBarbarianFiremaking(true);
             sendDialogueLines(
                     player,
                     "You feel you have learned more of barbarian ways.",

@@ -49,11 +49,7 @@ class FOGLobby :
         player.interfaceManager.openOverlay(Component(FOGActivityPlugin.WAITING_INTERFACE))
         player.packetDispatch.sendInterfaceConfig(FOGActivityPlugin.WAITING_INTERFACE, 17, true)
         player.packetDispatch.sendInterfaceConfig(FOGActivityPlugin.WAITING_INTERFACE, 26, true)
-        player.packetDispatch.sendString(
-            "Rating: " + player.getSavedData().activityData.fogRating,
-            FOGActivityPlugin.WAITING_INTERFACE,
-            7,
-        )
+        player.packetDispatch.sendString("Rating: " + player.getSavedData().activityData.fogRating, FOGActivityPlugin.WAITING_INTERFACE, 7)
     }
 
     override fun fireEvent(

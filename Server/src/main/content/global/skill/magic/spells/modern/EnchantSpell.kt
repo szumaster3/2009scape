@@ -1,6 +1,6 @@
 package content.global.skill.magic.spells.modern
 
-import content.minigame.mage_training.plugin.MTAType
+import content.minigame.mage_training.plugin.MTARoomType
 import content.minigame.mage_training.plugin.rooms.EnchantmentChamberPlugin
 import core.api.*
 import core.game.node.Node
@@ -47,7 +47,7 @@ class EnchantSpell(
             entity.graphics(Graphics.create(237, 110))
             val pizazz = calculatePizazz(entity, target)
             if (pizazz != 0) {
-                EnchantmentChamberPlugin.ZONE.incrementPoints(entity, MTAType.ENCHANTERS.ordinal, pizazz)
+                EnchantmentChamberPlugin.ZONE.incrementPoints(entity, MTARoomType.ENCHANTERS.ordinal, pizazz)
             }
         }
 

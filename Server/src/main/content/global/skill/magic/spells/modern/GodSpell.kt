@@ -67,9 +67,9 @@ class GodSpell private constructor(
             }
             val castData = p.getSavedData().activityData
             val spellName = getSpellName(data.name)
-            if (castData.godCasts[index] < data.requiredCasts) {
-                castData.godCasts[index]++
-                if (castData.godCasts[index] == data.requiredCasts) {
+            if (castData.godSpellCasts[index] < data.requiredCasts) {
+                castData.godSpellCasts[index]++
+                if (castData.godSpellCasts[index] == data.requiredCasts) {
                     sendMessage(p, "You can now cast $spellName outside the Arena.")
                 }
             }
@@ -96,8 +96,8 @@ class GodSpell private constructor(
             idx
         }
         val spellName = getSpellName(data.name)
-        if (castData.godCasts[index] < data.requiredCasts && !caster.zoneMonitor.isInZone("mage arena")) {
-            sendMessage(caster, "You need to cast $spellName ${data.requiredCasts - castData.godCasts[index]} more times inside the Mage Arena.")
+        if (castData.godSpellCasts[index] < data.requiredCasts && !caster.zoneMonitor.isInZone("mage arena")) {
+            sendMessage(caster, "You need to cast $spellName ${data.requiredCasts - castData.godSpellCasts[index]} more times inside the Mage Arena.")
             return false
         }
 

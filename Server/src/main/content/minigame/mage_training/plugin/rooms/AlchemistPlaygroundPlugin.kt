@@ -1,6 +1,6 @@
 package content.minigame.mage_training.plugin.rooms
 
-import content.minigame.mage_training.plugin.MTAType
+import content.minigame.mage_training.plugin.MTARoomType
 import content.minigame.mage_training.plugin.MTAZone
 import core.api.getVarbit
 import core.api.removeAttribute
@@ -50,7 +50,7 @@ class AlchemistPlaygroundPlugin :
             if (logout && entity.inventory.containsItem(COINS)) {
                 val deposit = entity.inventory.getAmount(COINS)
                 val earn = (deposit / 100).coerceAtLeast(0)
-                incrementPoints(entity, MTAType.ALCHEMISTS.ordinal, earn)
+                incrementPoints(entity, MTARoomType.ALCHEMISTS.ordinal, earn)
                 entity.inventory.remove(COINS)
             }
             removeAttribute(entity, "alchemist-session")
@@ -159,7 +159,7 @@ class AlchemistPlaygroundPlugin :
                 taking += add
             }
             if (earn != 0) {
-                incrementPoints(player, MTAType.ALCHEMISTS.ordinal, earn)
+                incrementPoints(player, MTARoomType.ALCHEMISTS.ordinal, earn)
             }
             if (taking != 0) {
                 player.setAttribute("alch-earn", taking)

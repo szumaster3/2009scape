@@ -105,7 +105,7 @@ class SquireDialogue(player: Player? = null) : Dialogue(player) {
             }
             15 -> npc("This island is being invaded by outsiders and the Void", "Knight over there is using a ritual to unsummon their", "portals. We must defend the Void Knight at all costs.", "however if you get an opening you can destroy the portals.").also { stage = END_DIALOGUE }
             16 -> npc("There are trees on the island. You'll need to chop them", "down for logs and use a hammer to repair the defences.", "Be careful tough, the trees here don't grow back very", "fast so your consts are limited!").also { stage = END_DIALOGUE }
-            17 -> sendDialogueLines(player, BLUE + "You now have " + RED + "" + player.getSavedData().activityData.pestPoints + "" + BLUE + " Void Knight Commendation points!</col>", "You can speak to a Void Knight to exchange your points for", "rewards.").also { stage = END_DIALOGUE }
+            17 -> sendDialogueLines(player, BLUE + "You now have " + RED + "" + player.getSavedData().activityData.pestControlPoints + "" + BLUE + " Void Knight Commendation points!</col>", "You can speak to a Void Knight to exchange your points for", "rewards.").also { stage = END_DIALOGUE }
             18 -> npc("Away you go then, the lander will take you back.").also { stage = END_DIALOGUE }
         }
         return true

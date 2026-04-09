@@ -40,7 +40,6 @@ class PlayerSaver(val player: Player) {
         saveAutocast(saveFile)
         saveMusicPlayer(saveFile)
         saveFamiliarManager(saveFile)
-        saveStateManager(saveFile)
         saveBankPinData(saveFile)
         saveHouseData(saveFile)
         saveAchievementData(saveFile)
@@ -260,19 +259,6 @@ class PlayerSaver(val player: Player) {
         root.add("costumeRoom", player.getCostumeRoomState().toJson())
     }
 
-    fun saveStateManager(root: JsonObject) {
-        val states = JsonArray()
-        player.states.forEach { (key, clazz) ->
-            if (clazz != null && clazz.pulse != null) {
-                val stateObj = JsonObject()
-                stateObj.addProperty("stateKey", key)
-                clazz.save(stateObj)
-                states.add(stateObj)
-            }
-        }
-        root.add("states", states)
-    }
-
     fun saveFamiliarManager(root: JsonObject) {
         val familiarManager = JsonObject()
         val petDetails = JsonArray()
@@ -462,44 +448,57 @@ class PlayerSaver(val player: Player) {
     }
 
     fun saveActivityData(root: JsonObject) {
+
+        val data = player.savedData.activityData
         val activityData = JsonObject()
-        activityData.addProperty("pestPoints", player.savedData.activityData.pestPoints.toString())
-        activityData.addProperty("warriorGuildTokens", player.savedData.activityData.warriorGuildTokens.toString())
-        activityData.addProperty("bountyHunterRate", player.savedData.activityData.bountyHunterRate.toString())
-        activityData.addProperty("bountyRogueRate", player.savedData.activityData.bountyRogueRate.toString())
-        activityData.addProperty("barrowKills", player.savedData.activityData.barrowKills.toString())
 
-        val barrowBrothers = JsonArray()
-        player.savedData.activityData.barrowBrothers.forEach { barrowBrothers.add(it) }
-        activityData.add("barrowBrothers", barrowBrothers)
+        // region basic
+        activityData.addProperty("pestControlPoints", data.pestControlPoints)
+        activityData.addProperty("warriorGuildTokens", data.warriorGuildTokens)
+        activityData.addProperty("bountyHunterRate", data.bountyHunterRate)
+        activityData.addProperty("bountyRogueRate", data.bountyRogueRate)
+        activityData.addProperty("barrowsBrothersKillCount", data.barrowsBrothersKillCount)
+        // endregion
 
-        activityData.addProperty("barrowTunnelIndex", player.savedData.activityData.barrowTunnelIndex.toString())
-        activityData.addProperty("kolodionStage", player.savedData.activityData.kolodionStage.toString())
+        // region arrays
+        val barrowBrothers = JsonArray().apply {
+            data.barrowsBrothers.forEach { add(it) }
+        }
+        activityData.add("barrowsBrothers", barrowBrothers)
 
-        val godCasts = JsonArray()
-        player.savedData.activityData.godCasts.forEach { godCasts.add(it.toString()) }
-        activityData.add("godCasts", godCasts)
+        activityData.addProperty("barrowsTunnelIndex", data.barrowsTunnelIndex)
+        activityData.addProperty("mageArenaStage", data.mageArenaStage)
 
-        activityData.addProperty("kolodionBoss", player.savedData.activityData.kolodionBoss.toString())
-        activityData.addProperty("elnockSupplies", player.savedData.activityData.isElnockSupplies)
-        activityData.addProperty("lastBorkBattle", player.savedData.activityData.lastBorkBattle.toString())
-        activityData.addProperty("startedMta", player.savedData.activityData.isStartedMta)
-        activityData.addProperty("lostCannon", player.savedData.activityData.isLostCannon)
-        activityData.addProperty("bonesToPeaches", player.savedData.activityData.isBonesToPeaches)
-        activityData.addProperty("solvedMazes", player.savedData.activityData.solvedMazes.toString())
-        activityData.addProperty("fogRating", player.savedData.activityData.fogRating.toString())
-        activityData.addProperty("borkKills", player.savedData.activityData.borkKills.toString())
-        activityData.addProperty("hardcoreDeath", player.savedData.activityData.hardcoreDeath)
-        activityData.addProperty("topGrabbed", player.savedData.activityData.isTopGrabbed)
+        val godCasts = JsonArray().apply {
+            data.godSpellCasts.forEach { add(it) }
+        }
+        activityData.add("godSpellCasts", godCasts)
 
-        activityData.addProperty("barbFiremakingBow", player.savedData.activityData.isBarbarianFiremakingBow)
-        activityData.addProperty("barbFiremakingPyre", player.savedData.activityData.isBarbarianFiremakingPyre)
-        activityData.addProperty("barbFishingRod", player.savedData.activityData.isBarbarianFishingRod)
-        activityData.addProperty("barbFishingBarehand", player.savedData.activityData.isBarbarianFishingBarehand)
-        activityData.addProperty("barbSmithingSpear", player.savedData.activityData.isBarbarianSmithingSpear)
-        activityData.addProperty("barbSmithingHasta", player.savedData.activityData.isBarbarianSmithingHasta)
-        activityData.addProperty("barbHerblore", player.savedData.activityData.isBarbarianHerbloreAttackMix)
+        activityData.addProperty("mageArenaBoss", data.mageArenaBoss)
 
+        activityData.addProperty("elnockNPCSupplies", data.elnockNPCSupplies)
+        activityData.addProperty("lastBorkActivity", data.lastBorkActivity)
+
+        activityData.addProperty("startMageTrainingArena", data.startMageTrainingArena)
+        activityData.addProperty("lostDwarfMulticannon", data.lostDwarfMulticannon)
+        activityData.addProperty("unlockBoneToPeachSpell", data.unlockBoneToPeachSpell)
+
+        activityData.addProperty("solvedMazes", data.solvedMazes)
+        activityData.addProperty("fogRating", data.fogRating)
+        activityData.addProperty("borkKillCount", data.borkKillCount)
+
+        activityData.addProperty("topGrabbed", data.topGrabbed)
+
+        activityData.addProperty("barbarianFiremaking", data.barbarianFiremaking)
+        activityData.addProperty("barbarianPyreBoat", data.barbarianPyreBoat)
+
+        activityData.addProperty("barbarianFishing", data.barbarianFishing)
+        activityData.addProperty("barbarianBarehandFishing", data.barbarianBarehandFishing)
+
+        activityData.addProperty("barbarianSpearSmithing", data.barbarianSpearSmithing)
+        activityData.addProperty("barbarianHastaeSmithing", data.barbarianHastaeSmithing)
+
+        activityData.addProperty("barbarianHerblore", data.barbarianHerblore)
         root.add("activityData", activityData)
     }
 

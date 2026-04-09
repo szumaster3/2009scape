@@ -59,7 +59,6 @@ class PlayerSaveParser(val player: Player) {
         parseAppearance()
         parseGrave()
         parseVarps()
-        parseStates()
         parseSpellbook()
         parseSavedData()
         parseAutocastSpell()
@@ -178,12 +177,17 @@ class PlayerSaveParser(val player: Player) {
     }
 
     fun parseSavedData() {
-        val activityData = saveFile?.getAsJsonObject("activityData") ?: return
-        val questData = saveFile?.getAsJsonObject("questData") ?: return
-        val globalData = saveFile?.getAsJsonObject("globalData") ?: return
-        player.savedData.activityData.parse(activityData)
-        player.savedData.questData.parse(questData)
-        player.savedData.globalData.parse(globalData)
+        saveFile?.getAsJsonObject("activityData")?.let {
+            player.savedData.activityData.parse(it)
+        }
+
+        saveFile?.getAsJsonObject("questData")?.let {
+            player.savedData.questData.parse(it)
+        }
+
+        saveFile?.getAsJsonObject("globalData")?.let {
+            player.savedData.globalData.parse(it)
+        }
     }
 
     fun parseAutocastSpell() {
@@ -243,22 +247,6 @@ class PlayerSaveParser(val player: Player) {
             val s = song.asString.toIntOrNull() ?: continue
             val entry = MusicEntry.forId(s) ?: continue
             player.musicPlayer.unlocked[entry.index] = entry
-        }
-    }
-
-    fun parseStates() {
-        player.states.clear()
-        if (saveFile != null && saveFile!!.has("states")) {
-            val states: JsonArray = saveFile!!.getAsJsonArray("states")
-            for (element in states) {
-                val s: JsonObject = element.asJsonObject
-                val stateId = s.get("stateKey").asString
-                if (player.states[stateId] != null) continue
-                val stateClass = player.registerState(stateId)
-                stateClass?.parse(s)
-                stateClass?.init()
-                player.states[stateId] = stateClass
-            }
         }
     }
 

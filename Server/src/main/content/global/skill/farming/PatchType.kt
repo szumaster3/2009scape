@@ -14,6 +14,7 @@ enum class PatchType(val stageGrowthTime: Int) {
     CACTUS_PATCH(60),
     EVIL_TURNIP_PATCH(5),
     SPECIAL_PATCH(20),
+    CALQUAT_TREE_PATCH(160),
     ;
 
     fun displayName(): String = name.lowercase().replace("_", " ")

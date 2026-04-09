@@ -1,6 +1,10 @@
-# 2009Scape Fork
+<div align="center">
+
+# <a href="https://2009scape.org"><img src="https://imgur.com/CUFKvNo.png" alt="2009Scape"/></a>
 
 A fork of [2009Scape](https://gitlab.com/2009scape/2009scape), licensed under **AGPL-3.0**.
+
+</div>
 
 > [!NOTE]
 >

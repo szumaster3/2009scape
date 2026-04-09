@@ -17,7 +17,7 @@ class ATailofTwoCats : Quest("A Tail of Two Cats", 119, 118, 2, Vars.VARBIT_QUES
         player ?: return
         if (stage == 0) {
             line(player, "I can start this quest by talking to !!Unferth?? in his house in", line++, false)
-            line(player, "!!Burthope??. Burthope is north of the Heroes' Guild in the", line++, false)
+            line(player, "!!Burthorpe??. Burthorpe is north of the Heroes' Guild in the", line++, false)
             line(player, "Kingdom of Asgarnia. To start this quest I need the", line++, false)
             line(player, "following:", line++, false)
             line(

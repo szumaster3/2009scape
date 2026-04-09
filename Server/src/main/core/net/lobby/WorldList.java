@@ -108,7 +108,7 @@ public final class WorldList {
             "House Parties",
             "Running - Nature Runes",
             "Role-Playing Server",
-            "Burthope Games Room",
+            "Burthorpe Games Room",
             "Vinesweeper",
             "<col=ffff00>High Lvl Duel - Tournaments</col>",
             "Blast Furnace",

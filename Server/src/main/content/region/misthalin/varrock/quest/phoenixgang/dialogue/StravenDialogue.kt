@@ -1,6 +1,6 @@
 package content.region.misthalin.varrock.quest.phoenixgang.dialogue
 
-import content.region.asgarnia.burthope.quest.hero.dialogue.StravenDialogueFile
+import content.region.asgarnia.burthorpe.quest.hero.dialogue.StravenDialogueFile
 import content.region.misthalin.varrock.quest.phoenixgang.ShieldofArrav
 import core.api.openDialogue
 import core.game.dialogue.Dialogue

@@ -1,6 +1,6 @@
 package content.region.karamja.shilo_village.npc
 
-import content.region.asgarnia.burthope.quest.hero.HeroesQuest
+import content.region.asgarnia.burthorpe.quest.hero.HeroesQuest
 import core.api.*
 import core.game.dialogue.DialogueFile
 import core.game.node.entity.Entity

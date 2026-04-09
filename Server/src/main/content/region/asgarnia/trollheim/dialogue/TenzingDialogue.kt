@@ -1,6 +1,6 @@
 package content.region.asgarnia.trollheim.dialogue
 
-import content.region.asgarnia.burthope.quest.death.dialogue.TenzingDialogueFile
+import content.region.asgarnia.burthorpe.quest.death.dialogue.TenzingDialogueFile
 import core.api.*
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim

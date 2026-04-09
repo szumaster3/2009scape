@@ -35,7 +35,7 @@ class KnightGWDDialogue(player: Player? = null) : Dialogue(player) {
             3 -> {
                 end()
                 if (player.inventory.add(Item(Items.KNIGHTS_NOTES_11734))) {
-                    sendItemDialogue(player, Item(Items.KNIGHTS_NOTES_11734), "The knight hands you a scroll.")
+                    sendItemDialogue(player, Items.KNIGHTS_NOTES_11734, "The knight hands you a scroll.")
                     setVarbit(player, 3936, 1, true)
                 } else {
                     sendDialogue(player, "The knight tries to give you something, but your inventory is full.").also {

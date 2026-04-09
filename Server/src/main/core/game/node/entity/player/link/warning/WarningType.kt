@@ -5,7 +5,7 @@ import shared.consts.Vars
 
 /**
  * Represents all configurable warnings.
- */
+ *///https://runescape.wiki/w/Doomsayer?oldid=714289
 enum class WarningType(val varbit: Int, val component: Int, val buttonId: Int) {
     WILDERNESS_DITCH(Vars.VARBIT_WILDERNESS_WARNING_382_3857, Components.WILDERNESS_WARNING_382, 67),
     CORPOREAL_BEAST_DANGEROUS(Vars.VARBIT_CORPOREAL_BEAST_DANGEROUS_5366, Components.CWS_WARNING_30_650, 78),

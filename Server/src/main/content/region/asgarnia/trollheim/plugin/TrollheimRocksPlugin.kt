@@ -16,7 +16,6 @@ import core.game.node.entity.player.link.warning.WarningType
 import core.game.node.entity.skill.Skills
 import core.game.system.task.Pulse
 import core.game.world.GameWorld.Pulser
-import core.game.world.map.Direction
 import core.game.world.map.Location
 import core.game.world.map.zone.MapZone
 import core.game.world.map.zone.ZoneBorders
@@ -201,17 +200,10 @@ class TrollheimRocksPlugin : OptionHandler() {
         private const val JUMP_ANIMATION = Animations.CLIMB_OBJECT_839
     }
 
-    /**
-     * Executes a climbing movement.
-     * @param player The player who climb.
-     * @param to The destination location to move the player to.
-     * @param anim The animation id (default is CLIMB_DOWN_B_740).
-     */
-    private fun runClimb(player: Player, to: Location, anim: Int = CLIMB_UP) {
+    private fun runClimb(player: Player, to: Location, anim: Int) {
         sendMessage(player, "You climb onto the rock...")
-        val direction = Direction.getLogicalDirection(player.location, to.location)
-
-        forceMove(player, player.location, to, 30, 90, direction, anim) {
+        forceMove(player, player.location, to, 30, 90, null, anim)
+        {
             sendMessage(player, "...and step down the other side.")
             resetAnimator(player)
         }

@@ -22,8 +22,9 @@ class NaturalHistorianDialogue(player: Player? = null) : Dialogue(player) {
         if(!firstTimeVisit) {
             npcl(FaceAnim.HAPPY, "Hello there and welcome to the Natural History exhibit of the Varrock Museum!")
         } else {
-            npcl(FaceAnim.ASKING, "Hello again, " + if (player.isMale) "sir" else "madam" + ", how can I help you on this fine day?").also { stage = 3 }
+            npcl(FaceAnim.ASKING, "Hello again, " + if (player.isMale) "sir" else "madam" + ", how can I help you on this fine day?")
             setAttribute(player, GameAttributes.NATURAL_HISTORIAN_FIRST_TALK, true)
+            stage = 3
         }
         return true
     }

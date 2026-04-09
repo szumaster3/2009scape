@@ -134,7 +134,7 @@ class TrollStrongholdPlugin : InteractionListener {
             if (getQuestStage(player, Quests.TROLL_STRONGHOLD) >= 8) {
                 player.properties.teleportLocation = Location.create(2824, 10050, 0)
             } else {
-                sendMessage(player, "The door is locked.")
+                sendMessage(player, "You don't know how to open the secret door.")
             }
             return@on true
         }

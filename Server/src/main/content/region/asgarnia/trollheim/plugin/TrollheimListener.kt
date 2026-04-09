@@ -91,11 +91,6 @@ class TrollheimListener : InteractionListener {
             return@on true
         }
 
-        on(3672, IntType.SCENERY, "open") { player, _ ->
-            sendMessage(player, "You don't know how to open the secret door.")
-            return@on true
-        }
-
         /*
          * Handles danger sign — starts the “trollheim-warning” cutscene.
          */

@@ -49,8 +49,6 @@ import core.game.node.entity.player.link.quest.QuestRepository;
 import core.game.node.entity.player.link.request.RequestManager;
 import core.game.node.entity.player.link.warning.PendingWarning;
 import core.game.node.entity.skill.Skills;
-import core.game.node.entity.state.State;
-import core.game.node.entity.state.StateRepository;
 import core.game.node.item.GroundItem;
 import core.game.node.item.GroundItemManager;
 import core.game.node.item.Item;
@@ -161,11 +159,6 @@ public class Player extends Entity {
      * Stores variable states that should be saved.
      */
     public HashMap<Integer, Boolean> saveVarp = new HashMap<>();
-
-    /**
-     * Stores various player states.
-     */
-    public HashMap<String, State> states = new HashMap<>();
 
     /**
      * Stores functions to be executed when the player logs out.
@@ -1476,43 +1469,6 @@ public class Player extends Entity {
      */
     public void setArcheryTotal(int archeryTotal) {
         this.archeryTotal = archeryTotal;
-    }
-
-    /**
-     * Has active state boolean.
-     *
-     * @param key the key
-     * @return the boolean
-     */
-    public boolean hasActiveState(String key) {
-        State state = states.get(key);
-        return state != null && state.getPulse() != null;
-    }
-
-    /**
-     * Register state state.
-     *
-     * @param key the key
-     * @return the state
-     */
-    public State registerState(String key) {
-        return StateRepository.forKey(key, this);
-    }
-
-    /**
-     * Clear state.
-     *
-     * @param key the key
-     */
-    public void clearState(String key) {
-        State state = states.get(key);
-        if (state != null) {
-            Pulse pulse = state.getPulse();
-            if (pulse != null) {
-                pulse.stop();
-            }
-            states.remove(key);
-        }
     }
 
     /**

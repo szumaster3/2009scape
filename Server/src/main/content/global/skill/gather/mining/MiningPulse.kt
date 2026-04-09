@@ -1,6 +1,7 @@
 package content.global.skill.gather.mining
 
 import content.data.skill.SkillingTool
+import content.global.activity.star.ShootingStarBonus
 import core.api.*
 import core.game.event.ResourceProducedEvent
 import core.game.node.Node
@@ -357,7 +358,7 @@ class MiningPulse(private val player: Player, private val node: Node) : Pulse(1,
             }
         }
 
-        if (player.hasActiveState("shooting-star")) {
+        if (hasTimerActive<ShootingStarBonus>(player)) {
             if (RandomFunction.getRandom(5) == 3) {
                 sendMessage(player, "...you manage to mine a second ore thanks to the Star Sprite.")
                 amount += 1

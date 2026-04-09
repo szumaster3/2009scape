@@ -99,7 +99,7 @@ class MTAShopPlugin : InterfaceListener {
             }
         }
 
-        if (item.id == Items.BONES_TO_PEACHES_6926 && player.getSavedData().activityData.isBonesToPeaches) {
+        if (item.id == Items.BONES_TO_PEACHES_6926 && player.getSavedData().activityData.unlockBoneToPeachSpell) {
             sendMessage(player, "You already unlocked that spell.")
             return
         }
@@ -121,7 +121,7 @@ class MTAShopPlugin : InterfaceListener {
         }
 
         if (item.id == Items.BONES_TO_PEACHES_6926) {
-            player.getSavedData().activityData.isBonesToPeaches = true
+            player.getSavedData().activityData.unlockBoneToPeachSpell = true
             sendDialogue(player, "The Guardian teaches you how to use the Bones to Peaches spell!")
         } else {
             if (itemToRemove == null || itemToRemove.remove()) {

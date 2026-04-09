@@ -273,7 +273,7 @@ class DMCHandler : LogoutListener {
         }
 
         if (!pickup) {
-            player?.savedData?.activityData?.isLostCannon = true
+            player?.savedData?.activityData?.lostDwarfMulticannon = true
             return
         }
 

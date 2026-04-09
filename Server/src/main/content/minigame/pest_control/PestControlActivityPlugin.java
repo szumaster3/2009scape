@@ -264,7 +264,7 @@ public final class PestControlActivityPlugin extends ActivityPlugin {
 		p.getInterfaceManager().openOverlay(new Component(407));
 		updateTime(p);
 		updatePlayerCount();
-		p.getPacketDispatch().sendString("Points: " + p.getSavedData().activityData.pestControlPoints, 407, 16);
+		p.getPacketDispatch().sendString("Points: " + p.getSavedData().activityData.getPestControlPoints(), 407, 16);
 		p.getPacketDispatch().sendString(StringUtils.formatDisplayName(type.name()), 407, 3);
 	}
 

@@ -27,7 +27,6 @@ class BalloonFlightInterface : InterfaceListener, Commands {
             val stepAttr = "zep_current_step_$routeId"
             val step = getAttribute(player, stepAttr, 1)
             setAttribute(player, stepAttr, step)
-
             BalloonRouteConfiguration.ROUTES[routeId]?.let {
                 refresh(player, routeId, it)
             }
@@ -35,7 +34,7 @@ class BalloonFlightInterface : InterfaceListener, Commands {
             return@onOpen true
         }
 
-        on(Components.ZEP_INTERFACE_SIDE_471) { player: Player, _, _, buttonID: Int, _, _ ->
+        on(Components.ZEP_INTERFACE_SIDE_471) { player: Player, c, _, buttonID: Int, _, _ ->
 
             val routeId = getAttribute(player, "zep_current_route", -1)
             if (routeId == -1) return@on true
@@ -70,19 +69,29 @@ class BalloonFlightInterface : InterfaceListener, Commands {
                 closeSingleTab(player)
                 return@on true
             }
-
             BalloonUtils.getSoundForButton(player, buttonID)
             BalloonUtils.drawBalloon(player, move, routeId, step)
 
             val newIndex = index + 1
             setAttribute(player, progressAttr, newIndex)
             BalloonUtils.debugNextMove(player, sequence, step, newIndex)
+            val isLastStage = step >= routeData.stages.size
+
             if (newIndex >= sequence.size) {
                 BalloonUtils.reset(player, Components.ZEP_INTERFACE_470)
                 removeAttribute(player, progressAttr)
 
                 BalloonUtils.updateScreen(player, routeId, step, routeData)
                 refresh(player, routeId, routeData)
+
+                if (!isLastStage) {
+                    runTask(player, 1) {
+                        player.packetDispatch.resetInterface(470)
+                        openInterface(player, Components.ZEP_INTERFACE_470)
+                    }
+                }
+
+                return@on true
             }
 
             return@on true

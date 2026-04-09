@@ -78,7 +78,7 @@ object BalloonRouteConfiguration {
                 RouteStage(
                     sequence = listOf(5,5,4,5,5,5,5,5,5,10,5,5,5,6,5,5,5,6),
                     overlay = BalloonRouteDefinition::crafting_guild_2,
-                    position = BalloonPosition(160,140)
+                    position = BalloonPosition(159,139)
                 )
             )
         )

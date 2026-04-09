@@ -47,7 +47,7 @@ class BalloonRouteBuilder(private val p: Player, private val c: Int){
         slot: Int,
         model: Int,
         anim: Int,
-        angle: Int = 2100,
+        angle: Int = 2567,
         x: Int = 200,
         y: Int = 300
     ) {
@@ -70,7 +70,7 @@ class BalloonRouteBuilder(private val p: Player, private val c: Int){
         vararg slots: Int,
         model: Int = 19780,//-1white
         anim: Int = 341,
-        angle: Int = 2100,
+        angle: Int = 2567,
         x: Int = 200,
         y: Int = 300
     ) {
@@ -120,20 +120,20 @@ object BalloonRouteDefinition {
         // Trees
         models(123 to 19580, 124 to 19578, 125 to 19582, 103 to 19579, 104 to 19576, 105 to 19581, 83 to 19575, 84 to 19574, 85 to 19577)
         // Small trees
-        models(102 to 19521, 82 to 19519, 107 to 19521, 87 to 19519, 106 to 19521, 86 to 19519)
+        models(102 to 19521, 82 to 19519, 107 to 19521, 87 to 19519, 106 to 19521, 86 to 19519, 109 to 19521, 89 to 19519)
         // Smallest
         models(91 to 19522, 92 to 19522)
         // Evergreens
         models(127 to 19570, 107 to 19569, 87 to 19568, 128 to 19570, 108 to 19569, 88 to 19568)
         // Eagles
         eagles(145, 148)
-        eagles(177, angle = 2100, x = 200, y = 300)
-        eagles(209, angle = 2576, x = 200, y = 300)
+        eagles(177)
+        eagles(209)
         // Clouds
         models(155 to 19525, 156 to 19526, 210 to 19525, 211 to 19524, 212 to 19524, 213 to 19526, 227 to 19525, 228 to 19524, 229 to 19526, 172 to 19525, 173 to 19524, 174 to 19526)
         // Stars
-        animated(175, 19781, 373, 2100, 0, 1500)
-        animated(230, 19781, 373, 2100, 0, 1500)
+        animated(175, 19781, 373)
+        animated(230, 19781, 373)
         // Base
         model(78, 19572)
     }
@@ -157,7 +157,7 @@ object BalloonRouteDefinition {
         models(102 to 19521, 82 to 19519, 103 to 19521, 83 to 19519, 84 to 19522, 85 to 19522, 126 to 19570, 106 to 19569, 86 to 19568, 92 to 19522, 113 to 19521, 93 to 19519)
         model(97, 19567)
         eagles(146, 151, 192, 207, 208, 215)
-        models(167 to 19525, 168 to 19524, 169 to 19524, 170 to 19524, 171 to 19526, 174 to 19525, 175 to 19524, 176 to 19526, 212 to 19525, 213 to 19524, 214 to 19526)
+        models(168 to 19525, 169 to 19524, 170 to 19524, 171 to 19526, 174 to 19525, 175 to 19524, 176 to 19526, 212 to 19525, 213 to 19524, 214 to 19526)
         animated(191, 19781, 373, 2100, 0, 1500)
     }
 
@@ -184,22 +184,25 @@ object BalloonRouteDefinition {
         // Eagles
         eagles(220, 221, 206, 175, 151, 171, 148)
         // Star
-        animated(183, 19781, 373, 2100, 0, 1500)
+        animated(183, 19781, 373)
         // Clouds
         models(162 to 19525, 163 to 19524, 164 to 19526, 192 to 19525, 193 to 19524, 194 to 19526, 233 to 19525, 234 to 19524, 235 to 19526)
     }
 
     fun crafting_guild_1(p: Player, c: Int) = balloonScreen(p, c) {
         models(40 to 19606, 45 to 19561, 50 to 19562, 55 to 19562)
+        models(168 to 19525, 169 to 19524, 170 to 19526, 200 to 19525, 201 to 19524, 202 to 19526, 206 to 19524, 207 to 19526)
         models(99 to 19521, 78 to 19519, 119 to 19570, 98 to 19569, 79 to 19568)
         models(103 to 19625, 83 to 19623, 124 to 19626, 104 to 19627, 84 to 19624)
-        models(106 to 19617, 86 to 19615, 108 to 19617, 88 to 19615, 111 to 19617, 91 to 19615, 96 to 19616)
+        models(107 to 19617, 87 to 19615, 109 to 19617, 89 to 19615, 112 to 19617, 92 to 19615, 97 to 19616)
         model(97, 19717)
-        eagles(161, 185, 216, 217, 169)
-        animated(126, 19781, 373, 2100, 0, 1500)
-        animated(131, 19781, 373, 2100, 0, 1500)
-        animated(186, 19781, 373, 2100, 0, 1500)
-        models(166 to 19525, 167 to 19524, 168 to 19526, 200 to 19525, 201 to 19524, 202 to 19526, 205 to 19525, 206 to 19524, 207 to 19526)
+        eagles(161, 187, 216, 217, 171)
+        animated(127, 19781, 373)
+        animated(132, 19781, 373)
+        animated(188, 19781, 373)
+        models(193 to 19525, 194 to 19524, 195 to 19526)
+        models(96 to 19616)
+        models(205 to 19525)
     }
 
     fun crafting_guild_2(p: Player, c: Int) = balloonScreen(p, c) {
@@ -210,8 +213,8 @@ object BalloonRouteDefinition {
         models(123 to 19601, 103 to 19600, 83 to 19599, 84 to 19616, 105 to 19521, 85 to 19519, 86 to 19522, 107 to 19521, 87 to 19519, 108 to 19521, 88 to 19519, 89 to 19622, 130 to 19601, 110 to 19600, 90 to 19599)
         model(198, 19526)
         eagles(199, 120, 163, 209)
-        animated(143, 19781, 373, 2100, 0, 1500)
-        animated(104, 19781, 373, 2100, 0, 1500)
+        animated(143, 19781, 373)
+        animated(104, 19781, 373)
         models(222 to 19525, 223 to 19524, 224 to 19526, 166 to 19525, 167 to 19524, 168 to 19526, 173 to 19525, 174 to 19524, 175 to 19526, 228 to 19525, 229 to 19524, 230 to 19526, 210 to 19525, 211 to 19524, 212 to 19526)
     }
 
@@ -285,7 +288,7 @@ object BalloonRouteDefinition {
         models(123 to 19729, 124 to 19729, 125 to 19730, 126 to 19729, 127 to 19729, 128 to 19730, 129 to 19729, 130 to 19729, 131 to 19730, 132 to 19729, 133 to 19729, 134 to 19729)
         models(143 to 19724, 144 to 19724, 145 to 19724, 146 to 19724, 147 to 19724, 148 to 19724, 149 to 19724, 150 to 19724, 151 to 19724, 152 to 19724, 153 to 19724, 154 to 19724)
         models(163 to 19725, 164 to 19726, 167 to 19725, 168 to 19726, 171 to 19725, 172 to 19726)
-        models(163 to 19727, 164 to 19728, 167 to 19727, 168 to 19728, 171 to 19727, 172 to 19728)
+        models(183 to 19727, 184 to 19728, 187 to 19727, 188 to 19728, 181 to 19727, 182 to 19728)
         model(97, 19567)
     }
 

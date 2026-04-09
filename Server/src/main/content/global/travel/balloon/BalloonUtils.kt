@@ -76,16 +76,19 @@ object BalloonUtils {
 
         var top = getAttribute(player, keyTop(routeId, step), base.top)
         var bottom = getAttribute(player, keyBottom(routeId, step), base.bottom)
-
         sendModelOnInterface(player, Components.ZEP_INTERFACE_470, top, -1)
         sendModelOnInterface(player, Components.ZEP_INTERFACE_470, bottom, -1)
 
-        repeat(move.dx) {
+        if (bottom == 98) bottom += 2
+
+        repeat(move.dx)
+        {
             top = moveEast(top)
             bottom = moveEast(bottom)
         }
 
-        repeat(kotlin.math.abs(move.dy)) {
+        repeat(kotlin.math.abs(move.dy))
+        {
             if (move.dy < 0) {
                 top = moveNorth(top)
                 bottom = moveNorth(bottom)
@@ -100,6 +103,7 @@ object BalloonUtils {
 
         setAttribute(player, keyTop(routeId, step), top)
         setAttribute(player, keyBottom(routeId, step), bottom)
+        println("top=$top | bottom=$bottom")
     }
 
     /**
@@ -111,7 +115,6 @@ object BalloonUtils {
      * @param routeData route configuration
      */
     fun updateScreen(player: Player, routeId: Int, step: Int, routeData: RouteData) {
-
         val nextStep = step + 1
 
         if (nextStep <= routeData.stages.size) {
@@ -153,7 +156,7 @@ object BalloonUtils {
     /**
      * Moves model north with row-wrap correction.
      */
-    private fun moveNorth(child: Int) = child + if (child >= 118) 20 else 19
+    private fun moveNorth(child: Int) = child + if (child >= 111) 20 else 19
 
     /**
      * Moves model one tile south in interface grid space.
@@ -233,15 +236,14 @@ object BalloonUtils {
     private fun keyTop(routeId: Int, step: Int) = "zep_balloon_top_${routeId}_$step"
     private fun keyBottom(routeId: Int, step: Int) = "zep_balloon_bottom_${routeId}_$step"
 
-    private val allChildren = (78..237).toSet()
-
     /**
      * Resets all interface models for balloon screen.
      */
     fun reset(player: Player, component: Int) {
-        allChildren.forEach { sendModelOnInterface(player, component, it, -1) }
+        for (i in 78..237) {
+            sendModelOnInterface(player, component, i, -1)
+        }
     }
-
     /**
      * Checks whether destination is unlocked via varbit.
      */

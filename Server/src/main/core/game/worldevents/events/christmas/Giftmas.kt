@@ -39,48 +39,6 @@ class Giftmas : Commands, StartupListener, LoginListener, InteractionListener {
     }
 
     fun init() {
-        try {
-            on(Items.MYSTERY_BOX_6199, IntType.ITEM, "open") { player, node ->
-
-                val item = node.asItem()
-                val charge = getCharge(item)
-
-                val loot = when (charge) {
-                    // Random event box
-                    6199 -> REBOX_LOOT.roll().first()
-                    // Giftmas box
-                    else -> MBOX_LOOT.roll().first()
-                }
-
-                if (!removeItem(player, item)) return@on true
-
-                when (charge) {
-                    6199 -> {
-                        sendMessage(
-                            player,
-                            if (loot.id == Items.FLIER_956) {
-                                "Inside the box you find a flier! Better luck next time!"
-                            } else {
-                                "You open the mystery box and find ${loot.amount}x ${loot.name.lowercase()}!"
-                            },
-                        )
-                    }
-
-                    else -> {
-                        sendDialogue(
-                            player,
-                            "You open the mystery box and find ${loot.amount}x ${loot.name.lowercase()}!"
-                        )
-                    }
-                }
-
-                addItem(player, loot.id, loot.amount)
-
-                return@on true
-            }
-        } catch (ignored: Exception) {
-        }
-
         for (player in Repository.players) player.hook(Event.XpGained, XpGainHook)
     }
 
@@ -153,6 +111,41 @@ class Giftmas : Commands, StartupListener, LoginListener, InteractionListener {
     }
 
     override fun defineListeners() {
+        flagInstant()
+        on(Items.MYSTERY_BOX_6199, IntType.ITEM, "open") { player, node ->
+
+            val item = node.asItem()
+            val charge = getCharge(item)
+
+            val loot = when (charge) {
+                // Random event box
+                6199 -> REBOX_LOOT.roll().first()
+                // Giftmas box
+                else -> MBOX_LOOT.roll().first()
+            }
+
+            if (!removeItem(player, item)) return@on true
+
+            when (charge) {
+                6199 -> {
+                    sendMessage(
+                        player,
+                        if (loot.id == Items.FLIER_956) {
+                            "Inside the box you find a flier! Better luck next time!"
+                        } else {
+                            "You open the mystery box and find ${loot.amount}x ${loot.name.lowercase()}!"
+                        },
+                    )
+                }
+
+                else -> {
+                    sendDialogue(player, "You open the mystery box and find ${loot.amount}x ${loot.name.lowercase()}!")
+                }
+            }
+
+            addItem(player, loot.id, loot.amount)
+            return@on true
+        }
     }
 
     companion object {

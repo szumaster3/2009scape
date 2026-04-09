@@ -14,7 +14,7 @@ interface InformationSign {
 
     fun read(player: Player) {
         val text = info.joinToString("<br>")
-        val component = if (scrollable) Components.CARPET_INFO_835 else Components.CARPET_INFO_723
+        val component = Components.CARPET_INFO_723
         player.interfaceManager.openSingleTab(Component(component))
         player.packetDispatch.sendString(button, component, 9)
         player.packetDispatch.sendString(text, component, 10)

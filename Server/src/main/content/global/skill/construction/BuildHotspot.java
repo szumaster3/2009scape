@@ -8,7 +8,7 @@ import java.util.List;
 
 public enum BuildHotspot {
 
-    CENTREPIECE_1(Scenery.CENTREPIECE_SPACE_15361, BuildHotspotType.INDIVIDUAL, BuildingUtils.BUILD_MID_ANIM, Decoration.PORTAL, Decoration.ROCK, Decoration.POND, Decoration.IMP_STATUE, Decoration.SMALL_OBELISK, Decoration.DUNGEON_ENTRANCE),
+    CENTREPIECE_1(Scenery.CENTREPIECE_SPACE_15361, BuildHotspotType.INDIVIDUAL, BuildingUtils.BUILD_MID_ANIM, Decoration.PORTAL, Decoration.ROCK, Decoration.POND, Decoration.IMP_STATUE, Decoration.DUNGEON_ENTRANCE),
     BIG_TREE_1(Scenery.BIG_TREE_SPACE_15362, BuildHotspotType.INDIVIDUAL, BuildingUtils.PLANT_ANIM, Decoration.BIG_DEAD_TREE, Decoration.BIG_TREE, Decoration.BIG_OAK_TREE, Decoration.BIG_WILLOW_TREE, Decoration.BIG_MAPLE_TREE, Decoration.BIG_YEW_TREE, Decoration.BIG_MAGIC_TREE),
     TREE_1(Scenery.TREE_SPACE_15363, BuildHotspotType.INDIVIDUAL, BuildingUtils.PLANT_ANIM, Decoration.DEAD_TREE, Decoration.TREE, Decoration.OAK_TREE, Decoration.WILLOW_TREE, Decoration.MAPLE_TREE, Decoration.YEW_TREE, Decoration.MAGIC_TREE),
     BIG_PLANT_1(Scenery.BIG_PLANT_SPACE_1_15364, BuildHotspotType.INDIVIDUAL, BuildingUtils.PLANT_ANIM, Decoration.FERN, Decoration.BUSH, Decoration.TALL_PLANT),

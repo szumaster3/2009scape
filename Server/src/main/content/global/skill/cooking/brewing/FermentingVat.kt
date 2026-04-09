@@ -11,7 +11,7 @@ import shared.consts.Animations
 import shared.consts.Items
 
 /**
- * @author Bishop
+ * @author GregF, Makar, Bishop
  */
 class FermentingVat(var player: Player, private val brewingVat: BrewingVat, var theStuff: Boolean, var nextBrew: Long, var stage: BrewingStage, var brewingItem: BrewProduct?) {
 

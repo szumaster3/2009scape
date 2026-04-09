@@ -2,6 +2,9 @@ package content.global.skill.cooking.brewing
 
 import shared.consts.Items
 
+/**
+ * @author GregF, Makar, Bishop
+ */
 enum class BrewProduct(
     val displayName: String,
     val itemID: Int,

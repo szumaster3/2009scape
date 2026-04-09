@@ -16,6 +16,7 @@ import shared.consts.Items
 /**
  * Independent brewing timer and functions exclusively for Kelda Stout
  * Varbit progression: 68 (mixed) -> 69 (brewing1) -> 70 (brewing2) -> 71 (done)
+ * @author GregF, Makar, Bishop
  */
 class KeldaStoutGrowth : PersistTimer( 5 /*minutes*/ * 100 /*ticks per minute*/, "cooking:brewing-kelda", isSoft = true) {
     lateinit var player: Player

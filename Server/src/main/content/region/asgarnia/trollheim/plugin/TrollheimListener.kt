@@ -13,14 +13,6 @@ import shared.consts.Scenery
 
 class TrollheimListener : InteractionListener {
 
-    private val arenaEntrances = intArrayOf(
-        3672,
-        Scenery.ARENA_EXIT_3785,
-        Scenery.ARENA_EXIT_3786,
-        Scenery.ARENA_ENTRANCE_3782,
-        Scenery.ARENA_ENTRANCE_3783
-    )
-
     override fun defineListeners() {
 
         /*
@@ -99,15 +91,8 @@ class TrollheimListener : InteractionListener {
             return@on true
         }
 
-        /*
-         * Handles all arena doors (entrance/exit and secret door).
-         */
-
-        on(arenaEntrances, IntType.SCENERY, "open") { player, node ->
-            if (node.id == 3672)
-                sendMessage(player, "You don't know how to open the secret door.")
-            else
-                DoorActionHandler.handleAutowalkDoor(player, node.asScenery())
+        on(3672, IntType.SCENERY, "open") { player, _ ->
+            sendMessage(player, "You don't know how to open the secret door.")
             return@on true
         }
 

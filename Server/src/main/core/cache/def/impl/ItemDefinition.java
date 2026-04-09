@@ -760,7 +760,7 @@ public class ItemDefinition extends Definition<Item> {
     );
 
     private static final List<String> allowedSubstrings = Arrays.asList(
-            "satchel", "naval", " partyhat", " afro"
+            "satchel", "naval", " partyhat"
     );
 
     /**

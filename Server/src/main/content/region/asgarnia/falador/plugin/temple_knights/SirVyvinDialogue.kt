@@ -83,13 +83,13 @@ class SirVyvinDialogue: DialogueFile() {
      * Returns the shop id for rank.
      */
     private fun getShopForRank(rank: WhiteKnightsRank): Int = when (rank) {
-        WhiteKnightsRank.NOVICE -> 269
-        WhiteKnightsRank.PEON -> 270
-        WhiteKnightsRank.PAGE -> 271
-        WhiteKnightsRank.NOBLE -> 272
-        WhiteKnightsRank.ADEPT -> 273
-        WhiteKnightsRank.MASTER -> 274
-        else -> 269
+        WhiteKnightsRank.NOVICE -> 267
+        WhiteKnightsRank.PEON -> 268
+        WhiteKnightsRank.PAGE -> 269
+        WhiteKnightsRank.NOBLE -> 270
+        WhiteKnightsRank.ADEPT -> 271
+        WhiteKnightsRank.MASTER -> 272
+        else -> 267
     }
 
 }

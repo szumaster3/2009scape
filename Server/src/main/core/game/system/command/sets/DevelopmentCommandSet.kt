@@ -65,7 +65,7 @@ class DevelopmentCommandSet : CommandSet(Privilege.ADMIN) {
         ) { player, args ->
 
             if (args.size < 2) {
-                sendMessage(player, "Usage: ::loadregion <region_id>")
+                notify(player, "Usage: ::loadregion <region_id>")
                 return@define
             }
 
@@ -78,11 +78,11 @@ class DevelopmentCommandSet : CommandSet(Privilege.ADMIN) {
             val dyn = DynamicRegion.create(regionId)
             dyn.add(player)
             registerLogoutListener(player, "before-teleport") {
-                player.location = Location.create(2500,2500,0)
+                player.location = Location.create(3222,3218,0)
             }
             teleport(player, dyn.baseLocation)
 
-            sendMessage(player, "Dynamic region $regionId loaded.")
+            notify(player, "Dynamic region $regionId loaded.")
         }
 
         /*

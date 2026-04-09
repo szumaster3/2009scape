@@ -41,12 +41,7 @@ class PartyPeteDialogue(player: Player? = null) : Dialogue(player) {
                 2 -> player(FaceAnim.HALF_GUILTY, "Why's there a chameleon in here?").also { stage = 9 }
                 3 -> options("So, what's this room for?", "What's the big lever over there for?", "What's the gold chest for?", "I wanna party!", "More...").also { stage = 3 }
             }
-            6 -> npcl(FaceAnim.HAPPY, "Isn't it groovy? I liked it so much, I had extras made for my party goers. Would you like to buy one?").also { stage++ }
-            7 -> options("Yes", "No").also { stage++ }
-            8 -> when (buttonId) {
-                1 -> end().also { openNpcShop(player, npc.id) }
-                2 -> end()
-            }
+            6 -> npcl(FaceAnim.HAPPY, "Isn't it groovy?").also { stage = END_DIALOGUE }
             9 -> npcl(FaceAnim.HAPPY, "Karma's my pet. I got him for Christmas one year. He keeps the Party Room free of flies, and he loves watching me dance. Karma karma karma cha...").also { stage++ }
             10 -> options("Can you talk to him?", "Christmas is over.", "Aww, that's nice.", "Got any cake?").also { stage++ }
             11 -> when (buttonId) {

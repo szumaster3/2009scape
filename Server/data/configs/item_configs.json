@@ -16121,7 +16121,7 @@
   {
     "shop_price": "1000",
     "ge_buy_limit": "100",
-    "examine": "Wizard Mizgog sells these aim-enhancing amulets.",
+    "examine": "It increases my aim.",
     "grand_exchange_price": "2870",
     "durability": null,
     "name": "Amulet of accuracy",

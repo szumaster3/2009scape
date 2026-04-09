@@ -7,6 +7,7 @@ import core.game.dialogue.FaceAnim
 import core.game.interaction.QueueStrength
 import core.game.node.entity.npc.NPC
 import core.game.node.entity.player.Player
+import core.game.node.item.GroundItemManager
 import core.tools.END_DIALOGUE
 import shared.consts.Components
 import shared.consts.Items
@@ -105,7 +106,11 @@ class QuizMasterDialogue : DialogueFile() {
 
                     2 -> {
                         queueScript(player!!, 1, QueueStrength.SOFT) {
-                            addItemOrDrop(player!!, QuizMaster.MYSTERY_BOX)
+                            if(freeSlots(player!!) == 0){
+                                GroundItemManager.create(QuizMaster.MYSTERY_BOX,player!!.location)
+                            } else {
+                                player?.inventory?.add(QuizMaster.MYSTERY_BOX)
+                            }
                             return@queueScript stopExecuting(player!!)
                         }
                     }

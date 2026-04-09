@@ -41,7 +41,6 @@ class WizardMizgogDialogue(player: Player? = null) : Dialogue(player) {
             0 -> showTopics(
                 IfTopic(FaceAnim.HAPPY, "Give me a quest!", 1, getQuestStage(player, Quests.IMP_CATCHER) == 0),
                 IfTopic(FaceAnim.HALF_ASKING, "Got any more quests?", 13, isQuestComplete(player, Quests.IMP_CATCHER)),
-                IfTopic(FaceAnim.HALF_ASKING, "Do you have any more amulets of accuracy?", 21, isQuestComplete(player, Quests.IMP_CATCHER), true),
                 Topic(FaceAnim.HAPPY,"Do you know any interesting spells you could teach me?", 14, false)
             )
 
@@ -131,12 +130,6 @@ class WizardMizgogDialogue(player: Player? = null) : Dialogue(player) {
                     }
                 )
             }
-
-            21 -> {
-                end()
-                openNpcShop(player, npc.id)
-            }
-
         }
         return true
     }

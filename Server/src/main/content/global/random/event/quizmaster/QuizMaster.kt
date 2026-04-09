@@ -4,6 +4,7 @@ import content.data.RandomEvent
 import core.api.*
 import core.game.node.entity.player.Player
 import core.game.node.entity.player.link.TeleportManager
+import core.game.node.item.Item
 import core.game.world.map.Location
 import shared.consts.Animations
 import shared.consts.Items
@@ -14,10 +15,9 @@ import shared.consts.Items
  */
 object QuizMaster {
     const val COINS = Items.COINS_995
-    const val MYSTERY_BOX = Items.RANDOM_EVENT_GIFT_14649
+    val MYSTERY_BOX = Item(Items.MYSTERY_BOX_6199, 1, 6199)
     const val SIT_ANIMATION = Animations.QUIZMASTER_CHAIR_2378
     private val EVENT_LOCATION: Location = Location.create(1952, 4764, 1)
-
     val CORRECT =
         arrayOf(
             "Hey, you're good at this! CORRECT!",

@@ -27,6 +27,13 @@ class SkippyNPC @JvmOverloads constructor(id: Int = NPCs.SKIPPY_2796, location: 
         }
     }
 
+    override fun isHidden(player: Player?): Boolean {
+        if (!GameWorld.settings!!.isDevMode) {
+            return true
+        }
+        return super.isHidden(player)
+    }
+
     override fun getIds(): IntArray {
         return intArrayOf(NPCs.SKIPPY_2796)
     }

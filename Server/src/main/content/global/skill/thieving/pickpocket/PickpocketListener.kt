@@ -125,7 +125,7 @@ class PickpocketListener : InteractionListener {
         fun pickpocketRoll(player: Player, low: Double, high: Double, table: WeightBasedTable): ArrayList<Item>? {
             var successMod = 0.0
             if (inEquipment(player, Items.GLOVES_OF_SILENCE_10075)) {
-                successMod += 3
+                successMod += 5
             }
             val chance = RandomFunction.randomDouble(1.0, 100.0)
             val failThreshold = RandomFunction.getSkillSuccessChance(low, high, getStatLevel(player, Skills.THIEVING)) + successMod

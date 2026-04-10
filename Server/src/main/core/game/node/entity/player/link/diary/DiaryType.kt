@@ -385,116 +385,12 @@ enum class DiaryType(
         ),
         arrayOf(
             arrayOf(Item(Items.SEERS_HEADBAND_1_14631), Item(LampItem.SEERS_ACHIEVEMENT_EASY.item)),
-            arrayOf(Item(14638), Item(LampItem.SEERS_ACHIEVEMENT_MEDIUM.item)),
-            arrayOf(Item(14639), Item(LampItem.SEERS_ACHIEVEMENT_HARD.item))
+            arrayOf(Item(Items.SEERS_HEADBAND_2_14638), Item(LampItem.SEERS_ACHIEVEMENT_MEDIUM.item)),
+            arrayOf(Item(Items.SEERS_HEADBAND_3_14639), Item(LampItem.SEERS_ACHIEVEMENT_HARD.item))
         ),
         "To start marking off tasks in your journal, speak to<br><br>any seer in Seers' Village, Stankers by the coal<br><br>trucks or Sir Kay in Camelot.",
         intArrayOf(NPCs.SEER_388, NPCs.STANKERS_383, NPCs.SIR_KAY_241)
-
     );
-    /*
-    ARDOUGNE(
-        "Ardougne",
-        intArrayOf(31,34,35,36),
-        arrayOf("Easy", "Medium", "Hard"),
-        arrayOf(
-            arrayOf( // Easy
-                "Have Wizard Cromperty teleport you to the essence mine.",
-                "Attempt to steal from any stall in Ardougne Market, or from any guard.",
-                "Sell silk to the silk trader in Ardougne for 60 coins each.",
-                "Use the altar in West Ardougne's church.",
-                "Enter the Castle Wars waiting room.",
-                "Go out fishing on the Fishing Trawler.",
-                "Enter the Combat Training Camp north of Ardougne.",
-                "Talk to a civilian in West Ardougne about selling a cat.",
-                "Kill a Unicow in the Tower of Life.",
-                "Get a civilian to throw a tomato at the army recruiter<br><br>in West Ardougne.",
-                "Sail from East Ardougne to Karamja.",
-                "Attempt to pick-lock a certain door east of the gem stall<br><br>in Ardougne's marketplace.",
-                "Spend some Penguin points with Larry at Ardougne Zoo.",
-                "Use the Summoning obelisk to the east of the Fight Arena.",
-                "Pop a balloon in the monastery south of Ardougne.",
-                "Buy a water-filled vial from the general store run<br><br>by Aemad and Kortan.",
-                "Use the noticeboard near the Observatory to gather information<br><br>about shooting stars.",
-                "Kill something on the Khazard Battlefield.",
-                "Buy a skewered kebab from the Poison Arrow pub.",
-                "View the Hunter equipment in Aleck's shop.",
-                "Talk to the head servant at the servants' guild to find out about <br><br>servants for your house.",
-                "Use a Ring of Dueling to teleport to Castle Wars.",
-                "Talk to Tindel Merchant about identifying swords."
-            ),
-            arrayOf(// Medium
-                "Enter the unicorn pen in Ardougne Zoo using the fairy rings.",
-                "Teleport to the Wilderness using the lever in Ardougne.",
-                "Grapple over Yanille's southern wall.",
-                "Craft some runes (any kind) at Ourania Altar.",
-                "Sell some rubium to Ezekial Lovecraft in the town of Witchaven.",
-                "Pick watermelons from the Farming patch north of Ardougne.",
-                "Cast the Watchtower Teleport spell.",
-                "Travel to Castle Wars by hot-air balloon.",
-                "Claim buckets of sand from Bert in Yanille.",
-                "After Meeting History, return to the past and<br><br>talk to Sarah about Herblore.",
-                "Catch a fish at the Fishing Platform using either a net or rod.",
-                "Cross the River Dougne using the log balance.",
-                "Pickpocket the master farmer north of Ardougne.",
-                "Attempt to steal a nature rune from a chest in Ardougne.",
-                "Mine some coal from the rocks east of Ardougne.",
-                "Kill a swordchick in the Tower of Life.",
-            ),
-            arrayOf( // Hard
-                "Recharge a bracelet of combat or a necklace of skills<br><br>at the Legends' Guild.",
-                "Kill a shadow warrior in the Legends' Guild basement.",
-                "Enter the Magic Guild in Yanille.",
-                "Use the portal in the Magic Guild to teleport to<br><br>Thormac's tower (west portal).",
-                "Be on the winning side in a game of Castle Wars.",
-                "Cast the Ourania Teleport spell.",
-                "Pickpocket a watchman in Yanille while wearing gloves of silence.",
-                "Kill a frogeel in the Tower of Life.",
-                "Have a zookeeper put you in Ardougne Zoo's monkey cage.",
-                "Kill your own jade vine after the Back to my Roots quest.",
-                "Use the Air Guitar emote near the south-east of the monastery<br><br>south of Ardougne.",
-                "Cast the Ardougne Teleport spell.",
-                "Cross the monkey bars in the Yanille Agility Dungeon.",
-                "Catch a red salamander from the Hunter area <br><br>outside of Ourania Altar.",
-                "Pick a papaya or coconut from the fruit tree patch<br><br>near Tree Gnome Village.",
-                "Attempt to steal blood runes from the chest in the<br><br>Chaos Druid Tower's dungeon.",
-                "Use a catapult in Castle Wars after gaining the knowledge from the<br><br>Catapult Construction quest."
-            ),
-        ),
-        arrayOf(
-
-            // TODO:
-            //  - [x] Ability to teleport to the monastery south of Ardougne an unlimited number of times
-            //  - [ ] Better chance at successful thieving in Ardougne
-            //  - [x] Twice as many death runes when trading a cat to a citizen in West Ardougne
-            //  - [ ] More drops in the Tower of Life will become noted.
-            //  - [ ] A boost of Prayer on entry to Castle Wars
-
-            arrayOf(Item(Items.ARDOUGNE_CLOAK_1_14638), Item(LampItem.ARDOUGNE_ACHIEVEMENT_EASY.item)),
-
-            // TODO:
-            //  - [x] Teleport to Ardougne Farm once per day.
-            //  - [ ] Better chance at successful pickpocket in Ardougne.
-            //  - [ ] Better chance at getting more runes at Ourania Altar.
-            //  - [ ] Even more of the drops from the Tower of Life will be noted.
-            //  - [ ] 100 Pure Essence per day from Wizard Cromperty.
-            //  - [ ] Longer immunity from attack once teleporting to the wilderness from the Ardougne Lever. (10 secs)
-            //  - [x] Toggle Ring of life teleport to Ardougne.
-
-            arrayOf(Item(Items.ARDOUGNE_CLOAK_2_14639), Item(LampItem.ARDOUGNE_ACHIEVEMENT_MEDIUM.item)),
-            // TODO:
-            //  - [ ] Better chance at stealing and pickpocketing anywhere in RuneScape.
-            //  - [ ] Magical traps on chests will teleport the player to Ardougne's North Bank, instead of a random location.
-            //  - [ ] Even more drops from the creatures in the Tower of Life will be noted.
-            //  - [ ] Wizard Cromperty will give 150 pure essence per day.
-            //  - [x] Ability to change the Watchtower teleport to take the player within Yanille's walls.
-
-            arrayOf(Item(Items.ARDOUGNE_CLOAK_3_14640), Item(LampItem.ARDOUGNE_ACHIEVEMENT_HARD.item))
-        ),
-        "To start making off tasks in your journal, speak to Doctor<br><br>Orbon in East Ardougne's church, Ardougne's town crier in<br><br>the marketplace, or Aleck in Yannile.",
-        intArrayOf(NPCs.DOCTOR_ORBON_290, NPCs.TOWN_CRIER_6138, NPCs.ALECK_5110)
-    );
-    */
 
     /**
      * Returns the NPC id associated with a diary level.

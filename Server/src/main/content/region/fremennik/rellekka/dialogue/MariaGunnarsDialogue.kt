@@ -18,7 +18,7 @@ class MariaGunnarsDialogue(player: Player? = null) : Dialogue(player) {
         npc = args[0] as NPC
         if (npc.id == NPCs.MARIA_GUNNARS_5508) {
             if (!isQuestComplete(player, Quests.THE_FREMENNIK_TRIALS)) {
-                npcl(FaceAnim.HALF_GUILTY, "I do not speak to outlanders. Maybe you should speak with Rellekka's Chieftain.").also { stage = END_DIALOGUE }
+                npcl(FaceAnim.HALF_GUILTY, "I do not speak to outerlanders. Maybe you should speak with Rellekka's Chieftain.").also { stage = END_DIALOGUE }
             } else {
                 npcl(FaceAnim.HAPPY, "Welcome back, ${getAttribute(player!!, "fremennikname", "name")}. Do you have any questions?").also { stage = 22 }
             }

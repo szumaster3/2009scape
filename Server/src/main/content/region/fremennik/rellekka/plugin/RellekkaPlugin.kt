@@ -78,7 +78,7 @@ class RellekkaPlugin : InteractionListener, MapArea {
 
         on(NPCs.FISH_MONGER_1315, IntType.NPC, "talk-to") { player, node ->
             if (!isQuestComplete(player, Quests.THE_FREMENNIK_TRIALS)) {
-                sendNPCDialogue(player, node.id, "I don't sell to outlanders.", FaceAnim.ANNOYED)
+                sendNPCDialogue(player, node.id, "I don't sell to outerlanders.", FaceAnim.ANNOYED)
             } else {
                 sendNPCDialogue(player, node.id, "Hello there, ${FremennikTrials.getFremennikName(player)}. Looking for fresh fish?")
                 openNpcShop(player, NPCs.FISH_MONGER_1315)

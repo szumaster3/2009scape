@@ -130,13 +130,13 @@ class PeerTheSeerDialogue(player: Player? = null) : Dialogue(player) {
             25 -> playerl(FaceAnim.THINKING, "Okay... I... think I understand...").also { stage = 1000 }
             26 -> npcl(FaceAnim.ANNOYED, "Not me, I'm afraid.").also { stage = 1000 }
             50 -> playerl(FaceAnim.ASKING, "Hello. I'm looking for members of the council of elders to vote for me to become a Fremennik.").also { stage++ }
-            51 -> npcl(FaceAnim.THINKING, "Are you now? Well that is interesting. Usually outlanders do not concern themselves with our ways like that.").also { stage++ }
+            51 -> npcl(FaceAnim.THINKING, "Are you now? Well that is interesting. Usually outerlanders do not concern themselves with our ways like that.").also { stage++ }
             52 -> npcl(FaceAnim.HAPPY, "I am one of the members of the council of elders, and should you be able to prove to me that you have something to offer my clan I will vote in your favour at the next meeting.").also { stage++ }
             53 -> playerl(FaceAnim.ASKING, "How can I prove that to you?").also { stage++ }
             54 -> npcl(FaceAnim.HAPPY, "Well, I have but a simple test. This building behind me is my house. Inside I have constructed a puzzle.").also { stage++ }
             55 -> npcl(FaceAnim.HAPPY, "As a Seer to the clan, I value intelligence very highly, so you may think of it as an intelligence test of sorts.").also { stage++ }
             56 -> playerl(FaceAnim.THINKING, "An intelligence test? I thought barbarians were stupid!").also { stage++ }
-            57 -> npcl(FaceAnim.ANNOYED, "That is the opinion that outlanders usually hold of my people, it is true. But that is because people often confuse knowledge with wisdom.").also { stage++ }
+            57 -> npcl(FaceAnim.ANNOYED, "That is the opinion that outerlanders usually hold of my people, it is true. But that is because people often confuse knowledge with wisdom.").also { stage++ }
             58 -> npcl(FaceAnim.ANNOYED, "My puzzle tests not what you know, but what you can work out. All members of our clan have been tested when they took their trials.").also { stage++ }
             59 -> playerl(FaceAnim.ASKING, "So what exactly does this puzzle consist of, then?").also { stage++ }
             60 -> npcl(FaceAnim.HAPPY, "Well, firstly you must enter my house with no items, weapons or armour. Then it is a simple matter of entering through one door and leaving by the other.").also { stage++ }
@@ -163,7 +163,7 @@ class PeerTheSeerDialogue(player: Player? = null) : Dialogue(player) {
             73 -> playerl(FaceAnim.THINKING, "Well...").also { stage++ }
             74 -> npcl(FaceAnim.ANGRY, "Yes, outerlander???").also { stage++ }
             75 -> playerl(FaceAnim.ASKING, "Where is the nearest bank?").also { stage++ }
-            76 -> npcl(FaceAnim.HAPPY, "Ah, I see your problem outerlander. The nearest bank to here is the place known to outlanders as the Seers Village.").also { stage++ }
+            76 -> npcl(FaceAnim.HAPPY, "Ah, I see your problem outerlander. The nearest bank to here is the place known to outerlanders as the Seers Village.").also { stage++ }
             77 -> npcl(FaceAnim.HAPPY, "It is some way South. I do however have an alternative, should you wish to take it.").also { stage++ }
             78 -> playerl(FaceAnim.ASKING, "And what is that?").also { stage++ }
             79 -> npcl(FaceAnim.HAPPY, "I can store all the weapons, armour and items that you have upon you directly into your bank account.").also { stage++ }

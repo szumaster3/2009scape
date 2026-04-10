@@ -152,7 +152,7 @@ class OlafTheBardDialogue(player: Player? = null) : Dialogue(player) {
             102 -> npcl(FaceAnim.HAPPY, "It is the song of Rellekka. When you play it, it will bring you back to this town where you are in this world.").also { stage++ }
             103 -> npcl(FaceAnim.HAPPY, "We often go adventuring with bards for precisely this reason. No matter where we have ended up we can return safe and sound to home.").also { stage++ }
             104 -> playerl(FaceAnim.HAPPY, "Thanks, Olaf!").also { stage = 1000 }
-            150 -> npcl(FaceAnim.HAPPY, "I am afraid I cannot speak to outlanders. Besides, I am busy composing an epic.").also { stage = 1000 }
+            150 -> npcl(FaceAnim.HAPPY, "I am afraid I cannot speak to outerlanders. Besides, I am busy composing an epic.").also { stage = 1000 }
             1000 -> end()
         }
         return true

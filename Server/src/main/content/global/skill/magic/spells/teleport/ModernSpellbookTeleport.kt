@@ -70,7 +70,7 @@ class ModernSpellbookTeleport : SpellListener("modern") {
         onCast(ModernSpells.CAMELOT_TELEPORT, NONE) { player, _ ->
             requires(player = player, magicLevel = 45, runes = arrayOf(Item(Items.AIR_RUNE_556, 5), Item(Items.LAW_RUNE_563)))
             val alternateTeleport = getAttribute(player, GameAttributes.ATTRIBUTE_CAMELOT_ALT_TELE, false) ||
-                    inEquipment(player, 14639)
+                    inEquipment(player, Items.SEERS_HEADBAND_3_14639)
             val dest = if (alternateTeleport) {
                 Location.create(2731, 3485, 0)
             } else {
@@ -84,8 +84,7 @@ class ModernSpellbookTeleport : SpellListener("modern") {
          */
 
         onCast(ModernSpells.ARDOUGNE_TELEPORT, NONE) { player, _ ->
-            if (!getAttribute(player, GameAttributes.ARDOUGNE_TELEPORT, false)) {
-                sendMessage(player, "You haven't learnt how to cast this spell yet.")
+            if (!hasRequirement(player, Quests.PLAGUE_CITY, true)) {
                 return@onCast
             }
             requires(player = player, magicLevel = 51, runes = arrayOf(Item(Items.WATER_RUNE_555, 2), Item(Items.LAW_RUNE_563, 2)))
@@ -102,10 +101,8 @@ class ModernSpellbookTeleport : SpellListener("modern") {
                 sendMessage(player, "You haven't learnt how to cast this spell yet.")
                 return@onCast
             }
-            val alternateTeleport = getAttribute(player, GameAttributes.ATTRIBUTE_WATCHTOWER_ALT_TELE, false)
-            val dest = if (alternateTeleport) Location.create(2606, 3093, 0) else Location.create(2549, 3112, 0)
             requires(player = player, magicLevel = 58, runes = arrayOf(Item(Items.EARTH_RUNE_557, 2), Item(Items.LAW_RUNE_563, 2)))
-            sendTeleport(player = player, xp = 68.0, location = dest)
+            sendTeleport(player = player, xp = 68.0, location = Location.create(2549, 3112, 0))
         }
 
         /*

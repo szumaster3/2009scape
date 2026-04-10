@@ -104,7 +104,7 @@ class SkulgrimenDialogue(player: Player? = null) : Dialogue(player) {
             25 -> npcl(FaceAnim.HAPPY, "Not hard. Just a trick to it. Takes skill to learn, but when learnt, easy. Sigli will be happy. Finest bowstring on continent. Will suit his needs perfectly.").also { stage = END_DIALOGUE }
             26 -> npcl(FaceAnim.ANNOYED, "Not for me, I'm afraid.").also { stage = END_DIALOGUE }
 
-            100 -> npcl(FaceAnim.HAPPY, "Sorry. I can't sell weapons to outlanders. Wouldn't be right. Against our beliefs.").also { stage = END_DIALOGUE }
+            100 -> npcl(FaceAnim.HAPPY, "Sorry. I can't sell weapons to outerlanders. Wouldn't be right. Against our beliefs.").also { stage = END_DIALOGUE }
 
             101 -> {
                 if (anyInInventory(player, Items.DAGANNOTH_HIDE_6155, Items.ROCK_SHELL_CHUNK_6157, Items.ROCK_SHELL_SHARD_6159, Items.ROCK_SHELL_SPLINTER_6161)) {

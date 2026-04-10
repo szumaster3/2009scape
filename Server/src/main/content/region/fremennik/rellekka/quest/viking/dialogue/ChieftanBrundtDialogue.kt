@@ -92,8 +92,8 @@ class ChieftanBrundtDialogue(player: Player? = null) : Dialogue(player) {
             2 -> npcl(FaceAnim.HAPPY, "This place? Why, this is Relleka! Homeland of all Fremennik! I do not recognise your face outerlander; Where do you come from?").also { stage++ }
             3 -> playerl(FaceAnim.HAPPY, "Hmmm... I will not press the issue then outerlander. How may my tribe and I help you?").also { stage = 0 }
             5 -> npcl(FaceAnim.HAPPY, "Do not take it personally, outerlander! We are a simple people, and it is our experience that keeping ourselves to ourselves is best.").also { stage++ }
-            6 -> npcl(FaceAnim.HAPPY, "This is why speaking to outlanders is forbidden.").also { stage++ }
-            7 -> npcl(FaceAnim.HAPPY, "We do not wish to enter war with the outlanders and their strange magics, so we limit all unauthorised communication.").also { stage++ }
+            6 -> npcl(FaceAnim.HAPPY, "This is why speaking to outerlanders is forbidden.").also { stage++ }
+            7 -> npcl(FaceAnim.HAPPY, "We do not wish to enter war with the outerlanders and their strange magics, so we limit all unauthorised communication.").also { stage++ }
             8 -> playerl(FaceAnim.ASKING, "Then how come you're talking to me?").also { stage++ }
             9 -> npcl(FaceAnim.HAPPY, "Ah, this is because I am the chieftan. I am the one who authorised contact. You will not find many of my tribe so forthcoming with you, as I.").also { stage++ }
             10 -> playerl(FaceAnim.ASKING, "Is there a way for you to authorise your tribe to talk to me then?").also { stage++ }
@@ -177,11 +177,11 @@ class ChieftanBrundtDialogue(player: Player? = null) : Dialogue(player) {
             605 -> npcl(FaceAnim.HAPPY, "Not at the moment, ${FremennikTrials.getFremennikName(player!!)}. Rest assured, should your services to the Fremennik be required, I will call upon you").also { stage = END_DIALOGUE }
             610 -> npcl(FaceAnim.HAPPY, "Aye that it is, ${if (player?.isMale == true) "brother" else "sister"} ${FremennikTrials.getFremennikName(player!!)}. Should you desire one of your own, you should go to Skulgrimen's shop and see what they have available!",).also { stage = END_DIALOGUE }
             615 -> npcl(FaceAnim.HAPPY, "Why, of course, ${FremennikTrials.getFremennikName(player!!)}! Do not say 'your people' like that, for you are now a Fremennik yourself! What did you want to hear of?").also { stage++ }
-            616 -> options("Tell me of the finding of Koschei", "Tell me of the lands to the North", "Tell me of the outlanders", "Don't tell me anything").also { stage++ }
+            616 -> options("Tell me of the finding of Koschei", "Tell me of the lands to the North", "Tell me of the outerlanders", "Don't tell me anything").also { stage++ }
             617 -> when (buttonId) {
                 1 -> playerl(FaceAnim.HAPPY, "I'm interested in finding out about that mysterious warrior I fought as part of Thorvalds' combat trial. His name is Koschei I believe.").also { stage++ }
                 2 -> playerl(FaceAnim.HAPPY, "I would like to hear of the lands across the ocean to the North.").also { stage = 635 }
-                3 -> playerl(FaceAnim.HAPPY, "I would like to hear a little of the history between the Fremenniks and the outlanders.").also { stage = 645 }
+                3 -> playerl(FaceAnim.HAPPY, "I would like to hear a little of the history between the Fremenniks and the outerlanders.").also { stage = 645 }
                 4 -> playerl(FaceAnim.HAPPY, "Actually, history isn't really my thing.").also { stage = 665 }
             }
             618 -> npcl(FaceAnim.HAPPY, "Ah... the deathless one... We do not even know if Koschei is his name, when we found him he had no memory,").also { stage++ }
@@ -208,7 +208,7 @@ class ChieftanBrundtDialogue(player: Player? = null) : Dialogue(player) {
             641 -> npcl(FaceAnim.HAPPY, "It is an inhospitable land, and you will need an agile and sturdy body just to keep alive in its perils.").also { stage++ }
             642 -> npcl(FaceAnim.HAPPY, "As I say, my knowledge outside of this town is rather limited, and I know no more than this.").also { stage++ }
             643 -> npcl(FaceAnim.HAPPY, "Was there anything else you wished to hear tell of?").also { stage = 616 }
-            645 -> npcl(FaceAnim.HAPPY, "Ah, now that is something I know a great deal about. Believe it or not, all outlanders were once orginally Fremenniks.").also { stage++ }
+            645 -> npcl(FaceAnim.HAPPY, "Ah, now that is something I know a great deal about. Believe it or not, all outerlanders were once orginally Fremenniks.").also { stage++ }
             646 -> npcl(FaceAnim.HAPPY, "When first man came to these lands all were Fremenniks, and followed our ways. We lived a happy life, and never settled in one place for long.").also { stage++ }
             647 -> npcl(FaceAnim.HAPPY, "We travelled by boat along the coastlines, never taking more from the land than could be regrown by the same time in the following year.").also { stage++ }
             648 -> npcl(FaceAnim.HAPPY, "However, many moons past, some of our tribesmen were weary of constantly travelling the lands, and decided to build themselves permanent homes.").also { stage++ }
@@ -224,7 +224,7 @@ class ChieftanBrundtDialogue(player: Player? = null) : Dialogue(player) {
             658 -> npcl(FaceAnim.HAPPY, "They began to mine these rocks, and set up transport systems to the various places of power that enchanted them. They even created temples at each of these places!").also { stage++ }
             659 -> npcl(FaceAnim.HAPPY, "This was going too far! We had no choice, but to expel them from our tribe forever!").also { stage++ }
             660 -> npcl(FaceAnim.HAPPY, "We turned our backs upon them, and let them know they would never be welcome back to our tribes until they had released themselves from the rocks.").also { stage++ }
-            661 -> npcl(FaceAnim.HAPPY, "This is the tale of how the outlanders came about; through stealing from the gods, and from betraying our ideals. This is why we show them no trust.").also { stage++ }
+            661 -> npcl(FaceAnim.HAPPY, "This is the tale of how the outerlanders came about; through stealing from the gods, and from betraying our ideals. This is why we show them no trust.").also { stage++ }
             662 -> npcl(FaceAnim.HAPPY, "Was there something else you wished to hear?").also { stage = 616 }
             665 -> npcl(FaceAnim.HAPPY, "Well let me know should you wish to hear our lore and histories. We value them highly.").also { stage = END_DIALOGUE }
             1200 -> npcl(FaceAnim.HALF_THINKING, "Well, I ought not to give you such things lightly...").also { stage++ }

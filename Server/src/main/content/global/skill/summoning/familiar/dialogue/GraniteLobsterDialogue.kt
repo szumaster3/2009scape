@@ -28,7 +28,7 @@ class GraniteLobsterDialogue : Dialogue {
         stage = 0
 
         when (branch) {
-            0 -> playerl(FaceAnim.FRIENDLY, "The outlanders have insulted our heritage for the last time!")
+            0 -> playerl(FaceAnim.FRIENDLY, "The outerlanders have insulted our heritage for the last time!")
             1 -> playerl(FaceAnim.FRIENDLY, "Yes! We shall pile gold before the longhall of our tribesmen!").also { stage = END_DIALOGUE }
             2 -> playerl(FaceAnim.FRIENDLY, "Crush your enemies, see them driven before you, and hear the lamentation of their women!")
             3 -> playerl(FaceAnim.FRIENDLY, "Well, I suppose we could when I'm done with this.")

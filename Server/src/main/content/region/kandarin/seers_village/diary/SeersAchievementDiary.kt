@@ -19,15 +19,6 @@ import shared.consts.*
 
 class SeersAchievementDiary : DiaryEventHookBase(DiaryType.SEERS_VILLAGE) {
     companion object {
-        private const val ATTRIBUTE_CUT_YEW_COUNT = "diary:seers:cut-yew"
-        private const val ATTRIBUTE_BASS_CAUGHT = "diary:seers:bass-caught"
-        private const val ATTRIBUTE_SHARK_CAUGHT_COUNT = "diary:seers:shark-caught"
-        private const val ATTRIBUTE_SHARK_COOKED_COUNT = "diary:seers:shark-cooked"
-        private const val ATTRIBUTE_ELEMENTAL_KILL_FLAGS = "diary:seers:elemental-kills"
-        private const val ATTRIBUTE_ARCHER_KILL_FLAGS = "diary:seers:archer-kills"
-        private const val ATTRIBUTE_COAL_TRUCK_FULL = "diary:seers:coal-truck-full"
-        private const val ATTRIBUTE_FLAX_PICKED = "diary:seers:flax-picked"
-
         private val SEERS_VILLAGE_AREA = ZoneBorders(2687, 3455, 2742, 3507)
         private val SEERS_BANK_AREA = ZoneBorders(2721, 3490, 2730, 3493)
         private val SEERS_COAL_TRUCKS_AREA = ZoneBorders(2690, 3502, 2699, 3508)

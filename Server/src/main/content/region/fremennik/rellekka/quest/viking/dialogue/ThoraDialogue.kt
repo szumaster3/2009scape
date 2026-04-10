@@ -100,9 +100,9 @@ class ThoraDialogue(player: Player? = null) : Dialogue(player) {
             30 -> npcl(FaceAnim.NEUTRAL, "If it's not the note from Askeladden it isn't me, I'm afraid.").also { stage = 1000 }
             35 -> npcl(FaceAnim.SAD, "Ah... when I gave up my travels across the world many years back, to return to my expected role as longhall barkeep,").also { stage++ }
             36 -> npcl(FaceAnim.SAD, "as my mother, and her mother, were before me, I gave up a lot of the freedom I had found in the outside world.").also { stage++ }
-            37 -> npcl(FaceAnim.SAD, "I know it is our custom to shun outlanders and their ways, but I didn't find them as bad as the stories say.").also { stage++ }
+            37 -> npcl(FaceAnim.SAD, "I know it is our custom to shun outerlanders and their ways, but I didn't find them as bad as the stories say.").also { stage++ }
             38 -> npcl(FaceAnim.SAD, "Sometimes I feel as though we Fremennik live in a prison that we have constructed for ourselves,").also { stage++ }
-            39 -> npcl(FaceAnim.SAD, "and that WE are the outlanders, out here on the edge of the world...").also { stage++ }
+            39 -> npcl(FaceAnim.SAD, "and that WE are the outerlanders, out here on the edge of the world...").also { stage++ }
             40 -> npcl(FaceAnim.SAD, "I'm sorry, I think it is part of the job of Longhall barkeep to get philosophical about things ocassionally.").also { stage++ }
             41 -> npcl(FaceAnim.HAPPY, "I wish you all the best of luck with your trials, outerlander.").also { stage++ }
             42 -> npcl(FaceAnim.HAPPY, "When you have finished, perhaps you will come back here, and we can share a drink over tales of the outside world?").also { stage++ }
@@ -116,7 +116,7 @@ class ThoraDialogue(player: Player? = null) : Dialogue(player) {
             }
             54 -> npcl(FaceAnim.HAPPY, "Okay then.").also { stage = 1000 }
             60 -> npcl(FaceAnim.HAPPY, "Hello yourself, outerlander. A little out of the way up here, aren't you?").also { stage++ }
-            61 -> npcl(FaceAnim.HAPPY, "I would love to stop and chat with you, but unfortunately we have a custom that no Fremennik may speak with the outlanders without the permission of our chieftain. Don't take it personally.").also { stage++ }
+            61 -> npcl(FaceAnim.HAPPY, "I would love to stop and chat with you, but unfortunately we have a custom that no Fremennik may speak with the outerlanders without the permission of our chieftain. Don't take it personally.").also { stage++ }
             62 -> npcl(FaceAnim.HAPPY, "The Chieftain is stood just over there, his name is Brundt. I suggest you go and introduce yourself.").also { stage++ }
             63 -> npcl(FaceAnim.ASKING, "You wouldn't want to go making any enemies because you weren't aware of our customs now, would you?").also { stage++ }
             64 -> playerl(FaceAnim.THINKING, "No, I guess not. Thanks anyway.").also { stage++ }

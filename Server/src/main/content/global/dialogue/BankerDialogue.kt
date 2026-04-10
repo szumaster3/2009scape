@@ -18,17 +18,31 @@ import shared.consts.NPCs
 @Initializable
 class BankerDialogue(player: Player? = null) : Dialogue(player) {
 
+    private val OLD_MODELS = setOf(
+        NPCs.GNOME_BANKER_166,
+        NPCs.BANKER_498,
+        NPCs.BANKER_2163,
+        NPCs.BANKER_2164,
+        NPCs.BANKER_5776
+    )
+
+    private val INCOMPATIBLE_MODELS = setOf(
+        NPCs.TZHAAR_KET_ZUH_2619,
+        NPCs.OGRESS_BANKER_7049,
+        NPCs.OGRESS_BANKER_7050
+    )
+
     override fun handle(interfaceId: Int, buttonId: Int): Boolean {
-        val oldModels = intArrayOf(NPCs.GNOME_BANKER_166, NPCs.BANKER_498, NPCs.BANKER_2163, NPCs.BANKER_2164, NPCs.BANKER_5776)
-        val incompatibleModels = intArrayOf(NPCs.TZHAAR_KET_ZUH_2619, NPCs.OGRESS_BANKER_7049, NPCs.OGRESS_BANKER_7050)
-        val checkRestriction = player?.let { amountInInventory(it, Items.STARDUST_13727) > 1 && amountInBank(it, Items.STARDUST_13727) >= 200 } ?: false
+        val checkRestriction = player?.let {
+            amountInInventory(it, Items.STARDUST_13727) > 1 &&
+                    amountInBank(it, Items.STARDUST_13727) >= 200
+        } ?: false
 
         val checkFaceAnim = when (npc.id) {
-            in oldModels -> FaceAnim.OLD_NORMAL
-            in incompatibleModels -> FaceAnim.CHILD_NORMAL
+            in OLD_MODELS -> FaceAnim.OLD_NORMAL
+            in INCOMPATIBLE_MODELS -> FaceAnim.CHILD_NORMAL
             else -> FaceAnim.FRIENDLY
-        } ?: FaceAnim.FRIENDLY
-
+        }
 
         when (stage) {
             START_DIALOGUE -> npcl(checkFaceAnim, "Good day, how may I help you?").also {
@@ -38,9 +52,6 @@ class BankerDialogue(player: Player? = null) : Dialogue(player) {
                     stage += 2
                 }
             }
-
-
-
             1 -> npcl(checkFaceAnim, "Before we go any further, I should inform you that you " + "have items ready for collection from the Grand Exchange.").also { stage++ }
             2 -> showTopics(
                 Topic(FaceAnim.FRIENDLY, "I'd like to access my bank account, please.", 10),

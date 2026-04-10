@@ -72,7 +72,7 @@ class SigliTheHuntsmanDialogue(player: Player? = null) : Dialogue(player) {
             }
 
             else -> {
-                npcl(FaceAnim.HAPPY, "I do not speak to outlanders. If you have anything of import to say, go and speak to the Chieftain.")
+                npcl(FaceAnim.HAPPY, "I do not speak to outerlanders. If you have anything of import to say, go and speak to the Chieftain.")
                 stage = 1000
             }
         }

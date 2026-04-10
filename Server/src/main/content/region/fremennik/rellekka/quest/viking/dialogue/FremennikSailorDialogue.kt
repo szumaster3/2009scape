@@ -65,7 +65,7 @@ class FremennikSailorDialogue(player: Player? = null) : Dialogue(player) {
 
     override fun handle(interfaceId: Int, buttonId: Int): Boolean {
         when (stage) {
-            1 -> npcl(FaceAnim.HAPPY, "Ah! Even the outlanders have heard of my mysterious flower! I found it in a country far far away from here!").also { stage++ }
+            1 -> npcl(FaceAnim.HAPPY, "Ah! Even the outerlanders have heard of my mysterious flower! I found it in a country far far away from here!").also { stage++ }
             2 -> playerl(FaceAnim.ASKING, "Can I buy it from you?").also { stage++ }
             3 -> npcl(FaceAnim.NEUTRAL, "I'm afraid not, outerlander. There is a woman in this village whose heart I seek to capture, and I think giving her this strange flower might be my best bet with her.").also { stage++ }
             4 -> playerl(FaceAnim.THINKING, "Maybe you could let me have the flower and do something else to impress her?").also { stage++ }

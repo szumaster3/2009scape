@@ -58,7 +58,7 @@ class FremennikFishermanDialogue : DialogueFile() {
                     stage = 200
                 }
             }
-            1 -> npcl(FaceAnim.AMAZED, "Ah, so even outlanders have heard of my amazing catch the other day!").also { stage++ }
+            1 -> npcl(FaceAnim.AMAZED, "Ah, so even outerlanders have heard of my amazing catch the other day!").also { stage++ }
             2 -> playerl(FaceAnim.THINKING, "You have it? Can I trade you something for it?").also { stage++ }
             3 -> npcl(FaceAnim.HAPPY, "As exotic looking as it is, it is bad eating. I will happily trade it if you can find me the secret map of the best fishing spots that the navigator has hidden away.").also { stage++ }
             4 -> playerl(FaceAnim.AMAZED, "Is that all?").also { stage++ }

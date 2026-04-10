@@ -165,7 +165,7 @@ class ManniDialogue(player: Player? = null) : Dialogue(player) {
                 stage++
             }
             191 -> npcl(FaceAnim.HAPPY, "There ya go! Anyone who can drink like you earns my respect!").also { stage = END_DIALOGUE }
-            200 -> npcl(FaceAnim.HAPPY, "Do not think me rude outerlander, but our customs forbid me talking to you. All contact with outlanders must be vetted by our chieftain, Brundt.").also { stage++ }
+            200 -> npcl(FaceAnim.HAPPY, "Do not think me rude outerlander, but our customs forbid me talking to you. All contact with outerlanders must be vetted by our chieftain, Brundt.").also { stage++ }
             201 -> playerl(FaceAnim.ASKING, "Where is this Brundt?").also { stage++ }
             202 -> npcl(FaceAnim.HAPPY, "He is standing just over there. He will speak for the tribe.").also { stage = END_DIALOGUE }
             203 -> npcl(FaceAnim.DRUNK, "Absholutely! (hic) You're one mighty drinker!").also { stage = END_DIALOGUE }

@@ -11,8 +11,8 @@ class SeersHeadbandPlugin : InteractionListener {
     companion object {
         val HEADBAND_ITEM_IDS = intArrayOf(
             Items.SEERS_HEADBAND_1_14631,
-            14638,
-            14639
+            Items.SEERS_HEADBAND_2_14638,
+            Items.SEERS_HEADBAND_3_14639
         )
     }
 

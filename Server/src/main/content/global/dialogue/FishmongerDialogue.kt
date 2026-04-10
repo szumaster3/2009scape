@@ -18,6 +18,13 @@ import shared.consts.Quests
 class FishmongerDialogue(player: Player? = null) : Dialogue(player) {
 
     override fun handle(interfaceId: Int, buttonId: Int): Boolean {
+        val canTrade = ThievingDefinition.Stall.handleStallCooldown(
+            player = player,
+            stallName = "FISH_STALL",
+            shopNpc = npc,
+            guardNpcIds = listOf(NPCs.MARKET_GUARD_1317, NPCs.WARRIOR_1318)
+        )
+
         when (stage) {
             0 -> when (npc.id) {
                 NPCs.FISHMONGER_1393 -> {
@@ -36,14 +43,8 @@ class FishmongerDialogue(player: Player? = null) : Dialogue(player) {
                 }
                 NPCs.FISH_MONGER_1315 -> {
                     if (!isQuestComplete(player, Quests.THE_FREMENNIK_TRIALS)) {
-                        npc(FaceAnim.ANNOYED, "I don't sell to outlanders.").also { stage = END_DIALOGUE }
+                        npc(FaceAnim.ANNOYED, "I don't sell to outerlanders.").also { stage = END_DIALOGUE }
                     } else {
-                        val canTrade = ThievingDefinition.Stall.handleStallCooldown(
-                            player = player,
-                            stallName = "FISH_STALL",
-                            shopNpc = npc,
-                            guardNpcIds = listOf(NPCs.MARKET_GUARD_1317, NPCs.WARRIOR_1318)
-                        )
                         if (!canTrade) return false
                         npcl(FaceAnim.HALF_ASKING, "Hello there, ${FremennikTrials.getFremennikName(player)}. Looking for fresh fish?")
                         stage = 3

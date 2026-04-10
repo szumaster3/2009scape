@@ -110,7 +110,7 @@ object DoorActionHandler {
         if (scenery.charge == IN_USE_CHARGE) {
             return false
         }
-        val second = if ((scenery.id == 3)) null else getSecondDoor(scenery)
+        val second = if (scenery.id == 3) null else getSecondDoor(scenery)
         entity.lock(4)
         val loc = entity.location
         if (entity is Player) {
@@ -129,34 +129,28 @@ object DoorActionHandler {
                 player.location = loc
             }
         }
-        submitWorldPulse(
-            object : Pulse(1) {
-                var opened: Boolean = false
-
-                override fun pulse(): Boolean {
-                    if (!opened) {
-                        open(scenery, second, scenery.id, second?.id ?: -1, false, 2, false)
-                        entity.walkingQueue.reset()
-                        entity.walkingQueue.addPath(location.x, location.y)
-                        opened = true
-
-                        scenery.charge = IN_USE_CHARGE
-                        if (second != null) {
-                            second.charge = IN_USE_CHARGE
-                        }
-                        return false
-                    }
+        queueScript(entity,1){ tick ->
+            when(tick)
+            {
+                0 -> {
+                    open(scenery, second, scenery.id, second?.id ?: -1, false, 2, false)
+                    entity.walkingQueue.reset()
+                    entity.walkingQueue.addPath(location.x, location.y)
+                    scenery.charge = IN_USE_CHARGE
+                    second?.charge = IN_USE_CHARGE
+                    return@queueScript keepRunning(entity)
+                }
+                1 -> {
                     if (entity is Player) {
                         entity.asPlayer().logoutListeners.remove("autowalk")
                     }
                     scenery.charge = 1000
-                    if (second != null) {
-                        second.charge = 1000
-                    }
-                    return true
+                    second?.charge = 1000
+                   return@queueScript stopExecuting(entity)
                 }
-            },
-        )
+                else -> true
+            }
+        }
         return true
     }
 

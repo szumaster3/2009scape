@@ -96,7 +96,7 @@ class PortalChamberPlugin : OptionHandler() {
                     return
                 }
 
-                if(location == Locations.ARDOUGNE && isQuestComplete(player, Quests.PLAGUE_CITY) && !getAttribute(player, GameAttributes.ARDOUGNE_TELEPORT, false)) {
+                if(location == Locations.ARDOUGNE && isQuestComplete(player, Quests.PLAGUE_CITY)) {
                     sendMessage(player, "You have not yet learned how to cast this spell.")
                 }
 

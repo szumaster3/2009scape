@@ -87,7 +87,7 @@ class BardurPlugin : InteractionListener {
                 2 -> npcl(FaceAnim.FRIENDLY, "I kill the daggermouths for glory and for sport! When I have had my fill, I move on to the daggermouths' lair!").also { stage++ }
                 3 -> playerl(FaceAnim.FRIENDLY, "Erm... okay then. I'll leave you to it.").also { stage = END_DIALOGUE }
                 4 -> npcl(FaceAnim.NEUTRAL, "Listen, ${FremennikTrials.getFremennikName(player)}. I'm sorry about the way I acted while you were exiled.").also { stage++ }
-                5 -> sendDialogue(player!!, "Bardur gets hostile around outlanders.").also { stage++ }
+                5 -> sendDialogue(player!!, "Bardur gets hostile around outerlanders.").also { stage++ }
                 6 -> playerl(FaceAnim.FRIENDLY, "Don't worry about it, I understand! All's well that ends well! How've you been?").also { stage++ }
                 7 -> npcl(FaceAnim.NEUTRAL, "I have been here all the long day, slaughtering the daggermouth spawns so that none may pass!").also { stage++ }
                 8 -> npcl(FaceAnim.NEUTRAL, "My sword arm grows weary, and the blood of my foes hangs heavy upon my clothing!").also { stage++ }

@@ -67,8 +67,8 @@ class TeleportTabletPlugin : InteractionListener {
          * Requirements map for tablet item.
          */
         val teleportRequirements: Map<Int, (Player) -> Boolean> = mapOf(
-            Items.ARDOUGNE_TP_8011      to { p -> getAttribute(p, GameAttributes.ARDOUGNE_TELEPORT, false) },
-            Items.WATCHTOWER_TPORT_8012 to { p -> getAttribute(p, GameAttributes.WATCHTOWER_TELEPORT, false) },
+            Items.ARDOUGNE_TP_8011      to { p -> hasRequirement(p, QuestReq(QuestRequirements.PLAGUE_CITY)) },
+            Items.WATCHTOWER_TPORT_8012 to { p -> hasRequirement(p, QuestReq(QuestRequirements.WATCHTOWER))},
             Items.ASTRAL_ALTAR_TP_13611 to { p -> hasRequirement(p, QuestReq(QuestRequirements.LUNAR_DIPLOMACY)) },
             Items.COSMIC_ALTAR_TP_13605 to { p -> isQuestComplete(p, Quests.LOST_CITY) },
             Items.DEATH_ALTAR_TP_13609  to { p -> hasRequirement(p, QuestReq(QuestRequirements.MEP_2)) },

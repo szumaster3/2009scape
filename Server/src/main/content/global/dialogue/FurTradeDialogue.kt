@@ -21,16 +21,17 @@ class FurTradeDialogue(player: Player? = null) : Dialogue(player) {
 
     override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
+        val canTrade = ThievingDefinition.Stall.handleStallCooldown(
+            player = player,
+            stallName = "FUR_STALL",
+            shopNpc = npc,
+            guardNpcIds = listOf(NPCs.MARKET_GUARD_1317, NPCs.WARRIOR_1318)
+        )
+
         when(npc.id) {
             NPCs.FUR_TRADER_1316 -> if (!isQuestComplete(player, Quests.THE_FREMENNIK_TRIALS)) {
-                npc(FaceAnim.ANNOYED, "I don't sell to outlanders.").also { stage = END_DIALOGUE }
+                npc(FaceAnim.ANNOYED, "I don't sell to outerlanders.").also { stage = END_DIALOGUE }
             } else {
-                val canTrade = ThievingDefinition.Stall.handleStallCooldown(
-                    player = player,
-                    stallName = "FUR_STALL",
-                    shopNpc = npc,
-                    guardNpcIds = listOf(NPCs.MARKET_GUARD_1317, NPCs.WARRIOR_1318)
-                )
                 if (!canTrade) return false
                 npcl(FaceAnim.FRIENDLY, "Welcome back, ${FremennikTrials.getFremennikName(player)}. Have you seen the furs I have today?").also { stage = 2 }
             }

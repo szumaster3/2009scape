@@ -13,6 +13,10 @@ import core.game.world.map.Location;
 import core.game.world.map.zone.ZoneBorders;
 import core.plugin.Initializable;
 import core.tools.RandomFunction;
+import shared.consts.NPCs;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * The type Godwars boss npc.
@@ -34,6 +38,26 @@ public final class GodwarsBossNPC extends AbstractNPC {
         "Death to the enemies of the light!", "Slay the evil ones!", "Saradomin lend me strength!", "By the power of Saradomin!", "May Saradomin be my sword.", "Good will always triumph!", "Forward! Our allies are with us!", "Saradomin is with us!", "In the name of Saradomin!", "Attack! Find the Godsword!"}, {
         "Death to our enemies!", "Brargh!", "Break their bones!", "For the glory of Bandos!", "Split their skulls!", "We feast on the bones of our enemies tonight!", "CHAAARGE!", "Crush them underfoot!", "All glory to Bandos!", "GRAAAAAAAAAAAR!", "FOR THE GLORY OF THE BIG HIGH WAR GOD!"}};
 
+    private static final Map<Integer, Location> SPAWN_LOCATIONS = new HashMap<>();
+
+    static {
+        SPAWN_LOCATIONS.put(NPCs.BALFRUG_KREEYATH_6208, Location.create(2920, 5320, 2));
+        SPAWN_LOCATIONS.put(NPCs.ZAKLN_GRITCH_6206, Location.create(2919, 5327, 2));
+        SPAWN_LOCATIONS.put(NPCs.TSTANON_KARLAK_6204, Location.create(2927, 5325, 2));
+
+        SPAWN_LOCATIONS.put(NPCs.WINGMAN_SKREE_6223, Location.create(2828, 5298, 2));
+        SPAWN_LOCATIONS.put(NPCs.FLOCKLEADER_GEERIN_6225, Location.create(2837, 5299, 2));
+        SPAWN_LOCATIONS.put(NPCs.FLIGHT_KILISA_6227, Location.create(2834, 5302, 2));
+
+        SPAWN_LOCATIONS.put(NPCs.STARLIGHT_6248, Location.create(2898, 5267, 0));
+        SPAWN_LOCATIONS.put(NPCs.GROWLER_6250, Location.create(2901, 5268, 0));
+        SPAWN_LOCATIONS.put(NPCs.BREE_6252, Location.create(2895, 5260, 0));
+
+        SPAWN_LOCATIONS.put(NPCs.SERGEANT_GRIMSPIKE_6265, Location.create(2866, 5363, 2));
+        SPAWN_LOCATIONS.put(NPCs.SERGEANT_STRONGSTACK_6261, Location.create(2867, 5354, 2));
+        SPAWN_LOCATIONS.put(NPCs.SERGEANT_STEELWILL_6263, Location.create(2873, 5354, 2));
+    }
+
     private NPC[] minions;
 
     private ZoneBorders chamber;
@@ -44,19 +68,10 @@ public final class GodwarsBossNPC extends AbstractNPC {
 
     private boolean targetFocus;
 
-    /**
-     * Instantiates a new Godwars boss npc.
-     */
     public GodwarsBossNPC() {
-        super(6203, null);
+        super(NPCs.KRIL_TSUTSAROTH_6203, null);
     }
 
-    /**
-     * Instantiates a new Godwars boss npc.
-     *
-     * @param id       the id
-     * @param location the location
-     */
     public GodwarsBossNPC(int id, Location location) {
         super(id, location);
     }
@@ -66,20 +81,20 @@ public final class GodwarsBossNPC extends AbstractNPC {
         setAggressive(false);
         super.init();
         switch (getId()) {
-            case 6203:
+            case NPCs.KRIL_TSUTSAROTH_6203:
                 chamber = new ZoneBorders(2918, 5318, 2936, 5331);
                 handler = TSUTSAROTH_COMBAT;
                 targetFocus = true;
                 break;
-            case 6222:
+            case NPCs.KREEARRA_6222:
                 chamber = new ZoneBorders(2824, 5296, 2842, 5308);
                 handler = KREE_ARRA_COMBAT;
                 break;
-            case 6247:
+            case NPCs.COMMANDER_ZILYANA_6247:
                 chamber = new ZoneBorders(2889, 5258, 2907, 5276);
                 handler = ZILYANA_COMBAT;
                 break;
-            case 6260:
+            case NPCs.GENERAL_GRAARDOR_6260:
                 chamber = new ZoneBorders(2864, 5351, 2876, 5369);
                 handler = GRAARDOR_COMBAT;
                 targetFocus = true;
@@ -166,7 +181,7 @@ public final class GodwarsBossNPC extends AbstractNPC {
 
     @Override
     public void sendImpact(BattleState state) {
-        if (state.getVictim() == null || getId() != 6222) {
+        if (state.getVictim() == null || getId() != NPCs.KREEARRA_6222) {
             return;
         }
         int max = 0;
@@ -207,7 +222,7 @@ public final class GodwarsBossNPC extends AbstractNPC {
 
     @Override
     public boolean isAttackable(Entity entity, CombatStyle style, boolean message) {
-        if (getId() == 6222 && style == CombatStyle.MELEE && entity instanceof Player) {
+        if (getId() == NPCs.KREEARRA_6222 && style == CombatStyle.MELEE && entity instanceof Player) {
             if (message) {
                 ((Player) entity).getPacketDispatch().sendMessage("The aviansie is flying too high for you to attack using melee.");
             }
@@ -217,33 +232,13 @@ public final class GodwarsBossNPC extends AbstractNPC {
     }
 
     private Location getSpawnLocation(int id) {
-        switch (id) {
-            case 6208:
-                return Location.create(2920, 5320, 2);
-            case 6206:
-                return Location.create(2919, 5327, 2);
-            case 6204:
-                return Location.create(2927, 5325, 2);
-            case 6223:
-                return Location.create(2828, 5298, 2);
-            case 6225:
-                return Location.create(2837, 5299, 2);
-            case 6227:
-                return Location.create(2834, 5302, 2);
-            case 6248:
-                return Location.create(2898, 5267, 0);
-            case 6250:
-                return Location.create(2901, 5268, 0);
-            case 6252:
-                return Location.create(2895, 5260, 0);
-            case 6265:
-                return Location.create(2866, 5363, 2);
-            case 6261:
-                return Location.create(2867, 5354, 2);
-            case 6263:
-                return Location.create(2873, 5354, 2);
+        Location base = SPAWN_LOCATIONS.get(id);
+
+        if (base == null) {
+            return null;
         }
-        return null;
+
+        return Location.getRandomLocation(base, 1, true);
     }
 
     @Override
@@ -261,7 +256,7 @@ public final class GodwarsBossNPC extends AbstractNPC {
 
     @Override
     public int[] getIds() {
-        return new int[]{6203, 6222, 6247, 6260};
+        return new int[]{NPCs.KRIL_TSUTSAROTH_6203, NPCs.KREEARRA_6222, NPCs.COMMANDER_ZILYANA_6247, NPCs.GENERAL_GRAARDOR_6260};
     }
 
 }

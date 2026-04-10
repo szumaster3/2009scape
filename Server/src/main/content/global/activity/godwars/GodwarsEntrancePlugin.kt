@@ -22,7 +22,7 @@ class GodwarsEntrancePlugin : InteractionListener {
                 sendMessage(player, "You don't have a rope to tie around the pillar.")
                 return@on true
             }
-            setVarbit(player, 3932, 1, true)
+            setVarbit(player, Vars.VARBIT_GWD_ROPE_ON_HOLE_3932, 1, true)
             return@on true
         }
 
@@ -39,10 +39,11 @@ class GodwarsEntrancePlugin : InteractionListener {
                 sendNPCDialogue(player, NPCs.KNIGHT_6201, "Cough... Hey, over here.", FaceAnim.HALF_GUILTY)
                 return@on true
             }
+            val endLoc = Location(2882, 5311, 2)
             lock(player, 2)
             sendMessage(player, "You climb down the rope.")
             animate(player, Animations.HUMAN_CLIMB_STAIRS_828)
-            teleport(player, Location.create(2882, 5311, 2), TeleportManager.TeleportType.INSTANT)
+            teleport(player, endLoc, TeleportManager.TeleportType.INSTANT)
             return@on true
         }
 
@@ -51,24 +52,28 @@ class GodwarsEntrancePlugin : InteractionListener {
          */
 
         on(Scenery.LITTLE_CRACK_26305, IntType.SCENERY, "crawl-through") { player, node ->
-            if (getStatLevel(player, Skills.AGILITY) < 60) {
-                sendMessage(player, "You need an agility level of 60 to squeeze through the crack.")
+            val requiredLevel = 60
+
+            if (getStatLevel(player, Skills.AGILITY) < requiredLevel) {
+                sendMessage(player, "You need an agility level of $requiredLevel to squeeze through the crack.")
                 return@on true
             }
-            val from = node.location
-            val destination = if (from == Location.create(2900, 3713, 0)) {
-                Location.create(2904, 3720, 0)
-            } else {
-                Location.create(2899, 3713, 0)
+
+            val startLoc = node.location
+
+            val endLoc = when (startLoc) {
+                Location(2900, 3713, 0) -> Location(2904, 3720, 0)
+                else -> Location(2899, 3713, 0)
             }
 
             lock(player, 6)
             openOverlay(player, Components.FADE_TO_BLACK_115)
-            queueScript(player, 6, QueueStrength.SOFT){
-                teleport(player, destination)
+            queueScript(player, 5, QueueStrength.SOFT) {
+                teleport(player, endLoc, TeleportManager.TeleportType.INSTANT)
                 openOverlay(player, Components.FADE_FROM_BLACK_170)
                 return@queueScript stopExecuting(player)
             }
+
             return@on true
         }
 
@@ -77,7 +82,8 @@ class GodwarsEntrancePlugin : InteractionListener {
          */
 
         on(Scenery.CLIMBING_WALL_41068, IntType.SCENERY, "climb-down") { player, _ ->
-            teleport(player, Location.create(2941, 3822, 0))
+            val endLoc = Location(2941, 3822, 0)
+            teleport(player, endLoc)
             return@on true
         }
     }

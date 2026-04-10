@@ -1,5 +1,6 @@
 package content.global.skill.thieving.pickpocket
 
+import content.global.plugins.item.equipment.GlovesOfSilence
 import content.global.skill.thieving.blackjack.BlackjackUtils
 import content.global.skill.thieving.pickpocket.loot.FremennikCitizenLootTable
 import core.api.*
@@ -73,17 +74,17 @@ class PickpocketListener : InteractionListener {
             }
 
             val lootTable = pickpocketRoll(player, pocketData.low, pocketData.high, pocketData.loot)
-
+            val isWearingGloves = inEquipment(player, Items.GLOVES_OF_SILENCE_10075)
             if (lootTable == null) {
                 npc.faceLocation(player.location)
                 npc.animator.animate(Animation(Animations.PUNCH_422))
                 npc.sendChat(pocketData.message)
                 sendMessage(player, "You fail to pick the $npcName's pocket.")
-
                 playHurtAudio(player, 20)
                 stun(player, pocketData.stunTime)
                 impact(player, RandomFunction.random(pocketData.stunDamageMin, pocketData.stunDamageMax))
                 sendMessage(player, "You feel slightly concussed from the blow.")
+                if(isWearingGloves) GlovesOfSilence.reduceDurability(player, Item(Items.GLOVES_OF_SILENCE_10075))
                 npc.face(null)
             } else {
                 lock(player, delay)

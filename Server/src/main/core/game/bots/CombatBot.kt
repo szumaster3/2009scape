@@ -15,9 +15,7 @@ import kotlin.random.Random
 /**
  * Represents an AI-controlled combat bot.
  */
-class CombatBot(
-    location: Location,
-) : AIPlayer(location) {
+class CombatBot(location: Location) : AIPlayer(location) {
     var tick = 0
 
     /**

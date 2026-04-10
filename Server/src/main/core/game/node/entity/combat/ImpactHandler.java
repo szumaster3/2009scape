@@ -3,7 +3,6 @@ package core.game.node.entity.combat;
 import content.data.EnchantedJewellery;
 import content.global.skill.summoning.familiar.Familiar;
 import content.global.skill.summoning.pets.Pet;
-import core.game.bots.AIPlayer;
 import core.game.container.impl.EquipmentContainer;
 import core.game.node.entity.Entity;
 import core.game.node.entity.player.Player;
@@ -180,7 +179,7 @@ public final class ImpactHandler {
         if (disabledTicks > GameWorld.getTicks()) {
             return null;
         }
-        if (entity instanceof Player && !(entity instanceof AIPlayer) && !(entity.getAttribute("tutorial:complete", false))) {
+        if (entity instanceof Player && !(entity.getAttribute("tutorial:complete", false))) {
             Impact impact = new Impact(source, 0, style, HitsplatType.MISS);
             impactQueue.add(impact);
             return impact;
@@ -282,7 +281,6 @@ public final class ImpactHandler {
         if (entity instanceof Player) {
             return killer;
         }
-        if (killer instanceof AIPlayer) return killer;
 
         int damage = -1;
         if (playerImpactLog.isEmpty()) {

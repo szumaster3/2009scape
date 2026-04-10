@@ -4,7 +4,6 @@ import core.ServerConstants
 import core.api.*
 import core.game.activity.ActivityManager
 import core.game.activity.ActivityPlugin
-import core.game.bots.PlayerScripts
 import core.game.interaction.InteractionListener
 import core.game.interaction.InterfaceListener
 import core.game.node.entity.Entity
@@ -208,30 +207,6 @@ object ClassScanner {
                 }
             },
         )
-
-        scanResults.getClassesWithAnnotation("core.game.bots.PlayerCompatible").forEach { res ->
-            val description =
-                res
-                    .getAnnotationInfo(
-                        "core.game.bots.ScriptDescription",
-                    ).parameterValues[0]
-                    .value as Array<String>
-            val identifier =
-                res
-                    .getAnnotationInfo(
-                        "core.game.bots.ScriptIdentifier",
-                    ).parameterValues[0]
-                    .value
-                    .toString()
-            val name =
-                res
-                    .getAnnotationInfo("core.game.bots.ScriptName")
-                    .parameterValues[0]
-                    .value
-                    .toString()
-            PlayerScripts.identifierMap[identifier] =
-                PlayerScripts.PlayerScript(identifier, description, name, res.loadClass())
-        }
     }
 
     /**

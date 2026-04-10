@@ -12,7 +12,6 @@ import core.api.*
 import core.cache.def.impl.NPCDefinition
 import core.cache.def.impl.SceneryDefinition
 import core.cache.def.impl.VarbitDefinition
-import core.game.bots.AIRepository
 import core.game.dialogue.InputType
 import core.game.ge.GrandExchange
 import core.game.node.entity.npc.NPC

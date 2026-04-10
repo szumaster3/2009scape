@@ -10,7 +10,6 @@ import content.global.skill.farming.FarmingPatch
 import content.global.skill.magic.SpellListener
 import content.global.skill.magic.spells.LunarSpells
 import core.api.*
-import core.game.bots.AIPlayer
 import core.game.component.CloseEvent
 import core.game.component.Component
 import core.game.consumable.Potion
@@ -639,9 +638,7 @@ class LunarSpell : SpellListener("lunar") {
 
             val doses = potion.getDose(item)
             val nearby = RegionManager.getNearbyPlayers(player, 1).filter {
-                it != player &&
-                        it.isActive &&
-                        (it.settings.isAcceptAid || it is AIPlayer)
+                it != player && it.isActive && (it.settings.isAcceptAid)
             }
 
             if (nearby.isEmpty()) {
@@ -701,9 +698,7 @@ class LunarSpell : SpellListener("lunar") {
             player.interfaceManager.setViewedTab(6)
             val doses = potion.getDose(item)
             val nearby = RegionManager.getNearbyPlayers(player, 1).filter {
-                it != player &&
-                        it.isActive &&
-                        (it.settings.isAcceptAid || it is AIPlayer)
+                it != player && it.isActive && (it.settings.isAcceptAid)
             }
 
             if (nearby.isEmpty()) {

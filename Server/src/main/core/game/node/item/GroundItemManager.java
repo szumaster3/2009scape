@@ -1,6 +1,5 @@
 package core.game.node.item;
 
-import core.game.bots.AIRepository;
 import core.game.node.entity.player.Player;
 import core.game.world.GameWorld;
 import core.game.world.map.Location;
@@ -149,24 +148,24 @@ public final class GroundItemManager {
     public static void pulse() {
         Object[] giArray = GROUND_ITEMS.toArray();
         int size = giArray.length;
+
         for (int i = 0; i < size; i++) {
             GroundItem item = (GroundItem) giArray[i];
+
             if (item.isAutoSpawn()) {
                 continue;
             }
+
             if (!item.isActive()) {
                 GROUND_ITEMS.remove(item);
-                if (item.getDropper() != null) {
-                    if (item.getDropper().isArtificial()) {
-                        ArrayList<GroundItem> val = AIRepository.getItems(item.getDropper());
-                        if (val != null) val.remove(item);
-                    }
-                }
+
                 if (!item.isRemoved()) {
                     RegionManager.getRegionPlane(item.getLocation()).remove(item);
                 }
+
             } else if (!item.isRemainPrivate() && item.getDecayTime() - GameWorld.getTicks() == 100) {
-                RegionManager.getRegionChunk(item.getLocation()).flag(new ItemUpdateFlag(item, ItemUpdateFlag.CONSTRUCT_TYPE));
+                RegionManager.getRegionChunk(item.getLocation())
+                        .flag(new ItemUpdateFlag(item, ItemUpdateFlag.CONSTRUCT_TYPE));
             }
         }
     }

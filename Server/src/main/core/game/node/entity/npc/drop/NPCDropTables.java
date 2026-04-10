@@ -2,9 +2,6 @@ package core.game.node.entity.npc.drop;
 
 import core.api.utils.NPCDropTable;
 import core.cache.def.impl.NPCDefinition;
-import core.game.bots.AIPlayer;
-import core.game.bots.AIRepository;
-import core.game.bots.GeneralBotCreator;
 import core.game.ge.GrandExchange;
 import core.game.node.entity.Entity;
 import core.game.node.entity.npc.NPC;
@@ -108,39 +105,30 @@ public final class NPCDropTables {
         if (item == null || item.getId() == 0 || l == null || item.getName().equals("null") || player == null) {
             return;
         }
-        if (item.hasItemPlugin() && player != null) {
+
+        if (item.hasItemPlugin()) {
             if (!item.getPlugin().createDrop(item, player, npc, l)) {
                 return;
             }
             item = item.getPlugin().getItem(item, npc);
         }
+
         if (!item.getDefinition().isStackable() && item.getAmount() > 1) {
             for (int i = 0; i < item.getAmount(); i++) {
                 GroundItemManager.create(new Item(item.getId()), l, player);
             }
             return;
         }
+
         announceIfRare(player, item);
-        if (item.getId() == 6199 && player instanceof Player) {
+
+        if (item.getId() == 6199) {
             player.sendMessage("<col=990000>A mystery box has fallen on the ground.</col>");
         }
+
         sendDropMessage(player, npc.getId(), item);
-        if (player == null) {
-            if (item != null) {
-                GroundItemManager.create(item, l);
-            }
-        } else {
-            GroundItem groundItem = GroundItemManager.create(item, l, getLooter(player, npc, item));
-            if (player instanceof AIPlayer) {
-                AIRepository.addItem(groundItem);
-            }
-            GeneralBotCreator.BotScriptPulse pulse = player.getAttribute("botting:script", null);
-            if (pulse != null && pulse.isRunning()) {
-                List<GroundItem> items = player.getAttribute("botting:drops", new ArrayList<GroundItem>());
-                items.add(groundItem);
-                player.setAttribute("botting:drops", items);
-            }
-        }
+
+        GroundItemManager.create(item, l, getLooter(player, npc, item));
     }
 
     /**

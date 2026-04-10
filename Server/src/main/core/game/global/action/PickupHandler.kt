@@ -3,7 +3,6 @@ package core.game.global.action
 import content.data.GodType
 import content.global.skill.runecrafting.RunePouch
 import core.api.*
-import core.game.bots.AIPlayer
 import core.game.dialogue.FaceAnim
 import core.game.event.PickUpEvent
 import core.game.node.entity.player.Player
@@ -111,10 +110,7 @@ object PickupHandler {
     @JvmStatic
     fun canTake(player: Player, item: GroundItem, type: Int): Boolean {
         // Check if the item was dropped by another player and if the player is restricted from picking it up.
-        if (item.dropper != null &&
-            !item.droppedBy(player) &&
-            item.dropper !is AIPlayer
-        ) {
+        if (item.dropper != null && !item.droppedBy(player)) {
             return false
         }
 

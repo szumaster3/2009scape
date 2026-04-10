@@ -1,6 +1,5 @@
 package core.net.packet.out
 
-import core.game.bots.AIPlayer
 import core.game.node.entity.player.Player
 import core.net.packet.IoBuffer
 import core.net.packet.OutgoingPacket
@@ -51,9 +50,6 @@ class CommunicationMessage : OutgoingPacket<MessageContext> {
                 buffer.put(context.chatIcon.toByte().toInt()) // rights
                 buffer.putBytes(bytes, 0, length)
             }
-        }
-        if (player.isArtificial) {
-            (player as AIPlayer).handleIncomingChat(context)
         }
         buffer.cypherOpcode(context.player.session.isaacPair.output)
         player.session.write(buffer)

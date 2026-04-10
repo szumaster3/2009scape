@@ -3,7 +3,6 @@ package core.integration.grafana
 import com.google.gson.JsonObject
 import core.ServerConstants
 import core.api.StartupListener
-import core.game.bots.AIRepository
 import core.integration.mysql.SQLiteProvider
 import kotlinx.coroutines.Job
 import java.util.*
@@ -22,11 +21,9 @@ class Grafana : StartupListener {
         val playerRenderTime: Int,
         val totalTickTime: Int,
         val packetProcessTime: Int,
-        val botPulseTime: Int,
         val otherPulseTime: Int,
         val pulseTimes: Array<Map.Entry<String, Int>>,
         val pulseCounts: Array<Map.Entry<String, Int>>,
-        val botCount: Int,
         val timeSecs: Int,
     )
 
@@ -80,11 +77,9 @@ class Grafana : StartupListener {
                     playerRenderTime,
                     totalTickTime,
                     packetProcessTime,
-                    botPulseTime,
                     otherPulseTime,
                     pulseTimes.entries.toTypedArray(),
                     pulseCounts.entries.toTypedArray(),
-                    AIRepository.PulseRepository.size,
                     getNowTime(),
                 )
             cycleData.add(thisCycle)
@@ -125,19 +120,9 @@ class Grafana : StartupListener {
                         }
                     }
 
-                    // Insert bot count data
-                    with(it.prepareStatement(INSERT_BOT_COUNT)) {
-                        for (i in 0 until 50) {
-                            setInt(1, cycleData[i].botCount)
-                            setInt(2, cycleData[i].timeSecs)
-                            execute()
-                        }
-                    }
-
                     // Insert tick measurement data
                     with(it.prepareStatement(INSERT_TICK_MEAS)) {
                         for (i in 0 until 50) {
-                            setInt(1, cycleData[i].botPulseTime)
                             setInt(2, cycleData[i].otherPulseTime)
                             setInt(3, cycleData[i].npcTickTime)
                             setInt(4, cycleData[i].playerTickTime)
@@ -147,7 +132,7 @@ class Grafana : StartupListener {
                                 7,
                                 cycleData[i].totalTickTime -
                                         (
-                                                cycleData[i].botPulseTime + cycleData[i].otherPulseTime +
+                                                cycleData[i].otherPulseTime +
                                                         cycleData[i].npcTickTime +
                                                         cycleData[i].playerTickTime +
                                                         cycleData[i].playerRenderTime +
@@ -167,28 +152,27 @@ class Grafana : StartupListener {
 
         private const val INSERT_TOP_PULSES = "INSERT INTO top_pulses (pulse_info, ts) VALUES (?, ?);"
         private const val INSERT_PULSE_COUNT = "INSERT INTO high_volume_pulses (pulse_info, ts) VALUES (?, ?);"
-        private const val INSERT_BOT_COUNT = "INSERT INTO bot_counts (count, ts) VALUES (?, ?);"
         private const val INSERT_TICK_MEAS = "INSERT INTO tick_lengths (bot_pulses, misc_pulses, npc_tick, player_tick, player_render, packet_incoming, other, ts) VALUES (?,?,?,?,?,?,?,?);"
 
         private var expectedTables =
             hashMapOf(
                 "bot_counts" to
-                    "CREATE TABLE \"bot_counts\" (\n" + "\t\"count\"\tINTEGER,\n" + "\t\"ts\"\tINTEGER\n" + ")",
+                        "CREATE TABLE \"bot_counts\" (\n" + "\t\"count\"\tINTEGER,\n" + "\t\"ts\"\tINTEGER\n" + ")",
                 "high_volume_pulses" to
-                    "CREATE TABLE \"high_volume_pulses\" (\n" + "\t\"pulse_info\"\tTEXT,\n" + "\t\"ts\"\tINTEGER\n" +
-                    ")",
+                        "CREATE TABLE \"high_volume_pulses\" (\n" + "\t\"pulse_info\"\tTEXT,\n" + "\t\"ts\"\tINTEGER\n" +
+                        ")",
                 "tick_lengths" to
-                    "CREATE TABLE \"tick_lengths\" (\n" + "\t\"bot_pulses\"\tINTEGER,\n" +
-                    "\t\"misc_pulses\"\tINTEGER,\n" +
-                    "\t\"npc_tick\"\tINTEGER,\n" +
-                    "\t\"player_tick\"\tINTEGER,\n" +
-                    "\t\"player_render\"\tINTEGER,\n" +
-                    "\t\"packet_incoming\"\tINTEGER,\n" +
-                    "\t\"other\"\tINTEGER,\n" +
-                    "\t\"ts\"\tINTEGER\n" +
-                    ")",
+                        "CREATE TABLE \"tick_lengths\" (\n" + "\t\"bot_pulses\"\tINTEGER,\n" +
+                        "\t\"misc_pulses\"\tINTEGER,\n" +
+                        "\t\"npc_tick\"\tINTEGER,\n" +
+                        "\t\"player_tick\"\tINTEGER,\n" +
+                        "\t\"player_render\"\tINTEGER,\n" +
+                        "\t\"packet_incoming\"\tINTEGER,\n" +
+                        "\t\"other\"\tINTEGER,\n" +
+                        "\t\"ts\"\tINTEGER\n" +
+                        ")",
                 "top_pulses" to
-                    "CREATE TABLE \"top_pulses\" (\n" + "\t\"pulse_info\"\tTEXT,\n" + "\t\"ts\"\tINTEGER\n" + ")",
+                        "CREATE TABLE \"top_pulses\" (\n" + "\t\"pulse_info\"\tTEXT,\n" + "\t\"ts\"\tINTEGER\n" + ")",
             )
     }
 }

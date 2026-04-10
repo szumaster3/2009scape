@@ -1,7 +1,5 @@
 package content.global.plugins.player
 
-import core.game.bots.AIPlayer
-import core.game.bots.AIRepository
 import core.game.interaction.*
 import core.game.node.entity.impl.PulseType
 import core.game.node.entity.player.Player
@@ -34,7 +32,6 @@ class PlayerOptionPlugin : InteractionListener {
          */
 
         on(IntType.PLAYER, Option._P_ASSIST.name) { player, node ->
-            if (node is AIPlayer) AIRepository.sendBotInfo(player, node)
             player.requestManager.request((node as Player), RequestType.ASSIST)
             return@on true
         }

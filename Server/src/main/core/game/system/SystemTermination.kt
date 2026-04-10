@@ -4,7 +4,6 @@ import core.Server
 import core.ServerConstants
 import core.ServerStore
 import core.api.log
-import core.game.bots.AIRepository.Companion.clearAllBots
 import core.game.node.entity.player.info.PlayerMonitor.flushRemainingEventsImmediately
 import core.game.world.GameWorld.majorUpdateWorker
 import core.game.world.GameWorld.shutdownListeners
@@ -26,8 +25,6 @@ class SystemTermination {
         try {
             log(javaClass, Log.INFO, "Shutting down networking...")
             Server.running = false
-            log(javaClass, Log.INFO, "Stopping all bots...")
-            clearAllBots()
             Server.reactor?.terminate()
             log(javaClass, Log.INFO, "Stopping all pulses...")
             majorUpdateWorker.stop()

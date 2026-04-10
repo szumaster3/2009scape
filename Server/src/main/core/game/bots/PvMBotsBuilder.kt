@@ -3,13 +3,9 @@ package core.game.bots
 import content.minigame.pest_control.bots.PestControlTestBot
 import content.minigame.pest_control.bots.PestControlTestBot2
 import core.game.world.map.Location
-
-// import sun.util.resources.CalendarData;
 class PvMBotsBuilder {
-
     companion object {
         var botsSpawned = 0
-
         fun create(l: Location?): PvMBots {
             botsSpawned++
             return PvMBots(l)

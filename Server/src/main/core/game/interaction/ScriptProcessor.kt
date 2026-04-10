@@ -1,7 +1,6 @@
 package core.game.interaction
 
 import core.api.*
-import core.game.bots.AIPlayer
 import core.game.node.Node
 import core.game.node.entity.Entity
 import core.game.node.entity.npc.NPC
@@ -48,7 +47,7 @@ class ScriptProcessor(val entity: Entity) {
         if (entity.delayed()) return
 
         var canProcess = !entity.delayed()
-        if (entity is Player && entity !is AIPlayer)
+        if (entity is Player)
             canProcess = canProcess && !entity.hasModalOpen()
 
         if (entity !is Player) return
@@ -74,7 +73,7 @@ class ScriptProcessor(val entity: Entity) {
         if (didMove)
             entity.clocks[Clocks.MOVEMENT] = GameWorld.ticks + if (entity.walkingQueue.isRunning) 0 else 1
         var canProcess = !entity.delayed()
-        if (entity is Player && entity !is AIPlayer)
+        if (entity is Player)
             canProcess = canProcess && !entity.interfaceManager.isOpened() && !entity.interfaceManager.hasChatbox()
 
         if (entity !is Player) return

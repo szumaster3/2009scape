@@ -1,7 +1,6 @@
 package core.net.packet
 
 import core.api.log
-import core.game.bots.AIPlayer
 import core.net.packet.out.*
 import core.tools.Log
 import java.io.PrintWriter
@@ -72,7 +71,7 @@ object PacketRepository {
     fun send(clazz: Class<out OutgoingPacket<*>>, context: Context) {
         val player = context.player
 
-        if (player is AIPlayer || player.session == null || player.isArtificial) {
+        if (player.session == null || player.isArtificial) {
             return
         }
 

@@ -2,7 +2,6 @@ package content.region.other.entrana.plugin
 
 import core.api.*
 import core.cache.def.impl.ItemDefinition
-import core.game.bots.AIPlayer
 import core.game.dialogue.FaceAnim
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
@@ -26,7 +25,7 @@ class EntranaPlugin : InteractionListener, MapArea {
     )
 
     override fun areaEnter(entity: Entity) {
-        if (entity is Player && entity !is AIPlayer && entity.details.rights != Rights.ADMINISTRATOR) {
+        if (entity is Player && entity.details.rights != Rights.ADMINISTRATOR) {
             if (!ItemDefinition.canEnterEntrana(entity)) {
                 kickThemOut(entity)
             }

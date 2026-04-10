@@ -1,6 +1,5 @@
 package content.global.activity.star
 
-import content.global.bots.ShootingStarBot
 import core.ServerStore.Companion.getBoolean
 import core.ServerStore.Companion.getInt
 import core.ServerStore.Companion.getString
@@ -74,12 +73,10 @@ class ShootingStar(var level: ShootingStarType = ShootingStarType.values().rando
     var isSpawned = false
     var spriteSpawned = false
     var firstStar = true
-    private val selfBots = ArrayList<ShootingStarBot>()
     private val activePlayers = HashSet<Player>()
 
     fun degrade() {
         if (level.ordinal == 0) {
-            selfBots.filter { it.isMining() }.forEach { it.sleep() }
             SceneryBuilder.remove(starScenery)
             isSpawned = false
             starSprite.location = starScenery.location
@@ -113,14 +110,6 @@ class ShootingStar(var level: ShootingStarType = ShootingStarType.values().rando
         rebuildVars()
         clearSprite()
         SceneryBuilder.add(starScenery)
-        if (!isSpawned) {
-            repeat(3) {
-                selfBots.add(ShootingStarBot.new())
-            }
-        }
-        if (level.ordinal + 1 > 5) {
-            selfBots.filter { it.isIdle() }.forEach { it.activate(true) }
-        }
         isSpawned = true
         sendNews("A shooting star level ${level.ordinal + 1} just crashed near $location!")
     }
@@ -172,17 +161,11 @@ class ShootingStar(var level: ShootingStarType = ShootingStarType.values().rando
     }
 
     fun notifyNewPlayer(player: Player) {
-        if (activePlayers.size < 3) {
-            selfBots.firstOrNull { it.isMining() }?.sleep()
-        }
         activePlayers.add(player)
     }
 
     fun notifyPlayerLeave(player: Player) {
         activePlayers.remove(player)
-        if (activePlayers.size < 3) {
-            selfBots.firstOrNull { it.isIdle() }?.activate(true)
-        }
     }
 
     val miningLevel: Int

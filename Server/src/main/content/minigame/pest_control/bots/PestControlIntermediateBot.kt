@@ -8,8 +8,7 @@ import core.tools.RandomFunction
 import java.util.*
 
 class PestControlTestBot2(l: Location) : PvMBots(legitimizeLocation(l)) {
-
-        var tick = 0
+    var tick = 0
     var combatMoveTimer = 0
     var justStartedGame = true
     var movetimer = 0
@@ -21,27 +20,23 @@ class PestControlTestBot2(l: Location) : PvMBots(legitimizeLocation(l)) {
 
     var time = 0
 
-     enum class State {
-        OUTSIDE_GANGPLANK,
-        REFRESH,
-        WAITING_IN_BOAT,
-        PLAY_GAME,
-        GET_TO_PC
+    enum class State {
+        OUTSIDE_GANGPLANK, REFRESH, WAITING_IN_BOAT, PLAY_GAME, GET_TO_PC
     }
+
     //Novice Lander co-ords (2657, 2639, 0)
     //Intermediate lander co-ords (2644, 2644, 0)
     //Veteran lander co-ords (2638, 2653 0)
     init {
         val random100 = Random().nextInt(100)
         if (random100 < 30) {
-            setAttribute("pc_role","defend_squire")
-        } else
-        {
-            setAttribute("pc_role","attack_portals")
+            setAttribute("pc_role", "defend_squire")
+        } else {
+            setAttribute("pc_role", "attack_portals")
             this.customState = "Fighting NPCs"
         }
         if (num <= 2) {
-            CombatBotAssembler().meleeBotIntermediate( this)
+            CombatBotAssembler().meleeBotIntermediate(this)
         } else {
             CombatBotAssembler().rangeBotIntermediate(this, Random().nextInt() % 2 == 0)
         }
@@ -85,20 +80,22 @@ class PestControlTestBot2(l: Location) : PvMBots(legitimizeLocation(l)) {
 
 
     private fun attackNPCs() {
-        if (PestControlHelper.outsideGangplankContainsLoc2(getLocation())){
-            content.minigame.pest_control.PestControlActivityPlugin().leave(this,false)
+        if (PestControlHelper.outsideGangplankContainsLoc2(getLocation())) {
+            content.minigame.pest_control.PestControlActivityPlugin().leave(this, false)
             val test = getClosestNodeWithEntry(50, myBoat.ladderId)
             test ?: println("PC: Gangplank Null")
-            test.interaction.handle(this, test.interaction[0])//.also { println("Intermediate - We think we is in pest control ${this.username}.") }
+            test.interaction.handle(
+                this, test.interaction[0]
+            )//.also { println("Intermediate - We think we is in pest control ${this.username}.") }
         }
         walkingQueue.isRunning = true
 
-        if (getAttribute("pc_role","E") == "attack_portals") {
+        if (getAttribute("pc_role", "E") == "attack_portals") {
             combathandler.goToPortals()
         } else {
-            movetimer = RandomFunction.random(2,10)
+            movetimer = RandomFunction.random(2, 10)
             val location = PestControlHelper.getMyPestControlSession2(this)?.squire?.location ?: location
-            if(location != null) {
+            if (location != null) {
                 randomWalkAroundPoint(location, 5)
             }
             combathandler.fightNPCs()
@@ -106,18 +103,18 @@ class PestControlTestBot2(l: Location) : PvMBots(legitimizeLocation(l)) {
     }
 
     private var insideBoatWalks = 3
-     fun idleInBoat() {
-         justStartedGame = true
-         openedGate = false
-         time = 0
-         if (prayer.active.isNotEmpty()) {
-             prayer.reset()
-         }
-         if (PestControlHelper.outsideGangplankContainsLoc2(getLocation())){
-             val test = getClosestNodeWithEntry(15, myBoat.ladderId)
-             test.interaction.handle(this,test.interaction[0])
-             enterBoat()//.also { println("We think we is in boat ${this.username}.") }
-         }
+    fun idleInBoat() {
+        justStartedGame = true
+        openedGate = false
+        time = 0
+        if (prayer.active.isNotEmpty()) {
+            prayer.reset()
+        }
+        if (PestControlHelper.outsideGangplankContainsLoc2(getLocation())) {
+            val test = getClosestNodeWithEntry(15, myBoat.ladderId)
+            test.interaction.handle(this, test.interaction[0])
+            enterBoat()//.also { println("We think we is in boat ${this.username}.") }
+        }
         if (Random().nextInt(100) < 40) {
             if (Random().nextInt(insideBoatWalks) <= 1) {
                 (insideBoatWalks * 1.5).toInt()
@@ -136,26 +133,23 @@ class PestControlTestBot2(l: Location) : PvMBots(legitimizeLocation(l)) {
     }
 
     private fun enterBoat() {
-        if (PestControlHelper.outsideGangplankContainsLoc2(getLocation())){
+        if (PestControlHelper.outsideGangplankContainsLoc2(getLocation())) {
             movetimer = Random().nextInt(10)
             combathandler.randomWalkTo(PestControlHelper.PestControlLanderIntermediate, 1)
         }
         if (!prayer.active.isEmpty()) {
             prayer.reset()
         }
-        if (Random().nextInt(8) >= 3)
-        {
-            val pclocs = Location.create(2652,2646,0)
-            combathandler.randomWalkTo(pclocs,8)
+        if (Random().nextInt(8) >= 3) {
+            val pclocs = Location.create(2652, 2646, 0)
+            combathandler.randomWalkTo(pclocs, 8)
             movetimer = Random().nextInt(180) + 15
         }
-        if (Random().nextInt(8) >= 2)
-        {
-            randomWalk(3,3)
+        if (Random().nextInt(8) >= 2) {
+            randomWalk(3, 3)
             movetimer = Random().nextInt(10)
         }
-        if (Random().nextInt(100) > 50)
-        {
+        if (Random().nextInt(100) > 50) {
             if (Random().nextInt(10) <= 5) {
                 this.walkToPosSmart(myBoat.outsideBoatBorder.randomLoc)
                 movetimer += RandomFunction.normalPlusWeightRandDist(400, 200)
@@ -164,7 +158,7 @@ class PestControlTestBot2(l: Location) : PvMBots(legitimizeLocation(l)) {
             return
         }
         val test = getClosestNodeWithEntry(15, myBoat.ladderId)
-        test ?: randomWalk(1,1)
+        test ?: randomWalk(1, 1)
         test?.interaction?.handle(this, test.interaction[0])
         insideBoatWalks = 3
     }
@@ -193,7 +187,7 @@ class PestControlTestBot2(l: Location) : PvMBots(legitimizeLocation(l)) {
 
 
     companion object {
-         fun legitimizeLocation(l: Location): Location {
+        fun legitimizeLocation(l: Location): Location {
             return if (PestControlHelper.landerContainsLoc(l)) Location(2648, 2648, 0) else l
         }
     }

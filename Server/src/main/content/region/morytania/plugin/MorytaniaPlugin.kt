@@ -3,7 +3,6 @@ package content.region.morytania.plugin
 import content.global.skill.agility.AgilityHandler
 import content.region.morytania.mort_myre.dialogue.AbidorCrankDialogue
 import core.api.*
-import core.game.bots.AIPlayer
 import core.game.global.action.ClimbActionHandler
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
@@ -34,11 +33,7 @@ class MorytaniaPlugin : InteractionListener, MapArea {
     override fun defineAreaBorders(): Array<ZoneBorders> = arrayOf(ZoneBorders(3426, 3191, 3715, 3588))
 
     override fun areaEnter(entity: Entity) {
-        if (entity is Player &&
-            entity !is AIPlayer &&
-            !isQuestComplete(entity, Quests.PRIEST_IN_PERIL) &&
-            entity.details.rights != Rights.ADMINISTRATOR
-        ) {
+        if (entity is Player && !isQuestComplete(entity, Quests.PRIEST_IN_PERIL) && entity.details.rights != Rights.ADMINISTRATOR) {
             kickThemOut(entity)
         }
     }

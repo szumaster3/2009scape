@@ -3,12 +3,10 @@ package core.game.system.command.rottenpotato
 import core.api.removeAttribute
 import core.api.sendInputDialogue
 import core.api.sendMessage
-import core.game.bots.AIRepository
 import core.game.dialogue.Dialogue
 import core.game.dialogue.InputType
 import core.game.node.entity.player.Player
 import core.game.node.entity.player.info.login.PlayerParser
-import core.game.world.ImmerseWorld
 import core.game.world.repository.Repository
 import core.plugin.Initializable
 import core.tools.colorize
@@ -20,7 +18,7 @@ class RottenPotatoRSHDDialogue(player: Player? = null) : Dialogue(player) {
     override fun newInstance(player: Player?): Dialogue = RottenPotatoRSHDDialogue(player)
 
     override fun open(vararg args: Any?): Boolean {
-        options("Wipe bots", "Spawn bots", "Force log players", "View bank", "Copy inventory")
+        options("Force log players", "View bank", "Copy inventory")
         return true
     }
 
@@ -32,18 +30,6 @@ class RottenPotatoRSHDDialogue(player: Player? = null) : Dialogue(player) {
             0 -> {
                 when (buttonId) {
                     1 -> {
-                        AIRepository.clearAllBots()
-                        sendMessage(player, colorize("%RBots wiped."))
-                        end()
-                    }
-
-                    2 -> {
-                        ImmerseWorld.spawnBots()
-                        sendMessage(player, colorize("%RBots Respawning."))
-                        end()
-                    }
-
-                    3 -> {
                         Repository.disconnectionQueue.clear().also { end() }
                         Repository.players.toArray().forEach {
                             val p = it.asPlayer()
@@ -56,7 +42,7 @@ class RottenPotatoRSHDDialogue(player: Player? = null) : Dialogue(player) {
                         }
                     }
 
-                    4 -> {
+                    2 -> {
                         end()
                         sendInputDialogue(player, InputType.STRING_SHORT, "Enter player name:") { value ->
                             val other =
@@ -71,7 +57,7 @@ class RottenPotatoRSHDDialogue(player: Player? = null) : Dialogue(player) {
                         }
                     }
 
-                    5 -> {
+                    3 -> {
                         end()
                         sendInputDialogue(player, InputType.STRING_SHORT, "Enter player name:") { value ->
                             val other =

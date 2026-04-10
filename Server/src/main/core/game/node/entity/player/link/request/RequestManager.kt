@@ -1,7 +1,5 @@
 package core.game.node.entity.player.link.request
 
-import content.global.bots.DoublingMoney
-import core.game.bots.AIRepository
 import core.game.node.entity.player.Player
 import core.game.world.GameWorld.ticks
 
@@ -41,14 +39,6 @@ class RequestManager(
         target.packetDispatch.sendMessage(type.getRequestMessage(player))
         player.setAttribute("lastRequest", type)
         this.target = target
-
-        // If the target is an AI bot, delegate handling to its bot script.
-        if (target.isArtificial) {
-            val bot = AIRepository.PulseRepository[target.username.lowercase()]
-            if (bot != null && bot.botScript is DoublingMoney) {
-                bot.botScript.tradeReceived(player)
-            }
-        }
         return true
     }
 

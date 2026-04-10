@@ -1,9 +1,0 @@
-// 1156
-[proc,script1156]
-if (detailget_stereo = 0) {
-    if_setgraphic("radio_buttons,0", interface_743:com51);
-    if_setgraphic("radio_buttons,1", interface_743:com49);
-} else {
-    if_setgraphic("radio_buttons,0", interface_743:com49);
-    if_setgraphic("radio_buttons,1", interface_743:com51);
-}

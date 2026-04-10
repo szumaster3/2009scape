@@ -1,8 +1,0 @@
-// 1506
-[clientscript,script1506](graphic $graphic0)
-if_setsize(455, 93, ^setsize_abs, ^setsize_abs, interface_769:com1);
-if_setsize(455, 93, ^setsize_abs, ^setsize_abs, interface_769:com2);
-if_setposition(45, 20, ^setposh_abs_left, ^setposv_abs_top, interface_769:com1);
-if_setposition(45, 20, ^setposh_abs_left, ^setposv_abs_top, interface_769:com2);
-if_sethide(false, interface_769:com3);
-if_setgraphic($graphic0, interface_769:com3);

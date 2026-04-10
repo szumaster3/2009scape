@@ -1,8 +1,0 @@
-[9327] - (2629, 4380, 0) [region=10564, name=Rocks]
-[9327] - (2916, 3672, 0) [region=11577, name=Rocks]
-[9327] - (2917, 3672, 0) [region=11577, name=Rocks]
-[9327] - (2922, 3672, 0) [region=11577, name=Rocks]
-[9327] - (2923, 3673, 0) [region=11577, name=Rocks]
-[9327] - (2947, 3678, 0) [region=11833, name=Rocks]
-[9327] - (2948, 3679, 0) [region=11833, name=Rocks]
-[9327] - (2949, 3680, 0) [region=11833, name=Rocks]

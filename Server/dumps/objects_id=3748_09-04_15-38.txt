@@ -1,7 +1,0 @@
-[3748] - (2821, 3635, 0) [region=11320, name=Rocks]
-[3748] - (2833, 3628, 0) [region=11320, name=Rocks]
-[3748] - (2834, 3628, 0) [region=11320, name=Rocks]
-[3748] - (2856, 3612, 0) [region=11320, name=Rocks]
-[3748] - (2857, 3612, 0) [region=11320, name=Rocks]
-[3748] - (2910, 3686, 0) [region=11577, name=Rocks]
-[3748] - (2910, 3687, 0) [region=11577, name=Rocks]

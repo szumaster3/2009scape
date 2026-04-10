@@ -385,8 +385,8 @@ enum class DiaryType(
         ),
         arrayOf(
             arrayOf(Item(Items.SEERS_HEADBAND_1_14631), Item(LampItem.SEERS_ACHIEVEMENT_EASY.item)),
-            arrayOf(Item(Items.SEERS_HEADBAND_2_14645), Item(LampItem.SEERS_ACHIEVEMENT_MEDIUM.item)),
-            arrayOf(Item(Items.SEERS_HEADBAND_3_14646), Item(LampItem.SEERS_ACHIEVEMENT_HARD.item))
+            arrayOf(Item(14638), Item(LampItem.SEERS_ACHIEVEMENT_MEDIUM.item)),
+            arrayOf(Item(14639), Item(LampItem.SEERS_ACHIEVEMENT_HARD.item))
         ),
         "To start marking off tasks in your journal, speak to<br><br>any seer in Seers' Village, Stankers by the coal<br><br>trucks or Sir Kay in Camelot.",
         intArrayOf(NPCs.SEER_388, NPCs.STANKERS_383, NPCs.SIR_KAY_241)

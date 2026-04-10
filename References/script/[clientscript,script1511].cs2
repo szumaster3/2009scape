@@ -1,7 +1,0 @@
-// 1511
-[clientscript,script1511]
-if (%varplayerbit_4908 = 0) {
-    if_setposition(0, 0, ^setposh_abs_left, ^setposv_abs_bottom, interface_768:com3);
-} else {
-    if_setposition(0, 165, ^setposh_abs_left, ^setposv_abs_bottom, interface_768:com3);
-}

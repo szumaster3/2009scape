@@ -1,6 +1,0 @@
-// 208
-[clientscript,script208]
-if_sethide(false, interface_595:com115);
-if_sethide(true, interface_595:com116);
-if_setgraphic("player_kit_fancy,7", interface_595:com120);
-if_setgraphic(graphic_1057, interface_595:com121);

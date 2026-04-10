@@ -1,5 +1,0 @@
-// 745
-[clientscript,script745]
-if_setgraphic("combatboxes,1", interface_664:com1);
-if_setgraphic("combatboxes,0", interface_664:com3);
-if_setgraphic("combatboxes,0", interface_664:com5);

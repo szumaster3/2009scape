@@ -1,5 +1,0 @@
-// 585
-[clientscript,script585]
-if_setonvartransmit("script588{varplayer_1109}", interface_105:com126);
-if_setonstocktransmit("script586", interface_105:com14);
-~script621;

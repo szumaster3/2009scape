@@ -1,6 +1,0 @@
-// 1948
-[clientscript,script1948]
-if_sethide(false, interface_810:com84);
-if_sethide(true, interface_810:com85);
-if_sethide(false, interface_810:com86);
-if_sethide(true, interface_810:com143);

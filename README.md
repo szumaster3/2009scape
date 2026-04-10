@@ -6,11 +6,6 @@ A fork of [2009Scape](https://gitlab.com/2009scape/2009scape), licensed under **
 
 </div>
 
-> [!NOTE]
->
-> - If you're interested in the project with custom data, please check out:
-    https://gitlab.com/openscape
-
 ## Prerequisites
 
 Before setting up the project, make sure you have the following installed:

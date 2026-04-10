@@ -1,8 +1,0 @@
-// 1611
-[clientscript,script1611]
-if_setonvartransmit("script1575{varplayer_1262}", interface_771:com424);
-if_setonvartransmit("script1576{varplayer_1262}", interface_771:com425);
-if_setonvartransmit("script1606{varplayer_1262}", interface_771:com426);
-if_setonvartransmit("script1587{varplayer_1262}", interface_771:com427);
-if_setonvartransmit("script1572{varplayer_170}", interface_771:com428);
-if_setonvartransmit("script1573{varplayer_170}", interface_771:com429);

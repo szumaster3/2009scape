@@ -1,5 +1,0 @@
-// 1944
-[clientscript,script1944]
-if_settext("", interface_802:com16);
-if_sethide(true, interface_802:com19);
-%varclient_581 = 0;

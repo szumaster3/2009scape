@@ -1,8 +1,0 @@
-// 1473
-[proc,script1473]
-if_setgraphic(graphic_1424, interface_762:com21);
-if_setgraphic(graphic_1433, interface_762:com20);
-~script1463(0);
-~script1456;
-~script1549;
-%varclient_188 = 1;

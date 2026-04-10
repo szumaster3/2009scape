@@ -1,8 +1,0 @@
-// 1517
-[proc,script1517]
-if_sethide(true, interface_768:com5);
-if_sethide(true, interface_768:com10);
-if_sethide(true, interface_768:com6);
-if_sethide(true, interface_768:com8);
-if_sethide(true, interface_768:com7);
-if_sethide(true, interface_768:com9);

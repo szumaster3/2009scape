@@ -1,9 +1,0 @@
-// 1424
-[clientscript,script1424]
-if (testbit(%varplayer_309, 2) = ^false) {
-    if_setcolour(0x2300, interface_5:com3);
-    if_setcolour(^red, interface_5:com2);
-} else {
-    if_setcolour(^green, interface_5:com3);
-    if_setcolour(0x230000, interface_5:com2);
-}

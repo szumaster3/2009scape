@@ -1,9 +1,0 @@
-// 1861
-[clientscript,script1861]
-if_setmodel(enum(int, model, enum_1318, %varplayerbit_5470), interface_799:com10);
-if_setmodel(enum(int, model, enum_1318, %varplayerbit_5471), interface_799:com11);
-if_setmodel(enum(int, model, enum_1318, %varplayerbit_5472), interface_799:com12);
-if_setmodel(enum(int, model, enum_1318, %varplayerbit_5473), interface_799:com13);
-if_setmodel(enum(int, model, enum_1318, %varplayerbit_5474), interface_799:com14);
-if_setmodel(enum(int, model, enum_1318, %varplayerbit_5475), interface_799:com15);
-if_setmodel(enum(int, model, enum_1318, %varplayerbit_5476), interface_799:com16);

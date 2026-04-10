@@ -253,7 +253,7 @@ class WoodcuttingPlugin : InteractionListener {
 
         // Bonus if wearing Seers' headband.
         if (reward == Items.LOGS_1511 &&
-            inEquipment(player, Items.SEERS_HEADBAND_3_14646)
+            inEquipment(player, 14639)
         ) {
             amount += 1
         }
@@ -276,7 +276,7 @@ class WoodcuttingPlugin : InteractionListener {
 
         // Bonus for Maple logs & Seers headband & diary
         if (reward == Items.MAPLE_LOGS_1517 &&
-            player.equipment.get(EquipmentContainer.SLOT_HAT)?.id == Items.SEERS_HEADBAND_3_14646 &&
+            player.equipment.get(EquipmentContainer.SLOT_HAT)?.id == 14639 &&
             isDiaryComplete(player, DiaryType.SEERS_VILLAGE, 1)
         ) {
             experience *= 1.10
@@ -284,7 +284,7 @@ class WoodcuttingPlugin : InteractionListener {
 
         // Extra bonus for Seers headband on normal logs/
         if (reward == Items.LOGS_1511 &&
-            inEquipment(player, Items.SEERS_HEADBAND_3_14646)
+            inEquipment(player, 14639)
         ) {
             experience *= 1.05
         }

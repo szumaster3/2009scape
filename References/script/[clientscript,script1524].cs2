@@ -1,6 +1,0 @@
-// 1524
-[clientscript,script1524]
-if (cc_find(interface_275:com9, 0) = true) {
-    cc_deleteall(interface_275:com9);
-    if_setop(1, null, interface_275:com9);
-}

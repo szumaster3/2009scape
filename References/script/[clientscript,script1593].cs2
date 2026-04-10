@@ -1,8 +1,0 @@
-// 1593
-[clientscript,script1593]
-if_sethide(true, interface_771:com188);
-if_sethide(true, interface_771:com247);
-if_sethide(false, interface_771:com306);
-if_setgraphic("tabs,1", interface_771:com178);
-if_setgraphic("tabs,1", interface_771:com176);
-if_setgraphic("tabs,0", interface_771:com174);

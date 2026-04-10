@@ -1,4 +1,0 @@
-[3791] - (2860, 3626, 0) [region=11320, name=Rocks]
-[3791] - (2860, 3627, 0) [region=11320, name=Rocks]
-[3791] - (2878, 3622, 0) [region=11320, name=Rocks]
-[3791] - (2878, 3623, 0) [region=11320, name=Rocks]

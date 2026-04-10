@@ -1,4 +1,0 @@
-[32738] - (2268, 4750, 0) [region=9034, name=Cave Exit]
-[32738] - (2892, 10072, 0) [region=11677, name=Cave Exit]
-[32738] - (2928, 10083, 0) [region=11677, name=Cave Exit]
-[32738] - (2892, 10072, 2) [region=11677, name=Cave Exit]

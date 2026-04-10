@@ -1,4 +1,0 @@
-// 432
-[clientscript,script432]
-if_setscrollsize(200, 300, interface_591:com177);
-~script31(interface_591:com178, interface_591:com177, "scrollbar_dragger_v2,3", "scrollbar_dragger_v2,0", "scrollbar_dragger_v2,1", "scrollbar_dragger_v2,2", "scrollbar_v2,0", "scrollbar_v2,1");

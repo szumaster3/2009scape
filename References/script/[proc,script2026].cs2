@@ -1,5 +1,0 @@
-// 2026
-[proc,script2026]
-if_setonmouserepeat(null, interface_752:com5);
-if_setonmouseleave(null, interface_752:com5);
-if_setcolour(0x80, interface_752:com5);

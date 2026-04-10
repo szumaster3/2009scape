@@ -1,3 +1,0 @@
-// 45
-[clientscript,script45](component $component0, int $rgb1)
-if_setcolour($rgb1, $component0);

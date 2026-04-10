@@ -1,8 +1,0 @@
-// 690
-[clientscript,script690]
-if_setontimer("script1949(%varclient_272, %varclient_273, event_com)", interface_190:com1);
-if_setontimer("script1949(%varclient_272, %varclient_273, event_com)", interface_190:com4);
-if_setontimer("script1949(%varclient_272, %varclient_273, event_com)", interface_190:com2);
-if_setontimer("script1949(%varclient_272, %varclient_273, event_com)", interface_190:com5);
-if_setontimer("script1949(%varclient_272, %varclient_273, event_com)", interface_190:com3);
-if_setontimer("script1949(%varclient_272, %varclient_273, event_com)", interface_190:com6);

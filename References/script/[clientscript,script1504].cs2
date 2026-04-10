@@ -1,9 +1,0 @@
-// 1504
-[clientscript,script1504]
-if (getwindowmode >= 2) {
-    if_sethide(false, interface_764:com45);
-    if_sethide(true, interface_764:com44);
-} else {
-    if_sethide(true, interface_764:com45);
-    if_sethide(false, interface_764:com44);
-}

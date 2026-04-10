@@ -1,6 +1,0 @@
-// 27
-[clientscript,script27]
-if_settext(tostring(%varplayerbit_1485), interface_197:com8);
-if_settext(tostring(%varplayerbit_1489), interface_197:com11);
-if_settext(tostring(%varplayerbit_1488), interface_197:com9);
-if_settext(tostring(%varplayerbit_1486), interface_197:com10);

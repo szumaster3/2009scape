@@ -1,4 +1,0 @@
-// 920
-[clientscript,script920](string $string0, string $string1)
-%varclientstring_25 = $string0;
-%varclientstring_26 = $string1;

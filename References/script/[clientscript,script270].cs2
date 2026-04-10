@@ -1,6 +1,0 @@
-// 270
-[clientscript,script270]
-~script366;
-if_setgraphic(graphic_1043, interface_594:com255);
-if_setonmouseleave("script40(interface_594:com300)", interface_594:com255);
-if_setonmouseover(null, interface_594:com255);

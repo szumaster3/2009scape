@@ -293,17 +293,6 @@ class TradeModule(
 
         PlayerMonitor.logTrade(module.player!!, module.target!!, pContainer, oContainer)
 
-        (AIRepository.PulseRepository[module.player!!.username.lowercase()]?.botScript as DoublingMoney?)
-            ?.itemsReceived(
-                module.target!!,
-                oContainer,
-            )
-        (AIRepository.PulseRepository[module.target!!.username.lowercase()]?.botScript as DoublingMoney?)
-            ?.itemsReceived(
-                module.player!!,
-                pContainer,
-            )
-
         addContainer(module.player, oContainer)
         addContainer(module.target, pContainer)
         module.target!!.packetDispatch.sendMessage("Accepted trade.")

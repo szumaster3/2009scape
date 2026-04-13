@@ -215,30 +215,6 @@ class MiscCommandSet : CommandSet(Privilege.ADMIN) {
         }
 
         /*
-         * Command for printing debug information
-         * about a specific bot.
-         */
-
-        define(
-            name = "botinfo",
-            privilege = Privilege.ADMIN,
-            usage = "::botinfo <lt>botname<gt>",
-            description = "Prints debug information about a bot",
-        ) { player, args ->
-            val scriptInstances = AIRepository.PulseRepository
-
-            val botName = args.slice(1 until args.size).joinToString(" ").lowercase()
-            val bot = scriptInstances[botName]
-            if (bot == null) {
-                reject(player, "No bot with that name found.")
-                return@define
-            }
-            val botInfo = bot.botScript.toString()
-            // Print the bot's information, max 80chars per line.
-            botInfo.chunked(80).forEach { notify(player, it) }
-        }
-
-        /*
          * Command for accessing the Grand Exchange
          * book with different modes (buying, selling, search,
          * bots, botsearch).

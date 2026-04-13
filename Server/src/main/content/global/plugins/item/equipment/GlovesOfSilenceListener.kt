@@ -52,7 +52,7 @@ class GlovesOfSilenceListener : InteractionListener {
          * Handles checking charges of them.
          */
 
-        on(Items.GLOVES_OF_SILENCE_10075, IntType.ITEM, "operate") { p, node ->
+        on(Items.GLOVES_OF_SILENCE_10075, IntType.ITEM, "operate", "check") { p, node ->
             val durability = getCharge(node.asItem())
             val m = when(durability){
                  990 -> "These gloves are in good condition."

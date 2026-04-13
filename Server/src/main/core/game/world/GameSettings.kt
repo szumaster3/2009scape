@@ -28,8 +28,6 @@ class GameSettings internal constructor(
     var autostock_ge: Boolean,
     var allow_token_purchase: Boolean,
     var enabled_botting: Boolean,
-    var max_adv_bots: Int,
-    var enable_doubling_money_scammers: Boolean,
     var wild_pvp_enabled: Boolean,
     var jad_practice_enabled: Boolean,
     var ge_announcement_limit: Int,
@@ -59,8 +57,6 @@ class GameSettings internal constructor(
             val enable_bots = data.get("enable_bots")?.asBoolean ?: false
             val autostock_ge = data.get("autostock_ge")?.asBoolean ?: false
             val enable_botting = data.get("botting_enabled")?.asBoolean ?: false
-            val max_adv_bots = data.get("max_adv_bots")?.asInt ?: 100
-            val enable_doubling_money_scammers = data.get("enable_doubling_money_scammers")?.asBoolean ?: false
             val wild_pvp_enabled = data.get("wild_pvp_enabled")?.asBoolean ?: true
             val jad_practice_enabled = data.get("jad_practice_enabled")?.asBoolean ?: true
             val ge_announcement_limit = data.get("ge_announcement_limit")?.asInt ?: 0
@@ -88,8 +84,6 @@ class GameSettings internal constructor(
                 autostock_ge,
                 allow_token_purchase,
                 enable_botting,
-                max_adv_bots,
-                enable_doubling_money_scammers,
                 wild_pvp_enabled,
                 jad_practice_enabled,
                 ge_announcement_limit,

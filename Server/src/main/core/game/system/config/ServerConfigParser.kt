@@ -111,8 +111,6 @@ object ServerConfigParser {
                 autostock_ge = data.getBoolean("world.autostock_ge"),
                 allow_token_purchase = data.getBoolean("world.allow_token_purchase"),
                 enabled_botting = data.getBoolean("world.enable_botting"),
-                max_adv_bots = data.getLong("world.max_adv_bots").toInt(),
-                enable_doubling_money_scammers = data.getBoolean("world.enable_doubling_money_scammers", false),
                 wild_pvp_enabled = data.getBoolean("world.wild_pvp_enabled"),
                 jad_practice_enabled = data.getBoolean("world.jad_practice_enabled"),
                 ge_announcement_limit = data.getLong("world.ge_announcement_limit", 500L).toInt(),

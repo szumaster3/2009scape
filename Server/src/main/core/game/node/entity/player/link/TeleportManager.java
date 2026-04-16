@@ -3,18 +3,18 @@ package core.game.node.entity.player.link;
 import content.data.GameAttributes;
 import content.region.other.tutorial_island.plugin.*;
 import core.ServerConstants;
+import core.game.interaction.QueueStrength;
 import core.game.node.entity.Entity;
 import core.game.node.entity.impl.Animator.Priority;
 import core.game.node.entity.player.Player;
-import core.game.system.task.Pulse;
 import core.game.world.GameWorld;
 import core.game.world.map.Location;
 import core.game.world.update.flag.context.Animation;
 import core.game.world.update.flag.context.Graphics;
 import core.worker.ManagementEvents;
 import proto.management.JoinClanRequest;
+import shared.consts.Animations;
 import shared.consts.Sounds;
-
 import static core.api.ContentAPIKt.*;
 
 /**
@@ -45,14 +45,9 @@ public class TeleportManager {
     private final Entity entity;
 
     /**
-     * The last teleport of this entity.
+     * The last teleport location.
      */
-    private Pulse lastTeleport;
-
-    /**
-     * The current teleport of this entity.
-     */
-    private Pulse currentTeleport;
+    private final Location lastTeleport;
 
     /**
      * The current teleport type.
@@ -74,7 +69,7 @@ public class TeleportManager {
             defaultLocation = player.getRespawnLocation();
         }
 
-        lastTeleport = TeleportType.HOME.getPulse(entity, defaultLocation);
+        this.lastTeleport = defaultLocation;
     }
 
     /**
@@ -108,43 +103,31 @@ public class TeleportManager {
      */
     public boolean send(Location location, TeleportType type, int teleportType) {
         if (teleportType == WILDERNESS_TELEPORT || type == TeleportType.OBELISK) {
-            if (hasTimerActive(entity, "teleblock")) return false;
+            if (hasTimerActive(entity, GameAttributes.TELEBLOCK_TIMER)) return false;
         } else {
             if (!entity.getZoneMonitor().teleport(teleportType, null)) {
                 return false;
             }
             if (teleportType != -1 && entity.isTeleBlocked()) {
-                if (entity.isPlayer())
+                if (entity.isPlayer()) {
                     entity.asPlayer().sendMessage("A magical force has stopped you from teleporting.");
+                }
                 return false;
             }
         }
-
-        if (teleportType != -1) {
-            if (entity instanceof Player) {
-                Player p = (Player) entity;
-                p.getDialogueInterpreter().close();
-            }
+        if (entity instanceof Player) {
+            ((Player) entity).getDialogueInterpreter().close();
+            ((Player) entity).getInterfaceManager().close();
         }
         if (entity.getAttribute("tablet-spell", false)) {
             type = TeleportType.TELETABS;
         }
         this.teleportType = teleportType;
         entity.getWalkingQueue().reset();
-        lastTeleport = currentTeleport;
-        currentTeleport = type.getPulse(entity, location);
-        entity.getPulseManager().clear();
-        if (type == TeleportType.HOME) {
-            entity.getPulseManager().run(type.getPulse(entity, location));
-        } else {
-            entity.lock(12);
-            entity.getLocks().lockComponent(12);
-            entity.getImpactHandler().setDisabledTicks(teleportType == -1 ? 5 : 12);
-            GameWorld.getPulser().submit(currentTeleport);
-        }
-        if (entity instanceof Player) {
-            ((Player) entity).getInterfaceManager().close();
-        }
+        entity.lock(12);
+        entity.getLocks().lockComponent(12);
+        entity.getImpactHandler().setDisabledTicks(teleportType == -1 ? 5 : 12);
+        type.queue(entity, location);
         return true;
     }
 
@@ -155,7 +138,7 @@ public class TeleportManager {
      * @param location The destination location.
      */
     public static void fireRandom(Entity entity, Location location) {
-        if (entity instanceof Player && entity.getTeleporter().getTeleportType() == 0) {
+        if (entity instanceof Player && entity.getTeleporter().teleportType == 0) {
             Player p = (Player) entity;
         }
     }
@@ -168,11 +151,13 @@ public class TeleportManager {
     private static int getAudio(int count) {
         switch (count) {
             case 0:
-                return 193;
+                return Sounds.AIDE_TP_CHALK_193;
             case 4:
-                return 194;
+                return Sounds.AIDE_TP_SITDOWN_196;
+            case 8:
+                return Sounds.AIDE_TP_BOOK_194;
             case 11:
-                return 195;
+                return Sounds.AIDE_TP_PORTAL_195;
         }
         return -1;
     }
@@ -187,711 +172,458 @@ public class TeleportManager {
     }
 
     /**
-     * Gets last teleport.
-     *
-     * @return the last teleport
-     */
-    public final Pulse getLastTeleport() {
-        return lastTeleport;
-    }
-
-    /**
-     * Gets current teleport.
-     *
-     * @return the current teleport
-     */
-    public final Pulse getCurrentTeleport() {
-        return currentTeleport;
-    }
-
-    /**
      * Represents a NodeType for Teleporter.
      *
      * @author SonicForce41
      */
     public enum TeleportType {
-        NORMAL(new TeleportSettings(8939, 8941, shared.consts.Graphics.NORMAL_TP_UPWARDS_1576, shared.consts.Graphics.NORMAL_TP_DOWNWARDS_1577)) {
+        NORMAL(new TeleportSettings(
+                Animations.MODERN_TELEPORT_START_8939,
+                Animations.MODERN_TELEPORT_END_8941,
+                shared.consts.Graphics.NORMAL_TP_UPWARDS_1576,
+                shared.consts.Graphics.NORMAL_TP_DOWNWARDS_1577
+        )) {
             @Override
-            public Pulse getPulse(final Entity entity, final Location location) {
-                return new TeleportPulse(entity) {
-                    int delay = 0;
-
-                    @Override
-                    public boolean pulse() {
-                        if (delay == 0) {
+            public void queue(Entity entity, Location location) {
+                queueScript(entity, 0, QueueStrength.NORMAL, false, stage -> {
+                    switch (stage) {
+                        case 0:
                             playGlobalAudio(entity.getLocation(), Sounds.TP_ALL_200);
                             entity.getAnimator().forceAnimation(new Animation(getSettings().getStartEmote()));
                             entity.graphics(new Graphics(getSettings().getStartGfx()));
-                        } else if (delay == 3) {
+                            return false;
+                        case 3:
                             entity.getProperties().setTeleportLocation(Location.create(location));
                             fireRandom(entity, location);
-                        } else if (delay == 4) {
+                            return false;
+                        case 4:
                             playGlobalAudio(entity.getLocation(), Sounds.TP_REVERSE_201);
                             entity.getAnimator().forceAnimation(new Animation(getSettings().getEndEmote(), Priority.HIGH));
                             entity.graphics(new Graphics(getSettings().getEndGfx()));
-                            return true;
-                        }
-                        delay++;
-                        return false;
-                    }
 
-                    @Override
-                    public void stop() {
-                        super.stop();
-                        entity.unlock();
-                        entity.lock(4);
+                            entity.unlock();
+                            entity.lock(4);
+                            return true;
                     }
-                };
+                    return false;
+                });
             }
         },
 
-        ANCIENT(new TeleportSettings(1979, -1, shared.consts.Graphics.ANCIENTS_TP_392, -1)) {
+        ANCIENT(new TeleportSettings(
+                Animations.CAST_SPELL_1979,
+                -1,
+                shared.consts.Graphics.ANCIENTS_TP_392,
+                -1
+        )) {
             @Override
-            public Pulse getPulse(final Entity entity, final Location location) {
-                return new TeleportPulse(entity) {
-                    int delay = 0;
-
-                    @Override
-                    public boolean pulse() {
-                        if (delay == 0) {
+            public void queue(Entity entity, Location location) {
+                queueScript(entity, 0, QueueStrength.NORMAL, false, stage -> {
+                    switch (stage) {
+                        case 0:
                             playGlobalAudio(entity.getLocation(), Sounds.BLOCK_TP_197, 0, 7);
                             entity.getAnimator().forceAnimation(new Animation(getSettings().getStartEmote()));
                             entity.graphics(new Graphics(getSettings().getStartGfx()));
-                        } else if (delay == 4) {
+                            return false;
+                        case 4:
                             entity.getProperties().setTeleportLocation(Location.create(location));
                             fireRandom(entity, location);
-                        } else if (delay == 5) {
+                            return false;
+                        case 5:
                             entity.getAnimator().forceAnimation(new Animation(getSettings().getEndEmote(), Priority.HIGH));
                             entity.graphics(new Graphics(getSettings().getEndGfx()));
+                            entity.getAnimator().forceAnimation(new Animation(-1));
+                            entity.graphics(new Graphics(-1));
+                            entity.unlock();
                             return true;
-                        }
-                        delay++;
-                        return false;
                     }
-
-                    @Override
-                    public void stop() {
-                        super.stop();
-                        entity.getAnimator().forceAnimation(new Animation(-1));
-                        entity.graphics(new Graphics(-1));
-                        entity.unlock();
-                    }
-                };
+                    return false;
+                });
             }
         },
 
-        LUNAR(new TeleportSettings(1816, -1, 747, -1)) {
+        LUNAR(new TeleportSettings(
+                Animations.OLD_SHRINK_AND_RISE_UP_TP_1816,
+                -1,
+                shared.consts.Graphics.LUNARS_TP_747,
+                -1
+        )) {
             @Override
-            public Pulse getPulse(final Entity entity, final Location location) {
-                return new TeleportPulse(entity) {
-                    int delay = 0;
-
-                    @Override
-                    public boolean pulse() {
-                        if (delay == 0) {
+            public void queue(Entity entity, Location location) {
+                queueScript(entity, 0, QueueStrength.NORMAL, false, stage -> {
+                    switch (stage) {
+                        case 0:
                             entity.graphics(new Graphics(getSettings().getStartGfx(), 120));
                             entity.getAnimator().forceAnimation(new Animation(getSettings().getStartEmote()));
-                        } else if (delay == 3) {
+                            return false;
+                        case 3:
                             entity.getProperties().setTeleportLocation(Location.create(location));
                             fireRandom(entity, location);
-                        } else if (delay == 4) {
+                            return false;
+                        case 4:
                             entity.getAnimator().forceAnimation(new Animation(getSettings().getEndEmote(), Priority.HIGH));
                             entity.graphics(new Graphics(getSettings().getEndGfx()));
+                            entity.unlock();
                             return true;
-                        }
-                        delay++;
-                        return false;
                     }
-
-                    @Override
-                    public void stop() {
-                        super.stop();
-                        entity.getAnimator().forceAnimation(new Animation(-1));
-                        entity.graphics(new Graphics(-1));
-                        entity.unlock();
-                    }
-                };
+                    return false;
+                });
             }
         },
 
-        TELETABS(new TeleportSettings(4731, -1, 678, -1)) {
+        TELETABS(new TeleportSettings(
+                Animations.TELEPORT_TABLET_4731, -1,
+                shared.consts.Graphics.BLUE_GLOW_678, -1)) {
             @Override
-            public Pulse getPulse(final Entity entity, final Location location) {
-                return new TeleportPulse(entity) {
-                    int delay = 0;
-
-                    @Override
-                    public boolean pulse() {
-                        if (delay == 0) {
-                            entity.getAnimator().forceAnimation(new Animation(4069));
-                        } else if (delay == 2) {
+            public void queue(Entity entity, Location location) {
+                queueScript(entity, 0, QueueStrength.NORMAL, false, stage -> {
+                    switch (stage) {
+                        case 0:
+                            entity.getAnimator().forceAnimation(new Animation(Animations.BREAK_SPELL_TABLET_A_4069));
+                            return false;
+                        case 2:
                             entity.getAnimator().forceAnimation(new Animation(getSettings().getStartEmote(), Priority.HIGH));
                             entity.graphics(new Graphics(getSettings().getStartGfx()));
-                        } else if (delay == 3) {
+                            return false;
+                        case 3:
                             entity.getProperties().setTeleportLocation(Location.create(location));
-                        } else if (delay == 4) {
+                            return false;
+                        case 4:
                             entity.getAnimator().forceAnimation(new Animation(getSettings().getEndEmote()));
                             entity.graphics(new Graphics(getSettings().getEndGfx()));
+                            entity.unlock();
+                            entity.lock(2);
                             return true;
-                        }
-                        delay++;
-                        return false;
                     }
-
-                    @Override
-                    public void stop() {
-                        super.stop();
-                        entity.getAnimator().forceAnimation(new Animation(-1));
-                        entity.graphics(new Graphics(-1));
-                        entity.unlock();
-                        entity.lock(2);
-                    }
-                };
+                    return false;
+                });
             }
         },
 
-        HOME(new TeleportSettings(4847, 4857, 800, 804)) {
+        /**
+         * TODO: Complete this teleport with delay 30 min.
+         */
+        HOME(new TeleportSettings(
+                Animations.HOME_TP_ANIMATION_4847,
+                Animations.IDLE_4857,
+                shared.consts.Graphics.HOME_TP_DRAW_800,
+                shared.consts.Graphics.HOME_TP_RING_804
+        )) {
             @Override
-            public Pulse getPulse(final Entity entity, final Location location) {
-                return new TeleportPulse(entity) {
-                    int count;
-                    Player player;
-
-                    @Override
-                    public boolean pulse() {
-                        if (count == 18) {
-                            player.getProperties().setTeleportLocation(location);
-                            if (player.getAttribute(GameAttributes.TUTORIAL_STAGE, -1) == 72) {
-                                Player p = entity.asPlayer();
-                                completeTutorial(p);
-                            }
-                            return true;
-                        } else {
-                            playGlobalAudio(entity.getLocation(), getAudio(count));
-                            player.getPacketDispatch().sendGraphic(HOME_GRAPHICS[count]);
-                            player.getPacketDispatch().sendAnimation(HOME_ANIMATIONS[count]);
+            public void queue(Entity entity, Location location) {
+                Player player = (Player) entity;
+                queueScript(entity, 0, QueueStrength.WEAK, false, stage -> {
+                    if (stage == 18) {
+                        player.getProperties().setTeleportLocation(location);
+                        if (player.getAttribute(GameAttributes.TUTORIAL_STAGE, -1) == 72) {
+                            completeTutorial(player);
                         }
-                        count++;
-                        return false;
+                        return true;
                     }
-
-                    @Override
-                    public void start() {
-                        player = ((Player) entity);
-                        /*
-                        if (player.getSavedData().globalData.getHomeTeleportDelay() > System.currentTimeMillis()) {
-                            long milliseconds = player.getSavedData().globalData.getHomeTeleportDelay() - System.currentTimeMillis();
-                            int minutes = Math.round((float) milliseconds / 120000);
-                            if (minutes > 15) {
-                                player.getSavedData().globalData.setHomeTeleportDelay(System.currentTimeMillis() + 1200000);
-                                milliseconds = player.getSavedData().globalData.getHomeTeleportDelay() - System.currentTimeMillis();
-                                minutes = Math.round((float) milliseconds / 120000);
-                            }
-                            if (minutes != 0) {
-                                player.getPacketDispatch().sendMessage("You need to wait another " + minutes + " " + (minutes == 1 ? "minute" : "minutes") + " to cast this spell.");
-                                stop();
-                                return;
-                            }
-                        }
-                        */
-                        super.start();
-                    }
-
-                    @Override
-                    public void stop() {
-                        super.stop();
-                        entity.getAnimator().forceAnimation(new Animation(-1));
-                        player.graphics(new Graphics(-1));
-                    }
-                };
+                    playGlobalAudio(entity.getLocation(), getAudio(stage));
+                    player.getPacketDispatch().sendGraphic(HOME_GRAPHICS[stage]);
+                    player.getPacketDispatch().sendAnimation(HOME_ANIMATIONS[stage]);
+                    return false;
+                });
             }
         },
 
-        OBELISK(new TeleportSettings(8939, 8941, shared.consts.Graphics.WILDERNESS_OBELISK_TP_661, -1)) {
+        OBELISK(new TeleportSettings(
+                Animations.MODERN_TELEPORT_START_8939,
+                Animations.MODERN_TELEPORT_END_8941,
+                shared.consts.Graphics.WILDERNESS_OBELISK_TP_661, -1)) {
             @Override
-            public Pulse getPulse(final Entity entity, final Location location) {
-                return new TeleportPulse(entity) {
-                    int delay = 0;
-
-                    @Override
-                    public boolean pulse() {
-                        if (delay == 0) {
+            public void queue(Entity entity, Location location) {
+                queueScript(entity, 0, QueueStrength.STRONG, false, stage -> {
+                    switch (stage) {
+                        case 0:
                             entity.lock();
-                            entity.getAnimator().forceAnimation(new Animation(1816));
-                        } else if (delay == 3) {
+                            entity.getAnimator().forceAnimation(new Animation(Animations.OLD_SHRINK_AND_RISE_UP_TP_1816));
+                            return false;
+                        case 3:
                             entity.getProperties().setTeleportLocation(Location.create(location));
-                        } else if (delay == 4) {
+                            return false;
+                        case 4:
                             entity.getAnimator().forceAnimation(Animation.RESET);
                             entity.unlock();
                             return true;
-                        }
-                        delay++;
-                        return false;
                     }
-                };
+                    return false;
+                });
             }
         },
 
-        TELE_OTHER(new TeleportSettings(1816, -1, shared.consts.Graphics.TELEOTHER_ACCEPT_342, -1)) {
+        TELE_OTHER(new TeleportSettings(Animations.OLD_SHRINK_AND_RISE_UP_TP_1816, -1, shared.consts.Graphics.TELEOTHER_ACCEPT_342, -1)) {
             @Override
-            public Pulse getPulse(final Entity entity, final Location location) {
-                return new TeleportPulse(entity) {
-                    int delay = 0;
-
-                    @Override
-                    public boolean pulse() {
-                        if (delay == 0) {
+            public void queue(Entity entity, Location location) {
+                queueScript(entity, 0, QueueStrength.STRONG, false, stage -> {
+                    switch (stage) {
+                        case 0:
                             playGlobalAudio(entity.getLocation(), Sounds.TELE_OTHER_CAST_199);
                             entity.getAnimator().forceAnimation(new Animation(getSettings().getStartEmote()));
                             entity.graphics(new Graphics(getSettings().getStartGfx()));
-                        } else if (delay == 3) {
+                            return false;
+                        case 3:
                             entity.getProperties().setTeleportLocation(Location.create(location));
-                        } else if (delay == 4) {
+                            return false;
+                        case 4:
                             entity.getAnimator().forceAnimation(new Animation(-1));
                             entity.unlock();
                             return true;
-                        }
-                        delay++;
-                        return false;
                     }
-                };
+                    return false;
+                });
             }
         },
 
         FAIRY_RING(new TeleportSettings(-1, -1, -1, -1)) {
             @Override
-            public Pulse getPulse(final Entity entity, final Location location) {
-                entity.graphics(Graphics.create(569));
-                return new TeleportPulse(entity) {
-                    int delay;
-
-                    @Override
-                    public boolean pulse() {
-                        switch (++delay) {
-                            case 2:
-                                entity.animate(Animation.create(3265));
-                                if (entity instanceof Player) {
-                                    playAudio(entity.asPlayer(), Sounds.FT_FAIRY_TP_1098);
-                                }
-                                break;
-                            case 4:
-                                entity.animate(Animation.create(3266));
-                                entity.getProperties().setTeleportLocation(location);
-                                entity.unlock();
-                                entity.lock(2);
-                                return true;
-                        }
-                        return false;
+            public void queue(Entity entity, Location location) {
+                entity.graphics(Graphics.create(shared.consts.Graphics.FLOWERS_AROUND_PLAYER_569));
+                queueScript(entity, 0, QueueStrength.STRONG, false, stage -> {
+                    switch (stage) {
+                        case 2:
+                            entity.animate(Animation.create(Animations.FADE_B_3265));
+                            if (entity instanceof Player) {
+                                playAudio(entity.asPlayer(), Sounds.FT_FAIRY_TP_1098);
+                            }
+                            return false;
+                        case 4:
+                            entity.animate(Animation.create(Animations.FADE_A_3266));
+                            entity.getProperties().setTeleportLocation(location);
+                            entity.unlock();
+                            entity.lock(2);
+                            return true;
                     }
-
-                };
+                    return false;
+                });
             }
         },
 
-        PURO_PURO(new TeleportSettings(6601, 1118, -1, -1)) {
+        PURO_PURO(new TeleportSettings(Animations.ANIMATION_6601, Animations.HANDHOLDS_1118, -1, -1)) {
             @Override
-            public Pulse getPulse(final Entity entity, final Location location) {
-                return new TeleportPulse(entity) {
-                    int delay = 0;
-
-                    @Override
-                    public boolean pulse() {
-                        if (delay == 0) {
+            public void queue(Entity entity, Location location) {
+                queueScript(entity, 0, QueueStrength.STRONG, false, stage -> {
+                    switch (stage) {
+                        case 0:
                             entity.getAnimator().forceAnimation(new Animation(getSettings().getStartEmote()));
-                            entity.graphics(new Graphics(1118));
-                        } else if (delay == 9) {
+                            entity.graphics(new Graphics(shared.consts.Graphics.TP_TO_PURO_PURO_WHEAT_FIELD_BEAM_1118));
+                            return false;
+                        case 9:
                             entity.getProperties().setTeleportLocation(Location.create(location));
                             entity.getAnimator().forceAnimation(new Animation(-1));
                             entity.unlock();
                             return true;
-                        }
-                        delay++;
-                        return false;
                     }
-                };
+                    return false;
+                });
             }
         },
 
-        ECTOPHIAL(new TeleportSettings(8939, 8941, 1587, 1588)) {
+        ECTOPHIAL(new TeleportSettings(
+                Animations.MODERN_TELEPORT_START_8939,
+                Animations.MODERN_TELEPORT_END_8941,
+                1587,
+                1588
+        )) {
             @Override
-            public Pulse getPulse(final Entity entity, final Location location) {
-                return new TeleportPulse(entity) {
-                    int delay = 0;
-
-                    @Override
-                    public boolean pulse() {
-                        if (delay == 0) {
+            public void queue(Entity entity, Location location) {
+                queueScript(entity, 0, QueueStrength.STRONG, false, stage -> {
+                    switch (stage) {
+                        case 0:
                             playGlobalAudio(entity.getLocation(), Sounds.TP_ALL_200);
                             entity.getAnimator().forceAnimation(new Animation(getSettings().getStartEmote()));
                             entity.graphics(new Graphics(getSettings().getStartGfx()));
-                        } else if (delay == 3) {
+                            return false;
+                        case 3:
                             entity.getProperties().setTeleportLocation(Location.create(location));
                             fireRandom(entity, location);
-                        } else if (delay == 4) {
+                            return false;
+                        case 4:
                             playGlobalAudio(entity.getLocation(), Sounds.TP_REVERSE_201);
                             entity.getAnimator().forceAnimation(new Animation(getSettings().getEndEmote(), Priority.HIGH));
                             entity.graphics(new Graphics(getSettings().getEndGfx()));
                             return true;
-                        }
-                        delay++;
-                        return false;
                     }
-                };
+                    return false;
+                });
             }
         },
 
-        CHRISTMAS(new TeleportSettings(7534, -1, 1292, -1)) {
+        CHRISTMAS(new TeleportSettings(7534, -1, shared.consts.Graphics.SNOW_GOING_UPWARDS_1292, -1)) {
             @Override
-            public Pulse getPulse(final Entity entity, final Location location) {
-                return new TeleportPulse(entity) {
-                    int delay = 0;
-
-                    @Override
-                    public boolean pulse() {
-                        if (delay == 0) {
+            public void queue(Entity entity, Location location) {
+                queueScript(entity, 0, QueueStrength.NORMAL, false, stage -> {
+                    switch (stage) {
+                        case 0:
                             playGlobalAudio(entity.getLocation(), Sounds.TP_ALL_200);
                             entity.getAnimator().forceAnimation(new Animation(getSettings().getStartEmote()));
                             entity.graphics(new Graphics(getSettings().getStartGfx()));
-                        } else if (delay == 3) {
+                            return false;
+                        case 3:
                             entity.getProperties().setTeleportLocation(Location.create(location));
                             fireRandom(entity, location);
-                        } else if (delay == 4) {
+                            return false;
+                        case 4:
                             playGlobalAudio(entity.getLocation(), Sounds.TP_REVERSE_201);
                             entity.getAnimator().forceAnimation(new Animation(getSettings().getEndEmote(), Priority.HIGH));
                             entity.graphics(new Graphics(getSettings().getEndGfx()));
                             return true;
-                        }
-                        delay++;
-                        return false;
                     }
-
-                    @Override
-                    public void stop() {
-                        super.stop();
-                        entity.unlock();
-                        entity.lock(4);
-                    }
-                };
+                    return false;
+                });
             }
         },
 
         CABBAGE(new TeleportSettings(9984, 9986, 1731, 1732)) {
             @Override
-            public Pulse getPulse(final Entity entity, final Location location) {
-                return new TeleportPulse(entity) {
-                    int delay = 0;
-
-                    @Override
-                    public boolean pulse() {
-                        if (delay == 0) {
+            public void queue(Entity entity, Location location) {
+                queueScript(entity, 0, QueueStrength.STRONG, false, stage -> {
+                    switch (stage) {
+                        case 0:
                             if (entity instanceof Player) {
                                 playAudio(entity.asPlayer(), 5036);
                             }
                             entity.getAnimator().forceAnimation(new Animation(getSettings().getStartEmote()));
                             entity.graphics(new Graphics(getSettings().getStartGfx()));
-                        } else if (delay == 5) {
+                            return false;
+                        case 5:
                             entity.getProperties().setTeleportLocation(Location.create(location));
                             fireRandom(entity, location);
+
                             if (entity instanceof Player) {
                                 playAudio(entity.asPlayer(), 5034);
                             }
                             entity.getAnimator().forceAnimation(new Animation(getSettings().getEndEmote(), Priority.HIGH));
                             entity.graphics(new Graphics(getSettings().getEndGfx()));
                             return true;
-                        }
-                        delay++;
-                        return false;
                     }
-
-                    @Override
-                    public void stop() {
-                        super.stop();
-                        entity.unlock();
-                        entity.lock(4);
-                    }
-                };
+                    return false;
+                });
             }
         },
 
         ENTRANA_MAGIC_DOOR(new TeleportSettings(10100, 9013, 1745, 1747)) {
-
             @Override
-            public Pulse getPulse(final Entity entity, final Location location) {
-                return new TeleportPulse(entity) {
-                    int delay = 0;
-
-                    @Override
-                    public boolean pulse() {
-                        if (delay == 0) {
+            public void queue(Entity entity, Location location) {
+                queueScript(entity, 0, QueueStrength.STRONG, false, stage -> {
+                    switch (stage) {
+                        case 0:
                             playGlobalAudio(entity.getLocation(), Sounds.TP_ALL_200);
                             entity.getAnimator().forceAnimation(new Animation(getSettings().getStartEmote()));
                             entity.graphics(new Graphics(getSettings().getStartGfx()));
-                        } else if (delay == 3) {
+                            return false;
+                        case 3:
                             entity.getProperties().setTeleportLocation(Location.create(location));
                             fireRandom(entity, location);
-                        } else if (delay == 4) {
+                            return false;
+                        case 4:
                             playGlobalAudio(entity.getLocation(), Sounds.TP_REVERSE_201);
                             entity.getAnimator().forceAnimation(new Animation(getSettings().getEndEmote(), Priority.HIGH));
                             entity.graphics(new Graphics(getSettings().getEndGfx()));
                             return true;
-                        }
-                        delay++;
-                        return false;
                     }
-
-                    @Override
-                    public void stop() {
-                        super.stop();
-                        entity.unlock();
-                        entity.lock(4);
-                    }
-                };
+                    return false;
+                });
             }
         },
 
         RANDOM_EVENT_OLD(new TeleportSettings(714, -1, -1, -1)) {
             @Override
-            public Pulse getPulse(final Entity entity, final Location location) {
-                return new TeleportPulse(entity) {
-                    int delay = 0;
-                    Player player;
-
-                    @Override
-                    public boolean pulse() {
-                        if (delay == 0) {
+            public void queue(Entity entity, Location location) {
+                queueScript(entity, 0, QueueStrength.NORMAL, false, stage -> {
+                    switch (stage) {
+                        case 0:
                             entity.getAnimator().forceAnimation(new Animation(getSettings().getStartEmote()));
-                            entity.graphics(new Graphics(308, 100, 50));
+                            entity.graphics(new Graphics(shared.consts.Graphics.OLD_RANDOM_EVENT_TP_308, 100, 50));
+
                             if (entity instanceof Player) {
                                 playAudio(entity.asPlayer(), Sounds.TP_ALL_200);
                             }
-                        } else if (delay == 4) {
+                            return false;
+
+                        case 4:
                             entity.getProperties().setTeleportLocation(Location.create(location));
                             entity.getAnimator().forceAnimation(new Animation(-1));
                             entity.unlock();
                             return true;
-                        }
-                        delay++;
-                        return false;
                     }
-
-                    @Override
-                    public void start() {
-
-                        super.start();
-                    }
-
-                    @Override
-                    public void stop() {
-                        super.stop();
-                        entity.getAnimator().forceAnimation(new Animation(-1));
-                        entity.graphics(new Graphics(-1));
-                    }
-                };
+                    return false;
+                });
             }
         },
 
         MINIGAME(new TeleportSettings(6601, 1118, -1, -1)) {
             @Override
-            public Pulse getPulse(final Entity entity, final Location location) {
-                return new TeleportPulse(entity) {
-                    int delay = 0;
-                    Player player;
-
-                    @Override
-                    public boolean pulse() {
-                        if (delay == 0) {
+            public void queue(Entity entity, Location location) {
+                queueScript(entity, 0, QueueStrength.STRONG, false, stage -> {
+                    switch (stage) {
+                        case 0:
                             entity.getAnimator().forceAnimation(new Animation(getSettings().getStartEmote()));
-                            entity.graphics(new Graphics(1118));
-                        } else if (delay == 9) {
+                            entity.graphics(new Graphics(shared.consts.Graphics.TP_TO_PURO_PURO_WHEAT_FIELD_BEAM_1118));
+                            return false;
+                        case 9:
                             entity.getProperties().setTeleportLocation(Location.create(location));
                             entity.getAnimator().forceAnimation(new Animation(-1));
                             entity.unlock();
                             return true;
-                        }
-                        delay++;
-                        return false;
                     }
-
-                    @Override
-                    public void start() {
-
-                        super.start();
-                    }
-
-                    @Override
-                    public void stop() {
-                        super.stop();
-                        entity.getAnimator().forceAnimation(new Animation(-1));
-                        entity.graphics(new Graphics(-1));
-                    }
-                };
+                    return false;
+                });
             }
         },
 
         PHARAOH_SCEPTRE(new TeleportSettings(714, 715, -1, -1)) {
             @Override
-            public Pulse getPulse(final Entity entity, final Location location) {
-                return new TeleportPulse(entity) {
-                    int delay = 0;
-                    Player player;
-
-                    @Override
-                    public boolean pulse() {
-                        if (delay == 0) {
+            public void queue(Entity entity, Location location) {
+                queueScript(entity, 0, QueueStrength.STRONG, false, stage -> {
+                    switch (stage) {
+                        case 0:
                             entity.getAnimator().forceAnimation(new Animation(getSettings().getStartEmote()));
-                            entity.graphics(new Graphics(715));
-                        } else if (delay == 4) {
+                            entity.graphics(new Graphics(shared.consts.Graphics.PHARAOH_SCEPTRE_TP_715));
+                            return false;
+                        case 4:
                             entity.getProperties().setTeleportLocation(Location.create(location));
                             entity.getAnimator().forceAnimation(new Animation(-1));
                             entity.unlock();
                             return true;
-                        }
-                        delay++;
-                        return false;
                     }
-
-                    @Override
-                    public void start() {
-                        super.start();
-                    }
-
-                    @Override
-                    public void stop() {
-                        super.stop();
-                        entity.getAnimator().forceAnimation(new Animation(-1));
-                        entity.graphics(new Graphics(-1));
-                    }
-                };
+                    return false;
+                });
             }
         },
 
         INSTANT(new TeleportSettings(-1, -1, -1, -1)) {
             @Override
-            public Pulse getPulse(final Entity entity, final Location location) {
-                return new TeleportPulse(entity) {
-                    int delay = 0;
-
-                    @Override
-                    public boolean pulse() {
-                        if (delay == 0) {
+            public void queue(Entity entity, Location location) {
+                queueScript(entity, 0, QueueStrength.STRONG, false, stage -> {
+                    switch (stage) {
+                        case 0:
                             entity.lock();
-                        } else if (delay == 3) {
+                            return false;
+                        case 3:
                             entity.getProperties().setTeleportLocation(Location.create(location));
-                        } else if (delay == 4) {
+                            return false;
+                        case 4:
                             entity.getAnimator().forceAnimation(Animation.RESET);
                             entity.unlock();
                             return true;
-                        }
-                        delay++;
-                        return false;
                     }
-                };
+                    return false;
+                });
             }
         };
 
-        /**
-         * The NodeSettings
-         */
-        private TeleportSettings settings;
-
-        /**
-         * Gets pulse.
-         *
-         * @param entity   the entity
-         * @param location the location
-         * @return the pulse
-         */
-        public abstract Pulse getPulse(final Entity entity, final Location location);
+        private final TeleportSettings settings;
 
         TeleportType(TeleportSettings settings) {
             this.settings = settings;
         }
 
-        /**
-         * Gets settings.
-         *
-         * @return the settings
-         */
-        public final TeleportSettings getSettings() {
+        public abstract void queue(Entity entity, Location location);
+
+        public TeleportSettings getSettings() {
             return settings;
-        }
-    }
-
-    /**
-     * Represents teleport node settings
-     *
-     * @author SonicForce41
-     */
-    static class TeleportSettings {
-        /**
-         * The start animation.
-         */
-        private int startAnim;
-
-        /**
-         * The end animation.
-         */
-        private int endAnim;
-
-        /**
-         * The start graphics.
-         */
-        private int startGFX;
-
-        /**
-         * The end gfx.
-         */
-        private int endGFX;
-
-        /**
-         * Constructs a new {@code Teleporter.java} {@code Object}.
-         *
-         * @param startAnim the start animation.
-         * @param endAnim   the end animation.
-         * @param startGfx  the start graphics.
-         * @param endGfx    the end graphiics.
-         */
-        public TeleportSettings(int startAnim, int endAnim, int startGfx, int endGfx) {
-            this.startAnim = startAnim;
-            this.endAnim = endAnim;
-            this.startGFX = startGfx;
-            this.endGFX = endGfx;
-        }
-
-        /**
-         * Gets start emote.
-         *
-         * @return the start emote
-         */
-        public final int getStartEmote() {
-            return startAnim;
-        }
-
-        /**
-         * Gets end emote.
-         *
-         * @return the end emote
-         */
-        public final int getEndEmote() {
-            return endAnim;
-        }
-
-        /**
-         * Gets start gfx.
-         *
-         * @return the start gfx
-         */
-        public final int getStartGfx() {
-            return startGFX;
-        }
-
-        /**
-         * Gets end gfx.
-         *
-         * @return the end gfx
-         */
-        public final int getEndGfx() {
-            return endGFX;
         }
     }
 
@@ -907,8 +639,9 @@ public class TeleportManager {
                 return TeleportType.ANCIENT;
             case 430:
                 return TeleportType.LUNAR;
+            default:
+                return TeleportType.NORMAL;
         }
-        return TeleportType.NORMAL;
     }
 
     /**
@@ -948,32 +681,42 @@ public class TeleportManager {
         player.getInterfaceManager().restoreTabs();
         player.getInterfaceManager().setViewedTab(3);
         player.getInterfaceManager().openDefaultTabs();
-        player.getDialogueInterpreter().sendDialogues(
-                "Welcome to Lumbridge! To get more help, simply click on the",
-                "Lumbridge Guide or one of the Tutors - these can be found by",
-                "looking for the question mark icon on your minimap. If you find you",
-                "are lost at any time, look for a signpost or use the Lumbridge Home",
-                "Teleport spell."
-        );
+        player.getDialogueInterpreter().sendDialogues("Welcome to Lumbridge! To get more help, simply click on the", "Lumbridge Guide or one of the Tutors - these can be found by", "looking for the question mark icon on your minimap. If you find you", "are lost at any time, look for a signpost or use the Lumbridge Home", "Teleport spell.");
         setAttribute(player, "close_c_", true);
     }
 
     /**
-     * Gets teleport type.
+     * Represents teleport node settings
      *
-     * @return the teleport type
+     * @author SonicForce41
      */
-    public int getTeleportType() {
-        return teleportType;
-    }
+    static class TeleportSettings {
+        private final int startAnim;
+        private final int endAnim;
+        private final int startGfx;
+        private final int endGfx;
 
-    /**
-     * Sets teleport type.
-     *
-     * @param teleportType the teleport type to set.
-     */
-    public void setTeleportType(int teleportType) {
-        this.teleportType = teleportType;
+        public TeleportSettings(int startAnim, int endAnim, int startGfx, int endGfx) {
+            this.startAnim = startAnim;
+            this.endAnim = endAnim;
+            this.startGfx = startGfx;
+            this.endGfx = endGfx;
+        }
+
+        public int getStartEmote() {
+            return startAnim;
+        }
+
+        public int getEndEmote() {
+            return endAnim;
+        }
+
+        public int getStartGfx() {
+            return startGfx;
+        }
+
+        public int getEndGfx() {
+            return endGfx;
+        }
     }
 }
-

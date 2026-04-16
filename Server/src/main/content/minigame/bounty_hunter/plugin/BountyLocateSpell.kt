@@ -83,7 +83,7 @@ class BountyLocateSpell :
         val destination = getTeleportLocation(entry.target!!.location, 5)
         if (entity.getTeleporter().send(destination, TeleportManager.TeleportType.NORMAL, -1)) {
             if (!super.meetsRequirements(entity, true, true)) {
-                entity.getTeleporter().currentTeleport.stop()
+                entity.scripts.reset()
                 return false
             }
             entity.setAttribute("magic-delay", GameWorld.ticks + 5)

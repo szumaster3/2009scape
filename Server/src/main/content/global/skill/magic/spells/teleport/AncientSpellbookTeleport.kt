@@ -90,7 +90,7 @@ class AncientSpellbookTeleport : SpellListener("ancient") {
         castRunes = runes
         spellId = if (isHome) 28 else 0
 
-        val dest = loc.transform(0, RandomFunction.random(3), 0)
+        val dest = Location.getRandomLocation(loc,1,true)
         val teleportType = if (isHome) TeleportManager.TeleportType.HOME else TeleportManager.TeleportType.ANCIENT
 
         RegionManager.getLocalPlayers(player, 1).forEach {

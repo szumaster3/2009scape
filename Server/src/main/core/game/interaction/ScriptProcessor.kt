@@ -115,6 +115,7 @@ class ScriptProcessor(val entity: Entity) {
 
         if (strongInQueue) {
             removeWeakScripts()
+            removeNormalScripts()
         }
 
         val toRemove = ArrayList<Script<*>>()

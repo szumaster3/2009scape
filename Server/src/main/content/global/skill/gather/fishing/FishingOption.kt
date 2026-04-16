@@ -63,21 +63,25 @@ enum class FishingOption(
      */
     fun rollFish(player: Player): Fish? {
         if (this == BigNet) {
-            return when (RandomFunction.randomize(100)) {
-                0  -> Fish.OYSTER
-                50 -> Fish.CASKET
-                90 -> Fish.SEAWEED
-                else -> null
+            when (RandomFunction.randomize(100)) {
+                0  -> return Fish.OYSTER
+                50 -> return Fish.CASKET
+                90 -> return Fish.SEAWEED
             }
         }
-
         val level = getDynLevel(player, Skills.FISHING)
         val invisibleLevelBoost = level + player.familiarManager.getBoost(Skills.FISHING)
-
         for (id in fishId) {
-            if (id.requiredLevel > level) continue
-            if (this == Lure && inInventory(player, Items.STRIPY_FEATHER_10087) != (id == Fish.RAINBOW_FISH)) continue
-            if (RandomFunction.random(0.0, 1.0) < id.getSuccessChance(invisibleLevelBoost)) return id
+            if (id.requiredLevel > level) {
+                continue
+            }
+            if (this == Lure && inInventory(player, Items.STRIPY_FEATHER_10087) != (id == Fish.RAINBOW_FISH)) {
+                continue
+            }
+            val chance = id.getSuccessChance(invisibleLevelBoost)
+            if (RandomFunction.random(0.0, 1.0) < chance) {
+                return id
+            }
         }
         return null
     }
@@ -105,13 +109,5 @@ enum class FishingOption(
         bait?.forEach { if (removeItem(player, it, Container.INVENTORY)) return true }
         return bait == null
     }
-
-    fun getStartMessage(): String {
-        return if(optionName == "net")
-            "You cast out your net..."
-        else
-            "You attempt to catch a fish."
-    }
-
 }
 

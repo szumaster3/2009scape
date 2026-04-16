@@ -14,6 +14,7 @@ import shared.consts.Items
 class CasketOptionPlugin : InteractionListener {
 
     companion object {
+
         val loot = WeightBasedTable.create(
             WeightedItem(Items.COINS_995, 20, 640, 55.0, false),
             WeightedItem(Items.UNCUT_SAPPHIRE_1623, 1, 1, 32.0, false),
@@ -23,6 +24,19 @@ class CasketOptionPlugin : InteractionListener {
             WeightedItem(Items.COSMIC_TALISMAN_1454, 1, 1, 8.0, false),
             WeightedItem(Items.LOOP_HALF_OF_A_KEY_987, 1, 1, 1.0, false),
             WeightedItem(Items.TOOTH_HALF_OF_A_KEY_985, 1, 1, 1.0, false),
+        )
+
+        private val COIN_TIERS = mapOf(
+            2 to Items.COINS_8890,
+            3 to Items.COINS_8891,
+            4 to Items.COINS_8892,
+            5 to Items.COINS_8893,
+            25 to Items.COINS_8894,
+            100 to Items.COINS_8895,
+            250 to Items.COINS_8896,
+            1000 to Items.COINS_8897,
+            10000 to Items.COINS_8898,
+            Int.MAX_VALUE to Items.COINS_8899,
         )
     }
 
@@ -36,20 +50,39 @@ class CasketOptionPlugin : InteractionListener {
             val casket = node.asItem()
 
             if (removeItem(player, casket, Container.INVENTORY)) {
-                val finalLoot: ArrayList<Item> = loot.roll()
+                val finalLoot = loot.roll()
                 finalLoot.forEach { player.inventory.add(it) }
+
+                val reward = finalLoot[0]
+
+                val dialogueItem = if (reward.id == Items.COINS_995) {
+                    getCoinDialogueItem(reward.amount)
+                } else {
+                    reward
+                }
+
                 sendItemDialogue(
-                    player, finalLoot[0],
-                    "You open the casket. Inside you find " + (if (finalLoot[0].amount > 1) {
-                        "some"
-                    } else if (StringUtils.isPlusN(finalLoot[0].name)) {
-                        "an"
-                    } else {
-                        "a"
-                    }) + " " + finalLoot[0].name.lowercase() + ".",
+                    player,
+                    dialogueItem,
+                    buildMessage(reward)
                 )
             }
             return@on true
         }
     }
+
+    private fun getCoinDialogueItem(amount: Int): Int {
+        return COIN_TIERS.entries.first { amount <= it.key }.value
+    }
+
+    private fun buildMessage(item: Item): String {
+        val prefix = when {
+            item.amount > 1 -> "some"
+            StringUtils.isPlusN(item.name) -> "an"
+            else -> "a"
+        }
+
+        return "You open the casket. Inside you find $prefix ${item.name.lowercase()}."
+    }
+
 }

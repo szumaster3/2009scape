@@ -106,8 +106,8 @@ class ModelViewerCommandSet : CommandSet(Privilege.ADMIN) {
         private val FEMALE_IMAGE_DRAW_ID = BookInterface.FANCY_BOOK_3_49_IMAGE_DRAW_IDS[15]
 
         private val EXPRESSIONS = enumValues<FaceAnim>()
-//            .filterNot { it.name.startsWith("OLD_") }
-//            .filterNot { it.name.startsWith("CHILD_") }
+            .filterNot { it.name.startsWith("OLD_") }
+            .filterNot { it.name.startsWith("CHILD_") }
             .filterNot { it.name.startsWith("NEW_") }
             .toTypedArray()
 
@@ -150,7 +150,7 @@ class ModelViewerCommandSet : CommandSet(Privilege.ADMIN) {
     }
 
     override fun defineCommands() {
-        define("models", Privilege.ADMIN) { player, args ->
+        define("models", Privilege.ADMIN, "Opens the interface for viewing models.") { player, args ->
             if (args.size > 2) {
                 reject(player, "Usage: ::models")
                 return@define
@@ -158,9 +158,9 @@ class ModelViewerCommandSet : CommandSet(Privilege.ADMIN) {
             BookInterface.openBook(player, BookInterface.FANCY_BOOK_2_27, ::display)
         }
 
-        define("showexpression", Privilege.ADMIN) { player, args ->
+        define("faceexpression", Privilege.ADMIN, "Opens the interface for entity chat dialogue models (m/f).") { player, args ->
             if (args.size != 2) {
-                reject(player, "Usage: ::showexpression npcId")
+                reject(player, "Usage: ::faceexpression npcId")
                 return@define
             }
 

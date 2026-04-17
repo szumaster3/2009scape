@@ -130,6 +130,35 @@ class CacheCommandSet : CommandSet(Privilege.ADMIN) {
         }
 
         /*
+         * Command for send model to interface.
+         */
+
+        define(
+            name = "iangle",
+            privilege = Privilege.ADMIN,
+            usage = "::iangle <interface_id> <component_id> <model_id> [zoom]",
+            description = "Send a model onto an iface component."
+        ) { player, args ->
+            if (args.size < 3) {
+                reject(player, "Usage: ::imodel <interface_id> <component_id> <model_id> <zoom> <pitch> <yaw>")
+                return@define
+            }
+
+            val iface     = args[1].toIntOrNull()
+            val component = args[2].toIntOrNull()
+            val zoom      = args.getOrNull(3)?.toIntOrNull() ?: 100
+            val pitch      = args.getOrNull(4)?.toIntOrNull() ?: 0
+            val yaw      = args.getOrNull(5)?.toIntOrNull() ?: 0
+
+            if (iface == null || component == null) {
+                reject(player, "Iface, component must be valid ints!")
+                return@define
+            }
+
+            sendAngleOnInterface(player, iface, component, zoom, pitch, yaw)
+        }
+
+        /*
          * Command for send item to interface.
          */
 

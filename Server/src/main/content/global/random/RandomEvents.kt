@@ -13,6 +13,7 @@ import content.global.random.event.gravedigger.LeoNPC
 import content.global.random.event.maze.MazeNPC
 import content.global.random.event.mime.MimeNPC
 import content.global.random.event.pinball.PinballNPC
+import content.global.random.event.prison_pete.PrisonPeteNPC
 import content.global.random.event.quizmaster.QuizMasterNPC
 import content.global.random.event.rickturpentine.RickTurpentineNPC
 import content.global.random.event.rivertroll.RiverTrollNPC
@@ -71,6 +72,7 @@ enum class RandomEvents(
     EVIL_TWIN(npc = MollyNPC(), skillIds = intArrayOf(Skills.MINING, Skills.MAGIC)),
     SURPRISE_EXAM(npc = PatternRecognitionNPC(), type = "sexam"),
     // PILLORY(npc = PilloryNPC(), loot = CERTER.loot),
+    PRISON_PETE(PrisonPeteNPC()),
     MAZE(npc = MazeNPC()),
     QUIZ_MASTER(npc = QuizMasterNPC(), skillIds = intArrayOf(Skills.FISHING, Skills.PRAYER)),
     SWARM(npc = SwarmNPC()),

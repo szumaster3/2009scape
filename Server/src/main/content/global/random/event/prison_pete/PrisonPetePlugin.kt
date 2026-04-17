@@ -4,40 +4,55 @@ import core.api.*
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
 import core.game.interaction.QueueStrength
-import core.game.world.map.Location
+import core.game.node.entity.Entity
+import core.game.node.entity.player.Player
 import core.game.world.map.zone.ZoneRestriction
-import core.game.world.update.flag.context.Graphics
 import shared.consts.*
 
 /**
  * Handles the interactions for Prison pete random event.
- * @author szu
+ * https://www.youtube.com/watch?v=xJA2mNsEYeg
+ * @author szu (January 3, 2024)
  */
 class PrisonPetePlugin : InteractionListener, MapArea {
 
-    init {
-        val sceneryData = listOf(
-            Triple(4408, Location(2085, 4457, 0), 22),
-            Triple(26191, Location(2083, 4460, 0), 10),
-            Triple(26184, Location(2084, 4459, 0), 0),
-            Triple(26186, Location(2085, 4459, 0), 0),
-            Triple(26188, Location(2086, 4459, 0), 0),
-            Triple(26184, Location(2087, 4459, 0), 0)
-        )
-        sceneryData.forEach { (id, loc, rot) -> addScenery(id, loc, 0, rot) }
+    /**
+     * Gets current event progress (keys found).
+     */
+    private fun getScore(player: Player): Int =
+        getVarbit(player, 1547)
+
+    /**
+     * Updates event progress (keys found).
+     */
+    private fun setScore(player: Player, value: Int) {
+        setVarbit(player, 1547, value)
     }
 
     override fun defineListeners() {
+
+        /*
+         * Handles basic dialogues.
+         */
+
         on(NPCs.PRISON_PETE_3118, IntType.NPC, "talk-to") { player, _ ->
             findNPC(NPCs.PRISON_PETE_3118)?.location?.let { face(player, it) }
             openDialogue(player, PrisonPeteDialogue(0))
             return@on true
         }
 
+        /*
+         * Handles key return dialogue.
+         */
+
         on(Items.PRISON_KEY_6966, IntType.ITEM, "return") { player, _ ->
             openDialogue(player, PrisonPeteDialogue(1))
             return@on true
         }
+
+        /*
+         * Opens balloon interface.
+         */
 
         on(Scenery.LEVER_26191, IntType.SCENERY, "pull") { player, _ ->
             animate(player, Animations.PULL_LEVER_798)
@@ -45,60 +60,173 @@ class PrisonPetePlugin : InteractionListener, MapArea {
             return@on true
         }
 
-        on(PrisonPeteUtils.ANIMAL_ID, IntType.NPC, "pop") { player, node ->
-            if (getUsedOption(player) == "pop") {
-                val keyAttribute = getAttribute(player, PrisonPeteUtils.POP_KEY_VALUE, -1)
-                val validIdToIndex = mapOf(
-                    3119 to 0,
-                    3120 to 1,
-                    3121 to 2,
-                    3122 to 3,
-                )
-                if (validIdToIndex[node.id] == keyAttribute) {
-                    player.incrementAttribute(PrisonPeteUtils.POP_KEY)
-                } else {
-                    setAttribute(player, PrisonPeteUtils.POP_KEY_FALSE, true)
-                }
+        /*
+         * Handles interaction with balloons npc.
+         */
+
+        on(PPUtils.ANIMAL_ID, IntType.NPC, "pop") { player, node ->
+            val validTarget = getAttribute(player, PPUtils.EXPECTED_NPC, -1)
+
+            if (validTarget == -1) {
+                sendMessage(player, "Pull the lever to see which balloon to pop.")
+                return@on true
             }
 
-            queueScript(player, 1, QueueStrength.SOFT) { stage ->
-                when (stage) {
-                    0 -> {
-                        lock(player, 3)
-                        visualize(
-                            player,
-                            Animations.STOMP_BALLOON_794,
-                            Graphics(shared.consts.Graphics.WHITE_SPIKE_BALL_POPS_524, 0, 10)
-                        )
-                        playAudio(player, Sounds.POP3_3252, 5)
-                        return@queueScript delayScript(player, 4)
-                    }
+            val currentScore = getScore(player)
 
+            if (currentScore >= 3) {
+                sendMessage(player, "You've found all the keys.")
+                return@on true
+            }
+
+            removeAttribute(player, PPUtils.EXPECTED_NPC)
+
+            if (player.location.getDistance(node.location) > 1) {
+                forceWalk(player, node.centerLocation, "smart")
+                return@on true
+            }
+
+            val correct = node.id == validTarget
+
+            if (correct) {
+                setScore(player, currentScore + 1)
+                removeAttribute(player, PPUtils.POP_KEY_FALSE)
+            } else {
+                setAttribute(player, PPUtils.POP_KEY_FALSE, true)
+            }
+
+            queueScript(player, 3, QueueStrength.SOFT) { tick ->
+                when (tick) {
+                    0 -> {
+                        playAudio(player, Sounds.POP3_3252)
+                        visualize(player, Animations.STOMP_BALLOON_794, Graphics.WHITE_SPIKE_BALL_POPS_524)
+                        return@queueScript delayScript(player, 1)
+                    }
                     1 -> {
                         animate(player, Animations.HUMAN_BURYING_BONES_827)
-                        addItem(player, Items.PRISON_KEY_6966)
-                        node.asNpc().clear()
-                        findNPC(NPCs.PRISON_PETE_3118)?.location?.let { face(player, it) }
-                        openDialogue(player, PrisonPeteDialogue(dialOpt = 1))
-                        stopExecuting(player)
+                        if (freeSlots(player) >= 1) {
+                            node.asNpc().clear()
+                            addItem(player, Items.PRISON_KEY_6966)
+                            openDialogue(player, PrisonPeteDialogue(1))
+                        } else {
+                            sendMessage(player, "You don't have enough inventory space.")
+                        }
+                        return@queueScript stopExecuting(player)
                     }
-
-                    else -> return@queueScript stopExecuting(player)
+                    else -> stopExecuting(player)
                 }
             }
             return@on true
         }
     }
 
-    override fun defineAreaBorders() = arrayOf(PrisonPeteUtils.PRISON_ZONE)
+    override fun defineAreaBorders() = arrayOf(PPUtils.PRISON_ZONE)
 
-    override fun getRestrictions() = arrayOf(
-        ZoneRestriction.RANDOM_EVENTS, ZoneRestriction.CANNON, ZoneRestriction.FOLLOWERS
-    )
+    override fun getRestrictions() = arrayOf(ZoneRestriction.RANDOM_EVENTS, ZoneRestriction.CANNON, ZoneRestriction.FOLLOWERS)
 
-    override fun defineDestinationOverrides() {
-        setDest(IntType.NPC, intArrayOf(NPCs.PRISON_PETE_3118), "talk-to") { _, _ ->
-            return@setDest Location.create(2084, 4461, 0)
+    override fun areaLeave(entity: Entity, logout: Boolean) {
+        if (entity is Player) {
+            if (getScore(entity) >= 3) {
+                PPUtils.cleanup(entity)
+                openOverlay(entity, Components.FADE_TO_BLACK_115)
+                queueScript(entity, 5, QueueStrength.SOFT) {
+                    sendMessage(entity, " ")
+                    sendMessage(entity, "You quickly escape the prison with Pete.")
+                    openOverlay(entity, Components.FADE_FROM_BLACK_170)
+                    openDialogue(entity, PrisonPeteDialogue(5))
+                    return@queueScript stopExecuting(entity)
+                }
+            } else {
+                PPUtils.cleanup(entity)
+            }
         }
     }
 }
+
+//    data class ScenerySpawn(val id: Int, val location: Location, val rotation: Int = 0, val height: Int = 1, val replaceWith: Int? = null, val replaceHeight: Int = -1)
+//
+//    private fun isNewer() = ServerConstants.PRISON_PETE_RANDOM_EVENT_REVISION == 592
+//
+//    private fun getScore(player: Player): Int =
+//        if (isNewer()) getAttribute(player, PrisonPeteUtils.POP_KEY, 0)
+//        else getVarbit(player, 1547)
+//
+//    private fun setScore(player: Player, value: Int) {
+//        if (isNewer()) {
+//            setAttribute(player, PrisonPeteUtils.POP_KEY, value)
+//        } else {
+//            setVarbit(player, 1547, value)
+//        }
+//    }
+//
+//    init {
+//        if (isNewer()) {
+//            init2010()
+//        } else {
+//            init2009()
+//        }
+//    }
+//
+//    private fun init2010() {
+//        core.game.node.entity.npc.NPC.create(
+//            NPCs.PRISON_PETE_3118,
+//            Location.create(2084, 4460)
+//        )
+//
+//        val sceneryData = listOf(
+//            ScenerySpawn(Scenery.GUTHIX_PORTAL_4408, Location(2085, 4457, 0), rotation = 10),
+//            ScenerySpawn(Scenery.LEVER_26191, Location(2083, 4460, 0), rotation = 10),
+//
+//            ScenerySpawn(26184, Location(2084, 4459, 0)),
+//            ScenerySpawn(26186, Location(2085, 4459, 0)),
+//            ScenerySpawn(26188, Location(2086, 4459, 0)),
+//            ScenerySpawn(26184, Location(2087, 4459, 0)),
+//
+//            ScenerySpawn(
+//                id = Scenery.FIREPLACE_10824,
+//                location = Location.create(2077, 4466),
+//                rotation = 10,
+//                replaceWith = 26192
+//            )
+//        )
+//
+//        sceneryData.forEach { s ->
+//            val base = core.game.node.scenery.Scenery(s.id, s.location, s.height, s.rotation)
+//
+//            if (s.replaceWith != null) {
+//                replaceScenery(base, s.replaceWith, s.replaceHeight)
+//            }
+//
+//            addScenery(s.id, s.location, s.height, s.rotation)
+//        }
+//
+//        listOf(
+//            12248 to Location(2094, 4472, 0),
+//            12247 to Location(2094, 4473, 0),
+//            12246 to Location(2092, 4473, 0),
+//            12245 to Location(2079, 4472, 0),
+//            12244 to Location(2077, 4473, 0),
+//            12243 to Location(2076, 4471, 0)
+//        ).forEach { (id, loc) ->
+//            removeScenery(core.game.node.scenery.Scenery(id, loc))
+//        }
+//    }
+//    on(Scenery.LOCKED_DOOR_26188, IntType.SCENERY, "open") { player, _ ->
+//
+//        val ttlScore = getScore(player)
+//
+//        WarningManager.trigger(player, WarningType.DROPPED_ITEMS_IN_RANDOM_EVENTS) {
+//            if (ttlScore >= 3) {
+//                PrisonPeteUtils.cleanup(player)
+//                queueScript(player, 2, QueueStrength.SOFT) {
+//                    PrisonPeteUtils.reward(player)
+//                    unlock(player)
+//                    stopExecuting(player)
+//                }
+//            }
+//        }
+//
+//        return@on true
+//    }
+
+// https://imgur.com/tYdajWW

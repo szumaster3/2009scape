@@ -1,7 +1,7 @@
 package content.global.random.event.prison_pete
 
-import core.api.sendAnimationOnInterface
 import core.api.sendModelOnInterface
+import core.api.setAttribute
 import core.game.interaction.InterfaceListener
 import shared.consts.Components
 
@@ -9,19 +9,23 @@ import shared.consts.Components
  * Represents the Prison Pete random event interface.
  */
 class PrisonPeteInterface : InterfaceListener {
-    private val modelIDs = intArrayOf(10734, 10735, 10736, 10737).random()
-    private val animationIDs = intArrayOf(3048, 3049, 3050, 3051, 3052).random()
-    private val rotatingAnimation = 3047
-
     override fun defineInterfaceListeners() {
-        onOpen(Components.MACRO_PRISON_PETE_273) { player, _ ->
-            sendModelOnInterface(player = player, iface = 273, child = 3, model = modelIDs, zoom = 230)
-            sendAnimationOnInterface(player = player, anim = animationIDs, iface = 273, child = 3)
-            return@onOpen true
-        }
+        /*
+         * Handles send random balloon NPC model.
+         */
 
-        on(Components.MACRO_PRISON_PETE_273) { _, _, _, _, _, _ ->
-            return@on true
+        onOpen(Components.MACRO_PRISON_PETE_273) { player, _ ->
+            val model = PPUtils.modelList.random()
+            val npcId = PPUtils.MODEL_TO_NPC[model] ?: -1
+            sendModelOnInterface(player, Components.MACRO_PRISON_PETE_273, 3, model)
+            setAttribute(player, PPUtils.EXPECTED_NPC, npcId)
+            return@onOpen true
         }
     }
 }
+
+// 0 - cs
+// 1 - model(prison_bars)
+// 2 - UNKNOWN_1
+// 3 - model(balloon)
+// 6 - close_glow(sprite)

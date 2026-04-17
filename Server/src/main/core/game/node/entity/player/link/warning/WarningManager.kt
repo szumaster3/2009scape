@@ -22,12 +22,11 @@ object WarningManager {
     }
 
     fun handleButton(player: Player, warning: WarningType, buttonId: Int) {
-        closeOverlay(player)
-        closeInterface(player)
-
         when (buttonId) {
                         // Ok.
             17, 18 -> {
+                closeOverlay(player)
+                closeInterface(player)
                 player.pendingWarning?.action?.execute(player)
                 player.pendingWarning = null
             }

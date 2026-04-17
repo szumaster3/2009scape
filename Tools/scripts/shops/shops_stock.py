@@ -18,7 +18,7 @@ AMOUNT = 10
 STOCK_PATTERN = re.compile(r"\{(\d+),(\d+),(\d+)\}")
 BASE_DIR = Path(__file__).resolve().parent
 ROOT_DIR = BASE_DIR.parents[3]
-SHOP_FILE = ROOT_DIR / "source/Server/data/configs/shops.json"
+SHOP_FILE = ROOT_DIR / "2009Scape/Server/data/configs/shops.json"
 
 
 def update_stock(stock: str) -> str:

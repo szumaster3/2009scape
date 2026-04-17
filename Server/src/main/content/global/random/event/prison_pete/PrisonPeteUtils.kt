@@ -45,7 +45,7 @@ object PrisonPeteUtils {
         queueScript(player, 1, QueueStrength.SOFT) { stage: Int ->
             when (stage) {
                 0 -> {
-                    forceWalk(player, Location.create(2084, 4461, 0), "smart")
+                    forceWalk(player, findNPC(NPCs.PRISON_PETE_3118)!!.location, "smart")
                     return@queueScript keepRunning(player)
                 }
                 2 -> {

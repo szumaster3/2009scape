@@ -16,7 +16,6 @@ object PrisonPeteUtils {
     private val PRISON_LOCATION: Location = Location.create(2086, 4462, 0)
 
     const val GET_REWARD = "/save:prisonpete:reward"
-    const val POP_KEY = "prisonpete:pop-animals"
     const val POP_KEY_FALSE = "prisonpete:pop-incorrect"
     const val EXPECTED_NPC = "prisonpete:expected-npc"
 
@@ -34,7 +33,7 @@ object PrisonPeteUtils {
     fun cleanup(player: Player) {
         player.properties.teleportLocation = getAttribute(player, RandomEvent.save(), null)
         clearLogoutListener(player, RandomEvent.logout())
-        removeAttributes(player,POP_KEY,GET_REWARD,RandomEvent.save(),RandomEvent.logout(),POP_KEY_FALSE,EXPECTED_NPC)
+        removeAttributes(player,GET_REWARD,RandomEvent.save(),RandomEvent.logout(),POP_KEY_FALSE,EXPECTED_NPC)
         sendMessage(player, "Welcome back to ${GameWorld.settings!!.name}.")
         if (anyInInventory(player, Items.PRISON_KEY_6966)) {
             removeAll(player, Items.PRISON_KEY_6966)
@@ -42,7 +41,7 @@ object PrisonPeteUtils {
     }
 
     fun getKey(player: Player) {
-        queueScript(player, 1, QueueStrength.SOFT) { stage: Int ->
+        queueScript(player, 1, QueueStrength.WEAK) { stage: Int ->
             when (stage) {
                 0 -> {
                     forceWalk(player, findNPC(NPCs.PRISON_PETE_3118)!!.location, "smart")
@@ -65,7 +64,6 @@ object PrisonPeteUtils {
         }
         teleport(player, PRISON_LOCATION, TeleportManager.TeleportType.RANDOM_EVENT_OLD)
         removeAttribute(player, EXPECTED_NPC)
-        setAttribute(player, POP_KEY, 0)
         AntiMacro.terminateEventNpc(player)
     }
 }

@@ -21,7 +21,7 @@ class PrisonPeteDialogue(
         componentID: Int,
         buttonID: Int,
     ) {
-        val correctKeyValue = getAttribute(player!!, PrisonPeteUtils.POP_KEY, 0)
+        val energyBarrier = getVarbit(player!!, 1547)
         npc = NPC(NPCs.PRISON_PETE_3118)
         when (dialOpt) {
             1 -> {
@@ -50,31 +50,22 @@ class PrisonPeteDialogue(
             3 -> {
                 when (stage) {
                     0 -> {
-                        if (correctKeyValue == 3) {
+                        if (energyBarrier == 3) {
                             npc(FaceAnim.FRIENDLY, "You did it, you got all the keys right!", "Thank you! You're my friend FOREVER!")
                             stage = 1
-                        } else if (correctKeyValue in 1..2) {
+                        } else if (energyBarrier in 1..2) {
                             npc(FaceAnim.HAPPY, "Hooray, you got the right one! Now pull the lever again", "and let's get the next lock unlocked.")
                             animate(npc!!, Animations.TAKE_THING_OUT_OF_POCKET_AND_GIVE_IT_4540)
-                            stage = 3
+                            stage = 2
                         } else if (getAttribute(player!!, PrisonPeteUtils.POP_KEY_FALSE, false)) {
                             playJingle(player!!, 149)
                             npc(FaceAnim.SAD, "Aww, that was the wrong key! Try the lever again", "to see which balloon you need.")
                             removeAttribute(player!!, PrisonPeteUtils.POP_KEY_FALSE)
-                            stage = 3
+                            stage = 2
                         }
                     }
-                    1 -> player(FaceAnim.NOD_YES, "Let's get out of here before that cat notices.").also { stage++ }
-                    3 -> end()
-                }
-            }
-            4 -> {
-                when (stage) {
-                    0 -> player(FaceAnim.ASKING, "Aren't you coming?").also { stage++ }
-                    1 -> npc(FaceAnim.SAD, "No, I've got a life sentence. Maybe if you'd been able", "to get the door open for yourself I could have escaped", "with you.").also { stage++ }
-                    2 -> player(FaceAnim.NEUTRAL, "I'm sorry.").also { stage++ }
-                    3 -> npc(FaceAnim.NEUTRAL, "Oh, don't worry. Someone always rescues me", "eventually. Then Evil Bob drags me back again. It's", "been going on for ages. Now you'd better get out", "before you're arrested for loitering.").also { stage++ }
-                    4 -> end()
+                    1 -> player(FaceAnim.NOD_YES, "Let's get out of here before that cat notices.").also { stage = END_DIALOGUE }
+                    2 -> end()
                 }
             }
 

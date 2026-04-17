@@ -76,13 +76,6 @@
     <ObjectAction mode="add" id="31059" x="3024" y="4491" z="0"/>
     <ObjectAction mode="add" id="31060" x="3025" y="4491" z="0"/>
 
-    <!-- Random sceneries - Prison Pete random event area. -->
-    <ObjectAction mode="remove" id="5346" x="2088" y="4460" z="0"/>
-    <ObjectAction mode="remove" id="5346" x="2094" y="4468" z="0"/>
-    <ObjectAction mode="remove" id="5347" x="2078" y="4468" z="0"/>
-    <ObjectAction mode="remove" id="5347" x="2085" y="4472" z="0"/>
-    <ObjectAction mode="remove" id="5348" x="2078" y="4464" z="0"/>
-
     <!-- Mystery statue - Leon d'Cour throne. -->
     <ObjectAction mode="add" id="10561" x="3168" y="9766" z="0" type="10" direction="e"/>
 </parsing>

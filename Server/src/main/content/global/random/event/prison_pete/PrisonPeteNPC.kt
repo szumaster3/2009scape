@@ -18,7 +18,7 @@ class PrisonPeteNPC(
         super.init()
         lock(player, 6)
         lockInteractions(player, 6)
-        PPUtils.teleport(player)
+        PrisonPeteUtils.teleport(player)
         sendMessage(player, "Welcome to ScapeRune.")
     }
 

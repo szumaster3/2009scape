@@ -21,14 +21,14 @@ class PrisonPeteDialogue(
         componentID: Int,
         buttonID: Int,
     ) {
-        val correctKeyValue = getAttribute(player!!, PPUtils.POP_KEY, 0)
+        val correctKeyValue = getAttribute(player!!, PrisonPeteUtils.POP_KEY, 0)
         npc = NPC(NPCs.PRISON_PETE_3118)
         when (dialOpt) {
             1 -> {
                 when (stage) {
                     0 -> npc(FaceAnim.HAPPY, "Great, now you've got a key!", "Bring it to me so I can try it on the door.").also { stage++ }
                     1 -> end().also{
-                        PPUtils.getKey(player!!)
+                        PrisonPeteUtils.getKey(player!!)
                     }
                 }
             }
@@ -57,10 +57,10 @@ class PrisonPeteDialogue(
                             npc(FaceAnim.HAPPY, "Hooray, you got the right one! Now pull the lever again", "and let's get the next lock unlocked.")
                             animate(npc!!, Animations.TAKE_THING_OUT_OF_POCKET_AND_GIVE_IT_4540)
                             stage = 3
-                        } else if (getAttribute(player!!, PPUtils.POP_KEY_FALSE, false)) {
+                        } else if (getAttribute(player!!, PrisonPeteUtils.POP_KEY_FALSE, false)) {
                             playJingle(player!!, 149)
                             npc(FaceAnim.SAD, "Aww, that was the wrong key! Try the lever again", "to see which balloon you need.")
-                            removeAttribute(player!!, PPUtils.POP_KEY_FALSE)
+                            removeAttribute(player!!, PrisonPeteUtils.POP_KEY_FALSE)
                             stage = 3
                         }
                     }

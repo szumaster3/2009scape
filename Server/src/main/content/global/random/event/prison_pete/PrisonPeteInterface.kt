@@ -15,10 +15,10 @@ class PrisonPeteInterface : InterfaceListener {
          */
 
         onOpen(Components.MACRO_PRISON_PETE_273) { player, _ ->
-            val model = PPUtils.modelList.random()
-            val npcId = PPUtils.MODEL_TO_NPC[model] ?: -1
+            val model = PrisonPeteUtils.modelList.random()
+            val npcId = PrisonPeteUtils.MODEL_TO_NPC[model] ?: -1
             sendModelOnInterface(player, Components.MACRO_PRISON_PETE_273, 3, model)
-            setAttribute(player, PPUtils.EXPECTED_NPC, npcId)
+            setAttribute(player, PrisonPeteUtils.EXPECTED_NPC, npcId)
             return@onOpen true
         }
     }

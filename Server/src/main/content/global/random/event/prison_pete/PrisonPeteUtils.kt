@@ -12,7 +12,7 @@ import core.game.world.map.zone.ZoneBorders
 import shared.consts.Items
 import shared.consts.NPCs
 
-object PPUtils {
+object PrisonPeteUtils {
     private val PRISON_LOCATION: Location = Location.create(2086, 4462, 0)
 
     const val GET_REWARD = "/save:prisonpete:reward"
@@ -48,11 +48,10 @@ object PPUtils {
                     forceWalk(player, Location.create(2084, 4461, 0), "smart")
                     return@queueScript keepRunning(player)
                 }
-                1 -> return@queueScript delayScript(player,3)
                 2 -> {
                     face(player, findNPC(NPCs.PRISON_PETE_3118)!!.location)
                     openDialogue(player, PrisonPeteDialogue(dialOpt = 2))
-                    return@queueScript stopExecuting(player)
+                    return@queueScript delayScript(player,3)
                 }
                 else -> return@queueScript stopExecuting(player)
             }

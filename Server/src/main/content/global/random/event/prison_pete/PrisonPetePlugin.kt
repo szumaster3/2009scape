@@ -64,8 +64,8 @@ class PrisonPetePlugin : InteractionListener, MapArea {
          * Handles interaction with balloons npc.
          */
 
-        on(PPUtils.ANIMAL_ID, IntType.NPC, "pop") { player, node ->
-            val validTarget = getAttribute(player, PPUtils.EXPECTED_NPC, -1)
+        on(PrisonPeteUtils.ANIMAL_ID, IntType.NPC, "pop") { player, node ->
+            val validTarget = getAttribute(player, PrisonPeteUtils.EXPECTED_NPC, -1)
 
             if (validTarget == -1) {
                 sendMessage(player, "Pull the lever to see which balloon to pop.")
@@ -79,7 +79,7 @@ class PrisonPetePlugin : InteractionListener, MapArea {
                 return@on true
             }
 
-            removeAttribute(player, PPUtils.EXPECTED_NPC)
+            removeAttribute(player, PrisonPeteUtils.EXPECTED_NPC)
 
             if (player.location.getDistance(node.location) > 1) {
                 forceWalk(player, node.centerLocation, "smart")
@@ -90,9 +90,9 @@ class PrisonPetePlugin : InteractionListener, MapArea {
 
             if (correct) {
                 setScore(player, currentScore + 1)
-                removeAttribute(player, PPUtils.POP_KEY_FALSE)
+                removeAttribute(player, PrisonPeteUtils.POP_KEY_FALSE)
             } else {
-                setAttribute(player, PPUtils.POP_KEY_FALSE, true)
+                setAttribute(player, PrisonPeteUtils.POP_KEY_FALSE, true)
             }
 
             queueScript(player, 3, QueueStrength.SOFT) { tick ->
@@ -120,14 +120,14 @@ class PrisonPetePlugin : InteractionListener, MapArea {
         }
     }
 
-    override fun defineAreaBorders() = arrayOf(PPUtils.PRISON_ZONE)
+    override fun defineAreaBorders() = arrayOf(PrisonPeteUtils.PRISON_ZONE)
 
     override fun getRestrictions() = arrayOf(ZoneRestriction.RANDOM_EVENTS, ZoneRestriction.CANNON, ZoneRestriction.FOLLOWERS)
 
     override fun areaLeave(entity: Entity, logout: Boolean) {
         if (entity is Player) {
             if (getScore(entity) >= 3) {
-                PPUtils.cleanup(entity)
+                PrisonPeteUtils.cleanup(entity)
                 openOverlay(entity, Components.FADE_TO_BLACK_115)
                 queueScript(entity, 5, QueueStrength.SOFT) {
                     sendMessage(entity, " ")
@@ -137,7 +137,7 @@ class PrisonPetePlugin : InteractionListener, MapArea {
                     return@queueScript stopExecuting(entity)
                 }
             } else {
-                PPUtils.cleanup(entity)
+                PrisonPeteUtils.cleanup(entity)
             }
         }
     }

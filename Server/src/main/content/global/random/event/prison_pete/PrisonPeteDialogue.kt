@@ -3,10 +3,13 @@ package content.global.random.event.prison_pete
 import core.api.*
 import core.game.dialogue.DialogueFile
 import core.game.dialogue.FaceAnim
+import core.game.interaction.QueueStrength
 import core.game.node.entity.npc.NPC
 import core.game.system.timer.impl.AntiMacro
+import core.game.world.map.Location
 import core.tools.END_DIALOGUE
 import shared.consts.Animations
+import shared.consts.Components
 import shared.consts.Items
 import shared.consts.NPCs
 
@@ -38,38 +41,42 @@ class PrisonPeteDialogue(
                     0 -> {
                         findLocalNPC(player!!, npc!!.id)?.let {
                             face(it, player!!)
-                            if (removeItem(player!!, Items.PRISON_KEY_6966))
+                            if (removeItem(player!!, Items.PRISON_KEY_6966)) {
                                 npc(FaceAnim.NOD_YES, "Ooh, thanks! I'll see if it's the right one...")
-                            openDialogue(player!!, PrisonPeteDialogue(dialOpt = 3))
-                        }
-                        stage++
-                    }
-                }
-            }
-
-            3 -> {
-                when (stage) {
-                    0 -> {
-                        if (energyBarrier == 3) {
-                            npc(FaceAnim.FRIENDLY, "You did it, you got all the keys right!", "Thank you! You're my friend FOREVER!")
-                            stage = 1
-                        } else if (energyBarrier in 1..2) {
-                            npc(FaceAnim.HAPPY, "Hooray, you got the right one! Now pull the lever again", "and let's get the next lock unlocked.")
-                            animate(npc!!, Animations.TAKE_THING_OUT_OF_POCKET_AND_GIVE_IT_4540)
-                            stage = 2
-                        } else if (getAttribute(player!!, PrisonPeteUtils.POP_KEY_FALSE, false)) {
-                            playJingle(player!!, 149)
-                            npc(FaceAnim.SAD, "Aww, that was the wrong key! Try the lever again", "to see which balloon you need.")
-                            removeAttribute(player!!, PrisonPeteUtils.POP_KEY_FALSE)
-                            stage = 2
+                                if (energyBarrier == 3) {
+                                    npc(FaceAnim.FRIENDLY, "You did it, you got all the keys right!", "Thank you! You're my friend FOREVER!")
+                                    stage = 1
+                                } else if (energyBarrier in 1..2) {
+                                    npc?.faceLocation(Location.create(2095, 4466, 0))
+                                    animate(npc!!, Animations.TAKE_THING_OUT_OF_POCKET_AND_GIVE_IT_4540)
+                                    npc(FaceAnim.HAPPY, "Hooray, you got the right one! Now pull the lever again", "and let's get the next lock unlocked.")
+                                    stage = 2
+                                } else if (getAttribute(player!!, PrisonPeteUtils.POP_KEY_FALSE, false)) {
+                                    playJingle(player!!, 149)
+                                    npc(FaceAnim.SAD, "Aww, that was the wrong key! Try the lever again", "to see which balloon you need.")
+                                    removeAttribute(player!!, PrisonPeteUtils.POP_KEY_FALSE)
+                                    stage = 2
+                                }
+                            }
                         }
                     }
-                    1 -> player(FaceAnim.NOD_YES, "Let's get out of here before that cat notices.").also { stage = END_DIALOGUE }
+                    1 -> player(FaceAnim.NOD_YES, "Let's get out of here before that cat notices.").also { stage = 3 }
                     2 -> end()
+                    3 -> {
+                        openOverlay(player!!, Components.FADE_TO_BLACK_115)
+                        PrisonPeteUtils.cleanup(player!!)
+                        queueScript(player!!, 5, QueueStrength.SOFT) {
+                            sendMessage(player!!, " ")
+                            sendMessage(player!!, "You quickly escape the prison with Pete.")
+                            openOverlay(player!!, Components.FADE_FROM_BLACK_170)
+                            openDialogue(player!!, PrisonPeteDialogue(3))
+                            return@queueScript stopExecuting(player!!)
+                        }
+                    }
                 }
             }
 
-            5 ->  {
+            3 ->  {
                 // https://youtu.be/DX5ZVwvMazc?si=ZfeVeFd0agoFCEiZ&t=154
                 when (stage) {
                     0 -> npc(FaceAnim.NOD_YES, "Thanks a lot for your help!", "Here, have a present:").also { stage++ }

@@ -126,19 +126,7 @@ class PrisonPetePlugin : InteractionListener, MapArea {
 
     override fun areaLeave(entity: Entity, logout: Boolean) {
         if (entity is Player) {
-            if (getScore(entity) >= 3) {
-                PrisonPeteUtils.cleanup(entity)
-                openOverlay(entity, Components.FADE_TO_BLACK_115)
-                queueScript(entity, 5, QueueStrength.SOFT) {
-                    sendMessage(entity, " ")
-                    sendMessage(entity, "You quickly escape the prison with Pete.")
-                    openOverlay(entity, Components.FADE_FROM_BLACK_170)
-                    openDialogue(entity, PrisonPeteDialogue(5))
-                    return@queueScript stopExecuting(entity)
-                }
-            } else {
-                PrisonPeteUtils.cleanup(entity)
-            }
+            PrisonPeteUtils.cleanup(entity)
         }
     }
 }

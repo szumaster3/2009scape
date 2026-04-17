@@ -44,10 +44,10 @@ object PrisonPeteUtils {
         queueScript(player, 1, QueueStrength.WEAK) { stage: Int ->
             when (stage) {
                 0 -> {
-                    forceWalk(player, findNPC(NPCs.PRISON_PETE_3118)!!.location, "smart")
+                    forceWalk(player, Location.create(2091, 4466, 0), "smart")
                     return@queueScript keepRunning(player)
                 }
-                2 -> {
+                1 -> {
                     face(player, findNPC(NPCs.PRISON_PETE_3118)!!.location)
                     openDialogue(player, PrisonPeteDialogue(dialOpt = 2))
                     return@queueScript delayScript(player,3)

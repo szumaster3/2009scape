@@ -72,11 +72,11 @@ enum class RandomEvents(
     EVIL_TWIN(npc = MollyNPC(), skillIds = intArrayOf(Skills.MINING, Skills.MAGIC)),
     SURPRISE_EXAM(npc = PatternRecognitionNPC(), type = "sexam"),
     // PILLORY(npc = PilloryNPC(), loot = CERTER.loot),
-    PRISON_PETE(
-        PrisonPeteNPC(),
+    PRISON_PETE(// Before https://runescape.wiki/w/Update:Random_Event_Update_and_More
+        PrisonPeteNPC(),// https://secure.runescape.com/m=news/random-event-update-and-more
         loot = WeightBasedTable.create(// https://runescape.wiki/w/Prison_Pete?oldid=2086261
-            WeightedItem(Items.GRIMY_SNAPDRAGON_3051, 4, 4, 0.6),
-            WeightedItem(Items.GRIMY_TOADFLAX_3049, 6, 6, 1.2),
+            WeightedItem(Items.GRIMY_SNAPDRAGON_3052, 4, 4, 0.6),
+            WeightedItem(Items.GRIMY_TOADFLAX_3050, 6, 6, 1.2),
             WeightedItem(Items.SAPPHIRE_1608, 5, 5, 2.5),
             WeightedItem(Items.UNCUT_RUBY_1620, 4, 4, 1.8),
             WeightedItem(Items.UNCUT_DIAMOND_1618, 3, 3, 0.9),

@@ -24,6 +24,17 @@ import shared.consts.Quests
 @Initializable
 class GardenerDialogue(player: Player? = null) : Dialogue(player) {
 
+    data class ShopData(val itemId: Int, val price: Int, val message: String)
+
+    private val offers = mapOf(
+        100 to ShopData(Items.PLANT_CURE_6036, 25, "Plant cure, eh? I might have some put aside for myself."),
+        200 to ShopData(Items.COMPOST_6032, 35, "A bucket of compost, eh? I might have one spare..."),
+        300 to ShopData(Items.RAKE_5341, 15, "A rake, eh? I might have one spare..."),
+        400 to ShopData(Items.WATERING_CAN8_5340, 25, "A watering can, eh? I might have one spare..."),
+        500 to ShopData(Items.GARDENING_TROWEL_5325, 15, "A gardening trowel, eh? I might have one spare..."),
+        600 to ShopData(Items.SEED_DIBBER_5343, 15, "A seed dibber, eh? I might have one spare...")
+    )
+
     override fun handle(interfaceId: Int, buttonId: Int): Boolean {
         val patches = Farmers.forId(npc.id)!!.patches
         when (stage) {
@@ -31,18 +42,8 @@ class GardenerDialogue(player: Player? = null) : Dialogue(player) {
                 val patch = patches[0].getPatchFor(player)
                 showTopics(
                     IfTopic("Talk about the Back o my Roots quest.", openDialogue(player, GarthDialogue()), npc.id == 2330 && getQuestStage(player, Quests.BACK_TO_MY_ROOTS) >= 5),
-                    IfTopic(
-                        FaceAnim.ASKING,
-                        "Would you chop my tree down for me?",
-                        1000,
-                        patch.patch.type == PatchType.TREE_PATCH && patch.plantable != null && patch.isGrown()
-                    ),
-                    IfTopic(
-                        FaceAnim.ASKING,
-                        "Would you look after my crops for me?",
-                        10,
-                        !(patch.patch.type == PatchType.TREE_PATCH && patch.plantable != null && patch.isGrown()),
-                    ),
+                    IfTopic(FaceAnim.ASKING, "Would you chop my tree down for me?", 1000, patch.patch.type == PatchType.TREE_PATCH && patch.plantable != null && patch.isGrown()),
+                    IfTopic(FaceAnim.ASKING, "Would you look after my crops for me?", 10, !(patch.patch.type == PatchType.TREE_PATCH && patch.plantable != null && patch.isGrown())),
                     Topic(FaceAnim.ASKING, "Can you give me any farming advice?", 2000),
                     Topic(FaceAnim.ASKING, "Can you sell me something?", 30),
                     Topic(FaceAnim.NEUTRAL, "That's all, thanks.", END_DIALOGUE),
@@ -86,99 +87,14 @@ class GardenerDialogue(player: Player? = null) : Dialogue(player) {
                 Topic(FaceAnim.NEUTRAL, "Forget it.", 40, true),
             )
             40 -> player("Forget it, you don't have anything I need.").also { stage = END_DIALOGUE }
-            100 -> npc("Plant cure, eh? I might have some put aside for myself.", "Tell you what. I'll sell you some plant cure for 25 gp if", "you like.").also { stage++ }
-            101 -> options("Yes, that sounds like a fair price.", "No thanks, I can get that much cheaper elsewhere.").also { stage++ }
-            102 -> when (buttonId) {
-                1 -> {
-                    player(FaceAnim.HAPPY, "Yes, that sounds like a fair price.").also { stage = END_DIALOGUE }
-                    if (removeItem(player, Item(Items.COINS_995, 25))) {
-                        addItemOrDrop(player, Items.PLANT_CURE_6036)
-                    } else {
-                        sendMessage(player, "You need 25 gp to pay for that.")
-                    }
-                }
 
-                2 -> player("No thanks, I can get that much cheaper elsewhere.").also { stage = END_DIALOGUE }
-            }
-
-            200 -> npc("A bucket of compost, eh? I might have one spare...", "tell you what, I'll sell it to you for 35 gp if you like.").also { stage++ }
-            201 -> options("Yes, that sounds like a fair price.", "No thanks, I can get that much cheaper elsewhere.").also { stage++ }
-            202 -> when (buttonId) {
-                1 -> {
-                    player("Yes, that sounds like a fair price.").also { stage = END_DIALOGUE }
-                    if (removeItem(player, Item(Items.COINS_995, 35))) {
-                        addItemOrDrop(player, Items.COMPOST_6032)
-                    } else {
-                        sendMessage(player, "You need 35 gp to pay for that.")
-                    }
-                }
-
-                2 -> player("No thanks, I can get that much cheaper elsewhere.").also { stage = END_DIALOGUE }
-            }
-
-            300 -> npc("A rake, eh? I might have one spare...", "tell you what, I'll sell it to you for 15 gp if you like.").also { stage++ }
-            301 -> options("Yes, that sounds like a fair price.", "No thanks, I can get that much cheaper elsewhere.").also { stage++ }
-            302 -> when (buttonId) {
-                1 -> {
-                    player("Yes, that sounds like a fair price.").also { stage = END_DIALOGUE }
-                    if (removeItem(player, Item(Items.COINS_995, 15))) {
-                        addItemOrDrop(player, Items.RAKE_5341)
-                    } else {
-                        sendMessage(player, "You need 15 gp to pay for that.")
-                    }
-                }
-
-                2 -> player("No thanks, I can get that much cheaper elsewhere.").also { stage = END_DIALOGUE }
-            }
-            400 -> npc("A watering can, eh? I might have one spare...", "tell you what, I'll sell it to you for 25 gp if you like.").also { stage++ }
-            401 -> options("Yes, that sounds like a fair price.", "No thanks, I can get that much cheaper elsewhere.").also { stage++ }
-            402 -> when (buttonId) {
-                1 -> {
-                    player("Yes, that sounds like a fair price.").also { stage = END_DIALOGUE }
-                    if (removeItem(player, Item(Items.COINS_995, 25))) {
-                        addItemOrDrop(player, Items.WATERING_CAN8_5340)
-                    } else {
-                        sendMessage(player, "You need 25 gp to pay for that.")
-                    }
-                }
-
-                2 -> player("No thanks, I can get that much cheaper elsewhere.").also { stage = END_DIALOGUE }
-            }
-            500 -> npc("A gardening trowel, eh? I might have one spare...", "tell you what, I'll sell it to you for 15 gp if you like.").also { stage++ }
-            501 -> options("Yes, that sounds like a fair price.", "No thanks, I can get that much cheaper elsewhere.").also { stage++ }
-            502 -> when (buttonId) {
-                1 -> {
-                    player("Yes, that sounds like a fair price.").also { stage = END_DIALOGUE }
-                    if (removeItem(player, Item(Items.COINS_995, 15))) {
-                        addItemOrDrop(player, Items.GARDENING_TROWEL_5325)
-                    } else {
-                        sendMessage(player, "You need 15 gp to pay for that.")
-                    }
-                }
-
-                2 -> player("No thanks, I can get that much cheaper elsewhere.").also { stage = END_DIALOGUE }
-            }
-            600 -> npc("A seed dibber, eh? I might have one spare...", "tell you what, I'll sell it to you for 15 gp if you like.").also { stage++ }
-            601 -> options("Yes, that sounds like a fair price.", "No thanks, I can get that much cheaper elsewhere.").also { stage++ }
-            602 -> when (buttonId) {
-                1 -> {
-                    player("Yes, that sounds like a fair price.").also { stage = END_DIALOGUE }
-                    if (removeItem(player, Item(Items.COINS_995, 15))) {
-                        addItemOrDrop(player, Items.SEED_DIBBER_5343)
-                    } else {
-                        sendMessage(player, "You need 15 gp to pay for that.")
-                    }
-                }
-
-                2 -> player("No thanks, I can get that much cheaper elsewhere.").also { stage = END_DIALOGUE }
-            }
+            100, 200, 300, 400, 500, 600 -> handleOffer(player, stage, buttonId).also { stage++ }
 
             1000 -> npc(FaceAnim.THINKING, "Why? You look like you could chop it down yourself!").also { stage++ }
             1001 -> showTopics(
                 Topic(FaceAnim.NEUTRAL, "Yes, you're right - I'll do it myself.", END_DIALOGUE),
                 Topic(FaceAnim.NEUTRAL, "I can't be bothered - I'd rather pay you to do it.", 1020),
             )
-
             1020 -> npc(FaceAnim.NEUTRAL, "Well, it's a lot of hard work - if you pay me 200 GP", "I'll chop it down for you.").also { stage++ }
             1021 -> {
                 if (inInventory(player, Items.COINS_995, 200)) {
@@ -237,10 +153,24 @@ class GardenerDialogue(player: Player? = null) : Dialogue(player) {
         return true
     }
 
-    private fun openPayGardenerDialogue(
-        player: Player,
-        fPatch: FarmingPatch,
-    ) {
+    private fun handleOffer(player: Player, id: Int, buttonId: Int) {
+        val offer = offers[id] ?: return
+        when (stage) {
+            0 -> npc(offer.message, "Tell you what, I'll sell it to you for ${offer.price} gp if you like.").also { stage++ }
+            1 -> showTopics(
+                Topic("Yes, that sounds like a fair price.",2, false),
+                Topic("No thanks, I can get that much cheaper elsewhere.",END_DIALOGUE,false)
+            )
+            2 -> {
+                if (!removeItem(player, Item(Items.COINS_995, offer.price))) {
+                    sendMessage(player, "You need ${offer.price} gp to pay for that.")
+                }
+                addItemOrDrop(player, offer.itemId)
+            }
+        }
+    }
+
+    private fun openPayGardenerDialogue(player: Player, fPatch: FarmingPatch) {
         end()
         openDialogue(player, FarmerPayOptionDialogue(fPatch.getPatchFor(player)), npc)
     }

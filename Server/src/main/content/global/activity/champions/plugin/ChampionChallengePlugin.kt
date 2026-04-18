@@ -73,7 +73,8 @@ class ChampionChallengePlugin : InteractionListener, MapArea {
          * Handles trapdoor to champions guild basement.
          */
 
-        on(Scenery.TRAPDOOR_10558, IntType.SCENERY, "open") { _, node ->
+        on(Scenery.TRAPDOOR_10558, IntType.SCENERY, "open") { player, node ->
+            playAudio(player, Sounds.TRAP_DOOR_OPEN_91)
             replaceScenery(node.asScenery(), Scenery.TRAPDOOR_10559, 100, node.location)
             return@on true
         }
@@ -83,6 +84,7 @@ class ChampionChallengePlugin : InteractionListener, MapArea {
          */
 
         on(Scenery.TRAPDOOR_10559, IntType.SCENERY, "close") { player, node ->
+            playAudio(player, Sounds.TRAP_DOOR_CLOSE_90)
             replaceScenery(node.asScenery(), Scenery.TRAPDOOR_10558, -1, node.location)
             return@on true
         }

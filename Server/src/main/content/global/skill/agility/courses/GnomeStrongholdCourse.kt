@@ -2,6 +2,7 @@ package content.global.skill.agility.courses
 
 import content.global.skill.agility.AgilityCourse
 import content.global.skill.agility.AgilityHandler
+import core.api.playAudio
 import core.api.sendMessage
 import core.cache.def.impl.SceneryDefinition
 import core.game.node.Node
@@ -12,6 +13,7 @@ import core.game.world.GameWorld
 import core.game.world.map.Location
 import core.game.world.update.flag.context.Animation
 import core.plugin.Initializable
+import shared.consts.Sounds
 
 @Initializable
 class GnomeStrongholdCourse
@@ -37,6 +39,7 @@ class GnomeStrongholdCourse
 
             35970 -> {
                 TRAINERS[2]!!.sendChat("That's it - straight up.")
+                playAudio(player, Sounds.TREE_CLIMBING_1705)
                 sendMessage(player, "You climb the tree..")
                 AgilityHandler.climb(player, 2, Animation.create(828), Location.create(2473, 3420, 2), 5.0, "...To the platform above.")
                 return true

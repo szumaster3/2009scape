@@ -70,6 +70,7 @@ class SlayerOptionPlugin : InteractionListener {
          */
 
         on(TRAPDOOR, IntType.SCENERY, "open") { player, _ ->
+            playAudio(player,  Sounds.TRAP_DOOR_OPEN_89)
             teleport(player, Location(2044, 4649, 0), TeleportManager.TeleportType.INSTANT)
             return@on true
         }

@@ -8,10 +8,7 @@ import core.game.node.item.Item
 import core.game.world.map.Direction
 import core.game.world.map.RegionManager.getObject
 import core.tools.RandomFunction
-import shared.consts.Components
-import shared.consts.Graphics
-import shared.consts.Items
-import shared.consts.Scenery
+import shared.consts.*
 
 class ImpetuousImpulsesPlugin : InteractionListener {
 
@@ -41,6 +38,7 @@ class ImpetuousImpulsesPlugin : InteractionListener {
                 sendMessage(player, "You push through the wheat. It's hard work though.")
             }
             setAttribute(player, "cantMove", true)
+            playGlobalAudio(player.location, Sounds.II_PUSH_THRU_WHEAT_3728)
             forceMove(player, player.location, dest, 0, 265, null, 6595, null)
             return@on true
         }
@@ -102,6 +100,7 @@ class ImpetuousImpulsesPlugin : InteractionListener {
             }
 
             lock(player, 5)
+            playAudio(player, Sounds.II_JAR_GENERATOR_3726)
             visualize(player, 6592, Graphics.SACHEL_EMOTE_1117)
             addItem(player, jar.id)
             item.charge -= percent

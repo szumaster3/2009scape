@@ -9,6 +9,7 @@ import core.game.world.update.flag.context.Animation
 import core.tools.RandomFunction
 import shared.consts.Animations
 import shared.consts.Items
+import shared.consts.Sounds
 
 /**
  * @author GregF, Makar, Bishop
@@ -53,8 +54,8 @@ class FermentingVat(var player: Player, private val brewingVat: BrewingVat, var 
                     }
 
                     stopWalk(player)
+                    playAudio(player, Sounds.FILL_VAT_2447)
                     animate(player, Animation(Animations.PICK_SOMETHING_UP_HIGH_2295))
-
                     val ingredientWord = if (item.id == Items.MUSHROOM_6004) item.name + "s" else item.name
                     sendMessage(player, "You add some $ingredientWord to the vat.")
 

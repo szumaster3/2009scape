@@ -227,7 +227,7 @@ class DarkZone : MapZone("Dark zone", true), EventHook<core.game.event.Event> {
             sendMessage(player, core.tools.RED + "Your $itemName flares brightly!")
             runTask(player, 7) {
                 val damage = player.skills.lifepoints / 4
-                playGlobalAudio(player.location, Sounds.LANTERN_EXPLODES_1583)
+                playGlobalAudio(player.location, Sounds.GAS_EXPLOSION_2299)
                 impact(player, damage, HitsplatType.NORMAL)
 
                 player.inventory.getSlot(Item(source.litId)).takeIf { it != -1 }?.let { slot ->

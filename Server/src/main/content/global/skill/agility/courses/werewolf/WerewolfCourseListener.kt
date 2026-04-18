@@ -10,21 +10,20 @@ import core.game.node.entity.skill.Skills
 import core.game.node.item.Item
 import core.game.world.map.Location
 import core.game.world.update.flag.context.Animation
-import shared.consts.Animations
-import shared.consts.Items
-import shared.consts.NPCs
-import shared.consts.Scenery
+import shared.consts.*
 
 class WerewolfCourseListener : InteractionListener {
 
     override fun defineListeners() {
         on(TRAPDOOR, IntType.SCENERY, "open") { player, node ->
+            playAudio(player,  Sounds.TRAP_DOOR_OPEN_89)
             sendMessage(player, "The trapdoor opens...")
             replaceScenery(node.asScenery(), OPEN_TRAPDOOR, -1)
             return@on true
         }
 
-        on(OPEN_TRAPDOOR, IntType.SCENERY, "close") { _, node ->
+        on(OPEN_TRAPDOOR, IntType.SCENERY, "close") { player, node ->
+            playAudio(player,  Sounds.TRAP_DOOR_CLOSE_88)
             replaceScenery(node.asScenery(), TRAPDOOR, -1)
             return@on true
         }

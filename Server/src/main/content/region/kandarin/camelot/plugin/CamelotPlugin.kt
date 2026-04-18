@@ -3,53 +3,65 @@ package content.region.kandarin.camelot.plugin
 import core.api.*
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
-import core.game.node.entity.player.Player
-import core.game.node.item.Item
 import core.game.world.update.flag.context.Animation
 import shared.consts.Animations
 import shared.consts.Items
 import shared.consts.Scenery
+import shared.consts.Sounds
 
 class CamelotPlugin : InteractionListener {
 
     companion object {
-        private val petFish = intArrayOf(Items.FISHBOWL_6670, Items.FISHBOWL_6671, Items.FISHBOWL_6672)
-        private val feedAnim = Animation(Animations.FEED_BOWL_2781)
-
-        private val fishFoodInteraction: Map<Int, (Player, Item) -> Unit> = mapOf(
-            Items.FISH_FOOD_272 to { player, used ->
-                lock(player, feedAnim.duration)
-                removeItem(player, used)
-                addItem(player, Items.AN_EMPTY_BOX_6675, 1)
-                animate(player, feedAnim)
-                sendMessage(player, "You feed your fish.")
-            },
-            Items.POISONED_FISH_FOOD_274 to { player, _ ->
-                sendMessage(player, "You can't poison your own pet!")
-            }
+        private val petFishIDs = intArrayOf(
+            Items.FISHBOWL_6670,
+            Items.FISHBOWL_6671,
+            Items.FISHBOWL_6672
         )
+        private val feedAnimation = Animation(Animations.FEED_BOWL_2781)
     }
 
     override fun defineListeners() {
 
         /*
-         * Handles using a fishbowl on the aquarium to place pet fish inside.
+         * Using fishbowl on aquarium.
          */
 
-        onUseWith(IntType.SCENERY, petFish, Scenery.AQUARIUM_10091) { player, used, _ ->
-            if(removeItem(player, used.asItem(), Container.INVENTORY)) {
+        onUseWith(IntType.SCENERY, petFishIDs, Scenery.AQUARIUM_10091) { player, used, _ ->
+            if (removeItem(player, used.asItem(), Container.INVENTORY)) {
                 addItem(player, Items.FISHBOWL_6667, 1)
             }
             return@onUseWith true
         }
 
         /*
-         * Handles using any items on pet fish.
+         * Handles use any item on pet fish.
          */
 
-        onUseAnyWith(IntType.ITEM, *petFish) { player, used, _ ->
-            fishFoodInteraction[used.id]?.invoke(player, used.asItem())
-                ?: sendMessage(player, "Your fish looks at you strangely. You get the feeling this will not work.")
+        onUseAnyWith(IntType.ITEM, *petFishIDs) { player, used, _ ->
+
+            val item = used.asItem()
+
+            when (used.id) {
+
+                Items.FISH_FOOD_272 -> {
+                    if (removeItem(player, item)) {
+                        lock(player, feedAnimation.duration)
+                        addItem(player, Items.AN_EMPTY_BOX_6675, 1)
+                        animate(player, feedAnimation)
+                        playAudio(player, Sounds.FILL_STONE_BOWL_1537)
+                        sendMessage(player, "You feed your fish.")
+                    }
+                }
+
+                Items.POISONED_FISH_FOOD_274 -> {
+                    sendMessage(player, "You can't poison your own pet!")
+                }
+
+                else -> {
+                    sendMessage(player, "Your fish looks at you strangely. You get the feeling this will not work.")
+                }
+            }
+
             return@onUseAnyWith true
         }
     }

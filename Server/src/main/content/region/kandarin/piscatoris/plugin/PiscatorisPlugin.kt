@@ -90,12 +90,14 @@ class PiscatorisPlugin : InteractionListener {
                 sendMessage(player, "You need to complete Wolf Whistle quest to do this.")
                 return@on true
             }
+            playAudio(player,  Sounds.TRAP_DOOR_OPEN_89)
             replaceScenery(node.asScenery(), Scenery.TRAPDOOR_28742, 80)
             sendMessage(player, "The trapdoor opens...")
             return@on true
         }
 
         on(Scenery.TRAPDOOR_28742, IntType.SCENERY, "close") { player, node ->
+            playAudio(player,  Sounds.TRAP_DOOR_CLOSE_88)
             replaceScenery(node.asScenery(), Scenery.TRAPDOOR_28741, 80)
             sendMessage(player, "You close the trapdoor.")
             return@on true

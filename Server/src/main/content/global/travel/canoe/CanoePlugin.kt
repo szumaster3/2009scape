@@ -419,6 +419,7 @@ class CanoePlugin : InteractionListener, InterfaceListener {
                                         10
                                     )
                                         .asScenery()
+                                playGlobalAudio(sinking.location, Sounds.CANOE_SINK_2732)
                                 animateScenery(sinking, SINKING_ANIM.id)
                                 clearLogoutListener(player, "canoe-travel")
                                 sendMessage(player, "You arrive at ${destination.destName}.")

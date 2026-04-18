@@ -1,22 +1,21 @@
 package content.global.skill.hunter.impling
 
 import content.global.skill.magic.spells.ModernSpells
-import core.api.log
-import core.api.sendChat
-import core.api.sendGraphics
-import core.api.sendMessage
+import core.api.*
 import core.game.node.entity.Entity
 import core.game.node.entity.combat.CombatStyle
 import core.game.node.entity.npc.NPC
 import core.game.node.entity.npc.NPCBehavior
 import core.game.node.entity.player.Player
 import core.game.node.entity.player.link.SpellBookManager
+import core.game.node.entity.player.link.audio.Audio
 import core.game.node.item.Item
 import core.game.world.map.path.ClipMaskSupplier
 import core.tools.Log
 import core.tools.RandomFunction
 import shared.consts.Graphics
 import shared.consts.NPCs
+import shared.consts.Sounds
 
 class ImplingNPC : NPCBehavior(*Implings.getIds()) {
 
@@ -36,6 +35,7 @@ class ImplingNPC : NPCBehavior(*Implings.getIds()) {
         if (!isPuroImpling(self)) {
             log(this::class.java, Log.ERR, "Non-puro impling has respawned!")
         }
+        playGlobalAudio(self.location, Sounds.II_IMPLING_SPAWN_3722, 1, 0, Audio.defaultAudioRadius)
         sendGraphics(Graphics.IMPLING_TP_WHITE_SMOKE_PUFF_1119, self.properties.teleportLocation!!)
     }
 

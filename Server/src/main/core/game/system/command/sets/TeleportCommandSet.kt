@@ -43,7 +43,7 @@ class TeleportCommandSet : CommandSet(Privilege.ADMIN) {
                 }
             }
             if (destination != null) {
-                player.teleporter.send(destination, TeleportManager.TeleportType.INSTANT)
+                player.teleporter.send(destination, TeleportManager.TeleportType.CHRISTMAS)
             } else {
                 reject(player, "Could not locate teleport destination [name=$place]!")
             }

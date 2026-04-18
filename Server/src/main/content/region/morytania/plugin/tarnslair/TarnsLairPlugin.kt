@@ -9,6 +9,7 @@ import core.game.world.map.zone.ZoneBorders
 import core.game.world.map.zone.ZoneRestriction
 import shared.consts.Items
 import shared.consts.NPCs
+import shared.consts.Sounds
 
 /**
  * Represents Tarn's Lair.
@@ -26,6 +27,7 @@ class TarnsLairPlugin : MapArea, InteractionListener {
     //    stopWalk(player)
     //    animateScenery(Scenery(trap.trap.id, trap.trap.location), 5631)
     //    queueScript(player, 1, QueueStrength.SOFT) {
+    //        playAudio(player, Sounds.CART_HIT_1603)
     //        animate(player, 1441)
     //        sendChat(player, "Ouch!")
     //        val direction = Direction.getLogicalDirection(location, trap.location)

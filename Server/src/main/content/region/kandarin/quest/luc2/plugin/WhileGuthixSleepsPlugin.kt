@@ -34,6 +34,7 @@ class WhileGuthixSleepsPlugin : InteractionListener {
         }
 
         on(Scenery.TRAPDOOR_TABLE_40897, IntType.SCENERY, "open") { player, _ ->
+            playAudio(player,  Sounds.TRAP_DOOR_OPEN_89)
             sendMessage(player, "You open the trapdoor.")
             setVarbit(player, 5511, 3)
             return@on true
@@ -42,6 +43,7 @@ class WhileGuthixSleepsPlugin : InteractionListener {
         on(Scenery.TRAPDOOR_40898, IntType.SCENERY, "climb-into", "close") { player, _ ->
             when (getUsedOption(player)) {
                 "close" -> {
+                    playAudio(player,  Sounds.TRAP_DOOR_CLOSE_88)
                     sendMessage(player, "You close the trapdoor.")
                     setVarbit(player, 5511, 2)
                     return@on true

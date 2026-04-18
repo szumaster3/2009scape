@@ -1,5 +1,6 @@
 package content.global.skill.agility.shortcuts
 
+import core.api.playAudio
 import core.api.sendMessage
 import core.api.teleport
 import core.game.global.action.DoorActionHandler
@@ -7,6 +8,7 @@ import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
 import core.game.world.map.Location
 import shared.consts.Scenery
+import shared.consts.Sounds
 
 /**
  * Handles the broken fence shortcut.

@@ -19,6 +19,7 @@ import core.plugin.Initializable
 import core.plugin.Plugin
 import core.tools.RandomFunction
 import shared.consts.Regions
+import shared.consts.Sounds
 
 @Initializable
 class ImpetuousImpulses : MapZone("puro puro", true), Plugin<Any> {
@@ -169,6 +170,7 @@ class ImpetuousImpulses : MapZone("puro puro", true), Plugin<Any> {
                         var counter = 0
                         override fun pulse(): Boolean {
                             if (counter++ == 0) {
+                                playGlobalAudio(`object`.location, Sounds.II_WHEAT_WILT_3730)
                                 animateScenery(`object`, 6596)
                                 delay = animationDuration(Animation(6596))
                                 return false
@@ -183,6 +185,7 @@ class ImpetuousImpulses : MapZone("puro puro", true), Plugin<Any> {
                     var counter = 0
                     override fun pulse(): Boolean {
                         if (counter++ == 0) {
+                            playGlobalAudio(`object`.location, Sounds.II_WHEAT_GROWING_3729)
                             animateScenery(`object`, 6599)
                             delay = animationDuration(Animation(6599))
                             return false

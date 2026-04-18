@@ -1,12 +1,10 @@
 package content.global.skill.magic.spells.lunar
 
-import core.api.addItemOrDrop
-import core.api.freeSlots
-import core.api.removeItem
-import core.api.sendMessage
+import core.api.*
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
 import shared.consts.Items
+import shared.consts.Sounds
 
 class HunterKitPlugin : InteractionListener {
     override fun defineListeners() {
@@ -17,6 +15,7 @@ class HunterKitPlugin : InteractionListener {
             }
 
             if (removeItem(player, Items.HUNTER_KIT_11159)) {
+                playAudio(player, Sounds.LUNAR_HUNTER_KIT_INV_3616)
                 for (item in HUNTER_KIT_IDS) {
                     addItemOrDrop(player, item, 1)
                 }

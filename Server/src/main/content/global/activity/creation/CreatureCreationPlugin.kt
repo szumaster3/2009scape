@@ -28,7 +28,7 @@ class CreatureCreationPlugin : InteractionListener {
                 sendDialogue(player, "The trapdoor won't open.")
                 return@on true
             }
-
+            playAudio(player,  Sounds.TRAP_DOOR_OPEN_89)
             setVarbit(player, Vars.VARBIT_TOL_TRAPDOOR_3372, 1)
             sendMessage(player, "You open the trapdoor.")
             return@on true
@@ -48,6 +48,7 @@ class CreatureCreationPlugin : InteractionListener {
          */
 
         on(Scenery.TRAPDOOR_21922, IntType.SCENERY, "close") { player, _ ->
+            playAudio(player,  Sounds.TRAP_DOOR_CLOSE_88)
             setVarbit(player, Vars.VARBIT_TOL_TRAPDOOR_3372, 0)
             sendMessage(player, "You close the trapdoor.")
             return@on true

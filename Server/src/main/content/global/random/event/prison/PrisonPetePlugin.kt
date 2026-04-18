@@ -1,4 +1,4 @@
-package content.global.random.event.prison_pete
+package content.global.random.event.prison
 
 import core.api.*
 import core.game.interaction.IntType
@@ -47,6 +47,15 @@ class PrisonPetePlugin : InteractionListener, MapArea {
 
         on(Items.PRISON_KEY_6966, IntType.ITEM, "return") { player, _ ->
             openDialogue(player, PrisonPeteDialogue(1))
+            return@on true
+        }
+
+        /*
+         * Handles lock the south doors.
+         */
+
+        on(Scenery.LOCKED_DOOR_26188, IntType.SCENERY, "open") { player, _ ->
+            sendMessage(player, "The doors won't open.")
             return@on true
         }
 
@@ -126,6 +135,10 @@ class PrisonPetePlugin : InteractionListener, MapArea {
 
     override fun areaLeave(entity: Entity, logout: Boolean) {
         if (entity is Player) {
+            if (!logout) {
+                PrisonTimer.stop(entity)
+            }
+
             PrisonPeteUtils.cleanup(entity)
         }
     }

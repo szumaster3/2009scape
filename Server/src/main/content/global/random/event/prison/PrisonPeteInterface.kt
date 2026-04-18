@@ -1,4 +1,4 @@
-package content.global.random.event.prison_pete
+package content.global.random.event.prison
 
 import core.api.sendModelOnInterface
 import core.api.setAttribute

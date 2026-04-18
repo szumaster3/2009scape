@@ -1,4 +1,4 @@
-package content.global.random.event.prison_pete
+package content.global.random.event.prison
 
 import content.data.RandomEvent
 import core.api.*

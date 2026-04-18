@@ -13,7 +13,7 @@ import content.global.random.event.gravedigger.LeoNPC
 import content.global.random.event.maze.MazeNPC
 import content.global.random.event.mime.MimeNPC
 import content.global.random.event.pinball.PinballNPC
-import content.global.random.event.prison_pete.PrisonPeteNPC
+import content.global.random.event.prison.PrisonPeteNPC
 import content.global.random.event.quizmaster.QuizMasterNPC
 import content.global.random.event.rickturpentine.RickTurpentineNPC
 import content.global.random.event.rivertroll.RiverTrollNPC
@@ -72,7 +72,22 @@ enum class RandomEvents(
     EVIL_TWIN(npc = MollyNPC(), skillIds = intArrayOf(Skills.MINING, Skills.MAGIC)),
     SURPRISE_EXAM(npc = PatternRecognitionNPC(), type = "sexam"),
     // PILLORY(npc = PilloryNPC(), loot = CERTER.loot),
-    PRISON_PETE(PrisonPeteNPC()),
+    PRISON_PETE(
+        PrisonPeteNPC(),
+        loot = WeightBasedTable.create(// https://runescape.wiki/w/Prison_Pete?oldid=2086261
+            WeightedItem(Items.GRIMY_SNAPDRAGON_3051, 4, 4, 0.6),
+            WeightedItem(Items.GRIMY_TOADFLAX_3049, 6, 6, 1.2),
+            WeightedItem(Items.SAPPHIRE_1608, 5, 5, 2.5),
+            WeightedItem(Items.UNCUT_RUBY_1620, 4, 4, 1.8),
+            WeightedItem(Items.UNCUT_DIAMOND_1618, 3, 3, 0.9),
+            WeightedItem(Items.COINS_995, 527, 527, 2.0),
+            WeightedItem(Items.COINS_995, 100, 500, 1.5),
+            WeightedItem(Items.LAW_RUNE_563, 10, 10, 2.2),
+            WeightedItem(Items.CHAOS_RUNE_562, 1, 1, 2.0),
+            WeightedItem(Items.UGTHANKI_KEBAB_1885, 2, 2, 1.3),
+            WeightedItem(Items.MITHRIL_ARROWTIPS_42, 47, 50, 1.6)
+        )
+    ),
     MAZE(npc = MazeNPC()),
     QUIZ_MASTER(npc = QuizMasterNPC(), skillIds = intArrayOf(Skills.FISHING, Skills.PRAYER)),
     SWARM(npc = SwarmNPC()),

@@ -1,4 +1,4 @@
-package content.global.random.event.prison_pete
+package content.global.random.event.prison
 
 import core.api.*
 import core.game.dialogue.DialogueFile
@@ -17,15 +17,17 @@ import shared.consts.NPCs
  * Represents the Prison Pete random event dialogue.
  * @author szu
  */
-class PrisonPeteDialogue(
-    val dialOpt: Int,
-) : DialogueFile() {
-    override fun handle(
-        componentID: Int,
-        buttonID: Int,
-    ) {
+class PrisonPeteDialogue(val dialOpt: Int) : DialogueFile() {
+
+    override fun handle(componentID: Int, buttonID: Int)
+    {
         val energyBarrier = getVarbit(player!!, 1547)
         npc = NPC(NPCs.PRISON_PETE_3118)
+
+        val ticks = PrisonTimer.getTicksLeft(player!!)
+        val hours = ticks / 6000
+        val minutes = (ticks % 6000) / 100
+
         when (dialOpt) {
             1 -> {
                 when (stage) {
@@ -106,8 +108,7 @@ class PrisonPeteDialogue(
                     7 -> npc(FaceAnim.SAD, "You need to pull the lever to find out which shape", "animal contains the key, then pop that sort of animal to", "get the key.").also { stage++ }
                     8 -> npc(FaceAnim.SAD, "Bring me any keys you get and", "I'll try them on the doors.").also { stage++ }
                     9 -> player(FaceAnim.THINKING, "What happens if I get it wrong?").also { stage++ }
-                    // TODO: Timer.
-                    10 -> npc(FaceAnim.SAD, "You haven't got a life sentence, so they'll let you out in", "23 hours 59 minutes. You should be able to escape", "much faster if you go pull that lever and pop the right", "balloon animals.").also { stage = END_DIALOGUE }
+                    10 -> npc(FaceAnim.SAD, "You haven't got a life sentence, so they'll let you out in", "$hours hours $minutes minutes. You should be able to escape", "much faster if you go pull that lever and pop the right", "balloon animals.").also { stage = END_DIALOGUE }
                 }
             }
         }

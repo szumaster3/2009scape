@@ -1,4 +1,4 @@
-package content.global.random.event.prison_pete
+package content.global.random.event.prison
 
 import content.global.random.RandomEventNPC
 import core.api.lock
@@ -19,10 +19,12 @@ class PrisonPeteNPC(
         lock(player, 6)
         lockInteractions(player, 6)
         PrisonPeteUtils.teleport(player)
+        PrisonTimer.start(player)
         sendMessage(player, "Welcome to ScapeRune.")
     }
 
     override fun talkTo(npc: NPC) {
-        // Empty
+        // If a player talks to Prison Pete after he escorts someone else back to the hood,
+        // he will say, "Don't mind me, I was just leaving."
     }
 }

@@ -10,6 +10,10 @@ import core.game.node.item.Item
 import shared.consts.Components
 import shared.consts.Items
 
+/**
+ * Represents the sawmill interface.
+ * @author Vexia (original java version), Oct 8, 2013
+ */
 class SawmillInterface : InterfaceListener
 {
 
@@ -34,11 +38,12 @@ class SawmillInterface : InterfaceListener
                 PlankType.MAHOGANY -> 125
             }
 
-            val index = if (plank != PlankType.WOOD) {
-                fullIndex - buttonID
-            } else {
-                fullIndex - buttonID - if (buttonID != 107) 1 else 0
-            }
+            val index =
+                if (plank == PlankType.WOOD) {
+                    fullIndex - buttonID - if (buttonID != 107) 1 else 0
+                } else {
+                    fullIndex - buttonID
+                }
 
             val amount = when (index) {
                 0 -> 1
@@ -51,33 +56,32 @@ class SawmillInterface : InterfaceListener
 
             if (amount == -1) {
                 sendInputDialogue(player, true, "Enter the amount:") { value ->
-                    val input = value as? Int ?: return@sendInputDialogue
+                    val input = (value as? Int) ?: return@sendInputDialogue
                     createPlank(player, plank, input)
                 }
                 return@on true
             }
 
-            if (amount > 0) {
-                createPlank(player, plank, amount)
-            }
-
+            createPlank(player, plank, amount)
             return@on true
         }
-
     }
 
-    private fun createPlank(player: Player, plank: PlankType, requestedAmount: Int)
-    {
+    private fun createPlank(player: Player, plank: PlankType, requested: Int) {
         closeInterface(player)
+
+        var amount = requested
         val availableLogs = amountInInventory(player, plank.log)
 
-        if (availableLogs <= 0)
-        {
+        if (availableLogs <= 0) {
             sendMessage(player, "You are not carrying any logs to cut into planks.")
             return
         }
 
-        val amount = requestedAmount.coerceAtMost(availableLogs)
+        if (amount > availableLogs) {
+            amount = availableLogs
+        }
+
         val cost = plank.price * amount
 
         if (!inInventory(player, Items.COINS_995, cost))
@@ -86,10 +90,11 @@ class SawmillInterface : InterfaceListener
             return
         }
 
-        if(removeItem(player, Item(plank.log, amount)) && removeItem(player, Item(Items.COINS_995, cost)))
-        {
-            addItem(player, plank.plank, amount)
-        }
+        if (!removeItem(player, Item(Items.COINS_995, cost))) return
+        val logRemoved = removeItem(player, Item(plank.log, amount))
+        if (!logRemoved) return
+
+        addItem(player, plank.plank, amount)
 
         // Diaries.
         when {

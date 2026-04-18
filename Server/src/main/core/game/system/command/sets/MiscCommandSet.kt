@@ -241,26 +241,22 @@ class MiscCommandSet : CommandSet(Privilege.ADMIN) {
             }
         }
 
+        /*
+         * Command for showing all commands in book.
+         */
+
         define(
             name = "commandbook",
             privilege = Privilege.ADMIN,
             usage = "commandbook",
-            description = "Shows commands in a book (only commands)"
-        ) { player, args ->
-
-            val requestedPage = if (args.size > 1) (args[1].toIntOrNull() ?: 1) - 1 else 0
-            val pages = CommandMapping.getPageIndices(player.rights.ordinal)
-            val pageCount = pages.size
-            val page = requestedPage.coerceIn(0, pageCount - 1)
-            val startIndex = pages[page]
-            val endIndex = if (page < pageCount - 1) pages[page + 1] else CommandMapping.getCommands().size
+            description = "Shows all commands in a book"
+        ) { player, _ ->
 
             val rawLines = ArrayList<String>()
 
-            for (i in startIndex until endIndex) {
-                val command = CommandMapping.getCommands()[i]
+            for (command in CommandMapping.getCommands()) {
                 if (command.privilege.ordinal > player.rights.ordinal) continue
-                rawLines.add("::${command.name}")
+                rawLines.add("${command.name}")
             }
 
             fun splitLine(line: String, maxLen: Int = 25): List<String> {
@@ -279,11 +275,12 @@ class MiscCommandSet : CommandSet(Privilege.ADMIN) {
             val linesPerSide = 15
             val leftLines = ArrayList<String>()
             val rightLines = ArrayList<String>()
+
             val chunks = splitLines.chunked(linesPerSide * 2)
 
             for (chunk in chunks) {
                 val leftChunk = chunk.take(linesPerSide)
-                val rightChunk = if (chunk.size > linesPerSide) chunk.drop(linesPerSide) else List(linesPerSide) { "" }
+                val rightChunk = chunk.drop(linesPerSide)
 
                 for (i in 0 until linesPerSide) {
                     leftLines.add(leftChunk.getOrElse(i) { "" })
@@ -293,7 +290,7 @@ class MiscCommandSet : CommandSet(Privilege.ADMIN) {
 
             showGeBook(
                 player,
-                "Commands${if (pageCount > 1) " (${page + 1}/$pageCount)" else ""}",
+                "Commands",
                 leftLines,
                 rightLines
             )

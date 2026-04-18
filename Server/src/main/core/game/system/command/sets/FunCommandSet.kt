@@ -45,6 +45,7 @@ class FunCommandSet : CommandSet(Privilege.ADMIN) {
             usage = "::bike",
             description = "Test a bike animation",
         ) { player, args ->
+            sendChat(player, "Go, go, Gadget arms!")
             animate(player, Animations.USE_BIKE_MACHINE_2433)
         }
 

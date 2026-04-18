@@ -31,6 +31,39 @@ import kotlin.reflect.jvm.isAccessible
 class CacheCommandSet : CommandSet(Privilege.ADMIN) {
 
     override fun defineCommands() {
+        /*
+         * Command for send item to interface with optional zoom.
+         */
+
+        define(
+            name = "iitem",
+            privilege = Privilege.ADMIN,
+            usage = "::iitem <interface_id> <component_id> <item_id> [amount] [zoom]",
+            description = "Send an item onto an iface component."
+        ) { player, args ->
+
+            if (args.size < 3) {
+                reject(player, "Usage: ::iitem <interface_id> <component_id> <item_id> [amount] [zoom]")
+                return@define
+            }
+
+            val iface     = args[1].toIntOrNull()
+            val component = args[2].toIntOrNull()
+            val itemId    = args[3].toIntOrNull() ?: -1
+            val amount    = args.getOrNull(4)?.toIntOrNull() ?: 1
+            val zoom      = args.getOrNull(5)?.toIntOrNull()
+
+            if (iface == null || component == null || itemId < 0) {
+                reject(player, "Iface, component and item id must be valid ints!")
+                return@define
+            }
+
+            if (zoom != null) {
+                player.packetDispatch.sendItemZoomOnInterface(itemId, amount, zoom, iface, component)
+            } else {
+                player.packetDispatch.sendItemOnInterface(itemId, amount, iface, component)
+            }
+        }
 
         /*
          * Command for looping incremental interface animation.
@@ -156,35 +189,6 @@ class CacheCommandSet : CommandSet(Privilege.ADMIN) {
             }
 
             sendAngleOnInterface(player, iface, component, zoom, pitch, yaw)
-        }
-
-        /*
-         * Command for send item to interface.
-         */
-
-        define(
-            name = "iitem",
-            privilege = Privilege.ADMIN,
-            usage = "::iitem <interface_id> <component_id> <item_id> [amount]",
-            description = "Send an item onto an Iface component."
-        ) { player, args ->
-            if (args.size < 3) {
-                reject(player, "Usage: ::iitem <interface_id> <component_id> [item_id] [amount]")
-                return@define
-            }
-
-            val iface     = args[1].toIntOrNull()
-            val component = args[2].toIntOrNull()
-            val itemId    = args.getOrNull(3)?.toIntOrNull() ?: 1
-            val amount    = args.getOrNull(4)?.toIntOrNull() ?: 1
-
-            if (iface == null || component == null || itemId <= 0 || amount <= 0)
-            {
-                reject(player, "Iface, component, item Id and amount must be valid int!")
-                return@define
-            }
-
-            sendItemOnInterface(player, iface, component, itemId, amount)
         }
 
         /*

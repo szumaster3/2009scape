@@ -36,20 +36,6 @@ class FunCommandSet : CommandSet(Privilege.ADMIN) {
     override fun defineCommands() {
 
         /*
-         * Command for making the player use a bike animation.
-         */
-
-        define(
-            name = "bike",
-            privilege = Privilege.ADMIN,
-            usage = "::bike",
-            description = "Test a bike animation",
-        ) { player, args ->
-            sendChat(player, "Go, go, Gadget arms!")
-            animate(player, Animations.USE_BIKE_MACHINE_2433)
-        }
-
-        /*
          * Command for making nearby NPCs perform an animation.
          */
 

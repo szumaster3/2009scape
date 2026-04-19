@@ -7,7 +7,6 @@ import core.game.node.entity.skill.Skills
 import core.game.node.item.Item
 import shared.consts.Items
 import shared.consts.Quests
-import shared.consts.Sounds
 
 class EnchantedWaterTiaraPlugin : InteractionListener {
     private val tiaraIDs = intArrayOf(Items.WATER_TIARA_5531, Items.ENCHANTED_WATER_TIARA_11969)
@@ -93,16 +92,12 @@ class EnchantedWaterTiaraPlugin : InteractionListener {
             val charges = getCharge(item)
 
             if (charges > 0) {
-                sendDestroyItemDialogue(player, Items.ENCHANTED_WATER_TIARA_11969, item.name)
+                sendDestroyItemDialogue(player, Items.ENCHANTED_WATER_TIARA_11969, "The Enchanted Water Tiara has been destroyed and turned back into a Water Tiara. You recover ${charges / 1000 * 3} Water Runes.",)
                 addDialogueAction(player) { player, button ->
                     if (button == 3) {
+                        closeDialogue(player)
                         replaceSlot(player, item.slot, Item(Items.WATER_TIARA_5531))
                         addItemOrDrop(player, Items.WATER_RUNE_555, charges / 1000 * 3)
-                        sendDialogue(
-                            player,
-                            "The Enchanted Water Tiara has been destroyed and turned back into a Water Tiara. You recover ${charges / 1000 * 3} Water Runes.",
-                        )
-                        playAudio(player, Sounds.DESTROY_OBJECT_2381)
                     }
                 }
             } else {

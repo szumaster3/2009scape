@@ -100,7 +100,7 @@ class DropListener : InteractionListener {
                 option == "destroy" || option == "dissolve" ||
                 item.definition.handlers.getOrDefault(ItemConfigParser.DESTROY, false) as Boolean
             ) {
-                player.dialogueInterpreter.sendDestroyItem(item.id, item.name)
+                player.dialogueInterpreter.sendDestroyItem(item.id, null)
                 addDialogueAction(player) { player, button ->
                     if (button == 3) {
                         if (removeItem(player, item)) {

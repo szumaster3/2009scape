@@ -138,7 +138,7 @@ class BobDialogue(player: Player? = null) : Dialogue(player) {
                 Topic("Give me a quest!", 0),
                 Topic("Have you anything to sell?", 1),
                 Topic("Can you repair my items for me?", 3),
-                Topic("Talk about Achievement Diaries", 4),
+                Topic("Talk about Achievement Diaries", 4,true),
             )
             stage = 0
             return true

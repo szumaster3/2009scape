@@ -141,7 +141,7 @@ class Shop(val title: String, val stock: Array<ShopItem>, val general: Boolean =
         player.packetDispatch.sendInterfaceConfig(Components.SHOP_TEMPLATE_620, 29, !main)
         player.packetDispatch.sendInterfaceConfig(Components.SHOP_TEMPLATE_620, 25, main)
         player.packetDispatch.sendInterfaceConfig(Components.SHOP_TEMPLATE_620, 27, main)
-        player.packetDispatch.sendInterfaceConfig(Components.SHOP_TEMPLATE_620, 26, false)
+        player.packetDispatch.sendInterfaceConfig(Components.SHOP_TEMPLATE_620, 26, !main)
 
         if (!main) {
             playerStock.refresh()

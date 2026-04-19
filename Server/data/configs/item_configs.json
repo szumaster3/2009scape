@@ -44119,7 +44119,7 @@
     "equipment_slot": "0",
     "grand_exchange_price": "94300",
     "name": "Ahrim's hood",
-    "tradeable": "false",
+    "tradeable": "true",
     "archery_ticket_price": "0",
     "id": "4708",
     "bonuses": "0,0,0,6,-2,15,13,16,6,0,15,0,0,0,0"
@@ -44130,7 +44130,7 @@
     "examine": "Swap this note at any bank for the equivalent item.",
     "durability": null,
     "name": "Ahrim's hood",
-    "tradeable": "false",
+    "tradeable": "true",
     "archery_ticket_price": "0",
     "id": "4709"
   },
@@ -44149,7 +44149,7 @@
     "attack_anims": "419,419,419,419",
     "grand_exchange_price": "69500",
     "stand_anim": "813",
-    "tradeable": "false",
+    "tradeable": "true",
     "run_anim": "1210",
     "archery_ticket_price": "0",
     "id": "4710",
@@ -44170,7 +44170,7 @@
     "examine": "Swap this note at any bank for the equivalent item.",
     "durability": null,
     "name": "Ahrim's staff",
-    "tradeable": "false",
+    "tradeable": "true",
     "archery_ticket_price": "0",
     "id": "4711"
   },
@@ -44240,7 +44240,7 @@
     "equipment_slot": "0",
     "grand_exchange_price": "1300000",
     "name": "Dharok's helm",
-    "tradeable": "false",
+    "tradeable": "true",
     "archery_ticket_price": "0",
     "id": "4716",
     "bonuses": "0,0,0,-3,-1,45,48,44,-1,51,15,0,0,0,0"
@@ -44251,7 +44251,7 @@
     "examine": "Swap this note at any bank for the equivalent item.",
     "durability": null,
     "name": "Dharok's helm",
-    "tradeable": "false",
+    "tradeable": "true",
     "archery_ticket_price": "0",
     "id": "4717"
   },
@@ -44270,7 +44270,7 @@
     "attack_anims": "2067,2067,2066,2067",
     "grand_exchange_price": "516900",
     "stand_anim": "2065",
-    "tradeable": "false",
+    "tradeable": "true",
     "run_anim": "824",
     "archery_ticket_price": "0",
     "id": "4718",
@@ -44290,7 +44290,7 @@
     "examine": "Swap this note at any bank for the equivalent item.",
     "durability": null,
     "name": "Dharok's greataxe",
-    "tradeable": "false",
+    "tradeable": "true",
     "archery_ticket_price": "0",
     "id": "4719"
   },
@@ -44307,7 +44307,7 @@
     "remove_sleeves": "true",
     "grand_exchange_price": "511400",
     "name": "Dharok's platebody",
-    "tradeable": "false",
+    "tradeable": "true",
     "archery_ticket_price": "0",
     "id": "4720",
     "bonuses": "0,0,0,-30,-10,122,120,107,-6,132,60,0,0,0,0"
@@ -44318,7 +44318,7 @@
     "examine": "Swap this note at any bank for the equivalent item.",
     "durability": null,
     "name": "Dharok's platebody",
-    "tradeable": "false",
+    "tradeable": "true",
     "archery_ticket_price": "0",
     "id": "4721"
   },
@@ -44334,7 +44334,7 @@
     "equipment_slot": "7",
     "grand_exchange_price": "748800",
     "name": "Dharok's platelegs",
-    "tradeable": "false",
+    "tradeable": "true",
     "archery_ticket_price": "0",
     "id": "4722",
     "bonuses": "0,0,0,-21,-7,85,82,83,-4,92,30,0,0,0,0"
@@ -44345,7 +44345,7 @@
     "examine": "Swap this note at any bank for the equivalent item.",
     "durability": null,
     "name": "Dharok's platelegs",
-    "tradeable": "false",
+    "tradeable": "true",
     "archery_ticket_price": "0",
     "id": "4723"
   },
@@ -44485,7 +44485,7 @@
     "equipment_slot": "0",
     "grand_exchange_price": "38900",
     "name": "Karil's coif",
-    "tradeable": "false",
+    "tradeable": "true",
     "archery_ticket_price": "0",
     "id": "4732",
     "bonuses": "0,0,0,-1,3,6,9,12,6,10,15,0,0,0,0"
@@ -44496,7 +44496,7 @@
     "examine": "Swap this note at any bank for the equivalent item.",
     "durability": null,
     "name": "Karil's coif",
-    "tradeable": "false",
+    "tradeable": "true",
     "archery_ticket_price": "0",
     "id": "4733"
   },
@@ -44515,7 +44515,7 @@
     "attack_anims": "2075,2075,2075,2075",
     "grand_exchange_price": "188000",
     "stand_anim": "2074",
-    "tradeable": "false",
+    "tradeable": "true",
     "run_anim": "2077",
     "archery_ticket_price": "0",
     "id": "4734",
@@ -44536,7 +44536,7 @@
     "examine": "Swap this note at any bank for the equivalent item.",
     "durability": null,
     "name": "Karil's crossbow",
-    "tradeable": "false",
+    "tradeable": "true",
     "archery_ticket_price": "0",
     "id": "4735"
   },
@@ -44623,7 +44623,7 @@
     "equipment_slot": "0",
     "grand_exchange_price": "139000",
     "name": "Torag's helm",
-    "tradeable": "false",
+    "tradeable": "true",
     "archery_ticket_price": "0",
     "id": "4745",
     "bonuses": "0,0,0,-6,-2,55,58,54,-1,62,15,0,0,0,0"
@@ -44634,7 +44634,7 @@
     "examine": "Swap this note at any bank for the equivalent item.",
     "durability": null,
     "name": "Torag's helm",
-    "tradeable": "false",
+    "tradeable": "true",
     "archery_ticket_price": "0",
     "id": "4746"
   },
@@ -44683,7 +44683,7 @@
     "remove_sleeves": "true",
     "grand_exchange_price": "346200",
     "name": "Torag's platebody",
-    "tradeable": "false",
+    "tradeable": "true",
     "archery_ticket_price": "0",
     "id": "4749",
     "bonuses": "0,0,0,-30,-10,122,120,107,-6,132,60,0,0,0,0"
@@ -44694,7 +44694,7 @@
     "examine": "Swap this note at any bank for the equivalent item.",
     "durability": null,
     "name": "Torag's platebody",
-    "tradeable": "false",
+    "tradeable": "true",
     "archery_ticket_price": "0",
     "id": "4750"
   },
@@ -44710,7 +44710,7 @@
     "equipment_slot": "7",
     "grand_exchange_price": "427200",
     "name": "Torag's platelegs",
-    "tradeable": "false",
+    "tradeable": "true",
     "archery_ticket_price": "0",
     "id": "4751",
     "bonuses": "0,0,0,-21,-7,85,82,83,-4,92,30,0,0,0,0"
@@ -44721,7 +44721,7 @@
     "examine": "Swap this note at any bank for the equivalent item.",
     "durability": null,
     "name": "Torag's platelegs",
-    "tradeable": "false",
+    "tradeable": "true",
     "archery_ticket_price": "0",
     "id": "4752"
   },
@@ -44739,7 +44739,7 @@
     "equipment_slot": "0",
     "grand_exchange_price": "687200",
     "name": "Verac's helm",
-    "tradeable": "false",
+    "tradeable": "true",
     "archery_ticket_price": "0",
     "id": "4753",
     "bonuses": "0,0,0,-6,-2,55,58,54,0,56,15,0,3,0,0"
@@ -44750,7 +44750,7 @@
     "examine": "Swap this note at any bank for the equivalent item.",
     "durability": null,
     "name": "Verac's helm",
-    "tradeable": "false",
+    "tradeable": "true",
     "archery_ticket_price": "0",
     "id": "4754"
   },
@@ -44769,7 +44769,7 @@
     "attack_anims": "2062,2062,2062,2062",
     "grand_exchange_price": "135500",
     "stand_anim": "1832",
-    "tradeable": "false",
+    "tradeable": "true",
     "run_anim": "1831",
     "archery_ticket_price": "0",
     "id": "4755",
@@ -44790,7 +44790,7 @@
     "examine": "Swap this note at any bank for the equivalent item.",
     "durability": null,
     "name": "Verac's flail",
-    "tradeable": "false",
+    "tradeable": "true",
     "archery_ticket_price": "0",
     "id": "4756"
   },
@@ -44807,7 +44807,7 @@
     "remove_sleeves": "true",
     "grand_exchange_price": "270000",
     "name": "Verac's brassard",
-    "tradeable": "false",
+    "tradeable": "true",
     "archery_ticket_price": "0",
     "id": "4757",
     "bonuses": "0,0,0,-6,-2,81,95,85,0,81,60,0,5,0,0"
@@ -44818,7 +44818,7 @@
     "examine": "Swap this note at any bank for the equivalent item.",
     "durability": null,
     "name": "Verac's brassard",
-    "tradeable": "false",
+    "tradeable": "true",
     "archery_ticket_price": "0",
     "id": "4758"
   },
@@ -44834,7 +44834,7 @@
     "equipment_slot": "7",
     "grand_exchange_price": "411400",
     "name": "Verac's plateskirt",
-    "tradeable": "false",
+    "tradeable": "true",
     "archery_ticket_price": "0",
     "id": "4759",
     "bonuses": "0,0,0,-21,-7,85,82,83,0,84,30,0,4,0,0"
@@ -44845,7 +44845,7 @@
     "examine": "Swap this note at any bank for the equivalent item.",
     "durability": null,
     "name": "Verac's plateskirt",
-    "tradeable": "false",
+    "tradeable": "true",
     "archery_ticket_price": "0",
     "id": "4760"
   },

@@ -170,6 +170,6 @@ class BobDialogue(player: Player? = null) : Dialogue(player) {
     }
 
     override fun getIds(): IntArray {
-        return intArrayOf(NPCs.BOB_519, NPCs.SQUIRE_3797, NPCs.TINDEL_MARCHANT_1799)
+        return intArrayOf(NPCs.BOB_519)
     }
 }

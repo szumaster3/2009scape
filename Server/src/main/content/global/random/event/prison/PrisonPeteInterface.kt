@@ -17,15 +17,11 @@ class PrisonPeteInterface : InterfaceListener {
         onOpen(Components.MACRO_PRISON_PETE_273) { player, _ ->
             val model = PrisonPeteUtils.modelList.random()
             val npcId = PrisonPeteUtils.MODEL_TO_NPC[model] ?: -1
+            val rot = (4..16).random()
             sendModelOnInterface(player, Components.MACRO_PRISON_PETE_273, 3, model)
+            player.packetDispatch.sendInterfaceAnimateRotation(Components.MACRO_PRISON_PETE_273, 3, rot, rot)
             setAttribute(player, PrisonPeteUtils.EXPECTED_NPC, npcId)
             return@onOpen true
         }
     }
 }
-
-// 0 - cs
-// 1 - model(prison_bars)
-// 2 - UNKNOWN_1
-// 3 - model(balloon)
-// 6 - close_glow(sprite)

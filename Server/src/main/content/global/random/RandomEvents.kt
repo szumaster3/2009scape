@@ -43,27 +43,7 @@ enum class RandomEvents(
 ) {
     SANDWICH_LADY(npc = SandwichLadyNPC()),
     GENIE(npc = GenieNPC()),
-    CERTER(
-        CertersBrothersNPC(),
-        loot =
-            WeightBasedTable.create(
-                WeightedItem(Items.UNCUT_SAPPHIRE_1623, 1, 1, 3.4),
-                WeightedItem(Items.KEBAB_1971, 1, 1, 1.7),
-                WeightedItem(Items.UNCUT_EMERALD_1621, 1, 1, 1.7),
-                WeightedItem(Items.SPINACH_ROLL_1969, 1, 1, 1.5),
-                WeightedItem(Items.COINS_995, 80, 80, 1.1),
-                WeightedItem(Items.COINS_995, 160, 160, 1.1),
-                WeightedItem(Items.COINS_995, 320, 320, 1.1),
-                WeightedItem(Items.COINS_995, 480, 480, 1.1),
-                WeightedItem(Items.COINS_995, 640, 640, 1.1),
-                WeightedItem(Items.UNCUT_RUBY_1619, 1, 1, 0.86),
-                WeightedItem(Items.COINS_995, 240, 240, 0.65),
-                WeightedItem(Items.COSMIC_TALISMAN_1454, 1, 1, 0.43),
-                WeightedItem(Items.UNCUT_DIAMOND_1617, 1, 1, 0.22),
-                WeightedItem(Items.TOOTH_HALF_OF_A_KEY_985, 1, 1, 0.1),
-                WeightedItem(Items.LOOP_HALF_OF_A_KEY_987, 1, 1, 0.1),
-            ),
-    ),
+    CERTER(CertersBrothersNPC(), loot = WeightBasedTable.create(WeightedItem(Items.UNCUT_SAPPHIRE_1623, 1, 1, 3.4), WeightedItem(Items.KEBAB_1971, 1, 1, 1.7), WeightedItem(Items.UNCUT_EMERALD_1621, 1, 1, 1.7), WeightedItem(Items.SPINACH_ROLL_1969, 1, 1, 1.5), WeightedItem(Items.COINS_995, 80, 80, 1.1), WeightedItem(Items.COINS_995, 160, 160, 1.1), WeightedItem(Items.COINS_995, 320, 320, 1.1), WeightedItem(Items.COINS_995, 480, 480, 1.1), WeightedItem(Items.COINS_995, 640, 640, 1.1), WeightedItem(Items.UNCUT_RUBY_1619, 1, 1, 0.86), WeightedItem(Items.COINS_995, 240, 240, 0.65), WeightedItem(Items.COSMIC_TALISMAN_1454, 1, 1, 0.43), WeightedItem(Items.UNCUT_DIAMOND_1617, 1, 1, 0.22), WeightedItem(Items.TOOTH_HALF_OF_A_KEY_985, 1, 1, 0.1), WeightedItem(Items.LOOP_HALF_OF_A_KEY_987, 1, 1, 0.1)),),
     DRILL_DEMON(npc = SergeantDamienNPC()),
     EVIL_CHICKEN(npc = EvilChickenNPC()),
     KISS_THE_FROG(npc = FrogHeraldNPC()),
@@ -72,22 +52,7 @@ enum class RandomEvents(
     EVIL_TWIN(npc = MollyNPC(), skillIds = intArrayOf(Skills.MINING, Skills.MAGIC)),
     SURPRISE_EXAM(npc = PatternRecognitionNPC(), type = "sexam"),
     // PILLORY(npc = PilloryNPC(), loot = CERTER.loot),
-    PRISON_PETE(// Before https://runescape.wiki/w/Update:Random_Event_Update_and_More
-        PrisonPeteNPC(),// https://secure.runescape.com/m=news/random-event-update-and-more
-        loot = WeightBasedTable.create(// https://runescape.wiki/w/Prison_Pete?oldid=2086261
-            WeightedItem(Items.GRIMY_SNAPDRAGON_3052, 4, 4, 0.6),
-            WeightedItem(Items.GRIMY_TOADFLAX_3050, 6, 6, 1.2),
-            WeightedItem(Items.SAPPHIRE_1608, 5, 5, 2.5),
-            WeightedItem(Items.UNCUT_RUBY_1620, 4, 4, 1.8),
-            WeightedItem(Items.UNCUT_DIAMOND_1618, 3, 3, 0.9),
-            WeightedItem(Items.COINS_995, 527, 527, 2.0),
-            WeightedItem(Items.COINS_995, 100, 500, 1.5),
-            WeightedItem(Items.LAW_RUNE_563, 10, 10, 2.2),
-            WeightedItem(Items.CHAOS_RUNE_562, 1, 1, 2.0),
-            WeightedItem(Items.UGTHANKI_KEBAB_1885, 2, 2, 1.3),
-            WeightedItem(Items.MITHRIL_ARROWTIPS_42, 47, 50, 1.6)
-        )
-    ),
+    PRISON_PETE(PrisonPeteNPC(), loot = WeightBasedTable.create(WeightedItem(Items.GRIMY_SNAPDRAGON_3052, 4, 4, 0.6), WeightedItem(Items.GRIMY_TOADFLAX_3050, 6, 6, 1.2), WeightedItem(Items.SAPPHIRE_1608, 5, 5, 2.5), WeightedItem(Items.UNCUT_RUBY_1620, 4, 4, 1.8), WeightedItem(Items.UNCUT_DIAMOND_1618, 3, 3, 0.9), WeightedItem(Items.COINS_995, 527, 527, 2.0), WeightedItem(Items.COINS_995, 100, 500, 1.5), WeightedItem(Items.LAW_RUNE_563, 10, 10, 2.2), WeightedItem(Items.CHAOS_RUNE_562, 1, 1, 2.0), WeightedItem(Items.UGTHANKI_KEBAB_1885, 2, 2, 1.3), WeightedItem(Items.MITHRIL_ARROWTIPS_42, 47, 50, 1.6))),
     MAZE(npc = MazeNPC()),
     QUIZ_MASTER(npc = QuizMasterNPC(), skillIds = intArrayOf(Skills.FISHING, Skills.PRAYER)),
     SWARM(npc = SwarmNPC()),

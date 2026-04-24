@@ -89,7 +89,7 @@ public final class PacketDispatch {
      * Send messages.
      *
      * @param messages the messages
-     * @param ticks the ticks
+     * @param ticks    the ticks
      */
     public void sendMessages(int ticks, final String... messages) {
         GameWorld.getPulser().submit(new Pulse(ticks, player) {
@@ -405,6 +405,18 @@ public final class PacketDispatch {
      */
     public void sendPositionedGraphics(Graphics graphics, Location location) {
         PacketRepository.send(PositionedGraphic.class, new PositionedGraphicContext(player, graphics, location, 0, 0));
+    }
+
+    /**
+     * Method used to send animate model rotation.
+     *
+     * @param id          the interface id.
+     * @param componentId the child component.
+     * @param pitch       the pitch rotation value.
+     * @param yaw         the yaw rotation value.
+     */
+    public void sendInterfaceAnimateRotation(int id, int componentId, int pitch, int yaw) {
+        PacketRepository.send(InterfaceModelAnimateRotation.class, new InterfaceAnimateRotateContext(player, id, componentId, pitch, yaw));
     }
 
     /**

@@ -7,47 +7,36 @@ import core.game.node.entity.player.Player
 import core.game.system.timer.PersistTimer
 import core.game.system.timer.TimerFlag
 
-class PrisonTimer :
-    PersistTimer(
-        runInterval = 1,
-        identifier = "prison_timer",
-        flags = arrayOf(TimerFlag.ClearOnDeath)
-    ) {
-
-    var started = false
+// https://runescape.wiki/w/Prison_Pete?oldid=862724
+class PrisonTimer : PersistTimer(
+    runInterval = 0,
+    identifier = "ame:prison",
+    flags = arrayOf(TimerFlag.ClearOnDeath)
+) {
 
     override fun onRegister(entity: Entity) {
         if (entity !is Player) return
-
-        if (!started) {
-            started = true
-            runInterval = HOURS_24_TICKS
-            nextExecution = getWorldTicks() + runInterval
-        }
+        nextExecution = getWorldTicks() + DURATION
     }
 
-    override fun run(entity: Entity): Boolean{
+    override fun run(entity: Entity): Boolean {
         if (entity !is Player) return false
-        if (!inBorders(entity,PrisonPeteUtils.PRISON_ZONE)) return false
+
+        if (!inBorders(entity, PrisonPeteUtils.PRISON_ZONE)) {
+            return true
+        }
 
         applyPenalty(entity)
-        return false
+        return true
     }
 
     override fun save(root: JsonObject, entity: Entity) {
         root.addProperty("ticksLeft", nextExecution - getWorldTicks())
-        root.addProperty("started", started)
     }
 
     override fun parse(root: JsonObject, entity: Entity) {
-        runInterval = root.get("ticksLeft")?.asInt ?: HOURS_24_TICKS
-        started = root.get("started")?.asBoolean ?: false
-    }
-
-    override fun beforeRegister(entity: Entity) {
-        if (hasTimerActive<PrisonTimer>(entity)) {
-            removeTimer(entity, this)
-        }
+        val ticksRemaining = root.get("ticksLeft")?.asInt ?: DURATION
+        nextExecution = getWorldTicks() + ticksRemaining
     }
 
     private fun applyPenalty(player: Player) {
@@ -59,11 +48,11 @@ class PrisonTimer :
     }
 
     companion object {
-        const val HOURS_24_TICKS = 144000
+        const val DURATION = 144000 // 24h
 
         fun start(player: Player) {
-            val timer = spawnTimer<PrisonTimer>()
-            registerTimer(player, timer)
+            removeTimer<PrisonTimer>(player)
+            registerTimer(player, PrisonTimer())
         }
 
         fun stop(player: Player) {

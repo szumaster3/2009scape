@@ -15,17 +15,11 @@ class EmoteTabInterface : InterfaceListener {
     override fun defineInterfaceListeners() {
         on(Components.EMOTES_464) { player, _, _, buttonID, _, _ ->
             if (inEquipment(player, Items.SLED_4084)) {
-                if (!emoteButtonID.contains(buttonID)) {
-                    sendMessage(player, "You can't do that on a sled.")
-                    return@on true
-                }
+                sendMessage(player, "You can't do that on a sled.")
+            } else {
+                Emotes.handle(player, buttonID)
             }
-            Emotes.handle(player, buttonID)
-            return@on true
+            true
         }
-    }
-
-    companion object {
-        private val emoteButtonID = intArrayOf(22, 10, 9, 7)
     }
 }

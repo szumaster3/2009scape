@@ -55,7 +55,7 @@ class PrayerTabInterface : InterfaceListener {
                 if (!hasRequirements) {
                     sendDialogue(
                         player,
-                        "You need a$DARK_BLUE Prayer level of 60</col>, a$DARK_BLUE Defence level of ${PrayerType.CHIVALRY.defenceReq}</col> and have completed the King's Ransom quest's Knight Wave</col> reward$DARK_BLUE to use Chivalry</col>.",
+                        "You need a$DARK_BLUE Prayer level of 60</col>, a$DARK_BLUE Defence level of ${PrayerType.CHIVALRY.defenceReq}</col> and have completed the$DARK_BLUE King's Ransom quest's Knight Wave</col> reward$DARK_BLUE to use Chivalry</col>.",
                     )
                     false
                 } else {
@@ -67,7 +67,7 @@ class PrayerTabInterface : InterfaceListener {
                 if (!hasRequirements) {
                     sendDialogue(
                         player,
-                        "You need a$DARK_BLUE Prayer level of 70</col>, a$DARK_BLUE Defence level of ${PrayerType.PIETY.defenceReq}</col> and to have completed the King's Ransom quest's Knight Wave</col> reward$DARK_BLUE to use Piety</col>.",
+                        "You need a$DARK_BLUE Prayer level of 70</col>, a$DARK_BLUE Defence level of ${PrayerType.PIETY.defenceReq}</col> and to have completed the$DARK_BLUE King's Ransom quest's Knight Wave</col> reward$DARK_BLUE to use Piety</col>.",
                     )
                     false
                 } else {

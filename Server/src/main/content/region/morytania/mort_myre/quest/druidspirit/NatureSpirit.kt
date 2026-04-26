@@ -43,7 +43,7 @@ class NatureSpirit : Quest(Quests.NATURE_SPIRIT, 95, 94, 2, Vars.VARP_QUEST_NATU
 
             if (stage >= 25) {
                 line(player, "I located Filliman Tarlock in the swamp and managed to", line++, true)
-                line(player, "convince him that he is in fact a ghost. ", line++, true)
+                line(player, "convince him that he is in fact a ghost.", line++, true)
             }
 
             if (stage == 25) {

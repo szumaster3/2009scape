@@ -27,7 +27,7 @@ class WemundDialogue(player: Player? = null) : Dialogue(player) {
             2 -> npc(FaceAnim.OLD_NORMAL, "I don't really sell just wrenches, you know, I sell anything", "related to the maintenance of dwarven steam machines.").also { stage++ }
             3 -> npc(FaceAnim.OLD_NORMAL, "Sometimes I do repair work as well.", "Or I send my assistant.").also { stage++ }
             4 -> player(FaceAnim.HALF_ASKING, "Who's he then?").also { stage++ }
-            5 -> npc(FaceAnim.OLD_NORMAL, "Oh, he's right over there... used to work in the mines to", "the south, poor lad. Made a bit of a mess of things ", "I believe.").also { stage++ }
+            5 -> npc(FaceAnim.OLD_NORMAL, "Oh, he's right over there... used to work in the mines to", "the south, poor lad. Made a bit of a mess of things", "I believe.").also { stage++ }
             6 -> npc(FaceAnim.OLD_NORMAL, "So what'll it be then? Got any ship engines to repair?").also { stage++ }
             7 -> player("Thanks, but I don't think your services are", "required.").also { stage = END_DIALOGUE }
         }

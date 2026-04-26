@@ -37,7 +37,7 @@ class FaladorPlugin : InteractionListener {
                     "bank, why not protect yourself with a Bank",
                     "PIN? A Bank PIN is a four-digit number.",
                     "",
-                    "It's like an extra password that protects ",
+                    "It's like an extra password that protects",
                     "your bank account. If you set one, you'll",
                     "be asked to enter it before you can take",
                     "items out of the bank.",

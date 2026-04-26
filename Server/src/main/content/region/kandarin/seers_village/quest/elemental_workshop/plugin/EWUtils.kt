@@ -51,7 +51,7 @@ object EWUtils {
                 ),
                 Page(
                     BookLine("also trying to destroy all", 66),
-                    BookLine("knowledge of ", 67),
+                    BookLine("knowledge of", 67),
                     BookLine("manufacturing processes.", 68),
                     BookLine("Yet this book remains and", 69),
                     BookLine("you may still find a way", 70),

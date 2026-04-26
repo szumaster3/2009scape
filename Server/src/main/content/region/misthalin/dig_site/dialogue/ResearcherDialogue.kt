@@ -8,6 +8,9 @@ import core.tools.END_DIALOGUE
 import core.tools.START_DIALOGUE
 import shared.consts.NPCs
 
+/**
+ * Represents Researcher dialogue.
+ */
 @Initializable
 class ResearcherDialogue(player: Player? = null) : Dialogue(player) {
 

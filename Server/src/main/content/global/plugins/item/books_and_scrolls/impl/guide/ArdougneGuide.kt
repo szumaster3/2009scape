@@ -37,7 +37,7 @@ class ArdougneGuide : InteractionListener {
                         BookLine("<col=ff0000>Ardougne: City of</col>", 66),
                         BookLine("<col=ff0000>Shopping!</col>", 67),
                         BookLine("Come sample the delights", 68),
-                        BookLine("of the Ardougne market ", 69),
+                        BookLine("of the Ardougne market", 69),
                         BookLine("the biggest in the known", 70),
                         BookLine("world! From spices to silk,", 71),
                         BookLine("there is something here", 72),

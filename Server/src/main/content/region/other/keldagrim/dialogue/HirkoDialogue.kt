@@ -41,7 +41,7 @@ class HirkoDialogue(player: Player? = null) : Dialogue(player) {
             8 -> npcl(FaceAnim.OLD_NORMAL, "Then get yourself some metal and a hammer and smith yourself some limbs for the bow, mind that you use the right metals and woods though as some wood is too light to use with some metal and vice versa.").also { stage++ }
             9 -> player(FaceAnim.HALF_ASKING, "Which goes with which?").also { stage++ }
             10 -> npc(FaceAnim.OLD_NORMAL, "Wood and Bronze as they're basic materials,", "Oak and Blurite, Willow and Iron, Steel and Teak,", "Mithril and Maple, Adamantite and Mahogany and finally", "Runite and Yew.").also { stage++ }
-            11 -> player("Ok, so I have my stock and a pair of ", "limbs... what now?").also { stage++ }
+            11 -> player("Ok, so I have my stock and a pair of", "limbs... what now?").also { stage++ }
             12 -> npcl(FaceAnim.OLD_NORMAL, "Simply take a hammer and smack the limbs firmly onto the stock. You'll then need a string, only they're not the same as normal bows.").also { stage++ }
             13 -> npcl(FaceAnim.OLD_NORMAL, "You'll need to dry some large animal's meat to get sinew, then spin that on a spinning wheel, it's the only thing we've found to be strong enough for a crossbow.").also { stage++ }
             14 -> options("What about magic logs?", "Thanks for telling me. Bye!").also { stage++ }

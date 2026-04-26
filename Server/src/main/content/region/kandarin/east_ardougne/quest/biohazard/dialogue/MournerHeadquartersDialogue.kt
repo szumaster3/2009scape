@@ -45,7 +45,7 @@ class MournerHeadquartersDialogue : DialogueFile() {
             102 -> if (!inEquipment(player!!, Items.DOCTORS_GOWN_430)) {
                 npc("I need a doctor. The nurse's hut is to the south west.", "Go now and bring us a doctor, that's an order.").also { stage = END_DIALOGUE }
             } else {
-                npc("There is one mourner, who's really sick, ", "resting upstairs. You should see to him first.").also { stage++ }
+                npc("There is one mourner, who's really sick,", "resting upstairs. You should see to him first.").also { stage++ }
             }
 
             103 -> player("Ok, I'll see what I can do.").also { stage = END_DIALOGUE }

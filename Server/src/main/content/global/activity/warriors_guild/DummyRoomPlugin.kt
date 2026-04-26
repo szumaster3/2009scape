@@ -1,4 +1,4 @@
-package content.global.activity.warriors_guild.plugin.room
+package content.global.activity.warriors_guild
 
 import core.api.*
 import core.cache.def.impl.SceneryDefinition

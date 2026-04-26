@@ -27,7 +27,7 @@ class MonksFriend : Quest(Quests.MONKS_FRIEND, 89, 88, 1, Vars.VARP_QUEST_MONKS_
             line++
         }
         if (stage >= 20) {
-            line(player, "Brother Omad asked me to recover a child's blanket, I ", line++, true)
+            line(player, "Brother Omad asked me to recover a child's blanket, I", line++, true)
             line(player, "found the secret cave and gave back the blanket.", line++, true)
             line++
         }

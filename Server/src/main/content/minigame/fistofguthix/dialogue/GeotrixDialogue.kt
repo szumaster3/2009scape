@@ -70,10 +70,10 @@ class GeotrixDialogue(player: Player? = null) : Dialogue(player) {
             32 -> player("Does Guthix do that sort of thing?").also { stage++ }
             33 -> npc("Well, no! I agree with you entirely.", "This theory has so many holes that it", "makes no sense at all!").also { stage++ }
             34 -> npc("Do you want to hear another theory?").also { stage = 16 }
-            35 -> npc("Shhh! Give Fiara some respect! She canhear you, ", "you know.").also { stage++ }
+            35 -> npc("Shhh! Give Fiara some respect! She canhear you,", "you know.").also { stage++ }
             36 -> player("Fiara? It has a name?").also { stage++ }
             37 -> npc("Of course, Guthix chooses names for all his guardians.").also { stage++ }
-            38 -> player("If...err...Fiara is a Guardian, ", "what is she guarding?").also { stage++ }
+            38 -> player("If...err...Fiara is a Guardian,", "what is she guarding?").also { stage++ }
             39 -> npc("She guards this site. It is a holy site of Guthix.").also { stage++ }
             40 -> options("How long has Fiara been here?", "I'd better get going.").also { stage++ }
             41 -> when (buttonId) {

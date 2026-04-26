@@ -1,7 +1,6 @@
-package content.global.activity.warriors_guild.plugin
+package content.global.activity.warriors_guild
 
 import content.global.activity.warriors_guild.dialogue.ClaimTokenDialogue
-import content.global.activity.warriors_guild.plugin.room.CatapultRoomPlugin
 import core.api.*
 import core.game.component.Component
 import core.game.container.impl.EquipmentContainer
@@ -15,8 +14,8 @@ import core.game.node.item.Item
 import core.game.world.map.Location
 import shared.consts.*
 
-class WarriorsGuildPlugin: InteractionListener {
-    private val warriorGuildDoors = intArrayOf(Scenery.DOOR_15653, Scenery.DOOR_1530)
+class WarriorsGuildPlugin : InteractionListener {
+
     override fun defineListeners() {
         on(Items.GROUND_ASHES_8865, IntType.ITEM, "dust-hands") { player, node ->
             val inShotputArea = withinDistance(player, Location(2861, 3553, 1), 1) ||
@@ -39,13 +38,15 @@ class WarriorsGuildPlugin: InteractionListener {
         onEquip(Items.DEFENSIVE_SHIELD_8856) { player, node ->
             if (node is Item) {
                 if (player.location != CatapultRoomPlugin.TARGET) {
-                    sendMessage(player,
+                    sendMessage(
+                        player,
                         "You may not equip this shield outside the target area in the Warrior's Guild.",
                     )
                     return@onEquip false
                 }
                 if (player.equipment[EquipmentContainer.SLOT_WEAPON] != null) {
-                    sendDialogueLines(player,
+                    sendDialogueLines(
+                        player,
                         "You will need to make sure your sword hand is free to equip this",
                         "shield.",
                     )
@@ -67,7 +68,7 @@ class WarriorsGuildPlugin: InteractionListener {
             return@onUnequip true
         }
 
-        on(warriorGuildDoors, IntType.SCENERY, "open") { player, node ->
+        on(intArrayOf(Scenery.DOOR_15653, Scenery.DOOR_1530), IntType.SCENERY, "open") { player, node ->
             val doorScenery = node.asScenery()
 
             if (node.id == Scenery.DOOR_1530 && node.location != Location(2837, 3549, 0)) {
@@ -99,6 +100,6 @@ class WarriorsGuildPlugin: InteractionListener {
     companion object {
         private fun canEnter(player: Player): Boolean =
             getStatLevel(player, Skills.ATTACK) + getStatLevel(player, Skills.STRENGTH) >= 130 ||
-            getStatLevel(player, Skills.ATTACK) == 99 || getStatLevel(player, Skills.STRENGTH) == 99
+                    getStatLevel(player, Skills.ATTACK) == 99 || getStatLevel(player, Skills.STRENGTH) == 99
     }
 }

@@ -70,7 +70,7 @@ class BarbarianBook : InteractionListener {
                     BookLine("that I may not forget my", 69),
                     BookLine("tasks. His instructions are", 70),
                     BookLine("thus faithfully recorded for", 71),
-                    BookLine("posterity. ", 72),
+                    BookLine("posterity.", 72),
                     BookLine(BLUE + "Otto's words on Fishing with", 74),
                     BookLine(BLUE + "rods.", 75),
                     BookLine("'While you civilised folk use", 77),

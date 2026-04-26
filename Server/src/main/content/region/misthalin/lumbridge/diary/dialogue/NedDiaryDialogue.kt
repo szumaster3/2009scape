@@ -87,7 +87,7 @@ class NedDiaryDialogue : DialogueFile() {
 
             31 ->
                 npc(
-                    "To claim the explorer's ring speak to Explorer Jack in ",
+                    "To claim the explorer's ring speak to Explorer Jack in",
                     "Lumbridge, Bob in Bob's Axes in Lumbridge, or myself.",
                 ).also { stage = 0 }
 

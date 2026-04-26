@@ -682,7 +682,7 @@ class JunaDialogue(player: Player? = null) : Dialogue(player) {
             13 -> npc(FaceAnim.OLD_CALM_TALK1, "Silence fell, for the gods knew that none could challenge", "the power of the mighty Guthix; for His power is that", "of nature itself, to which all other things are subject, in", "the end.").also { stage++ }
             14 -> npc(FaceAnim.OLD_CALM_TALK1, "Guthix reclaimed that which had been stolen from Him,", "and went back underground to return to His sleep and", "continue to draw the world's power into Himself.").also { stage++ }
             15 -> npc(FaceAnim.OLD_CALM_TALK1, "But on His way into the depths of the earth He sat and", "rested in this cave; and, thinking of the battle-scarred", "desert that now stretched from one side of His world to", "the other, He wept.").also { stage++ }
-            16 -> npc(FaceAnim.OLD_CALM_TALK1, "And so great was His sorrow, and so great was His life- ", "giving power, that the rocks themselves began to weep", "with Him.").also { stage++ }
+            16 -> npc(FaceAnim.OLD_CALM_TALK1, "And so great was His sorrow, and so great was His life-", "giving power, that the rocks themselves began to weep", "with Him.").also { stage++ }
             17 -> npc(FaceAnim.OLD_CALM_TALK1, "Later, Guthix noticed that the rocks continued to weep,", "and that their tears were infused with a small part of", "His power.").also { stage++ }
             18 -> {
                 npc(FaceAnim.OLD_NORMAL, "So He set me, His servant, to guard the cave, and He", "entrusted to me the task of judging who was and was", "not worthy to access the tears.")

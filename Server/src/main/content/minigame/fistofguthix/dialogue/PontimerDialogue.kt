@@ -55,7 +55,7 @@ class PontimerDialogue(player: Player? = null) : Dialogue(player) {
 
             20 -> npc("Because he was angry at the time, the power would have", "been tainted with aggression, which is why he left Fiara as", "a guardian, to make sure the power did not escape unfettered.").also { stage++ }
             21 -> player("Do you believe this theory?").also { stage++ }
-            22 -> npc("No, I think it's rubbish; if it was true, that would mean", "Guthix's hand would be a very strange shape. The ", "indentation in the centre of the cave doesn't look like a fist", "to me.").also { stage++ }
+            22 -> npc("No, I think it's rubbish; if it was true, that would mean", "Guthix's hand would be a very strange shape. The", "indentation in the centre of the cave doesn't look like a fist", "to me.").also { stage++ }
             23 -> npc("Getorix has just let his imagination run away with him.", "My theory is better.").also { stage++ }
             24 -> npc("Do you want to hear another theory?").also { stage++ }
             25 -> sendOptions(player, "I suppose so...", "Pontimer's theory.", "Alran's theory.", "I'd better get going.").also { stage++ }
@@ -73,10 +73,10 @@ class PontimerDialogue(player: Player? = null) : Dialogue(player) {
             33 -> player("Does Guthix do that sort of thing?").also { stage++ }
             34 -> npc("Well, no! I agree with you entirely. This theory has", "so many holes that it makes no sense at all!").also { stage++ }
             35 -> npc("Do you want to hear another theory?").also { stage = 16 }
-            36 -> npc("Shhh! Give Fiara some respect! She canhear you, ", "you know.").also { stage++ }
+            36 -> npc("Shhh! Give Fiara some respect! She canhear you,", "you know.").also { stage++ }
             37 -> player("Fiara? It has a name?").also { stage++ }
             38 -> npc("Of course, Guthix chooses names for all his guardians.").also { stage++ }
-            39 -> player("If...err...Fiara is a Guardian, ", "what is she guarding?").also { stage++ }
+            39 -> player("If...err...Fiara is a Guardian,", "what is she guarding?").also { stage++ }
             40 -> npc("She guards this site. It is a holy site of Guthix.").also { stage++ }
             41 -> options("How long has Fiara been here?", "I'd better get going.").also { stage++ }
             42 -> when (buttonId) {

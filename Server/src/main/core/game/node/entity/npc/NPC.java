@@ -39,6 +39,8 @@ import core.game.world.update.flag.context.Animation;
 import core.game.world.update.flag.context.Graphics;
 import core.tools.RandomFunction;
 
+import java.util.List;
+
 /**
  * Represents a non-player character.
  *
@@ -84,7 +86,8 @@ public class NPC extends Entity {
     private double slayerExperience;
     private Tasks task;
     private boolean neverWalks;
-    private String forceTalk;
+    @SuppressWarnings("unchecked")
+    private List<String> forceTalk;
     /**
      * The Behavior.
      */
@@ -451,8 +454,9 @@ public class NPC extends Entity {
                 return;
             }
         }
-        if (forceTalk != null && getAttribute("lastForceTalk", 0) < GameWorld.getTicks()) {
-            sendChat(forceTalk);
+        if (forceTalk != null && !forceTalk.isEmpty() && getAttribute("lastForceTalk", 0) < GameWorld.getTicks()) {
+            String text = forceTalk.get(RandomFunction.random(forceTalk.size()));
+            sendChat(text);
             setAttribute("lastForceTalk", GameWorld.getTicks() + RandomFunction.random(15, 30));
         }
     }

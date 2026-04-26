@@ -18,7 +18,6 @@ import shared.consts.NPCs
 @Initializable
 class KlenterDialogue(player: Player? = null) : Dialogue(player) {
 
-    val forceChat = arrayOf("Agghhh!", "Aieee!", "Waghhhh!", "Wooo!")
     private val forceDialogue = arrayOf("You worm! May the Devourer take your soul.", "Give me my guts back, thief.", "You pathetic excuse for a thief.", "Return what is mine.", "Grave defiler.", "Thief.", "Evil doer.", "Spawn of evil.", "Graverobber.", "Organ snatcher.")
 
     override fun open(vararg args: Any?): Boolean {
@@ -28,7 +27,6 @@ class KlenterDialogue(player: Player? = null) : Dialogue(player) {
         } else {
             npc(FaceAnim.ANGRY, "You foul thief, return what is mine.")
         }
-        sendChat(npc, forceChat.random())
         return true
     }
 

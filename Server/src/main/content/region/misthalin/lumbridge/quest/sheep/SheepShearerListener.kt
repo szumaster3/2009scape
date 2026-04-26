@@ -1,12 +1,9 @@
-package content.global.plugins.npc
+package content.region.misthalin.lumbridge.quest.sheep
 
-import content.region.misthalin.lumbridge.quest.sheep.SheepShearer
 import core.api.*
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
-import core.game.node.entity.combat.DeathTask
 import core.game.node.entity.npc.NPC
-import core.game.node.entity.npc.NPCBehavior
 import core.game.node.entity.player.Player
 import core.game.system.task.Pulse
 import core.game.world.GameWorld
@@ -16,73 +13,7 @@ import core.game.world.update.flag.context.Animation
 import core.tools.RandomFunction
 import shared.consts.*
 
-private val sheepIds =
-    intArrayOf(
-        NPCs.SHEEP_42,
-        NPCs.SHEEP_43,
-        NPCs.GOLDEN_SHEEP_1271,
-        NPCs.GOLDEN_SHEEP_1272,
-        NPCs.SHEEP_1529,
-        NPCs.SHEEP_1762,
-        NPCs.SHEEP_1763,
-        NPCs.SHEEP_1764,
-        NPCs.SHEEP_1765,
-        NPCs.SICK_LOOKING_SHEEP_1_2377,
-        NPCs.SICK_LOOKING_SHEEP_2_2378,
-        NPCs.SICK_LOOKING_SHEEP_3_2379,
-        NPCs.SICK_LOOKING_SHEEP_4_2380,
-        NPCs.SHEEP_3310,
-        NPCs.SHEEP_3311,
-        NPCs.SHEEP_3579,
-        NPCs.SHEEP_5148,
-        NPCs.SHEEP_5149,
-        NPCs.SHEEP_5150,
-        NPCs.SHEEP_5151,
-        NPCs.SHEEP_5152,
-        NPCs.SHEEP_5153,
-        NPCs.SHEEP_5154,
-        NPCs.SHEEP_5155,
-        NPCs.SHEEP_5156,
-        NPCs.SHEEP_5157,
-        NPCs.SHEEP_5158,
-        NPCs.SHEEP_5159,
-        NPCs.SHEEP_5160,
-        NPCs.SHEEP_5161,
-        NPCs.SHEEP_5162,
-        NPCs.SHEEP_5163,
-        NPCs.SHEEP_5164,
-        NPCs.SHEEP_5165,
-        NPCs.GOLDEN_SHEEP_5172,
-        NPCs.GOLDEN_SHEEP_5173,
-    )
-
-/**
- * Handles the SheepNPC.
- */
-class SheepNPC : NPCBehavior(*sheepIds), InteractionListener {
-
-    private var tickDelay = RandomFunction.random(5)
-    private var nextChatTick = RandomFunction.random(20, 40)
-
-    override fun tick(self: NPC): Boolean {
-        if (self.properties.combatPulse.isAttacking || DeathTask.isDead(self)) {
-            return true
-        }
-
-        tickDelay++
-
-        if (tickDelay >= nextChatTick) {
-            tickDelay = 0
-            nextChatTick = RandomFunction.random(20, 40)
-
-            if (RandomFunction.random(2) == 1) {
-                sendChat(self, "Baa!")
-            }
-        }
-
-        return true
-    }
-
+class SheepShearerListener: InteractionListener {
     override fun defineListeners() {
         on(IntType.NPC, "shear") { player, node ->
             val sheep = node as NPC

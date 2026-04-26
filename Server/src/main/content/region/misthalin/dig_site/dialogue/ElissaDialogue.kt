@@ -7,6 +7,9 @@ import core.game.node.entity.player.Player
 import core.plugin.Initializable
 import shared.consts.NPCs
 
+/**
+ * Represents Elissa dialogue.
+ */
 @Initializable
 class ElissaDialogue(player: Player? = null) : Dialogue(player) {
 

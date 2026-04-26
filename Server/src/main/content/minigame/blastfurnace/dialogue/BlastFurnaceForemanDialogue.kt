@@ -356,34 +356,6 @@ class BlastFurnaceForemanDialogue(player: Player? = null) : Dialogue(player) {
         return true
     }
 
-    class ChatPulse(
-        val npc: NPC,
-    ) : Pulse() {
-        companion object {
-            val forceChat = arrayOf(
-                "Good work soldier!",
-                "Push it!",
-                "Work it!",
-                "The dummy is the enemy. Kill it!",
-                "Put your back into it soldier!",
-                "You're not out for a sunday stroll soldier!",
-                "My daughter can hit harder than that!",
-                "I want to see you sweat!",
-                "Keep it up soldier!",
-            )
-        }
-
-        var ticks = 0
-
-        override fun pulse(): Boolean {
-            ticks++
-            if (ticks % 100 == 0) {
-                sendChat(npc, forceChat[RandomFunction.random(forceChat.size)])
-            }
-            return true
-        }
-    }
-
     override fun newInstance(player: Player?): Dialogue = BlastFurnaceForemanDialogue(player)
 
     override fun getIds(): IntArray = intArrayOf(NPCs.BLAST_FURNACE_FOREMAN_2553)

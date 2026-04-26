@@ -245,7 +245,7 @@ public final class GrandExchangeCutscene extends CutscenePlugin {
                     stage = 109;
                     break;
                 case 109:
-                    npc("Taking note of past successes and failures is important, ", "so the clerks will show you your previous buy and sell", "attempts on the Grand Exchange.");
+                    npc("Taking note of past successes and failures is important,", "so the clerks will show you your previous buy and sell", "attempts on the Grand Exchange.");
                     stage = 110;
                     break;
                 case 110:

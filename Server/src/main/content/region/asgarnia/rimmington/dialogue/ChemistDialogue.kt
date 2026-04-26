@@ -80,7 +80,7 @@ class ChemistDialogue(player: Player? = null) : Dialogue(player) {
             }
             50 -> npc("Anchovies are pretty oily fish. I'd have thought you", "could just grind them up and sieve out the bits. You'd", "probably want to remove any water first - Cooking", "should do that pretty well.").also { stage = END_DIALOGUE }
             55 -> if (player.hasItem(Item(Items.SIEVE_6097))) {
-                npc("Errm, yes. But you already have one. Two sieves is a ", "bit exessive, don't you think?").also { stage = END_DIALOGUE }
+                npc("Errm, yes. But you already have one. Two sieves is a", "bit excessive, don't you think?").also { stage = END_DIALOGUE }
             } else {
                 npc("Errm, yes. Here have this one. It's only been used for", "sieving dead rats out of sewer water.").also { stage++ }
             }

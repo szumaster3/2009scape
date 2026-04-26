@@ -622,7 +622,7 @@ class SlayerMasterDialogue(player: Player? = null) : Dialogue(player) {
                     interpreter.sendDialogues(
                         master!!.npc,
                         getExpression(master),
-                        "You're still hunting " + getInstance(player).taskName + ", you have ",
+                        "You're still hunting " + getInstance(player).taskName + ", you have",
                         getInstance(player).amount.toString() + " to go. Come back when you've finished your task.",
                     )
                 } else {

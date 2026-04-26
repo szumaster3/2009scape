@@ -38,7 +38,7 @@ class PortSarimGuardDialogue(player: Player? = null) : Dialogue(player) {
             4 -> npc("Mighty? You look like another of those silly adventurers", "who thinks they're the bee's knees just because they've", "done a few lousy quests!").also { stage++ }
             5 -> player("Well it sounds better than sitting on this rooftop all day", "looking at trees!").also { stage++ }
             6 -> npc("I'll have you know it's a very important job guarding this", "jail!").also { stage++ }
-            7 -> npc("If anyone comes sneaking in here to mess around with ", "the prisoners, the lads downstairs will make mincemeat of them, and I'll be", "here to pick them off if they try to escape.").also { stage++ }
+            7 -> npc("If anyone comes sneaking in here to mess around with", "the prisoners, the lads downstairs will make mincemeat of them, and I'll be", "here to pick them off if they try to escape.").also { stage++ }
             8 -> player("You mean people aren't meant to be able to shoot the", "prisoners in the cells?").also { stage++ }
             9 -> npc(FaceAnim.NOD_YES, "Yes, that's right.").also { stage++ }
             10 -> player("Okay, it's been nice talking to you.").also { stage = END_DIALOGUE }

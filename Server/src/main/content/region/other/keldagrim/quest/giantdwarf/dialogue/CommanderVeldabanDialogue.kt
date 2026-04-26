@@ -10,7 +10,7 @@ import shared.consts.NPCs
 import shared.consts.Quests
 
 /**
- * Represents the Commander Veldaban dialogue (The Giant Dwarf start)
+ * Represents the Commander Veldaban dialogue (The Giant Dwarf start).
  */
 @Initializable
 class CommanderVeldabanDialogue(player: Player? = null) : Dialogue(player) {

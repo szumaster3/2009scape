@@ -20,10 +20,10 @@ class GemTraderDialogue(player: Player? = null) : Dialogue(player) {
         npc = (args[0] as NPC).getShownNPC(player)
         val qstage = player?.questRepository?.getStage(Quests.FAMILY_CREST) ?: -1
         if (qstage == 12) {
-            npc("Good day to you, traveller. ", "Would you be interested in buying some gems?")
+            npc("Good day to you, traveller.", "Would you be interested in buying some gems?")
             stage = 1
         } else {
-            npc("Good day to you, traveller. ", "Would you be interested in buying some gems?")
+            npc("Good day to you, traveller.", "Would you be interested in buying some gems?")
             stage = 2
         }
         return true
@@ -41,7 +41,7 @@ class GemTraderDialogue(player: Player? = null) : Dialogue(player) {
                 }
 
                 2 -> player("No, thank you.").also { stage = END_DIALOGUE }
-                3 -> npc("Fitzharmon, eh? Hmmm... If I'm not mistaken, ", "that's the family name of a member ", "of the Varrockian nobility.").also { stage = 100 }
+                3 -> npc("Fitzharmon, eh? Hmmm... If I'm not mistaken,", "that's the family name of a member", "of the Varrockian nobility.").also { stage = 100 }
             }
 
             20 -> when (buttonId) {
@@ -53,9 +53,9 @@ class GemTraderDialogue(player: Player? = null) : Dialogue(player) {
             }
 
             100 -> npc("You know, I HAVE seen someone of that", "persuasion around here recently...", "wearing a 'poncey' yellow cape, he was.").also { stage++ }
-            101 -> npc("Came in here all la-di-dah, high and mighty,", "asking for jewellery made from 'perfect gold' - ", "whatever that is - like 'normal' gold just isn't ", "good enough for 'little lord fancy pants' there!").also { stage++ }
-            102 -> npc("I told him to head to the desert 'cos ", "I know there's gold out there, in them there sand dunes. ", "And if it's not up to his lordship's ", "high standards of 'gold perfection', then...").also { stage++ }
-            103 -> npc("Well, maybe we'll all get lucky ", "and the scorpions will deal with him.").also { stage++ }
+            101 -> npc("Came in here all la-di-dah, high and mighty,", "asking for jewellery made from 'perfect gold' -", "whatever that is - like 'normal' gold just isn't", "good enough for 'little lord fancy pants' there!").also { stage++ }
+            102 -> npc("I told him to head to the desert 'cos", "I know there's gold out there, in them there sand dunes.", "And if it's not up to his lordship's", "high standards of 'gold perfection', then...").also { stage++ }
+            103 -> npc("Well, maybe we'll all get lucky", "and the scorpions will deal with him.").also { stage++ }
             104 -> {
                 end()
                 setQuestStage(player, Quests.FAMILY_CREST, 13)

@@ -873,6 +873,7 @@
   },
   {
     "examine": "White and fluffy.",
+    "force_talk": "Baa!",
     "melee_animation": "0",
     "range_animation": "0",
     "magic_level": "1",
@@ -891,6 +892,7 @@
   },
   {
     "examine": "White and fluffy.",
+    "force_talk": "Baa!",
     "melee_animation": "0",
     "range_animation": "0",
     "magic_level": "1",
@@ -945,6 +947,7 @@
   },
   {
     "examine": "He's quackers.",
+    "force_talk": "Quack!",
     "melee_animation": "0",
     "range_animation": "0",
     "attack_speed": "4",
@@ -1696,6 +1699,7 @@
   },
   {
     "examine": "Converts grass to beef.",
+    "force_talk": "Moo",
     "melee_animation": "5849",
     "range_animation": "5849",
     "combat_audio": "369,371,370",
@@ -7285,6 +7289,7 @@
   },
   {
     "examine": "Converts grass to beef.",
+    "force_talk": "Moo",
     "melee_animation": "5849",
     "range_animation": "5849",
     "combat_audio": "369,371,370",
@@ -16062,6 +16067,7 @@
   },
   {
     "examine": "Converts grass to beef.",
+    "force_talk": "Moo",
     "melee_animation": "5849",
     "range_animation": "5849",
     "combat_audio": "369,371,370",
@@ -21438,6 +21444,7 @@
   },
   {
     "examine": "Lovely thick wool.",
+    "force_talk": "Baa!",
     "melee_animation": "0",
     "range_animation": "0",
     "magic_level": "1",
@@ -21456,6 +21463,7 @@
   },
   {
     "examine": "Lovely thick wool.",
+    "force_talk": "Baa!",
     "melee_animation": "0",
     "range_animation": "0",
     "magic_level": "1",
@@ -22546,7 +22554,7 @@
     "range_level": "1",
     "attack_level": "1"
   },
-   {
+  {
     "examine": "A horror from the ocean depths...",
     "combat_style": "1",
     "melee_animation": "1340",
@@ -25350,6 +25358,7 @@
   },
   {
     "examine": "White and fluffy.",
+    "force_talk": "Baa!",
     "name": "Sheep",
     "defence_level": "1",
     "safespot": null,
@@ -28267,6 +28276,7 @@
   },
   {
     "examine": "This ghost looks quite rebellious.",
+    "force_talk": "Down with Necrovaus!!,Rise up my fellow ghosts, and we shall be victorious!,Power to the Ghosts!!,Rise together Ghosts without a cause!!,United we conquer - divided we fall!!,We shall overcome!!,Let Necrovarus know we want out!!,Don't stay silent - victory in numbers!!",
     "name": "Gravingas",
     "defence_level": "1",
     "safespot": null,
@@ -29502,6 +29512,7 @@
   },
   {
     "examine": "White and fluffy.",
+    "force_talk": "Baa!",
     "name": "Sheep",
     "defence_level": "1",
     "safespot": null,
@@ -29514,6 +29525,7 @@
   },
   {
     "examine": "White and fluffy.",
+    "force_talk": "Baa!",
     "melee_animation": "0",
     "range_animation": "0",
     "magic_level": "1",
@@ -29532,6 +29544,7 @@
   },
   {
     "examine": "White and fluffy.",
+    "force_talk": "Baa!",
     "name": "Sheep",
     "defence_level": "1",
     "safespot": null,
@@ -29544,6 +29557,7 @@
   },
   {
     "examine": "White and fluffy.",
+    "force_talk": "Baa!",
     "name": "Sheep",
     "defence_level": "1",
     "safespot": null,
@@ -29555,7 +29569,7 @@
     "attack_level": "1"
   },
   {
-    "examine": "",
+    "examine": "Prelude to a steak.",
     "melee_animation": "5849",
     "range_animation": "5849",
     "combat_audio": "366,368,367",
@@ -29577,6 +29591,7 @@
   },
   {
     "examine": "Converts grass to beef.",
+    "force_talk": "Moo",
     "melee_animation": "5849",
     "range_animation": "5849",
     "combat_audio": "369,371,370",
@@ -33445,7 +33460,8 @@
     "attack_level": "1"
   },
   {
-    "examine": "",
+    "examine": "A rather transparent character.",
+    "force_talk": "Agghhh!,Aieee!,Waghhhh!,Wooo!",
     "name": "Klenter",
     "safespot": null,
     "id": "2014"
@@ -35402,6 +35418,7 @@
   },
   {
     "examine": "He is regulating the flow of goods on the trade floor and maintaining order.",
+    "force_talk": "Stay inside your triangle!,Who's next?,Next bid please!,Need an offer now!,Keep the goods flowing!,Keep it civil!,Come on come on!,Go again please.,Keep the goods flowing!,Hold on there!",
     "melee_animation": "0",
     "range_animation": "0",
     "magic_level": "1",
@@ -35601,7 +35618,6 @@
     "examine": "A gnome traveller, visiting Keldagrim.",
     "name": "Gnome traveller",
     "defence_level": "1",
-    "force_talk": "",
     "safespot": null,
     "lifepoints": "10",
     "strength_level": "1",
@@ -35615,7 +35631,6 @@
     "examine": "A gnome traveller, visiting Keldagrim.",
     "name": "Gnome traveller",
     "defence_level": "1",
-    "force_talk": "",
     "safespot": null,
     "lifepoints": "10",
     "strength_level": "1",
@@ -36239,6 +36254,7 @@
   },
   {
     "examine": "He makes sure the carts don't run anyone over.",
+    "force_talk": "Grand Exchange carts departing from all tracks!,Ice Mountain carts departing from all tracks!,White Wolf Mountain carts departing from all tracks!,Ice Mountain carts departing from all tracks!,Grand Exchange carts departing from all tracks!,Mind the cart!,Careful!",
     "melee_animation": "0",
     "range_animation": "0",
     "magic_level": "1",
@@ -36257,6 +36273,7 @@
   },
   {
     "examine": "He makes sure the carts don't run anyone over.",
+    "force_talk": "Tickets! Tickets!,Buy your tickets here!,Selling tickets!",
     "melee_animation": "0",
     "range_animation": "0",
     "magic_level": "1",
@@ -39199,6 +39216,7 @@
   },
   {
     "examine": "The sheep looks distinctly unwell and has a slight red tinge.",
+    "force_talk": "Baa!",
     "name": "Sick-looking sheep (1)",
     "defence_level": "1",
     "safespot": null,
@@ -39211,6 +39229,7 @@
   },
   {
     "examine": "The sheep looks distinctly unwell and has a slight green tinge.",
+    "force_talk": "Baa!",
     "name": "Sick-looking sheep (2)",
     "defence_level": "1",
     "safespot": null,
@@ -39223,6 +39242,7 @@
   },
   {
     "examine": "The sheep looks distinctly unwell and has a slight blue tinge.",
+    "force_talk": "Baa!",
     "name": "Sick-looking sheep (3)",
     "defence_level": "1",
     "safespot": null,
@@ -39235,6 +39255,7 @@
   },
   {
     "examine": "The sheep looks distinctly unwell and has a slight yellow tinge.",
+    "force_talk": "Baa!",
     "name": "Sick-looking sheep (4)",
     "defence_level": "1",
     "safespot": null,
@@ -41670,6 +41691,7 @@
   },
   {
     "examine": "Looks after the blast furnace.",
+    "force_talk": "Good work soldier!,Push it!,Work it!,The dummy is the enemy. Kill it!,Put your back into it soldier!,You're not out for a sunday stroll soldier!,My daughter can hit harder than that!,I want to see you sweat!,Keep it up soldier!",
     "melee_animation": "0",
     "range_animation": "0",
     "magic_level": "1",
@@ -43808,6 +43830,7 @@
   },
   {
     "examine": "He's quackers.",
+    "force_talk": "Quack!",
     "melee_animation": "0",
     "range_animation": "0",
     "attack_speed": "4",
@@ -45444,6 +45467,7 @@
   },
   {
     "examine": "They just call him 'Coach'.",
+    "force_talk": "One-Two One-Two!,Run faster! Don't be so lazy!,Pass to your left! Pass now!,There are others to pass to you know,Hey human get moving!,Take him out you wuss",
     "melee_animation": "0",
     "range_animation": "0",
     "magic_level": "1",
@@ -53320,6 +53344,7 @@
   },
   {
     "examine": "Converts grass to beef.",
+    "force_talk": "Moo",
     "melee_animation": "5849",
     "range_animation": "5849",
     "combat_audio": "369,371,370",
@@ -53342,6 +53367,7 @@
   },
   {
     "examine": "White and fluffy.",
+    "force_talk": "Baa!",
     "name": "Sheep",
     "defence_level": "1",
     "safespot": null,
@@ -53354,6 +53380,7 @@
   },
   {
     "examine": "White and fluffy.",
+    "force_talk": "Baa!",
     "name": "Sheep",
     "defence_level": "1",
     "safespot": null,
@@ -57118,6 +57145,7 @@
   },
   {
     "examine": "Is it a sheep?",
+    "force_talk": "Baa!",
     "melee_animation": "0",
     "range_animation": "0",
     "magic_level": "1",
@@ -67255,6 +67283,7 @@
   },
   {
     "examine": "Blademistress, skillful female warrior.",
+    "force_talk": "When you aim for perfection you discover it's a moving target.,Patience and persistence can bring down the tallest tree.,Be master of mind rather than mastered by mind.,A reflection on a pool of water does not reveal its depth.,Life isn't fair that doesn't mean you can't win.",
     "name": "Kamfreena",
     "defence_level": "1",
     "safespot": null,
@@ -67267,6 +67296,7 @@
   },
   {
     "examine": "A warrior mage from the east.",
+    "force_talk": "Think not dishonestly.,The Way in training is.,Acquainted with every art become.,Ways of all professions know you.,Gain and loss between you must distinguish.,Judgment and understanding for everything develop you must.,Those things which cannot be seen, perceive them.,Trifles pay attention even to.,Do nothing which is of no use.,Way of the Warrior this is.",
     "name": "Shanomi",
     "defence_level": "1",
     "safespot": null,
@@ -67329,6 +67359,7 @@
   },
   {
     "examine": "Food Shopkeeper.",
+    "force_talk": "Potatoes are filling and healthy too!,Come try my lovely pizza or maybe some fish!,Stew to fill the belly on sale here!",
     "name": "Lidio",
     "defence_level": "1",
     "safespot": null,
@@ -67341,6 +67372,7 @@
   },
   {
     "examine": "Potion shopkeeper",
+    "force_talk": "It's not an optical illusion it just looks like one.,Madness takes its toll. Please have exact change.,If you don't care where you are then you ain't lost.,Don't look back they might be gaining on you.,Demons are a Ghouls best friend.,Pink bananas... mmmmm.",
     "name": "Lilly",
     "defence_level": "1",
     "safespot": null,
@@ -67353,6 +67385,7 @@
   },
   {
     "examine": "Armour shopkeeper.",
+    "force_talk": "A fine selection of blades for you to peruse come take a look!,Imported weapons from the finest smithys around the lands!,Ow my toe! That armour is heavy.,Armour and axes to suit your needs.",
     "name": "Anton",
     "defence_level": "1",
     "safespot": null,
@@ -80464,6 +80497,7 @@
   },
   {
     "examine": "White and fluffy.",
+    "force_talk": "Baa!",
     "name": "Sheep",
     "defence_level": "1",
     "safespot": null,
@@ -80476,6 +80510,7 @@
   },
   {
     "examine": "White and fluffy.",
+    "force_talk": "Baa!",
     "name": "Sheep",
     "defence_level": "1",
     "safespot": null,
@@ -80488,6 +80523,7 @@
   },
   {
     "examine": "White and fluffy.",
+    "force_talk": "Baa!",
     "name": "Sheep",
     "defence_level": "1",
     "safespot": null,
@@ -80500,6 +80536,7 @@
   },
   {
     "examine": "White and fluffy.",
+    "force_talk": "Baa!",
     "name": "Sheep",
     "defence_level": "1",
     "safespot": null,
@@ -80512,6 +80549,7 @@
   },
   {
     "examine": "White and fluffy.",
+    "force_talk": "Baa!",
     "name": "Sheep",
     "defence_level": "1",
     "safespot": null,
@@ -80524,6 +80562,7 @@
   },
   {
     "examine": "White and fluffy.",
+    "force_talk": "Baa!",
     "name": "Sheep",
     "defence_level": "1",
     "safespot": null,
@@ -80536,6 +80575,7 @@
   },
   {
     "examine": "White and fluffy.",
+    "force_talk": "Baa!",
     "name": "Sheep",
     "defence_level": "1",
     "safespot": null,
@@ -80548,6 +80588,7 @@
   },
   {
     "examine": "White and fluffy.",
+    "force_talk": "Baa!",
     "name": "Sheep",
     "defence_level": "1",
     "safespot": null,
@@ -80560,6 +80601,7 @@
   },
   {
     "examine": "White and fluffy.",
+    "force_talk": "Baa!",
     "name": "Sheep",
     "defence_level": "1",
     "safespot": null,
@@ -80572,6 +80614,7 @@
   },
   {
     "examine": "White and fluffy.",
+    "force_talk": "Baa!",
     "name": "Sheep",
     "defence_level": "1",
     "safespot": null,
@@ -80584,6 +80627,7 @@
   },
   {
     "examine": "White and fluffy.",
+    "force_talk": "Baa!",
     "name": "Sheep",
     "defence_level": "1",
     "safespot": null,
@@ -80596,6 +80640,7 @@
   },
   {
     "examine": "White and fluffy.",
+    "force_talk": "Baa!",
     "name": "Sheep",
     "defence_level": "1",
     "safespot": null,
@@ -80608,6 +80653,7 @@
   },
   {
     "examine": "White and fluffy.",
+    "force_talk": "Baa!",
     "name": "Sheep",
     "defence_level": "1",
     "safespot": null,
@@ -80620,6 +80666,7 @@
   },
   {
     "examine": "White and fluffy.",
+    "force_talk": "Baa!",
     "name": "Sheep",
     "defence_level": "1",
     "safespot": null,
@@ -80632,6 +80679,7 @@
   },
   {
     "examine": "White and fluffy.",
+    "force_talk": "Baa!",
     "melee_animation": "0",
     "range_animation": "0",
     "magic_level": "1",
@@ -80650,6 +80698,7 @@
   },
   {
     "examine": "White and fluffy.",
+    "force_talk": "Baa!",
     "melee_animation": "0",
     "range_animation": "0",
     "magic_level": "1",
@@ -80668,6 +80717,7 @@
   },
   {
     "examine": "White and fluffy.",
+    "force_talk": "Baa!",
     "name": "Sheep",
     "defence_level": "1",
     "safespot": null,
@@ -80680,6 +80730,7 @@
   },
   {
     "examine": "White and fluffy.",
+    "force_talk": "Baa!",
     "name": "Sheep",
     "defence_level": "1",
     "safespot": null,
@@ -80808,6 +80859,7 @@
   },
   {
     "examine": "Lovely thick wool.",
+    "force_talk": "Baa!",
     "melee_animation": "0",
     "range_animation": "0",
     "magic_level": "1",
@@ -80826,6 +80878,7 @@
   },
   {
     "examine": "Lovely thick wool.",
+    "force_talk": "Baa!",
     "melee_animation": "0",
     "range_animation": "0",
     "magic_level": "1",
@@ -89989,6 +90042,7 @@
   {
     "examine": "Sells lamps to light your way in dark caves.",
     "name": "Miltog",
+    "force_talk": "Lamps!,Lanterns!,Tinderboxes!,Torches!,Lamp oil!",
     "defence_level": "1",
     "safespot": null,
     "strength_level": "1",
@@ -90149,6 +90203,7 @@
   {
     "examine": "Sells cave goblin fast food.",
     "name": "Markog",
+    "force_talk": "Gumbo!,Frogspawn gumbo!,Nice chewy frogspawn gumbo!,Get your frogspawn gumbo!,Fresh frogspawn gumbo!",
     "defence_level": "1",
     "safespot": null,
     "strength_level": "1",
@@ -90161,6 +90216,7 @@
   {
     "examine": "Sells cave goblin fast food.",
     "name": "Durgok",
+    "force_talk": "Burgers!,Hot frogburgers!,Frogburgers!,Frog in a bun!,Tasty frogburgers!",
     "defence_level": "1",
     "safespot": null,
     "strength_level": "1",
@@ -90173,6 +90229,7 @@
   {
     "examine": "Sells cave goblin fast food.",
     "name": "Tindar",
+    "force_talk": "Crispy!,Creeeespy frogs' legs!,Get your crispy frogs' legs!,Frogs' legs!,Crispy frogs' legs!",
     "defence_level": "1",
     "safespot": null,
     "strength_level": "1",
@@ -90185,6 +90242,7 @@
   {
     "examine": "Sells cave goblin fast food.",
     "name": "Gundik",
+    "force_talk": "Spicy kebabs!,Bat kebabs!,Spicy bat kebabs!,Bat shish kebabs!,Kebabs!",
     "defence_level": "1",
     "safespot": null,
     "strength_level": "1",
@@ -90198,6 +90256,7 @@
     "examine": "Sells cave goblin fast food.",
     "name": "Zenkog",
     "defence_level": "1",
+    "force_talk": "Fingers!,Wall beast fingers!,Fresh wall beast fingers!,Lovely wall beast fingers!,Tasty wall beast fingers!",
     "safespot": null,
     "strength_level": "1",
     "id": "5797",
@@ -92077,6 +92136,7 @@
   },
   {
     "examine": "Newspaper seller.",
+    "force_talk": "Read all about it!,Varrock Herald on sale here!,Buy your Varrock Herald now!,Extra! Extra! Read all about it!,Varrock Herald now only 50 gold!",
     "name": "Benny",
     "defence_level": "1",
     "safespot": null,
@@ -92205,6 +92265,7 @@
   },
   {
     "examine": "An archaeologist hard at work.",
+    "force_talk": "How's it going officers?,Another lot for ya!,Off we go again!,Alright thanks!",
     "name": "Barnabus Hurma",
     "defence_level": "1",
     "safespot": null,
@@ -92217,6 +92278,7 @@
   },
   {
     "examine": "An archaeologist hard at work.",
+    "force_talk": "How's it going officers?,Another lot for ya!,Off we go again!,Alright thanks!",
     "name": "Marius Giste",
     "defence_level": "1",
     "safespot": null,
@@ -92229,6 +92291,7 @@
   },
   {
     "examine": "An archaeologist hard at work.",
+    "force_talk": "How's it going officers?,Another lot for ya!,Off we go again!,Alright thanks!",
     "name": "Caden Azro",
     "defence_level": "1",
     "safespot": null,
@@ -92241,6 +92304,7 @@
   },
   {
     "examine": "An archaeologist hard at work.",
+    "force_talk": "How's it going officers?,Another lot for ya!,Off we go again!,Alright thanks!",
     "name": "Thias Leacke",
     "defence_level": "1",
     "safespot": null,
@@ -92253,6 +92317,7 @@
   },
   {
     "examine": "An archaeologist hard at work.",
+    "force_talk": "How's it going officers?,Another lot for ya!,Off we go again!,Alright thanks!",
     "name": "Sinco Doar",
     "defence_level": "1",
     "safespot": null,
@@ -92265,6 +92330,7 @@
   },
   {
     "examine": "An archaeologist hard at work.",
+    "force_talk": "How's it going officers?,Another lot for ya!,Off we go again!,Alright thanks!",
     "name": "Tinse Torpe",
     "defence_level": "1",
     "safespot": null,
@@ -92319,6 +92385,7 @@
   },
   {
     "examine": "This man guards the entrance to the Museum's cleaning area.",
+    "force_talk": "Another boring day.,Nothing new there.,Keep 'em coming!,Don't daudle there!",
     "name": "Museum guard",
     "defence_level": "1",
     "safespot": null,
@@ -92331,6 +92398,7 @@
   },
   {
     "examine": "This man guards the workman's entrance.",
+    "force_talk": "Another boring day.,Nothing new there.,Keep 'em coming!,Don't daudle there!",
     "name": "Museum guard",
     "defence_level": "1",
     "safespot": null,
@@ -92343,6 +92411,7 @@
   },
   {
     "examine": "This man watches the workmen.",
+    "force_talk": "Another boring day.,Nothing new there.,Keep 'em coming!,Don't daudle there!",
     "name": "Museum guard",
     "defence_level": "1",
     "safespot": null,
@@ -92667,6 +92736,7 @@
   },
   {
     "examine": "Likes the straight and narrow.",
+    "force_talk": "Can't stop. Too busy.,Wonder when I'll get paid.,Is it lunch break yet?,Hey I'm working here. I'm working here.,This work isn't going to do itself.,Ouch! That was my finger!",
     "name": "Ed Wood",
     "defence_level": "1",
     "safespot": null,
@@ -93029,6 +93099,7 @@
   },
   {
     "examine": "A gnarly old man.",
+    "force_talk": "Selling Magic Beans!,You there, you look like you could use some beans!,All beans must go!,Buy 1 bean get a bean free!,Selling bags of Magic Beans!",
     "name": "Sylas",
     "defence_level": "1",
     "safespot": null,
@@ -95228,6 +95299,7 @@
   },
   {
     "examine": "He's quackers.",
+    "force_talk": "Quack!",
     "melee_animation": "747",
     "attack_speed": "4",
     "magic_level": "1",
@@ -102130,6 +102202,7 @@
   },
   {
     "examine": "The son of Ali M!",
+    "force_talk": "I can make so much money here!,My father shall be so pleased.,Woo hoo! What a sale!,What shall I trade next....,Hmm. If I divide 20 and take off 50%...",
     "melee_animation": "0",
     "range_animation": "0",
     "magic_level": "1",
@@ -102148,6 +102221,7 @@
   },
   {
     "examine": "He's probably seen better days.",
+    "force_talk": "Now, what should I buy?,I'm in the money!,I could have sworn that would have worked.,Hope this item sells well.,Please please please work.",
     "melee_animation": "0",
     "range_animation": "0",
     "magic_level": "1",
@@ -102166,6 +102240,7 @@
   },
   {
     "examine": "You can never miss a pirate in disguise.",
+    "force_talk": "Sure be a busy place today.,Yarrr! I'm gonna be rich,I tell ye!,I'm lovin' this Grand Exchange! Arrr!,Arrr! Another good sale!,No! Me prices, they be goin' down!",
     "melee_animation": "0",
     "range_animation": "0",
     "magic_level": "1",
@@ -102184,6 +102259,7 @@
   },
   {
     "examine": "A tribal man, for sure.",
+    "force_talk": "Such a joy it is to be in this building.,Hmmm. These numbers don't quite add up.,My people shall be so proud!,Yes! Yet another great deal.,Just one more offer! One more!",
     "melee_animation": "0",
     "range_animation": "0",
     "magic_level": "1",
@@ -102202,6 +102278,7 @@
   },
   {
     "examine": "He's travelled a long way.",
+    "force_talk": "I've hit the jackpot!,Wow. That's cheap.,This is trading, the likes of which I've never seen,Oh that didn't sell so well.,Jackpot! I'm in the money now!,Hmmm. If I spend twenty thousand on that then...,Hahaha! Trading the likes of which I have never seen.",
     "melee_animation": "0",
     "range_animation": "0",
     "magic_level": "1",

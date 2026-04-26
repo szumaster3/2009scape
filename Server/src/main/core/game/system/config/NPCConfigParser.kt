@@ -96,8 +96,14 @@ class NPCConfigParser {
                             configs[key] = ClueLevel.values()[clueIndex]
                         }
 
-                        "name", "examine", "force_talk" -> {
+                        "name", "examine" -> {
                             configs[key] = valueStr
+                        }
+
+                        "force_talk" -> {
+                            configs[key] = valueStr.split(",")
+                                .map { it.trim() }
+                                .filter { it.isNotBlank() }
                         }
 
                         "combat_audio", "bonuses" -> {

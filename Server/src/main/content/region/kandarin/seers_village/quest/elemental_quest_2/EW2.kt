@@ -90,7 +90,7 @@ class EW2 : Quest("Elemental Workshop II", 53, 52, 1, Vars.VARBIT_QUEST_ELEMENTA
                 false,
             )
             line(player, "The tank - this should work fine now I have replaced the pipe.", line++, false)
-            line(player, "A wind tunnel - I have fitted all the cogs on to the pins. ", line++, false)
+            line(player, "A wind tunnel - I have fitted all the cogs on to the pins.", line++, false)
             line(player, "The win tunnel should now work as long as it's powered.", line++, false)
             line(player, "Once I have fixed all the equipment I'll need to work out how to use it.", line++, false)
             line(

@@ -73,7 +73,7 @@ private class ScoutDialogueFile : DialogueFile() {
             11 -> player("Khazard with a master? Hard to believe. Who was it?").also { stage++ }
             12 -> npc("I think I have said too much already.").also { stage++ }
             13 -> player("So what have you discovered on your travels though", "the desert?").also { stage++ }
-            14 -> npc("The fighting in the desert has come to a stop. However, ", "there is still much distrust between Menaphos and Al", "Kharid. It seems like it would be possible to reignite the", "war if needed.").also { stage++ }
+            14 -> npc("The fighting in the desert has come to a stop. However,", "there is still much distrust between Menaphos and Al", "Kharid. It seems like it would be possible to reignite the", "war if needed.").also { stage++ }
 
             15 -> if (isQuestComplete(player!!, Quests.DESERT_TREASURE)) {
                 npc("I have heard whisperings in the bandit camp that the", "prisoner of Jaldraocht is now free.").also { stage++ }
@@ -115,7 +115,7 @@ private class ScoutDialogueFile : DialogueFile() {
                 GeneralShadow.setShadowProgress(player!!, 3)
             }
 
-            201 -> npc("You must be a great mage to be able to see me, ", "human.").also { stage++ }
+            201 -> npc("You must be a great mage to be able to see me,", "human.").also { stage++ }
             202 -> player("So, are you a ghost?").also { stage++ }
             203 -> npc("Nothing so morbid. I am a scout for Khazard, and I", "move more easily through the land unseen. There are", "enemies everywhere.").also { stage++ }
             204 -> player("If you're not a ghost, why do I need an Amulet of", "Ghostspeak to talk to you?").also { stage++ }
@@ -149,7 +149,7 @@ private class ScoutDialogueFile : DialogueFile() {
             304 -> player("Khazard says: 'The planets are nearly alignment; we", "will meet in the place of half light and ice soon. Beware", "of the others, for though they are weak and few, they", "are cunning.'").also { stage++ }
             305 -> npc(FaceAnim.ANNOYED, "I'll be glad when all this is over. The General will be", "strong again and we will push back this tide of filth that", "is humanity.").also { stage++ }
             306 -> player(FaceAnim.ANGRY, "Oi! I am one of the filth, I mean, humans! Besides, we", "were here first.").also { stage++ }
-            307 -> npc(FaceAnim.EXTREMELY_SHOCKED, "Haa, haa, haa. Oh, you naive mortals. There were many", "here before you. The last time the General went north, ", "all this land belonged to the elves. Do not think so", "highly of your race.").also { stage++ }
+            307 -> npc(FaceAnim.EXTREMELY_SHOCKED, "Haa, haa, haa. Oh, you naive mortals. There were many", "here before you. The last time the General went north,", "all this land belonged to the elves. Do not think so", "highly of your race.").also { stage++ }
             308 -> player("Discovered anything interesting on your travels?").also { stage++ }
             309 -> if (hasRequirement(player!!, Quests.BIOHAZARD) || isQuestComplete(player!!, Quests.PLAGUE_CITY)) {
                 npc("As I passed through Ardougne, I overheard some news.", "The plague in the west grows worse. King Lathas's", "popularity continues to increase, while the people are", "becoming more and more hostile to Tyras. I suspect").also { stage++ }

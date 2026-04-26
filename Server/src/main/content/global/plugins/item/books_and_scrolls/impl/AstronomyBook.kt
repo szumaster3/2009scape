@@ -18,7 +18,7 @@ class AstronomyBook : InteractionListener {
                 PageSet(
                     Page(
                         BookLine("THE TALE OF", 55),
-                        BookLine("SCORPIUS: ", 56),
+                        BookLine("SCORPIUS:", 56),
                         BookLine("A History of Astronomy", 58),
                         BookLine("in " + GameWorld.settings!!.name + ".", 59),
                         BookLine("At the start of the 4th", 61),

@@ -63,7 +63,7 @@ class AhabDialogue(player: Player? = null) : Dialogue(player) {
             29 -> npc("Arrr! That ship be known to me, and a fine lass she is.").also { stage++ }
             30 -> player("I suppose she might be...").also { stage++ }
             31 -> npc("So would ye be kind enough to let", "me take her out to sea?").also { stage++ }
-            32 -> player("I had to pay 2000gp for that ship! ", "Have you got that much?").also { stage++ }
+            32 -> player("I had to pay 2000gp for that ship!", "Have you got that much?").also { stage++ }
             33 -> npc("Nay, I have nary a penny to my name. All my wordly goods", "went down with me old ship.").also { stage++ }
             34 -> player("So you're actually asking me to give you a free ship.").also { stage++ }
             35 -> npc("Arrr! Would ye be so kind?").also { stage++ }

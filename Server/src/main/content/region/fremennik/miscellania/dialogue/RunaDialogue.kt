@@ -14,7 +14,7 @@ class RunaDialogue(player: Player? = null) : Dialogue(player) {
 
     override fun open(vararg args: Any?): Boolean {
         npc = args[0] as NPC
-        npc(FaceAnim.FRIENDLY, "Would you like to try some fine Miscellanian ale, ", "your Royal Highness?")
+        npc(FaceAnim.FRIENDLY, "Would you like to try some fine Miscellanian ale,", "your Royal Highness?")
         return true
     }
 

@@ -9,10 +9,10 @@ import core.tools.START_DIALOGUE
 import shared.consts.NPCs
 
 /**
- * Represents the Ur Vass dialogue.
+ * Represents the Ur-vass dialogue.
  */
 @Initializable
-class UrVassDialogue(player: Player? = null) : Dialogue(player) {
+class UrvassDialogue(player: Player? = null) : Dialogue(player) {
 
     override fun handle(interfaceId: Int, buttonId: Int): Boolean {
         when (stage) {
@@ -23,7 +23,7 @@ class UrVassDialogue(player: Player? = null) : Dialogue(player) {
         return true
     }
 
-    override fun newInstance(player: Player?): Dialogue = UrVassDialogue(player)
+    override fun newInstance(player: Player?): Dialogue = UrvassDialogue(player)
 
     override fun getIds(): IntArray = intArrayOf(NPCs.UR_VASS_5771)
 }

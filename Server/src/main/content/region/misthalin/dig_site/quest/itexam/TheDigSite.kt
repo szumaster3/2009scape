@@ -222,7 +222,7 @@ class TheDigSite : Quest(Quests.THE_DIG_SITE, 47, 46, 2, 131, 0, 1, 9) {
             }
             if (stage >= 5 || getAttribute(player, attrPurpleExam2ObtainAnswer, false)) {
                 line(player, "I need to speak to the student in the purple skirt about", line++, true)
-                line(player, "the exams. 2 ", line++, true)
+                line(player, "the exams. 2", line++, true)
             } else if (stage >= 4) {
                 line(player, "I need to speak to the student in the purple skirt about", line++)
                 line(player, "the exams.", line++)

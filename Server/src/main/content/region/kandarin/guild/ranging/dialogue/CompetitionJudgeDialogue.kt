@@ -17,7 +17,7 @@ class CompetitionJudgeDialogue(player: Player? = null) : Dialogue(player) {
 
     override fun open(vararg args: Any?): Boolean {
         if (player.inventory.getAmount(Items.ARCHERY_TICKET_1464) >= 1000 && !hasDiaryTaskComplete(player, DiaryType.SEERS_VILLAGE, 1, 7)) {
-            npc("Wow! I see that you've got yourself a whole load of ", "archery tickets. Well done!")
+            npc("Wow! I see that you've got yourself a whole load of", "archery tickets. Well done!")
             finishDiaryTask(player, DiaryType.SEERS_VILLAGE, 1, 7)
             setVarbit(player, 5798,1, true)
             stage = -1

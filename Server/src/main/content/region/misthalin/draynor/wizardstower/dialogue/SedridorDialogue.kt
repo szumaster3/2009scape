@@ -418,7 +418,7 @@ class SedridorDialogue(player: Player? = null) : Dialogue(player) {
                         override fun pulse(): Boolean {
                             npc(
                                 "Ok, I have retrieved it. Luckily it doesn't appear to",
-                                "have been damaged. Now please take it to Aubury, ",
+                                "have been damaged. Now please take it to Aubury,",
                                 "and try not to lose it again.",
                             )
                             stage = 807

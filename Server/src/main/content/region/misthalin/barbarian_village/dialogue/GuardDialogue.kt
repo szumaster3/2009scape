@@ -50,7 +50,7 @@ class GuardDialogue(player: Player? = null) : Dialogue(player) {
             10 -> player(FaceAnim.FRIENDLY, "Can I go upstairs?").also { stage++ }
             11 -> npc(FaceAnim.NEUTRAL, "Yes citizen. Before you do, I am instructed to give", "you one final piece of information.").also { stage++ }
             12 -> player(FaceAnim.NEUTRAL, "Oh, okay then.").also { stage++ }
-            13 -> npc(FaceAnim.NEUTRAL, "In your travels around ${settings!!.name}, should you find a ", "player who acts in a way that breaks one of our rules,", "you should report them.").also { stage++ }
+            13 -> npc(FaceAnim.NEUTRAL, "In your travels around ${settings!!.name}, should you find a", "player who acts in a way that breaks one of our rules,", "you should report them.").also { stage++ }
             14 -> npc(FaceAnim.NEUTRAL, "Reporting is very simple and easy to do. Simply click", "the Report Abuse button at the button of the screen", "and you will be shown of following screen:").also { stage++ }
             15 -> {
                 openInterface(player, Components.TUTORIAL2_REPORT_ABUSE_700)

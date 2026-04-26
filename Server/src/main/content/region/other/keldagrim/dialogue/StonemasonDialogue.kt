@@ -34,7 +34,7 @@ class StonemasonDialogue(player: Player? = null) : Dialogue(player) {
                 openNpcShop(player, NPCs.STONEMASON_4248)
             }
             4 -> npc(FaceAnim.OLD_NORMAL, "A few kinds. Limestone, of course. Here in Keldagrim we're", "surrounded by the stuff so I can practically give it away!", "You'll be able to build some kinds of furniture out of that.").also { stage++ }
-            5 -> npc(FaceAnim.OLD_NORMAL, "Marble is much better, of course, but it costs a lot for me", "to get hold of it. You can make some beautiful ", "pieces of furniture out of that.").also { stage++ }
+            5 -> npc(FaceAnim.OLD_NORMAL, "Marble is much better, of course, but it costs a lot for me", "to get hold of it. You can make some beautiful", "pieces of furniture out of that.").also { stage++ }
             6 -> npc(FaceAnim.OLD_NORMAL, "I also sell gold leaf, which can be used to decorate furniture", "made of marble or mahogany.").also { stage++ }
             7 -> npc(FaceAnim.OLD_NORMAL, "Then for the very special furniture I sell these", "magic stones. Only the most skilled builders can work them,", "but they can create a few amazing pieces of", "furniture with them.").also { stage++ }
             8 -> npc(FaceAnim.OLD_NORMAL, "So, do you want to buy anything?").also { stage = 0 }

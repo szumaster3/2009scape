@@ -34,8 +34,8 @@ class HorrorFromTheDeep : Quest(Quests.HORROR_FROM_THE_DEEP, 77, 76, 2, Vars.VAR
             line++
         }
         if (progress == 1) {
-            line(player, "I travelled to an isolated !!Lighthouse?? north of the !!Barbarian outpost??, ", line++, stage >= 2)
-            line(player, "to find a !!Fremennik?? girl called !!Larrissa?? locked outside, ", line++, stage >= 2)
+            line(player, "I travelled to an isolated !!Lighthouse?? north of the !!Barbarian outpost??,", line++, stage >= 2)
+            line(player, "to find a !!Fremennik?? girl called !!Larrissa?? locked outside,", line++, stage >= 2)
             line(player, "and worried about her boyfriend !!Jossik??.", line++, stage >= 2)
             line++
         }
@@ -105,7 +105,7 @@ class HorrorFromTheDeep : Quest(Quests.HORROR_FROM_THE_DEEP, 77, 76, 2, Vars.VAR
             line(player, "<col=FF0000>QUEST COMPLETE!</col>", line++, false)
             line++
 
-            line(player, "I found a !!strange casket?? on the dead body of the !!sea monster??, ", line++, godBooks)
+            line(player, "I found a !!strange casket?? on the dead body of the !!sea monster??,", line++, godBooks)
             line(player, "which !!Jossik?? said he could tell me about.", line++, godBooks)
 
             limitScrolling(player, line, false)

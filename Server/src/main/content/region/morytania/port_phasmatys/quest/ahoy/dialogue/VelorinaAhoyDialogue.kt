@@ -72,7 +72,7 @@ class VelorinaAhoyDialogue : DialogueFile() {
 
             2 -> when (stage) {
                 0 -> player("I'm sorry, but Necrovarus will not let you go.").also { stage++ }
-                1 -> npc("I feared as much. His spirit is a thing of fire and ", "wrath.").also { stage++ }
+                1 -> npc("I feared as much. His spirit is a thing of fire and", "wrath.").also { stage++ }
                 2 -> player("You spoke of another way.").also { stage++ }
                 3 -> npc("It is only a small chance. During the building of the", "Ectofuntus one of Necrovarus's disciples spoke out", "against him. It is such a long time ago I cannot", "remember her name, although I knew her as a friend.").also { stage++ }
                 4 -> npc("She fled before the Ectofuntus took control over us, but", "being a disciple of Necrovarus she would have been", "privy to many of his darkest secrets. She may know of", "a way to aid us without Necrovarus.").also { stage++ }
@@ -83,7 +83,7 @@ class VelorinaAhoyDialogue : DialogueFile() {
                         stage = 8
                     }
                 }
-                7 -> npc("I have a vision of a small wooden shack, the land it was", "built on the unholy soil of Morytania. I sense the sea is", "very close, and that there looms castles to the west and ", "the east.").also { stage = END_DIALOGUE }
+                7 -> npc("I have a vision of a small wooden shack, the land it was", "built on the unholy soil of Morytania. I sense the sea is", "very close, and that there looms castles to the west and", "the east.").also { stage = END_DIALOGUE }
                 8 -> npc("She was a friend of mine. Had she died, I would have", "felt her spirit pass over to the next world, though", "I may not follow.").also { stage++ }
                 9 -> {
                     end()

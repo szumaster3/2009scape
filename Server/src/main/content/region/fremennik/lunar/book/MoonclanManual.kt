@@ -178,7 +178,7 @@ class MoonclanManual : InteractionListener {
                         BookLine("The rocks in their", 69),
                         BookLine("contact with the Stone of", 70),
                         BookLine("J-- had gained a", 71),
-                        BookLine("yearning to be something ", 72),
+                        BookLine("yearning to be something", 72),
                         BookLine("they were not, and", 73),
                         BookLine("V------- discovered that by", 74),
                         BookLine("focussing thought upon", 75),

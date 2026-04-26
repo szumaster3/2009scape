@@ -14,7 +14,7 @@ class FullangrDialogue : DialogueFile() {
                 1 -> player(FaceAnim.FRIENDLY, "What are you doing down here?").also { stage++ }
                 2 -> player(FaceAnim.NEUTRAL, "Good day.").also { stage = END_DIALOGUE }
             }
-            3 -> npc(FaceAnim.OLD_DEFAULT, "I'm working on the digging, of course.", "It's a small excavation, so only two of us ", "can work on it at a time.").also { stage = END_DIALOGUE }
+            3 -> npc(FaceAnim.OLD_DEFAULT, "I'm working on the digging, of course.", "It's a small excavation, so only two of us", "can work on it at a time.").also { stage = END_DIALOGUE }
         }
     }
 }

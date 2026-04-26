@@ -146,7 +146,7 @@ class LeonDialogue(player: Player? = null) : Dialogue(player) {
                 npc(
                     FaceAnim.HALF_GUILTY,
                     "Kebbit spikes. Lots of 'em. Not all kebbits have spikes, mind",
-                    "you. You'll be needing to look for prickly kebbits or, even better, ",
+                    "you. You'll be needing to look for prickly kebbits or, even better,",
                     "razor-backed kebbits to get material hard enough.",
                 )
                 stage = 46

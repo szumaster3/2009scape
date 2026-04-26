@@ -117,7 +117,7 @@ class ElenaBiohazardQuestDialogue : DialogueFile() {
                     }
 
                     6 -> player(FaceAnim.HAPPY, "Those look pretty fancy.").also { stage++ }
-                    7 -> npc(FaceAnim.HAPPY, "Well, yes and no. The liquid honey isn't worth much, ", "but the others are. Especially this colourless ethenea. Be", "careful with the sulphuric broline, it's highly poisonous.").also { stage++ }
+                    7 -> npc(FaceAnim.HAPPY, "Well, yes and no. The liquid honey isn't worth much,", "but the others are. Especially this colourless ethenea. Be", "careful with the sulphuric broline, it's highly poisonous.").also { stage++ }
 
                     8 -> player(FaceAnim.HAPPY, "You're not kidding, I can smell it from here!").also { stage++ }
                     9 -> {

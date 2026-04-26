@@ -95,7 +95,7 @@ class TestOfWits(private val dialogueNum: Int = 0) : DialogueBuilderFile() {
                         branch
                             .onValue(2)
                             .npc(FaceAnim.THINKING, "Here is my riddle:", "I have both a husband and daughter.")
-                            .npc(FaceAnim.THINKING, "My husband is four times older than my daughter. ", "In twenty years time, he will be twice as old as my", "daughter.")
+                            .npc(FaceAnim.THINKING, "My husband is four times older than my daughter.", "In twenty years time, he will be twice as old as my", "daughter.")
                             .npc(FaceAnim.THINKING, "How old is my daughter now?")
                             .manualStage { _, player, _, _ ->
                                 sendInputDialogue(player, true, "Enter the amount:") { value: Any ->

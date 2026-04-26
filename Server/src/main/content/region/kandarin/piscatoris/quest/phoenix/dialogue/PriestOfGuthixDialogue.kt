@@ -67,7 +67,7 @@ private class PriestDialogueFile : DialogueFile() {
             }
 
             2 -> {
-                npc(FaceAnim.HALF_GUILTY, "I...I'm sorry. My emotions have run away with me. ", "Allow me to explain.")
+                npc(FaceAnim.HALF_GUILTY, "I...I'm sorry. My emotions have run away with me.", "Allow me to explain.")
                 stage++
             }
 

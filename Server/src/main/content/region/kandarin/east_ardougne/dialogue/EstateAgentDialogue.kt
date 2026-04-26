@@ -128,7 +128,7 @@ class EstateAgentDialogue(player: Player? = null) : Dialogue(player) {
             60 -> npc("It all came out of the wizards' experiments. They found", "a way to fold space, so that they could pack many", "acres of land into an area only a foot across.").also { stage++ }
             61 -> npc("They created several folded-space regions across", "" + settings!!.name + ". Each one contains hundreds of small plots", "where people can build houses.").also { stage++ }
             62 -> player("Ah, so that's how everyone can have a house without", "them cluttering up the world!").also { stage++ }
-            63 -> npc("Quite. The wizards didn't want to get bogged down", "in the business side of things so they ", "hired me to sell the houses.").also { stage++ }
+            63 -> npc("Quite. The wizards didn't want to get bogged down", "in the business side of things so they", "hired me to sell the houses.").also { stage++ }
             64 -> npc("There are various other people across " + settings!!.name + " who can", "help you furnish your house. You should start buying", "planks from the sawmill operator in Varrock.").also { stage = END_DIALOGUE }
             100 -> npc("As you may know, skillcapes are only available to masters", "in a skill. I have spent my entire life building houses and", "now I spend my time selling them! As a sign of my abilities", "I wear this Skillcape of Construction. If you ever have").also { stage++ }
             101 -> npc("enough skill to build a demonic throne, come and talk to", "me and I'll sell you a skillcape like mine.").also { stage = END_DIALOGUE }

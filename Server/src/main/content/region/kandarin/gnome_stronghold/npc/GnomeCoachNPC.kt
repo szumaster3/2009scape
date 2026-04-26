@@ -12,15 +12,6 @@ import shared.consts.NPCs
  * Handles the Gnome Coach NPC.
  */
 class GnomeCoachNPC : NPCBehavior(NPCs.GNOME_COACH_2802) {
-    private val forceChat =
-        arrayOf(
-            "One-Two, One-Two!",
-            "Run faster! Don't be so lazy!",
-            "Pass to your left! Pass now!",
-            "There are others to pass to you know",
-            "Hey human, get moving!",
-            "Take him out you wuss",
-        )
 
     override fun onCreation(self: NPC) {
         if (inBorders(self, 2386, 3496, 2410, 3499)) {
@@ -35,12 +26,5 @@ class GnomeCoachNPC : NPCBehavior(NPCs.GNOME_COACH_2802) {
             self.configureMovementPath(*movementPath)
             self.isWalks = true
         }
-    }
-
-    override fun tick(self: NPC): Boolean {
-        if (RandomFunction.random(100) < 3) {
-            sendChat(self, forceChat.random())
-        }
-        return true
     }
 }

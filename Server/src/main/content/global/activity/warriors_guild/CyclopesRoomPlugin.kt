@@ -1,4 +1,4 @@
-package content.global.activity.warriors_guild.plugin.room
+package content.global.activity.warriors_guild
 
 import core.api.clearLogoutListener
 import core.api.registerLogoutListener

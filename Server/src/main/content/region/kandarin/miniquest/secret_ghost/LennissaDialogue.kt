@@ -58,7 +58,7 @@ private class LennissaDialogueFile : DialogueFile() {
             }
             1 -> npc("Who are you?", "Where did you hear my name?", "How comes it that you can see and speak to me?").also { stage++ }
             2 -> player("Well, a ghost called Kharrim directed me towards you.").also { stage++ }
-            3 -> npc("So that weasel Kharrim has been blighted by this curse ", "too?").also { stage++ }
+            3 -> npc("So that weasel Kharrim has been blighted by this curse", "too?").also { stage++ }
             4 -> npc("Ha, a good thing too.", "If anybody deserved such a fate it would be one such", "as him.").also { stage++ }
             5 -> player("I guess you didn't get along then?").also { stage++ }
             6 -> npc("No, evil scum such as he should never have been", "allowed to walk this world.").also { stage++ }

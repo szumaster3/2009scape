@@ -50,7 +50,7 @@ class RagAndBoneMan : Quest(Quests.RAG_AND_BONE_MAN, 100, 99, 2, 714, 0, 1, 4) {
 
             in 1..3 -> {
                 line++
-                line(player, "I have spoken to the Odd Old Man and have agreed to help him ", line++, true)
+                line(player, "I have spoken to the Odd Old Man and have agreed to help him", line++, true)
                 line(player, "complete his collection of bones. I should check which ones", line++, true)
                 line(player, "he needs.", line++, true)
                 line++
@@ -82,7 +82,7 @@ class RagAndBoneMan : Quest(Quests.RAG_AND_BONE_MAN, 100, 99, 2, 714, 0, 1, 4) {
 
             100 -> {
                 line++
-                line(player, "I have spoken to the Odd Old Man and have agreed to help him ", line++, true)
+                line(player, "I have spoken to the Odd Old Man and have agreed to help him", line++, true)
                 line(player, "complete his collection of bones. I should check which ones", line++, true)
                 line(player, "he needs.", line++, true)
                 line++

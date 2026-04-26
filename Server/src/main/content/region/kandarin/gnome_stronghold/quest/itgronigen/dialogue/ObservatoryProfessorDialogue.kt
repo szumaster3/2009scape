@@ -77,7 +77,7 @@ class ObservatoryProfessorDialogue(player: Player? = null) : Dialogue(player) {
             }
             11 -> npc(FaceAnim.FRIENDLY, "Ah, I get asked about Treasure Trails all the time!", "Listen carefully and I shall tell you what I know.", "Lots of clues have " + DARK_RED + "degrees</col> and " + DARK_RED + "minutes</col> written", "on them.").also { stage++ }
             12 -> npcl(FaceAnim.FRIENDLY, "These are coordinates of the place where the treasure is buried. You will have to walk to the correct spot, so that your coordinates are exactly the same as the values written on the clue scroll.").also { stage++ }
-            13 -> npc(FaceAnim.FRIENDLY, "To do this, you must use a " + DARK_RED + "sextant</col>, a " + DARK_RED + "watch</col> and ", "a$DARK_RED chart</col> to find the coordinates of where you are.").also { stage++ }
+            13 -> npc(FaceAnim.FRIENDLY, "To do this, you must use a " + DARK_RED + "sextant</col>, a " + DARK_RED + "watch</col> and", "a$DARK_RED chart</col> to find the coordinates of where you are.").also { stage++ }
             14 -> npcl(FaceAnim.FRIENDLY, "Once you know the coordinates of your position, you know which way you have to walk to get to the treasure's coordinates!").also { stage++ }
             15 -> playerl(FaceAnim.THINKING, "Riiight. So, where do I get these items from?").also { stage++ }
             16 -> npcl(FaceAnim.FRIENDLY, "I think Murphy, the owner of the Fishing Trawler moored at Port Khazard, might be able to spare you a sextant. After that, the nearest clock tower is south of Ardougne - you could probably get a watch there.").also { stage++ }

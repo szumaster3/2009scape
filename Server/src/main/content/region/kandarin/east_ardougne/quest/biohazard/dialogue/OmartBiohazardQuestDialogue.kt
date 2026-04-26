@@ -23,7 +23,7 @@ class OmartBiohazardQuestDialogue : DialogueFile() {
             (questStage in 2..3) -> {
                 when (stage) {
                     0 -> player("Omart, Jerico said you might be able to help me.").also { stage++ }
-                    1 -> npc("He informed me of your problem traveller. I would", "be glad to help, I have a rope ladder and my associate, ", "Kilron, is waiting on the other side.").also { stage++ }
+                    1 -> npc("He informed me of your problem traveller. I would", "be glad to help, I have a rope ladder and my associate,", "Kilron, is waiting on the other side.").also { stage++ }
                     2 -> player("Good stuff.").also { stage++ }
                     3 -> npc("Unfortunately we can't risk it with the watch tower so", "close. So first we need to distract the guards in the tower.").also { stage++ }
                     4 -> player("How?").also { stage++ }

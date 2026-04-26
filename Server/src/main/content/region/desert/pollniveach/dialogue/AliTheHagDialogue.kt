@@ -40,7 +40,7 @@ class AliTheHagDialogue(player: Player? = null) : Dialogue(player) {
             2 -> npc(FaceAnim.ANNOYED, "Well how else would you abbreviate Alice then?", "And no, you can't call me Al!").also { stage++ }
             3 -> npc(FaceAnim.ASKING, "Now what do you want from the Old hag of Pollnivneach?", "To hex someone? Power, beauty, eternal youth", "or something else drab like that?").also { stage++ }
             4 -> player(FaceAnim.HALF_GUILTY, "Actually none of those, I'm new in town and", "I just wanted to get to know the locals.").also { stage++ }
-            5 -> npc(FaceAnim.ANNOYED, "I'm busy brewing potions, so if you ", "disturb me again without reason,", "I will turn you into a frog!").also { stage++ }
+            5 -> npc(FaceAnim.ANNOYED, "I'm busy brewing potions, so if you", "disturb me again without reason,", "I will turn you into a frog!").also { stage++ }
             6 -> player(FaceAnim.SCARED, "Oh I'm sorry I won't let it happen again.").also { stage = END_DIALOGUE }
             10 -> when (buttonId) {
                 1 -> if (hasRequirement(player, Quests.THE_FEUD)) {

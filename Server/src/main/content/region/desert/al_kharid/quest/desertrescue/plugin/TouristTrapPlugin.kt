@@ -423,7 +423,7 @@ class TouristTrapPlugin : OptionHandler() {
                 }
 
                 18958, 18959 -> player.dialogueInterpreter.sendDialogue(
-                    "A sturdy looking cart for carrying barrels of rocks out of ",
+                    "A sturdy looking cart for carrying barrels of rocks out of",
                     "the mining camp.",
                 )
 

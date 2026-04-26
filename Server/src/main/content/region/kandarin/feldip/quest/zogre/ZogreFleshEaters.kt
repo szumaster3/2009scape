@@ -57,7 +57,7 @@ class ZogreFleshEaters : Quest(Quests.ZOGRE_FLESH_EATERS, 40, 39, 1, Vars.VARBIT
         }
 
         if (getVarbit(player, Vars.VARBIT_QUEST_ZORGE_FLESH_EATERS_PROGRESS_487) >= 8) {
-            line(player, "Unfortunately I couldn't remove the curse from the area, ", line++, getVarbit(player, Vars.VARBIT_QUEST_ZORGE_FLESH_EATERS_PROGRESS_487) >= 12)
+            line(player, "Unfortunately I couldn't remove the curse from the area,", line++, getVarbit(player, Vars.VARBIT_QUEST_ZORGE_FLESH_EATERS_PROGRESS_487) >= 12)
             line(player, "however, I was able to return some important artefacts to", line++, getVarbit(player, Vars.VARBIT_QUEST_ZORGE_FLESH_EATERS_PROGRESS_487) >= 12)
             line(player, "Grish, who can now set up a new ceremonial dance area for", line++, getVarbit(player, Vars.VARBIT_QUEST_ZORGE_FLESH_EATERS_PROGRESS_487) >= 12)
             line(player, "the ogres of Gu' Tanoth.", line++, getVarbit(player, Vars.VARBIT_QUEST_ZORGE_FLESH_EATERS_PROGRESS_487) >= 12)

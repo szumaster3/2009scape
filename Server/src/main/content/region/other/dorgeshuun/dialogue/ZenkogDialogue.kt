@@ -1,12 +1,14 @@
 package content.region.other.dorgeshuun.dialogue
 
-import core.api.openNpcShop
+import core.api.*
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim
 import core.game.node.entity.player.Player
+import core.game.node.item.Item
 import core.plugin.Initializable
 import core.tools.END_DIALOGUE
 import core.tools.START_DIALOGUE
+import shared.consts.Items
 import shared.consts.NPCs
 
 /**
@@ -25,7 +27,12 @@ class ZenkogDialogue(player: Player? = null) : Dialogue(player) {
             }
             3 -> {
                 end()
-                openNpcShop(player, NPCs.ZENKOG_5797)
+                if (!removeItem(player!!, Item(Items.COINS_995, 10))) {
+                    sendMessage(player!!, "You don't have enough coins.")
+                } else {
+                    addItem(player!!, Items.FINGERS_10965, 1)
+                    npc(FaceAnim.OLD_DEFAULT, "There you go.")
+                }
             }
             4 -> npcl(FaceAnim.OLD_NORMAL, "Have a good day!").also { stage = END_DIALOGUE }
         }

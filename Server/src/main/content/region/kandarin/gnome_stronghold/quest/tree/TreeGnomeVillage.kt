@@ -61,7 +61,7 @@ class TreeGnomeVillage : Quest(Quests.TREE_GNOME_VILLAGE, 125, 124, 2, Vars.VARP
             line(player, "You've retrieved the orb! You should return it to !!King Bolren??", line++)
         }
         if (stage >= 40) {
-            line(player, "Khazard troops took the other !!Orbs of Protection?? ", line++, stage > 40)
+            line(player, "Khazard troops took the other !!Orbs of Protection??", line++, stage > 40)
             line(player, "They were headed north of the stronghold.", line++, stage > 40)
             line(player, "A warlord carries the orbs.", line++, stage > 40)
             line++

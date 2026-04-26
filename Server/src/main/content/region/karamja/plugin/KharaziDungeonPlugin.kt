@@ -190,7 +190,7 @@ class KharaziDungeonPlugin : InteractionListener {
                     stage++
                 }
                 2 -> {
-                    sendDialogueLines(player!!,"You push the doors... They're quite stiff... They won't budge with a ", "normal push. Do you want to try to force them open with brute", "strength?")
+                    sendDialogueLines(player!!,"You push the doors... They're quite stiff... They won't budge with a", "normal push. Do you want to try to force them open with brute", "strength?")
                     stage++
                 }
                 3 -> {

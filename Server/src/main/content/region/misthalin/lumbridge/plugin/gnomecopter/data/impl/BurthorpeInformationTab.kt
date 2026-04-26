@@ -45,7 +45,7 @@ enum class BurthorpeInformationTab(
     FOURTH_PAGE(
         "drinks while they challenge",
         "each other to games of",
-        "${RED}draughts</col>, ${RED}runelink</col>, ",
+        "${RED}draughts</col>, ${RED}runelink</col>,",
         "${RED}runesquares</col> and ${RED}runeversi,",
         "using runes as the",
         "gamepieces.",

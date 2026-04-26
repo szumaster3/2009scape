@@ -43,7 +43,7 @@ class CaptainBentleyDialogue(player: Player? = null) : Dialogue(player) {
                 end()
                 FremennikBoat.sail(player, Travel.LUNAR_TO_PIRATES_COVE)
             }
-            7 -> npc("Yep. You're free to explore the island. Be careful though, ", "the Moon Clan are very powerful, it wouldn't be wise to", "wrong them.").also { stage++ }
+            7 -> npc("Yep. You're free to explore the island. Be careful though,", "the Moon Clan are very powerful, it wouldn't be wise to", "wrong them.").also { stage++ }
             8 -> player("Thanks, i'll keep that seal of passage close.").also { stage++ }
             9 -> end()
         }

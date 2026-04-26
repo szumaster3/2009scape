@@ -17,7 +17,7 @@ class InSearchOfTheMyreque :
         var line = 11
         player ?: return
         if (stage == 0) {
-            line(player, "I can start this quest by talking to a !!stranger?? in the '!!Hair ", line++, stage >= 3)
+            line(player, "I can start this quest by talking to a !!stranger?? in the '!!Hair", line++, stage >= 3)
             line(player, "!!of the dog Inn??' located in the town of !!Canafis?? in the land of", line++, stage >= 3)
             line(player, "!!Morytania.??", line++, stage >= 3)
             line++

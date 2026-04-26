@@ -40,7 +40,7 @@ class BaileyDialogue(player: Player? = null) : Dialogue(player) {
             0 -> npc(FaceAnim.SCARED, "What? Who are you? Come inside quickly!").also { stage++ }
             1 -> npc(FaceAnim.SCARED, "What are you doing here?").also { stage++ }
             2 -> player("I'm trying to find out what happened to a boy named", "Kennith.").also { stage++ }
-            3 -> npc(FaceAnim.NEUTRAL, "Oh you mean Kent's son. He's around somewhere, ", "probably hiding if he knows what's good for him.").also { stage++ }
+            3 -> npc(FaceAnim.NEUTRAL, "Oh you mean Kent's son. He's around somewhere,", "probably hiding if he knows what's good for him.").also { stage++ }
             4 -> player("Hiding from what? What's got you so frightened?").also { stage++ }
             5 -> npc(FaceAnim.NEUTRAL, "Haven't you seen all those things out there?").also { stage++ }
             6 -> player("The sea slugs?").also { stage++ }
@@ -75,7 +75,7 @@ class BaileyDialogue(player: Player? = null) : Dialogue(player) {
             107 -> npc(FaceAnim.NEUTRAL, "I doubt the fishermen will come near you if you can", "get this torch lit.").also { stage++ }
             108 -> npc(FaceAnim.NEUTRAL, "The only problem is all the wood and flint are damp... I", "can't light a thing!").also { stage = END_DIALOGUE }
             200 -> npc("Well done traveller, you'd better get Kennith", "out of here soon.").also { stage++ }
-            201 -> npc(FaceAnim.NEUTRAL, "The fishermen are becoming stranger by the minute, ", "and they keep pulling up those blasted sea slugs.").also { stage++ }
+            201 -> npc(FaceAnim.NEUTRAL, "The fishermen are becoming stranger by the minute,", "and they keep pulling up those blasted sea slugs.").also { stage++ }
             202 -> player("Don't worry I'm working on it.").also { stage++ }
             203 -> npc(FaceAnim.NEUTRAL, "Just be sure to watch your back. The fishermen", "seem to have taken notice of you.").also { stage = END_DIALOGUE }
 

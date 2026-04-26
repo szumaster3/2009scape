@@ -13,6 +13,9 @@ import shared.consts.Items
 import shared.consts.NPCs
 import shared.consts.Quests
 
+/**
+ * Represents Examiner dialogue.
+ */
 @Initializable
 class ExaminerDialogue(player: Player? = null) : Dialogue(player) {
 
@@ -26,6 +29,9 @@ class ExaminerDialogue(player: Player? = null) : Dialogue(player) {
     override fun getIds(): IntArray = intArrayOf(NPCs.EXAMINER_618, NPCs.EXAMINER_4566, NPCs.EXAMINER_4567)
 }
 
+/**
+ * Represents Examiner dialogue file.
+ */
 class ExaminerDialogueFile : DialogueBuilderFile() {
     companion object;
 

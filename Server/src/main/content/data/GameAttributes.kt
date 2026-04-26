@@ -456,4 +456,7 @@ internal object GameAttributes {
     const val TOG_TIMER = "minigame:tearsofguthix-ticksremaining"
     const val TOG_TEARS_TTL = "minigame:tearsofguthix-tearscollected"
     const val TOG_ACTVITY = "minigame:tearsofguthix-iscollecting"
+
+
+    const val COUNCIL_PERMISSION = "/save:dorgesh-kaan:council_permission"
 }

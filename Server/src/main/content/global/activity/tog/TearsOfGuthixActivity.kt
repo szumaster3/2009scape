@@ -42,7 +42,7 @@ class TearsOfGuthixActivity : MapArea, InteractionListener, EventHook<TickEvent>
                 "Your fingers feel nimble and suited to delicate work.",
                 "You have a brief urge to set light to something.",
                 "You gain a deep understanding of the creatures of the sea.",
-                "You feel the power of the runes surging through you. ",
+                "You feel the power of the runes surging through you.",
                 "You gain a deep understanding of the stones of the earth.",
                 "You suddenly feel very close to the gods.",
                 "Your aim improves.",

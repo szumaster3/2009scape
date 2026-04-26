@@ -77,7 +77,7 @@ class AlranDialogue(player: Player? = null) : Dialogue(player) {
             38 -> npc("Shhh! Give Fiara some respect! She canhear you, ", "you know.").also { stage++ }
             39 -> player("Fiara? It has a name?").also { stage++ }
             40 -> npc("Of course, Guthix chooses names for all his guardians.").also { stage++ }
-            41 -> player("If...err...Fiara is a Guardian, ", "what is she guarding?").also { stage++ }
+            41 -> player("If...err...Fiara is a Guardian,", "what is she guarding?").also { stage++ }
             42 -> npc("She guards this site. It is a holy site of Guthix.").also { stage++ }
             43 -> options("How long has Fiara been here?", "I'd better get going.").also { stage++ }
             44 -> when (buttonId) {

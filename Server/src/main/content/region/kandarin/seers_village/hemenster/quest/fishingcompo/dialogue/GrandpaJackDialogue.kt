@@ -74,7 +74,7 @@ class GrandpaJackDialogue(player: Player? = null) : Dialogue(player) {
             23 -> npc("If you're sure... passing up an opportunity of a lifetime you are.").also { stage = END_DIALOGUE }
             24 -> npc("Of course! Let me see now... You'll need a rod and bait.", "You can fish with a net too, but not in the competition.").also { stage++ }
             25 -> player("Ok... I think I can get those in Catherby.").also { stage++ }
-            26 -> npc("Then simply find yourself a fishing spot, ", "either in the competition near here, or wherever you can.", "I recommend net fishing in Catherby.").also { stage++ }
+            26 -> npc("Then simply find yourself a fishing spot,", "either in the competition near here, or wherever you can.", "I recommend net fishing in Catherby.").also { stage++ }
             27 -> npc("Net or Lure the fish in the fishing spot", "by clicking on it and then be patient...").also { stage++ }
             28 -> player("It's that simple?").also { stage++ }
             29 -> npc("Yep! Go get em tiger.").also { stage = 0 }

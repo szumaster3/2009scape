@@ -38,7 +38,7 @@ class AliTheOperatorDialogue(player: Player? = null) : Dialogue(player) {
                 2 -> end()
             }
             30 -> player(FaceAnim.HALF_ASKING, "I've discovered that. Well he has an uncle called", "Ali Morrisane, a market vendor in Al Kharid and", "that's all I really know about him.").also { stage++ }
-            31 -> npc(FaceAnim.ANNOYED, "Say no more. I too am looking for him.", "The little tyke robbed me too. If we work together,", "perhaps we can catch him and teach him ", "a lesson.").also { stage = 10 }
+            31 -> npc(FaceAnim.ANNOYED, "Say no more. I too am looking for him.", "The little tyke robbed me too. If we work together,", "perhaps we can catch him and teach him", "a lesson.").also { stage = 10 }
         }
         return true
     }

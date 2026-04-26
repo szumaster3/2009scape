@@ -1,5 +1,6 @@
 package content.region.other.dorgeshuun.dialogue
 
+import content.data.GameAttributes
 import core.api.getAttribute
 import core.api.setAttribute
 import core.game.dialogue.Dialogue
@@ -17,10 +18,9 @@ import shared.consts.NPCs
 class UrtagDialogue(player: Player? = null) : Dialogue(player) {
 
     override fun handle(interfaceId: Int, buttonId: Int): Boolean {
-        val foodPermission = "/save:dorgesh-kaan:food_permission"
         when (stage) {
             START_DIALOGUE -> npcl(FaceAnim.OLD_NORMAL, "Greetings, surface-dweller. Welcome to Dorgesh-Kaan.").also { stage++ }
-            1 -> if (getAttribute(player, foodPermission, false)) {
+            1 -> if (getAttribute(player, GameAttributes.COUNCIL_PERMISSION, false)) {
                 options("What can I do in the city?", "Why did you decide to open the city?").also { stage++ }
             } else {
                 options("What can I do in the city?", "Why did you decide to open the city?", "May I have permission to sell food in the market?").also { stage++ }
@@ -33,7 +33,7 @@ class UrtagDialogue(player: Player? = null) : Dialogue(player) {
             3 -> npcl(FaceAnim.OLD_NORMAL, "Of course you can.").also { stage++ }
             4 -> {
                 end()
-                setAttribute(player, foodPermission, true)
+                setAttribute(player, GameAttributes.COUNCIL_PERMISSION, true)
             }
             5 -> npcl(FaceAnim.OLD_NORMAL, "For trade, and for fostering goodwill between races!").also { stage++ }
             6 -> npcl(FaceAnim.OLD_NORMAL, "I am sure that it will benefit both our races.").also { stage = END_DIALOGUE }

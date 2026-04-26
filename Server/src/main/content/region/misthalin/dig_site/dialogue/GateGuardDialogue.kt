@@ -7,6 +7,9 @@ import core.game.node.entity.npc.NPC
 import core.tools.END_DIALOGUE
 import shared.consts.NPCs
 
+/**
+ * Represents Gate guard dialogue.
+ */
 class GateGuardDialogue : DialogueFile() {
     override fun handle(componentID: Int, buttonID: Int) {
         npc = NPC(NPCs.MUSEUM_GUARD_5941)
@@ -19,11 +22,8 @@ class GateGuardDialogue : DialogueFile() {
             1 -> options("Yes, I'll go in!", "No thanks, I'll take a look around out there.").also { stage++ }
             2 -> when (buttonID) {
                 1 -> playerl(FaceAnim.HALF_GUILTY, "Yes, I'll go in!").also { stage++ }
-                2 -> playerl(FaceAnim.HALF_GUILTY, "No thanks, I'll take a look around out there.").also {
-                    stage = END_DIALOGUE
-                }
+                2 -> playerl(FaceAnim.HALF_GUILTY, "No thanks, I'll take a look around out there.").also { stage = END_DIALOGUE }
             }
-
             3 -> {
                 end()
                 MuseumPlugin.openMuseumGate(player!!)

@@ -98,7 +98,7 @@ class OutpostHistory {
                 PageSet(
                     Page(
                         BookLine("Guthix, the two went about", 55),
-                        BookLine("their ways to spread equality ", 56),
+                        BookLine("their ways to spread equality", 56),
                         BookLine("mong the people. One of the", 57),
                         BookLine("friends became king, to listen", 58),
                         BookLine("to people's views and ensure", 59),

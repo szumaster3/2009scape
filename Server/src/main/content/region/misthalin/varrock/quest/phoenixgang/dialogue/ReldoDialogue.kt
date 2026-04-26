@@ -78,7 +78,7 @@ class ReldoDialogue(player: Player? = null) : Dialogue(player) {
                 }
 
                 440 -> {
-                    npc("Really? How extraordinary! Well, that certainly is a ", "worthy achievement indeed.")
+                    npc("Really? How extraordinary! Well, that certainly is a", "worthy achievement indeed.")
                     stage++
                 }
 

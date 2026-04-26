@@ -118,7 +118,7 @@ class SithikIntsPortraitureBookDialogueFile : DialogueFile() {
         npc = NPC(NPCs.SITHIK_INTS_2061)
         when (stage) {
             0 -> playerl("Oh, so explain this then?").also { stage++ }
-            1 -> sendDoubleItemDialogue(player!!, -1, Items.BOOK_OF_PORTRAITURE_4817, "You show the book on portraiture to Sithik.").also { stage++ }
+            1 -> sendItemDialogue(player!!, Items.BOOK_OF_PORTRAITURE_4817, "You show the book on portraiture to Sithik.").also { stage++ }
             2 -> npcl("It's my hobby...I'm interested in portraiture, but all art in general. It's fun, you should try it.").also { stage++ }
             3 -> playerl("How do I do it...").also { stage++ }
             4 -> npcl("Well...you could start by reading the book!").also { stage = END_DIALOGUE }
@@ -131,7 +131,7 @@ class SithikIntsHamBookDialogueFile : DialogueFile() {
         npc = NPC(NPCs.SITHIK_INTS_2061)
         when (stage) {
             0 -> playerl("What's this then?").also { stage++ }
-            1 -> sendDoubleItemDialogue(player!!, -1, Items.BOOK_OF_HAM_4829, "You show the HAM book to Sithik.").also { stage++ }
+            1 -> sendItemDialogue(player!!, Items.BOOK_OF_HAM_4829, "You show the HAM book to Sithik.").also { stage++ }
             2 -> npcl("What do you mean? It's a book by the respected HAM leader Johanhus Ulsbrecht, that man speaks for a lot of people who are unhappy with the current state of affairs.").also { stage++ }
             3 -> npcl("Can you honestly tell me that you've not had to fight for your life against the odd monster or two?").also { stage++ }
             4 -> playerl("Hmm, that may be true, but I don't universally hate all monsters, whereas I have a sneaking suspicion that you do...and ogres in particular!").also { stage++ }
@@ -145,7 +145,7 @@ class SithikIntsNecromancyBookDialogueFile : DialogueFile() {
         npc = NPC(NPCs.SITHIK_INTS_2061)
         when (stage) {
             0 -> playerl("Aha! A necromantic book! What's this doing here then?").also { stage++ }
-            1 -> sendDoubleItemDialogue(player!!, -1, Items.NECROMANCY_BOOK_4837, "You show the Necromantic book to Sithik.").also { stage++ }
+            1 -> sendItemDialogue(player!!, Items.NECROMANCY_BOOK_4837, "You show the Necromantic book to Sithik.").also { stage++ }
             2 -> npcl("Oh..I'm not quite sure actually...where did you find that then?").also { stage++ }
             3 -> playerl("I found it in this cupboard! What do you have to say for yourself?").also { stage++ }
             4 -> npcl("Oh yes, that's right...I remember now. It's for my research, there's nothing really dangerous about it, unless it falls into the wrong hands. I'm sure it's pretty safe with me.").also { stage++ }
@@ -159,7 +159,7 @@ class SithikIntsTornPageDialogueFile : DialogueFile() {
         npc = NPC(NPCs.SITHIK_INTS_2061)
         when (stage) {
             0 -> playerl("Have you ever seen anything like this before?").also { stage++ }
-            1 -> sendDoubleItemDialogue(player!!, -1, Items.TORN_PAGE_4809, "You show the torn page to Sithik.").also { stage++ }
+            1 -> sendItemDialogue(player!!, Items.TORN_PAGE_4809, "You show the torn page to Sithik.").also { stage++ }
             2 -> npcl("It's probably a piece of rubbish someone threw away...what does it say, I can't read it?").also { stage++ }
             3 -> playerl("You should be able to read it, it's been torn from a book on necromancy and you're meant to be a specialist in the subject.").also { stage++ }
             4 -> npcl("Oh, no..., not really a specialist, just a hobby of mine really. Hardly know anything about it, but it does seem interesting...").also { stage = END_DIALOGUE }
@@ -172,7 +172,7 @@ class SithikIntsBlackPrismDialogueFile : DialogueFile() {
         npc = NPC(NPCs.SITHIK_INTS_2061)
         when (stage) {
             0 -> playerl("Hey, what's this then, can you explain it?!").also { stage++ }
-            1 -> sendDoubleItemDialogue(player!!, -1, Items.BLACK_PRISM_4808, "You show the black prism to Sithik.").also { stage++ }
+            1 -> sendItemDialogue(player!!, Items.BLACK_PRISM_4808, "You show the black prism to Sithik.").also { stage++ }
             2 -> npcl("Err..it looks sort of familiar, did you steal it from me? Come to think of it, you have the appearance of a common thief!").also { stage++ }
             3 -> playerl("I found it in a place called Jiggig where some undead ogres happen to be wandering around.").also { stage++ }
             4 -> npcl("Oh, nothing to do with me then, never seen it in my life before!").also { stage = END_DIALOGUE }
@@ -185,7 +185,7 @@ class SithikIntsDragonTankardDialogueFile : DialogueFile() {
         npc = NPC(NPCs.SITHIK_INTS_2061)
         when (stage) {
             0 -> playerl("What about this then? Guess where I found this?").also { stage++ }
-            1 -> sendDoubleItemDialogue(player!!, -1, Items.DRAGON_INN_TANKARD_4811, "You show the tankard to Sithik.").also { stage++ }
+            1 -> sendItemDialogue(player!!, Items.DRAGON_INN_TANKARD_4811, "You show the tankard to Sithik.").also { stage++ }
             2 -> npcl("You probably found it at the local brewhouse! It doesn't take a genius to figure that one out.").also { stage++ }
             3 -> playerl("Aha! But I found this in an old ogre tomb! I suspect it's a clue which will lead me to the suspect.").also { stage++ }
             4 -> npcl("Hmmm, well that eliminates all the local people who don't actually drink at the 'Dragon Inn'. ").also { stage++ }

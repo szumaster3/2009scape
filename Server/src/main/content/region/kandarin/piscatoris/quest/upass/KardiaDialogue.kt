@@ -27,7 +27,7 @@ class KardiaDialogue(player: Player? = null) : Dialogue(player) {
             2 -> {
                 lock(player, 1)
                 visualize(player, -1, SweptUtils.BROOM_ENCHANTMENT_GFX)
-                sendDoubleItemDialogue(player, -1, Items.BROOMSTICK_14057, "You receive 14,979 Magic experience.")
+                sendItemDialogue(player, Items.BROOMSTICK_14057, "You receive 14,979 Magic experience.")
                 rewardXP(player, Skills.MAGIC, 14979.0)
                 setAttribute(player, GameAttributes.QUEST_SWEPT_AWAY_KARDIA_ENCH_RECEIVED, true)
                 stage = 3

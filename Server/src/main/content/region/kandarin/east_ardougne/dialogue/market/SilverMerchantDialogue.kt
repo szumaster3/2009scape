@@ -177,7 +177,7 @@ private class SilverMerchantDialogueExtension(override var stage: Int) : Dialogu
             20 -> npcl("I wonder what is inside.").also { stage = END_DIALOGUE }
             21 -> playerl("Would you like to see the journal I have found?").also { stage++ }
             22 -> npcl("Let's have a look.").also { stage++ }
-            23 -> sendDoubleItemDialogue(player!!, -1, Items.JOURNAL_6755, "Erin reads the journal.").also { stage++ }
+            23 -> sendItemDialogue(player!!, Items.JOURNAL_6755, "Erin reads the journal.").also { stage++ }
             24 -> npcl("Very interesting. Best you show it to Jorral at the outpost.").also { stage = END_DIALOGUE }
         }
     }

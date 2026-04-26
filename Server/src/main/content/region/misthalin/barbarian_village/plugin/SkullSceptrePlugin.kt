@@ -95,7 +95,7 @@ class SkullSceptrePlugin : InteractionListener {
 
         onUseWith(IntType.ITEM, Items.STRANGE_SKULL_9009, Items.RUNED_SCEPTRE_9012) { player, used, with ->
             if (removeItem(player, used.asItem())) {
-                sendDoubleItemDialogue(player, -1, Items.SKULL_SCEPTRE_9013, "The skull fits perfectly atop the Sceptre.")
+                sendItemDialogue(player, Items.SKULL_SCEPTRE_9013, "The skull fits perfectly atop the Sceptre.")
                 replaceSlot(player, with.asItem().index, Item(Items.SKULL_SCEPTRE_9013, 1))
             }
             return@onUseWith true

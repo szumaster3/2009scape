@@ -103,7 +103,7 @@ class SorceressApprenticeDialogue(player: Player? = null) : Dialogue(player) {
             }
             102 -> {
                 end()
-                sendDoubleItemDialogue(player, -1, Items.BROOMSTICK_14057, "You must have finished Prince Ali Rescue and have talked to Osman before Sorceress's apprentice will help you.")
+                sendItemDialogue(player, Items.BROOMSTICK_14057, "You must have finished Prince Ali Rescue and have talked to Osman before Sorceress's apprentice will help you.")
             }
             103 -> {
                 end()

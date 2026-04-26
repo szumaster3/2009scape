@@ -143,21 +143,21 @@ class AFUBeaconPlugin : InteractionListener {
                                 if (questComplete) {
                                     session?.startTimer(beacon.ordinal)
                                     if (session?.getLitBeacons() == 6 && !player.hasFireRing()) {
-                                        sendDoubleItemDialogue(player, -1, Items.RING_OF_FIRE_13659, DARK_BLUE +
+                                        sendItemDialogue(player, Items.RING_OF_FIRE_13659, DARK_BLUE +
                                                     "Congratulations! You have kept six beacons alight simultaneously!</col><br></br>Why don't you talk to King Roald in Varrock? He has<br></br>a special rewawrd for you.",)
                                         sendMessage(player, "Congratulations! You've lit six beacons simultaneously!")
                                         sendMessage(player, "Why don't you talk to King Roald in Varrock? He has a special reward for you.")
                                         setAttribute(player, "/save:afu-mini:ring", true)
                                     }
                                     if (session?.getLitBeacons() == 10 && !player.hasFlameGloves()) {
-                                        sendDoubleItemDialogue(player, -1, Items.FLAME_GLOVES_13660, DARK_BLUE +
+                                        sendItemDialogue(player, Items.FLAME_GLOVES_13660, DARK_BLUE +
                                                     "Congratulations! You have kept ten beacons alight simultaneously!</col><br></br>Why don't you talk to King Roald in Varrock? He has<br></br>a special rewawrd for you.",)
                                         sendMessage(player, "Congratulations! You've lit ten beacons simultaneously!")
                                         sendMessage(player, "Why don't you talk to King Roald in Varrock? He has a special reward for you.")
                                         setAttribute(player, "/save:afu-mini:gloves", true)
                                     }
                                     if (session?.getLitBeacons() == 14 && !player.hasInfernoAdze()) {
-                                        sendDoubleItemDialogue(player, -1, Items.INFERNO_ADZE_13661, DARK_BLUE + "Congratulations! You have kept all fourteen beacons alight simultaneously!</col><br></br>Why don't you talk to King Roald in Varrock? He has<br></br>a special rewawrd for you.",)
+                                        sendItemDialogue(player,  Items.INFERNO_ADZE_13661, DARK_BLUE + "Congratulations! You have kept all fourteen beacons alight simultaneously!</col><br></br>Why don't you talk to King Roald in Varrock? He has<br></br>a special rewawrd for you.",)
                                         sendMessage(player, "Congratulations! You've lit all fourteen beacons simultaneously!")
                                         sendMessage(player, "Why don't you talk to King Roald in Varrock? He has a special reward for you.")
                                         setAttribute(player, "/save:afu-mini:adze", true)

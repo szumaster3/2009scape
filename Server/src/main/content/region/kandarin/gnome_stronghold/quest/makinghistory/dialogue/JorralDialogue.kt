@@ -145,7 +145,7 @@ class JorralDialogue(player: Player? = null) : Dialogue(player) {
             49 -> npcl(FaceAnim.FRIENDLY, "How's it going?").also { stage++ }
             50 -> playerl(FaceAnim.FRIENDLY, "I found a journal!").also { stage++ }
             51 -> npcl(FaceAnim.FRIENDLY, "Good work. Let's see what it says.").also { stage++ }
-            52 -> sendDoubleItemDialogue(player!!, -1, Items.JOURNAL_6755, "Jorral reads through the journal.").also { stage++ }
+            52 -> sendItemDialogue(player!!, Items.JOURNAL_6755, "Jorral reads through the journal.").also { stage++ }
             53 -> npcl(FaceAnim.FRIENDLY, "The person who wrote the journal spent time living in the outpost, following the order of Zamorak.").also { stage++ }
             54 -> playerl(FaceAnim.FRIENDLY, "I see.").also { stage++ }
             55 -> npcl(FaceAnim.FRIENDLY, "He talks of all the nasty things they did to the people of Ardougne, which I don't care to mention! It looks like they were stopped by someone. But it doesn't say who.").also { stage++ }
@@ -158,7 +158,7 @@ class JorralDialogue(player: Player? = null) : Dialogue(player) {
             57 -> player("Hi there.").also { stage++ }
             58 -> npcl(FaceAnim.FRIENDLY, "How's it going?").also { stage++ }
             59 -> playerl(FaceAnim.FRIENDLY, "I have been in contact with the ghost you suggested, and I've recovered this:").also { stage++ }
-            60 -> sendDoubleItemDialogue(player!!, -1, Items.SCROLL_6758, "Jorral skims over the contents of the scroll.").also { stage++ }
+            60 -> sendItemDialogue(player!!, Items.SCROLL_6758, "Jorral skims over the contents of the scroll.").also { stage++ }
             61 -> npcl(FaceAnim.FRIENDLY, "Very interesting. So there was a great battle at the outpost. Then one of the survivors became king, and the other started the market place. Good work.").also {
                 removeItem(player, Items.SCROLL_6758)
                 checkProgress(player!!)
@@ -210,7 +210,7 @@ class JorralDialogue(player: Player? = null) : Dialogue(player) {
                 addItemOrDrop(player!!, Items.LETTER_6756)
             }
             88 -> npcl(FaceAnim.FRIENDLY, "Quick, let me see.").also { stage++ }
-            89 -> sendDoubleItemDialogue(player!!, -1, Items.LETTER_6757, "Jorral reads the letter.").also { stage++ }
+            89 -> sendItemDialogue(player!!, Items.LETTER_6757, "Jorral reads the letter.").also { stage++ }
             90 -> npcl(FaceAnim.FRIENDLY, "Hurrah! Good work, you've done it. You've saved the outpost!").also { stage++ }
             91 -> playerl(FaceAnim.FRIENDLY, "My pleasure.").also { stage++ }
             92 -> npcl(FaceAnim.FRIENDLY, "I can now continue with my plans for this place. Thank you.").also { stage++ }

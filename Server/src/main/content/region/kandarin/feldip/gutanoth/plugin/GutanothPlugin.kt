@@ -114,9 +114,8 @@ class GutanothPlugin : InteractionListener {
                 sendMessage(player, "You find nothing here this time.")
             } else {
                 setAttribute(player, ZogreUtils.TORN_PAGE_ACQUIRED, true)
-                sendDoubleItemDialogue(
+                sendItemDialogue(
                     player,
-                    -1,
                     TORN_PAGE,
                     "You find a half torn page...it has spidery writing all over it."
                 )
@@ -217,9 +216,8 @@ class GutanothPlugin : InteractionListener {
                                     Items.ZOGRE_BONES_4812
                                 )
                             ) {
-                                sendDoubleItemDialogue(
+                                sendItemDialogue(
                                     player,
-                                    -1,
                                     loot.id,
                                     "You find some ancestral ${getItemName(loot.id)}."
                                 )
@@ -310,9 +308,8 @@ class GutanothPlugin : InteractionListener {
                                     Items.ZOGRE_BONES_4812
                                 )
                             ) {
-                                sendDoubleItemDialogue(
+                                sendItemDialogue(
                                     player,
-                                    -1,
                                     loot.id,
                                     "You find some ancestral ${getItemName(loot.id)}."
                                 )
@@ -450,9 +447,8 @@ class GutanothPlugin : InteractionListener {
                     override fun handle(componentID: Int, buttonID: Int) {
                         when (stage) {
                             0 -> {
-                                sendDoubleItemDialogue(
+                                sendItemDialogue(
                                     player,
-                                    -1,
                                     BACKPACK,
                                     "Just before you open the backpack, you notice a small leather patch with the monkier: 'B.Uahn', on it."
                                 ).also { stage++ }

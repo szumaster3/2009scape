@@ -135,7 +135,7 @@ class OldCroneDialogue(player: Player? = null) : Dialogue(player) {
                 visualize(player, -1, SweptUtils.BROOM_ENCHANTMENT_GFX)
                 removeAttribute(player, GameAttributes.QUEST_SWEPT_AWAY_LABELS_COMPLETE)
                 setAttribute(player, GameAttributes.QUEST_SWEPT_AWAY_OLD_CRONE_ENCH_RECEIVED, true)
-                sendDoubleItemDialogue(player, -1, Items.BROOMSTICK_14057, "You receive 7,139 Magic experience.")
+                sendItemDialogue(player, Items.BROOMSTICK_14057, "You receive 7,139 Magic experience.")
                 rewardXP(player, Skills.MAGIC, 7139.0)
             }
         }

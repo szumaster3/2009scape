@@ -138,8 +138,8 @@ class DragonSlayerListener : InteractionListener {
                 Items.MAP_PART_1537 -> "This is a piece of map that you found in a secret chest in the Dwarven Mine. You will need to join it to the other two map pieces before you can see the route to Crandor."
                 else -> return@on false
             }
-            if(node.id == 1537) {
-                sendDoubleItemDialogue(player, -1, 1537, dialogue)
+            if(node.id == Items.MAP_PART_1537) {
+                sendItemDialogue(player, Items.MAP_PART_1537, dialogue)
             } else {
               sendItemDialogue(player, node.id, dialogue)
             }

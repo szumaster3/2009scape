@@ -364,7 +364,7 @@ class ZavisticRarveDialogues : DialogueFile() {
                     sendItemDialogue(player!!, Items.BOOK_OF_HAM_4829, "You show the HAM book to Zavistic.").also { stage = 80 }
 
                 inInventory(player!!, Items.DRAGON_INN_TANKARD_4811) && !getAttribute(player!!, ZogreUtils.TALK_AGAIN_3, false) ->
-                    sendDoubleItemDialogue(player!!, -1, Items.DRAGON_INN_TANKARD_4811, "You show the dragon Inn Tankard to Zavistic.").also { stage = 82 }
+                    sendItemDialogue(player!!, Items.DRAGON_INN_TANKARD_4811, "You show the dragon Inn Tankard to Zavistic.").also { stage = 82 }
 
                 inInventory(player!!, ZogreUtils.UNREALIST_PORTRAIT) && !getAttribute(player!!, ZogreUtils.TALK_AGAIN_4, false) ->
                     player("Look, I made a portrait of Sithik.").also { stage = 84 }
@@ -503,7 +503,7 @@ class ZavisticRarveDialogues : DialogueFile() {
 
             // 108 -> player(FaceAnim.HALF_GUILTY, "Well, I found this...").also { stage++ }
 
-            109 -> sendDoubleItemDialogue(player!!, -1, Items.DRAGON_INN_TANKARD_4811, "You show the tankard to Zavistic.").also { stage++ }
+            109 -> sendItemDialogue(player!!, Items.DRAGON_INN_TANKARD_4811, "You show the tankard to Zavistic.").also { stage++ }
             110 -> npcl(FaceAnim.THINKING, "Hmmm, no, that's not really associated with this to be honest.").also {
                 setAttribute(player!!, ZogreUtils.TALK_ABOUT_TANKARD, true)
                 stage = 5
@@ -543,7 +543,7 @@ class ZavisticRarveDialogues : DialogueFile() {
             //     playerl(FaceAnim.HALF_GUILTY, "There's some undead ogre activity over at 'Jiggig', and the ogres have asked me to look into it. I think I've found a clue and I wonder if you could take a look at it for me?").also { stage++ }
             // }
 
-            128 -> sendDoubleItemDialogue(player!!, -1, Items.BLACK_PRISM_4808, "You show the black prism to the aged wizard.").also { stage++ }
+            128 -> sendItemDialogue(player!!, Items.BLACK_PRISM_4808, "You show the black prism to the aged wizard.").also { stage++ }
             129 -> npcl(FaceAnim.FRIENDLY, "Hmmm, well this is an uncommon spell component. On it's own it's useless, but with certain necromantic spells it can be very powerful.").also { stage++ }
             130 -> {
                 npcl(FaceAnim.HALF_ASKING, "Did you find anything else there?")
@@ -557,7 +557,7 @@ class ZavisticRarveDialogues : DialogueFile() {
                     else -> 5
                 }
             }
-            131 -> sendDoubleItemDialogue(player!!, -1, Items.BLACK_PRISM_4808, "You show the black prism to the aged wizard.").also { stage++ }
+            131 -> sendItemDialogue(player!!, Items.BLACK_PRISM_4808, "You show the black prism to the aged wizard.").also { stage++ }
             132 -> npcl(FaceAnim.FRIENDLY, "Yes, you've already showed me that, bring it to me when you've resolved the problems at Jiggig and I'll see what I can do.").also { stage = END_DIALOGUE }
             133 -> sendDialogue(player!!, "You show the black prism to Zavistic.").also { stage++ }
             134 -> npcl(FaceAnim.FRIENDLY, "Ah yes, I remember saying something about a reward didn't I? Well, I can offer you 2000 coins for it as it stands,").also { stage++ }
@@ -584,7 +584,7 @@ class ZavisticRarveDialogues : DialogueFile() {
 
             // 141 -> playerl(FaceAnim.HALF_GUILTY, "There's some undead ogre activity over at Jiggig, I've found a clue that you may be able to help with.").also { stage++ }
 
-            142 -> sendDoubleItemDialogue(player!!, -1, Items.TORN_PAGE_4809, "You show the necromantic half page to the aged wizard.").also { stage++ }
+            142 -> sendItemDialogue(player!!, Items.TORN_PAGE_4809, "You show the necromantic half page to the aged wizard.").also { stage++ }
             143 -> npcl(FaceAnim.HALF_ASKING, "Hmm, this is a half torn spell page, it requires another spell component to be effective.").also { stage++ }
             144 -> {
                 npcl(FaceAnim.HALF_ASKING, "Did you find anything else there?")

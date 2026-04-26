@@ -63,7 +63,7 @@ class AliTheHagDialogue(player: Player? = null) : Dialogue(player) {
                 lock(player, 1)
                 visualize(player, -1, SweptUtils.BROOM_ENCHANTMENT_GFX)
                 setAttribute(player, GameAttributes.QUEST_SWEPT_AWAY_ALI_THE_HAG_ENCH_RECEIVED, true)
-                sendDoubleItemDialogue(player, -1, Items.BROOMSTICK_14057, "You receive 1,997 Magic experience.")
+                sendItemDialogue(player, Items.BROOMSTICK_14057, "You receive 1,997 Magic experience.")
                 rewardXP(player, Skills.MAGIC, 1997.0)
             }
         }

@@ -420,23 +420,6 @@ public final class DialogueInterpreter {
      *
      * @param first   the first
      * @param second  the second
-     * @param zoom    the zoom
-     * @param message the message
-     * @return the component
-     */
-    public Component sendDoubleItemMessage(int first, int second, int zoom, String message) {
-        player.getInterfaceManager().openChatbox(Components.DOUBLEOBJBOX_131);
-        player.getPacketDispatch().sendString(message, Components.DOUBLEOBJBOX_131, 1);
-        player.getPacketDispatch().sendItemZoomOnInterface(first, zoom, Components.DOUBLEOBJBOX_131, 0);
-        player.getPacketDispatch().sendItemZoomOnInterface(second, zoom, Components.DOUBLEOBJBOX_131, 2);
-        return player.getInterfaceManager().chatbox;
-    }
-
-    /**
-     * Send double item message component.
-     *
-     * @param first   the first
-     * @param second  the second
      * @param message the message
      * @return the component
      */

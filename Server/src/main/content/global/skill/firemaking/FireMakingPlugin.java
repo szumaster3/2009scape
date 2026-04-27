@@ -1,7 +1,6 @@
 package content.global.skill.firemaking;
 
 import content.data.skill.SkillingTool;
-import content.global.skill.firemaking.items.Log;
 import content.region.kandarin.baxtorian.BarbarianTraining;
 import core.api.Container;
 import core.api.ContentAPIKt;
@@ -29,7 +28,7 @@ import static core.api.ContentAPIKt.*;
  */
 public final class FireMakingPlugin extends SkillPulse<Item> {
 
-    private final Log fire;
+    private final LogItem fire;
     private GroundItem groundItem;
     private int ticks;
 
@@ -46,7 +45,7 @@ public final class FireMakingPlugin extends SkillPulse<Item> {
      */
     public FireMakingPlugin(Player player, Item node, GroundItem groundItem, FiremakingMode mode) {
         super(player, node);
-        this.fire = Log.forId(node.getId());
+        this.fire = LogItem.forId(node.getId());
         this.mode = mode;
 
         visualize(player);
@@ -224,7 +223,7 @@ public final class FireMakingPlugin extends SkillPulse<Item> {
         }
     }
 
-    public static GroundItem getAsh(final Player player, Log fire, final Scenery scenery) {
+    public static GroundItem getAsh(final Player player, LogItem fire, final Scenery scenery) {
         GroundItem ash = new GroundItem(new Item(Items.ASHES_592), scenery.getLocation(), player);
         ash.setDecayTime(fire.getLife() + 200);
         return ash;

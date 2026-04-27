@@ -2,7 +2,7 @@ package content.global.skill.summoning.familiar.npc
 
 import content.global.skill.crafting.CraftingDefinition
 import content.global.skill.firemaking.FireMakingPlugin
-import content.global.skill.firemaking.items.Log
+import content.global.skill.firemaking.LogItem
 import content.global.skill.summoning.familiar.Familiar
 import content.global.skill.summoning.familiar.FamiliarSpecial
 import core.api.finishDiaryTask
@@ -81,7 +81,7 @@ class PyrelordNPC @JvmOverloads constructor(owner: Player? = null, id: Int = NPC
 
         override fun handle(event: NodeUsageEvent): Boolean {
             val player = event.player
-            val log = Log.forId(event.usedItem.id)
+            val logItem = LogItem.forId(event.usedItem.id)
             val familiar = event.usedWith as Familiar
             val ticks = FIREMAKING_ANIMATION.definition.getDurationTicks()
             if (!player.familiarManager.isOwner(familiar)) {
@@ -100,12 +100,12 @@ class PyrelordNPC @JvmOverloads constructor(owner: Player? = null, id: Int = NPC
                         if (!ground.isActive) {
                             return true
                         }
-                        val `object` = Scenery(log!!.fireId, familiar.location)
+                        val `object` = Scenery(logItem!!.fireId, familiar.location)
                         familiar.moveStep()
                         GroundItemManager.destroy(ground)
-                        player.getSkills().addExperience(Skills.FIREMAKING, log.xp + 10)
+                        player.getSkills().addExperience(Skills.FIREMAKING, logItem.xp + 10)
                         familiar.faceLocation(`object`.getFaceLocation(familiar.location))
-                        SceneryBuilder.add(`object`, log.life, FireMakingPlugin.getAsh(player, log, `object`))
+                        SceneryBuilder.add(`object`, logItem.life, FireMakingPlugin.getAsh(player, logItem, `object`))
                         if (player.viewport.region!!.id == 10806) {
                             finishDiaryTask(player, DiaryType.SEERS_VILLAGE, 1, 9)
                             setVarbit(player, 5803,1,true)

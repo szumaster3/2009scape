@@ -2,7 +2,7 @@ package content.minigame.blastfurnace.plugin
 
 import com.google.gson.JsonArray
 import com.google.gson.JsonObject
-import content.global.skill.smithing.items.Bar
+import content.global.skill.smithing.bar.BarItem
 import content.minigame.blastfurnace.plugin.BlastFurnace.Companion.getBarForOreId
 import content.minigame.blastfurnace.plugin.BlastFurnace.Companion.getNeededCoal
 import content.minigame.blastfurnace.plugin.BlastUtils.BAR_LIMIT
@@ -30,7 +30,7 @@ class BFOreContainer {
         if (id == Items.COAL_453) return addCoal(amount)
 
         var limit = BlastUtils.ORE_LIMIT
-        if (getBarForOreId(id, -1, 99) == Bar.BRONZE) limit *= 2
+        if (getBarForOreId(id, -1, 99) == BarItem.BRONZE) limit *= 2
 
         var amountLeft = amount
         var maxAdd = getAvailableSpace(id, 99)
@@ -86,7 +86,7 @@ class BFOreContainer {
 
             val coalNeeded = getNeededCoal(bar)
 
-            if (bar == Bar.BRONZE) {
+            if (bar == BarItem.BRONZE) {
                 val indexOfComplement =
                     when (ores[i]) {
                         Items.COPPER_ORE_436 -> indexOfOre(Items.TIN_ORE_438)
@@ -113,7 +113,7 @@ class BFOreContainer {
         return xpReward
     }
 
-    fun getBarAmount(bar: Bar): Int = barAmounts[bar.ordinal]
+    fun getBarAmount(barItem: BarItem): Int = barAmounts[barItem.ordinal]
 
     fun getTotalBarAmount(): Int {
         var total = 0
@@ -122,14 +122,14 @@ class BFOreContainer {
     }
 
     fun takeBars(
-        bar: Bar,
+        barItem: BarItem,
         amount: Int,
     ): Item? {
-        val amt = amount.coerceAtMost(barAmounts[bar.ordinal])
+        val amt = amount.coerceAtMost(barAmounts[barItem.ordinal])
         if (amt == 0) return null
 
-        barAmounts[bar.ordinal] -= amt
-        return Item(bar.product.id, amt)
+        barAmounts[barItem.ordinal] -= amt
+        return Item(barItem.product.id, amt)
     }
 
     fun getAvailableSpace(
@@ -144,7 +144,7 @@ class BFOreContainer {
         for (i in 0 until BlastUtils.ORE_LIMIT) {
             if (ores[i] == -1) {
                 var oreLimit = BlastUtils.ORE_LIMIT
-                if (bar == Bar.BRONZE) oreLimit *= 2
+                if (bar == BarItem.BRONZE) oreLimit *= 2
                 freeSlots = oreLimit - i
                 break
             } else {

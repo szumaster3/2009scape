@@ -1,6 +1,6 @@
 package content.global.skill.smithing
 
-import content.global.skill.smithing.items.Bars
+import content.global.skill.smithing.bar.BarItemProduct
 import core.game.node.entity.player.Player
 import core.game.node.item.Item
 
@@ -52,7 +52,7 @@ enum class SmithingType(
          *
          * @return the amount to smith, or `-1` if invalid
          */
-        fun forButton(player: Player, bar: Bars?, button: Int, item: Int): Int {
+        fun forButton(player: Player, bar: BarItemProduct?, button: Int, item: Int): Int {
             var count = 0
             if (bar == null) {
                 return -1

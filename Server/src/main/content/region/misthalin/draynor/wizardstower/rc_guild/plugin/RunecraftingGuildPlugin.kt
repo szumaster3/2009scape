@@ -1,6 +1,6 @@
 package content.region.misthalin.draynor.wizardstower.rc_guild.plugin
 
-import content.global.skill.runecrafting.Talisman
+import content.global.skill.runecrafting.item.Talisman
 import core.api.*
 import core.game.dialogue.FaceAnim
 import core.game.interaction.IntType
@@ -13,7 +13,6 @@ import core.game.world.GameWorld
 import core.game.world.map.Location
 import core.game.world.map.zone.ZoneBorders
 import core.game.world.map.zone.ZoneRestriction
-import core.tools.END_DIALOGUE
 import shared.consts.*
 
 /*

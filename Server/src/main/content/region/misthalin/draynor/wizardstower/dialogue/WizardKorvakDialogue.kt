@@ -1,6 +1,6 @@
 package content.region.misthalin.draynor.wizardstower.dialogue
 
-import content.global.skill.runecrafting.PouchManager
+import content.global.skill.runecrafting.item.PouchManager
 import core.api.*
 import core.game.dialogue.Dialogue
 import core.game.dialogue.FaceAnim

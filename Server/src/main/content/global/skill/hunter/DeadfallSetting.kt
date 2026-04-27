@@ -1,6 +1,6 @@
 package content.global.skill.hunter
 
-import content.global.skill.firemaking.items.Log
+import content.global.skill.firemaking.LogItem
 import core.api.*
 import core.game.node.Node
 import core.game.node.entity.npc.NPC
@@ -31,7 +31,7 @@ class DeadfallSetting :
             sendMessage(player, "You need a knife in order to set a deadfall trap.")
             return false
         }
-        for (log in Log.values()) {
+        for (log in LogItem.values()) {
             if (inInventory(player, log.logId, 1)) {
                 return true
             }
@@ -119,8 +119,8 @@ class DeadfallSetting :
         return locations
     }
 
-    private fun getLog(player: Player): Log? {
-        for (log in Log.values()) {
+    private fun getLog(player: Player): LogItem? {
+        for (log in LogItem.values()) {
             if (player.inventory.contains(log.logId, 1)) {
                 return log
             }

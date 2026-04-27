@@ -2,7 +2,7 @@ package content.minigame.blastfurnace.plugin
 
 import com.google.gson.JsonArray
 import com.google.gson.JsonObject
-import content.global.skill.smithing.items.Bar
+import content.global.skill.smithing.bar.BarItem
 import core.api.*
 import core.game.node.entity.player.Player
 import core.game.node.entity.skill.Skills
@@ -56,7 +56,7 @@ class BFPlayerState(
     fun hasBarsClaimable(): Boolean = container.getTotalBarAmount() > 0
 
     fun claimBars(
-        bar: Bar,
+        barItem: BarItem,
         amount: Int,
     ): Boolean {
         if (barsNeedCooled) return false
@@ -64,14 +64,14 @@ class BFPlayerState(
         val maxAmt = amount.coerceAtMost(freeSlots(player))
         if (maxAmt == 0) return false
 
-        val reward = container.takeBars(bar, maxAmt) ?: return false
+        val reward = container.takeBars(barItem, maxAmt) ?: return false
         addItem(player, reward.id, reward.amount)
         setBarClaimVarbits()
         return true
     }
 
     fun setBarClaimVarbits() {
-        for (bar in Bar.values()) {
+        for (bar in BarItem.values()) {
             val amount = container.getBarAmount(bar)
             val varbit = getVarbitForBar(bar)
             if (varbit == 0) continue
@@ -91,17 +91,17 @@ class BFPlayerState(
         setVarbit(player, COAL_NEEDED, (totalCoalNeeded - container.coalAmount()).coerceAtLeast(0))
     }
 
-    private fun getVarbitForBar(bar: Bar): Int =
-        when (bar) {
-            Bar.BRONZE -> BRONZE_COUNT
-            Bar.IRON -> IRON_COUNT
-            Bar.STEEL -> STEEL_COUNT
-            Bar.MITHRIL -> MITHRIL_COUNT
-            Bar.ADAMANT -> ADDY_COUNT
-            Bar.RUNITE -> RUNITE_COUNT
-            Bar.GOLD -> GOLD_COUNT
-            Bar.SILVER -> SILVER_COUNT
-            Bar.PERFECT_GOLD -> PERF_GOLD_COUNT
+    private fun getVarbitForBar(barItem: BarItem): Int =
+        when (barItem) {
+            BarItem.BRONZE -> BRONZE_COUNT
+            BarItem.IRON -> IRON_COUNT
+            BarItem.STEEL -> STEEL_COUNT
+            BarItem.MITHRIL -> MITHRIL_COUNT
+            BarItem.ADAMANT -> ADDY_COUNT
+            BarItem.RUNITE -> RUNITE_COUNT
+            BarItem.GOLD -> GOLD_COUNT
+            BarItem.SILVER -> SILVER_COUNT
+            BarItem.PERFECT_GOLD -> PERF_GOLD_COUNT
             else -> 0
         }
 

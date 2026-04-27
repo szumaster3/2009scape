@@ -1,5 +1,7 @@
 package content.global.skill.runecrafting
 
+import content.global.skill.runecrafting.item.Talisman
+import content.global.skill.runecrafting.item.Tiara
 import core.game.node.scenery.Scenery
 import core.game.world.map.Location
 

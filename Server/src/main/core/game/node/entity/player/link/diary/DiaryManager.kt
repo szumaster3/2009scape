@@ -1,13 +1,12 @@
 package core.game.node.entity.player.link.diary
 
 import com.google.gson.JsonArray
-import content.global.skill.smithing.items.Bar
+import content.global.skill.smithing.bar.BarItem
 import core.api.*
 import core.game.component.Component
 import core.game.container.impl.EquipmentContainer
 import core.game.node.entity.player.Player
 import shared.consts.Components
-import shared.consts.Items
 
 /**
  * The Diary manager.
@@ -95,13 +94,13 @@ class DiaryManager(val player: Player) {
     /**
      * Checks smithing reward eligibility.
      */
-    fun checkSmithReward(type: Bar): Boolean {
+    fun checkSmithReward(type: BarItem): Boolean {
         val level = player.achievementDiaryManager.armour
         if (level == -1) return false
         return when (level) {
-            0 -> type.ordinal <= Bar.STEEL.ordinal
-            1 -> type.ordinal <= Bar.MITHRIL.ordinal
-            2 -> type.ordinal <= Bar.ADAMANT.ordinal
+            0 -> type.ordinal <= BarItem.STEEL.ordinal
+            1 -> type.ordinal <= BarItem.MITHRIL.ordinal
+            2 -> type.ordinal <= BarItem.ADAMANT.ordinal
             else -> false
         }
     }

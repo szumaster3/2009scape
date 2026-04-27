@@ -1,6 +1,5 @@
 package content.global.skill.firemaking
 
-import content.global.skill.firemaking.items.GnomishFirelighter
 import content.region.kandarin.baxtorian.BarbarianTraining
 import core.api.*
 import core.game.interaction.IntType

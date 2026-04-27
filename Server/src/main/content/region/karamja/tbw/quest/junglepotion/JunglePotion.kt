@@ -1,6 +1,6 @@
 package content.region.karamja.tbw.quest.junglepotion
 
-import content.global.skill.herblore.herbs.HerbItem
+import content.global.skill.herblore.herb.HerbItem
 import content.region.karamja.tbw.quest.junglepotion.dialogue.JogreCavernDialogue
 import content.region.karamja.tbw.quest.junglepotion.dialogue.TrufitusDialogue
 import content.region.karamja.tbw.quest.junglepotion.plugin.JunglePotionObject

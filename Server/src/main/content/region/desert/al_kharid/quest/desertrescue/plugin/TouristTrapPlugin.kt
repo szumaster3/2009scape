@@ -1,6 +1,6 @@
 package content.region.desert.al_kharid.quest.desertrescue.plugin
 
-import content.global.skill.smithing.items.Bar
+import content.global.skill.smithing.bar.BarItem
 import content.region.desert.al_kharid.quest.desertrescue.TouristTrap
 import content.region.desert.al_kharid.quest.desertrescue.plugin.TouristTrapPlugin.AnnaCartHandler.AnnaCartCutscene
 import content.region.desert.al_kharid.quest.desertrescue.plugin.TouristTrapPlugin.BedabinAnvilHandler.AnnaWinchHandler
@@ -1427,7 +1427,7 @@ class TouristTrapPlugin : OptionHandler() {
                         player.packetDispatch.sendMessage("You need a hammer in order to work metal with.")
                         return false
                     }
-                    return player.inventory.containsItem(Bar.BRONZE.product)
+                    return player.inventory.containsItem(BarItem.BRONZE.product)
                 }
 
                 override fun animate() {
@@ -1446,7 +1446,7 @@ class TouristTrapPlugin : OptionHandler() {
                             "You begin experimenting in forging the weapon...",
                         )
                     } else if (ticks == 8) {
-                        player.inventory.remove(Bar.BRONZE.product)
+                        player.inventory.remove(BarItem.BRONZE.product)
                         player.inventory.add(TouristTrap.PROTOTYPE_DART_TIP)
                         player.dialogueInterpreter.sendItemMessage(
                             TouristTrap.PROTOTYPE_DART_TIP,

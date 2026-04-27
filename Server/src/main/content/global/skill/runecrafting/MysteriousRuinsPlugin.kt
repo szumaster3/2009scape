@@ -1,5 +1,8 @@
 package content.global.skill.runecrafting
 
+import content.global.skill.runecrafting.item.RunecraftingStaff
+import content.global.skill.runecrafting.item.Talisman
+import content.global.skill.runecrafting.item.Tiara
 import core.api.*
 import core.game.container.impl.EquipmentContainer.SLOT_HAT
 import core.game.interaction.IntType

@@ -1,5 +1,6 @@
 package content.global.skill.runecrafting
 
+import content.global.skill.runecrafting.item.RunecraftingStaff
 import core.api.*
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener

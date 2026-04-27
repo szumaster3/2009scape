@@ -4,7 +4,7 @@ import content.data.GameAttributes
 import content.data.skill.SkillingTool
 import content.data.tables.BirdNestDropTable
 import content.global.skill.farming.FarmingPatch
-import content.global.skill.firemaking.items.Log
+import content.global.skill.firemaking.LogItem
 import core.api.*
 import core.cache.def.impl.ItemDefinition
 import core.game.container.impl.EquipmentContainer
@@ -97,7 +97,7 @@ class WoodcuttingPlugin : InteractionListener {
 
                 player.getSkills().addExperience(Skills.WOODCUTTING, resource.experience)
 
-                val fire = Log.forId(reward)
+                val fire = LogItem.forId(reward)
                 if (fire != null) {
                     player.getSkills().addExperience(Skills.FIREMAKING, fire.xp)
                 }

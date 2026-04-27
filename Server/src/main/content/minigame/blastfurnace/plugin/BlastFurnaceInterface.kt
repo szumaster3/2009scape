@@ -1,6 +1,6 @@
 package content.minigame.blastfurnace.plugin
 
-import content.global.skill.smithing.items.Bar
+import content.global.skill.smithing.bar.BarItem
 import core.api.animateInterface
 import core.api.setComponentVisibility
 import core.api.submitIndividualPulse
@@ -45,18 +45,18 @@ class BlastFurnaceInterface : InterfaceListener {
         }
     }
 
-    private fun getBarForButton(id: Int): Pair<Boolean, Bar> =
+    private fun getBarForButton(id: Int): Pair<Boolean, BarItem> =
         when (id) {
-            43, 44 -> Pair(id == 44, Bar.BRONZE)
-            40, 41 -> Pair(id == 41, Bar.IRON)
-            36, 38 -> Pair(id == 38, Bar.STEEL)
-            33, 35 -> Pair(id == 35, Bar.MITHRIL)
-            30, 32 -> Pair(id == 32, Bar.ADAMANT)
-            27, 29 -> Pair(id == 29, Bar.RUNITE)
-            24, 26 -> Pair(id == 26, Bar.SILVER)
-            21, 23 -> Pair(id == 23, Bar.GOLD)
-            2, 4 -> Pair(id == 4, Bar.PERFECT_GOLD)
+            43, 44 -> Pair(id == 44, BarItem.BRONZE)
+            40, 41 -> Pair(id == 41, BarItem.IRON)
+            36, 38 -> Pair(id == 38, BarItem.STEEL)
+            33, 35 -> Pair(id == 35, BarItem.MITHRIL)
+            30, 32 -> Pair(id == 32, BarItem.ADAMANT)
+            27, 29 -> Pair(id == 29, BarItem.RUNITE)
+            24, 26 -> Pair(id == 26, BarItem.SILVER)
+            21, 23 -> Pair(id == 23, BarItem.GOLD)
+            2, 4 -> Pair(id == 4, BarItem.PERFECT_GOLD)
 
-            else -> Pair(false, Bar.BRONZE)
+            else -> Pair(false, BarItem.BRONZE)
         }
 }

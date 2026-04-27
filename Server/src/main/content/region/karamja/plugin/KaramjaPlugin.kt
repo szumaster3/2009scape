@@ -1,7 +1,7 @@
 package content.region.karamja.plugin
 
 import content.data.skill.SkillingTool
-import content.global.skill.gather.SkillReward
+import content.global.skill.gather.SkillUtils
 import content.global.skill.gather.woodcutting.WoodcuttingNode
 import core.api.*
 import core.game.dialogue.FaceAnim
@@ -209,7 +209,7 @@ class KaramjaPlugin : InteractionListener {
         }
 
         if (jungleBushNode == null ||
-            !SkillReward.checkWoodcuttingReward(player, jungleBushNode, machete)
+            !SkillUtils.checkWoodcuttingReward(player, jungleBushNode, machete)
         ) {
             delayClock(player, Clocks.SKILLING, 3)
             return delayScript(player, 2)

@@ -2,7 +2,7 @@ package content.global.skill.construction.decoration.portalchamber
 
 import content.data.GameAttributes
 import content.global.skill.construction.Decoration
-import content.global.skill.runecrafting.Rune
+import content.global.skill.runecrafting.item.Rune
 import core.api.*
 import core.cache.def.impl.SceneryDefinition
 import core.game.dialogue.Dialogue

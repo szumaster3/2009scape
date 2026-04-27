@@ -1,6 +1,6 @@
 package content.region.asgarnia.burthorpe.quest.troll.plugin
 
-import content.global.skill.gather.SkillReward
+import content.global.skill.gather.SkillUtils
 import content.region.asgarnia.burthorpe.quest.troll.dialogue.DadDialogueFile
 import core.api.*
 import core.game.global.action.DoorActionHandler
@@ -82,7 +82,7 @@ class TrollStrongholdPlugin : InteractionListener {
                                 }
                             }
                             3 -> {
-                                val success = SkillReward.success(player, Skills.THIEVING)
+                                val success = SkillUtils.success(player, Skills.THIEVING)
                                 if (success) {
                                     if (isQuestInProgress(player, Quests.TROLL_STRONGHOLD, 8, 10)) {
                                         addItem(player, keyItem)

@@ -1,7 +1,6 @@
 package content.global.skill.firemaking
 
 import content.data.skill.SkillingTool
-import content.global.skill.firemaking.items.Log
 import content.region.kandarin.baxtorian.BarbarianTraining
 import core.api.*
 import core.cache.def.impl.SceneryDefinition
@@ -123,7 +122,7 @@ class PyreBoatOptionPlugin : OptionHandler() {
 
                     if (count % 4 == 0) {
                         if (objectId == Objects.PYRE_BOAT_25291) {
-                            if (player.inventory.remove(Item(logType.log.logId), bones)) {
+                            if (player.inventory.remove(Item(logType.logItem.logId), bones)) {
                                 resetAnimator(player)
                                 rewardXP(player, Skills.CRAFTING, logType.xp[0])
                                 rewardXP(player, Skills.FIREMAKING, logType.xp[1])
@@ -205,24 +204,24 @@ class PyreBoatOptionPlugin : OptionHandler() {
             else -> null
         }
 
-    enum class LogType(val log: Log, val level: Int, val xp: DoubleArray, val enhancedExp: Int) {
-        NORMAL(Log.NORMAL, 11, doubleArrayOf(10.0, 40.0), 1),
-        ACHEY(Log.ACHEY, 11, doubleArrayOf(10.0, 40.0), 1),
-        OAK(Log.OAK, 25, doubleArrayOf(15.0, 60.0), 2),
-        WILLOW(Log.WILLOW, 40, doubleArrayOf(22.5, 90.0), 2),
-        TEAK(Log.TEAK, 45, doubleArrayOf(26.2, 105.0), 3),
-        ARCTIC_PINE(Log.ARCTIC_PINE, 52, doubleArrayOf(31.2, 125.0), 3),
-        MAPLE(Log.MAPLE, 55, doubleArrayOf(35.0, 140.0), 3),
-        MAHOGANY(Log.MAHOGANY, 60, doubleArrayOf(39.5, 158.0), 4),
-        EUCALYPTUS(Log.EUCALYPTUS, 65, doubleArrayOf(43.7, 175.0), 4),
-        YEW(Log.YEW, 70, doubleArrayOf(48.7, 195.0), 5),
-        MAGIC(Log.MAGIC, 85, doubleArrayOf(60.0, 250.0), 5),
+    enum class LogType(val logItem: LogItem, val level: Int, val xp: DoubleArray, val enhancedExp: Int) {
+        NORMAL(LogItem.NORMAL, 11, doubleArrayOf(10.0, 40.0), 1),
+        ACHEY(LogItem.ACHEY, 11, doubleArrayOf(10.0, 40.0), 1),
+        OAK(LogItem.OAK, 25, doubleArrayOf(15.0, 60.0), 2),
+        WILLOW(LogItem.WILLOW, 40, doubleArrayOf(22.5, 90.0), 2),
+        TEAK(LogItem.TEAK, 45, doubleArrayOf(26.2, 105.0), 3),
+        ARCTIC_PINE(LogItem.ARCTIC_PINE, 52, doubleArrayOf(31.2, 125.0), 3),
+        MAPLE(LogItem.MAPLE, 55, doubleArrayOf(35.0, 140.0), 3),
+        MAHOGANY(LogItem.MAHOGANY, 60, doubleArrayOf(39.5, 158.0), 4),
+        EUCALYPTUS(LogItem.EUCALYPTUS, 65, doubleArrayOf(43.7, 175.0), 4),
+        YEW(LogItem.YEW, 70, doubleArrayOf(48.7, 195.0), 5),
+        MAGIC(LogItem.MAGIC, 85, doubleArrayOf(60.0, 250.0), 5),
         ;
 
         companion object {
             fun getType(player: Player): LogType? {
                 for (type in values()) {
-                    if (player.inventory.containsItem(Item(type.log.logId))) {
+                    if (player.inventory.containsItem(Item(type.logItem.logId))) {
                         return type
                     }
                 }

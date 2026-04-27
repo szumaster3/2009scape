@@ -1,6 +1,6 @@
 package content.activity.blastfurnace
 
-import content.global.skill.smithing.items.Bar
+import content.global.skill.smithing.bar.BarItem
 import content.minigame.blastfurnace.plugin.BFOreContainer
 import content.minigame.blastfurnace.plugin.BlastUtils
 import org.junit.jupiter.api.Assertions
@@ -46,7 +46,7 @@ class BlastFurnaceOreContainerTests {
             val oreAmount: Array<Pair<Int, Int>>,
             val expectedOreAmounts: Array<Pair<Int, Int>>,
             val expectedCoalAmount: Int,
-            val expectedBarResult: Array<Pair<Bar, Int>>,
+            val expectedBarItemResult: Array<Pair<BarItem, Int>>,
         )
         val testData =
             arrayOf(
@@ -55,7 +55,7 @@ class BlastFurnaceOreContainerTests {
                     arrayOf(Pair(Items.IRON_ORE_440, 20)),
                     arrayOf(Pair(Items.IRON_ORE_440, 0)),
                     0,
-                    arrayOf(Pair(Bar.IRON, 20)),
+                    arrayOf(Pair(BarItem.IRON, 20)),
                 ),
                 Data( // edge case - 20 iron with 10 coal produces 10 steel and 10 iron
                     10,
@@ -63,9 +63,9 @@ class BlastFurnaceOreContainerTests {
                     arrayOf(Pair(Items.IRON_ORE_440, 0)),
                     0,
                     arrayOf(
-                        Pair(Bar.STEEL, 10),
+                        Pair(BarItem.STEEL, 10),
                         Pair(
-                            Bar.IRON,
+                            BarItem.IRON,
                             10,
                         ),
                     ),
@@ -75,35 +75,35 @@ class BlastFurnaceOreContainerTests {
                     arrayOf(Pair(Items.MITHRIL_ORE_447, 10)),
                     arrayOf(Pair(Items.MITHRIL_ORE_447, 0)),
                     0,
-                    arrayOf(Pair(Bar.MITHRIL, 10)),
+                    arrayOf(Pair(BarItem.MITHRIL, 10)),
                 ),
                 Data( // standard case - 30 coal with 10 adamantite produces 10 addy bars
                     30,
                     arrayOf(Pair(Items.ADAMANTITE_ORE_449, 10)),
                     arrayOf(Pair(Items.ADAMANTITE_ORE_449, 0)),
                     0,
-                    arrayOf(Pair(Bar.ADAMANT, 10)),
+                    arrayOf(Pair(BarItem.ADAMANT, 10)),
                 ),
                 Data( // standard case - 40 coal with 10 runite produces 10 runite bars
                     40,
                     arrayOf(Pair(Items.RUNITE_ORE_451, 10)),
                     arrayOf(Pair(Items.RUNITE_ORE_451, 0)),
                     0,
-                    arrayOf(Pair(Bar.RUNITE, 10)),
+                    arrayOf(Pair(BarItem.RUNITE, 10)),
                 ),
                 Data( // semi-edge case - 28 gold with 150 coal produces 28 gold bars with 150 coal remaining (doesn't use any coal when not needed)
                     150,
                     arrayOf(Pair(Items.GOLD_ORE_444, 28)),
                     arrayOf(Pair(Items.GOLD_ORE_444, 0)),
                     150,
-                    arrayOf(Pair(Bar.GOLD, 28)),
+                    arrayOf(Pair(BarItem.GOLD, 28)),
                 ),
                 Data( // ~
                     150,
                     arrayOf(Pair(Items.PERFECT_GOLD_ORE_446, 28)),
                     arrayOf(Pair(Items.PERFECT_GOLD_ORE_446, 0)),
                     150,
-                    arrayOf(Pair(Bar.PERFECT_GOLD, 28)),
+                    arrayOf(Pair(BarItem.PERFECT_GOLD, 28)),
                 ),
                 Data( // edge case - 18 silver and 10 runite with 58 coal produces 18 silver bars and 10 runite bars with 18 coal remaining
                     58,
@@ -111,9 +111,9 @@ class BlastFurnaceOreContainerTests {
                     arrayOf(Pair(Items.SILVER_ORE_442, 0), Pair(Items.RUNITE_ORE_451, 0)),
                     18,
                     arrayOf(
-                        Pair(Bar.SILVER, 18),
+                        Pair(BarItem.SILVER, 18),
                         Pair(
-                            Bar.RUNITE,
+                            BarItem.RUNITE,
                             10,
                         ),
                     ),
@@ -123,28 +123,28 @@ class BlastFurnaceOreContainerTests {
                     arrayOf(Pair(Items.RUNITE_ORE_451, 10)),
                     arrayOf(Pair(Items.RUNITE_ORE_451, 5)),
                     0,
-                    arrayOf(Pair(Bar.RUNITE, 5)),
+                    arrayOf(Pair(BarItem.RUNITE, 5)),
                 ),
                 Data( // technically an edge case - 28 copper and 28 tin makes 28 bronze with nothing leftover.
                     0,
                     arrayOf(Pair(Items.COPPER_ORE_436, 28), Pair(Items.TIN_ORE_438, 28)),
                     arrayOf(Pair(Items.COPPER_ORE_436, 0), Pair(Items.TIN_ORE_438, 0)),
                     0,
-                    arrayOf(Pair(Bar.BRONZE, 28)),
+                    arrayOf(Pair(BarItem.BRONZE, 28)),
                 ),
                 Data( // edge case - 10 copper and no tin makes nothing with 10 copper leftover
                     0,
                     arrayOf(Pair(Items.COPPER_ORE_436, 10)),
                     arrayOf(Pair(Items.COPPER_ORE_436, 10)),
                     0,
-                    arrayOf(Pair(Bar.BRONZE, 0)),
+                    arrayOf(Pair(BarItem.BRONZE, 0)),
                 ),
                 Data( // edge case - 14 copper and 5 tin make 5 bronze bars with 9 copper leftover
                     0,
                     arrayOf(Pair(Items.COPPER_ORE_436, 14), Pair(Items.TIN_ORE_438, 5)),
                     arrayOf(Pair(Items.COPPER_ORE_436, 9), Pair(Items.TIN_ORE_438, 0)),
                     0,
-                    arrayOf(Pair(Bar.BRONZE, 5)),
+                    arrayOf(Pair(BarItem.BRONZE, 5)),
                 ),
             )
 
@@ -174,11 +174,11 @@ class BlastFurnaceOreContainerTests {
         val cont = BFOreContainer()
         cont.addOre(Items.IRON_ORE_440, 28)
         cont.convertToBars()
-        Assertions.assertEquals(28, cont.getBarAmount(Bar.IRON))
+        Assertions.assertEquals(28, cont.getBarAmount(BarItem.IRON))
 
         cont.addOre(Items.IRON_ORE_440, 28)
         cont.convertToBars()
-        Assertions.assertEquals(28, cont.getBarAmount(Bar.IRON))
+        Assertions.assertEquals(28, cont.getBarAmount(BarItem.IRON))
         Assertions.assertEquals(28, cont.getOreAmount(Items.IRON_ORE_440))
     }
 
@@ -194,7 +194,7 @@ class BlastFurnaceOreContainerTests {
         val json = cont.toJson()
         val deserialized = BFOreContainer.fromJson(json)
 
-        Assertions.assertEquals(28, deserialized.getBarAmount(Bar.IRON))
+        Assertions.assertEquals(28, deserialized.getBarAmount(BarItem.IRON))
         Assertions.assertEquals(15, cont.getOreAmount(Items.RUNITE_ORE_451))
         Assertions.assertEquals(13, cont.getOreAmount(Items.MITHRIL_ORE_447))
         Assertions.assertEquals(150, cont.coalAmount())
@@ -205,9 +205,9 @@ class BlastFurnaceOreContainerTests {
         cont.addOre(Items.IRON_ORE_440, 28)
         cont.convertToBars()
 
-        val bars = cont.takeBars(Bar.IRON, 15)
+        val bars = cont.takeBars(BarItem.IRON, 15)
         Assertions.assertEquals(15, bars?.amount)
-        Assertions.assertEquals(13, cont.getBarAmount(Bar.IRON))
+        Assertions.assertEquals(13, cont.getBarAmount(BarItem.IRON))
     }
 
     @Test fun shouldNotBeAbleToRemoveMoreBarsThanPossible() {
@@ -215,9 +215,9 @@ class BlastFurnaceOreContainerTests {
         cont.addOre(Items.IRON_ORE_440, 28)
         cont.convertToBars()
 
-        val bars = cont.takeBars(Bar.IRON, 50)
+        val bars = cont.takeBars(BarItem.IRON, 50)
         Assertions.assertEquals(28, bars?.amount)
-        Assertions.assertEquals(0, cont.getBarAmount(Bar.IRON))
+        Assertions.assertEquals(0, cont.getBarAmount(BarItem.IRON))
     }
 
     @Test fun convertToBarsShouldReturnXPReward() {
@@ -229,6 +229,6 @@ class BlastFurnaceOreContainerTests {
 
     @Test fun removingBarsWithNoStockReturnsNull() {
         val cont = BFOreContainer()
-        Assertions.assertEquals(null, cont.takeBars(Bar.RUNITE, 1))
+        Assertions.assertEquals(null, cont.takeBars(BarItem.RUNITE, 1))
     }
 }

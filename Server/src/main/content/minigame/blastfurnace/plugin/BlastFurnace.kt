@@ -1,7 +1,7 @@
 package content.minigame.blastfurnace.plugin
 
 import com.google.gson.JsonObject
-import content.global.skill.smithing.items.Bar
+import content.global.skill.smithing.bar.BarItem
 import core.api.*
 import core.game.node.entity.Entity
 import core.game.node.entity.player.Player
@@ -268,12 +268,12 @@ class BlastFurnace : MapArea, PersistPlayer, TickListener {
         /**
          * Calculates coal required for a given bar type.
          */
-        fun getNeededCoal(bar: Bar): Int {
+        fun getNeededCoal(barItem: BarItem): Int {
             var coalAmount = 0
 
-            if (bar.ores.size == 1) return coalAmount
+            if (barItem.ores.size == 1) return coalAmount
 
-            for (ore in bar.ores) {
+            for (ore in barItem.ores) {
                 if (ore.id == Items.COAL_453) {
                     coalAmount = ore.amount
                     break
@@ -286,11 +286,11 @@ class BlastFurnace : MapArea, PersistPlayer, TickListener {
         /**
          * Gets the bar type for a given ore id.
          */
-        fun getBarForOreId(id: Int, coalAmount: Int, level: Int): Bar? = when (id) {
-            Items.COPPER_ORE_436, Items.TIN_ORE_438 -> Bar.BRONZE
-            Items.IRON_ORE_440 -> if (coalAmount >= 1 && level >= Bar.STEEL.level) Bar.STEEL else Bar.IRON
-            Items.PERFECT_GOLD_ORE_446 -> Bar.PERFECT_GOLD
-            else -> Bar.forOre(id)
+        fun getBarForOreId(id: Int, coalAmount: Int, level: Int): BarItem? = when (id) {
+            Items.COPPER_ORE_436, Items.TIN_ORE_438 -> BarItem.BRONZE
+            Items.IRON_ORE_440 -> if (coalAmount >= 1 && level >= BarItem.STEEL.level) BarItem.STEEL else BarItem.IRON
+            Items.PERFECT_GOLD_ORE_446 -> BarItem.PERFECT_GOLD
+            else -> BarItem.forOre(id)
         }
 
         /**

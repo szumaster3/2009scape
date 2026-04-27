@@ -1,7 +1,7 @@
 package content.activity.blastfurnace
 
 import TestUtils
-import content.global.skill.smithing.items.Bar
+import content.global.skill.smithing.bar.BarItem
 import content.minigame.blastfurnace.plugin.BlastFurnace
 import core.api.addItem
 import core.api.amountInInventory
@@ -19,13 +19,13 @@ class BFPlayerStateTests {
             val state = BlastFurnace.getPlayerState(p)
             state.container.addOre(Items.IRON_ORE_440, 28)
             Assertions.assertEquals(true, state.processOresIntoBars())
-            Assertions.assertEquals(28, state.container.getBarAmount(Bar.IRON))
+            Assertions.assertEquals(28, state.container.getBarAmount(BarItem.IRON))
 
             state.container.addCoal(40)
             state.container.addOre(Items.RUNITE_ORE_451, 10)
             Assertions.assertEquals(false, state.processOresIntoBars())
 
-            Assertions.assertEquals(0, state.container.getBarAmount(Bar.RUNITE))
+            Assertions.assertEquals(0, state.container.getBarAmount(BarItem.RUNITE))
         }
     }
 
@@ -39,11 +39,11 @@ class BFPlayerStateTests {
             state.container.addCoal(40)
             state.container.addOre(Items.RUNITE_ORE_451, 10)
             Assertions.assertEquals(false, state.processOresIntoBars())
-            Assertions.assertEquals(0, state.container.getBarAmount(Bar.RUNITE))
+            Assertions.assertEquals(0, state.container.getBarAmount(BarItem.RUNITE))
 
             state.checkBars()
             Assertions.assertEquals(true, state.processOresIntoBars())
-            Assertions.assertEquals(10, state.container.getBarAmount(Bar.RUNITE))
+            Assertions.assertEquals(10, state.container.getBarAmount(BarItem.RUNITE))
         }
     }
 
@@ -54,9 +54,9 @@ class BFPlayerStateTests {
             Assertions.assertEquals(true, state.processOresIntoBars())
             state.coolBars()
 
-            Assertions.assertEquals(true, state.claimBars(Bar.IRON, 5))
+            Assertions.assertEquals(true, state.claimBars(BarItem.IRON, 5))
             Assertions.assertEquals(5, amountInInventory(p, Items.IRON_BAR_2351))
-            Assertions.assertEquals(23, state.container.getBarAmount(Bar.IRON))
+            Assertions.assertEquals(23, state.container.getBarAmount(BarItem.IRON))
         }
     }
 
@@ -69,9 +69,9 @@ class BFPlayerStateTests {
 
             addItem(p, Items.ABYSSAL_WHIP_4151, 27)
 
-            Assertions.assertEquals(true, state.claimBars(Bar.IRON, 5))
+            Assertions.assertEquals(true, state.claimBars(BarItem.IRON, 5))
             Assertions.assertEquals(1, amountInInventory(p, Items.IRON_BAR_2351))
-            Assertions.assertEquals(27, state.container.getBarAmount(Bar.IRON))
+            Assertions.assertEquals(27, state.container.getBarAmount(BarItem.IRON))
         }
     }
 
@@ -84,9 +84,9 @@ class BFPlayerStateTests {
 
             addItem(p, Items.ABYSSAL_WHIP_4151, 28)
 
-            Assertions.assertEquals(false, state.claimBars(Bar.IRON, 5))
+            Assertions.assertEquals(false, state.claimBars(BarItem.IRON, 5))
             Assertions.assertEquals(0, amountInInventory(p, Items.IRON_BAR_2351))
-            Assertions.assertEquals(28, state.container.getBarAmount(Bar.IRON))
+            Assertions.assertEquals(28, state.container.getBarAmount(BarItem.IRON))
         }
     }
 
@@ -95,7 +95,7 @@ class BFPlayerStateTests {
             val state = BlastFurnace.getPlayerState(p)
             state.container.addOre(Items.IRON_ORE_440, 28)
             Assertions.assertEquals(true, state.processOresIntoBars())
-            Assertions.assertEquals(false, state.claimBars(Bar.IRON, 5))
+            Assertions.assertEquals(false, state.claimBars(BarItem.IRON, 5))
         }
     }
 }

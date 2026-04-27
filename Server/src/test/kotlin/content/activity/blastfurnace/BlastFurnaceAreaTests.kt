@@ -2,7 +2,7 @@ package content.activity.blastfurnace
 
 import TestUtils
 import com.google.gson.JsonObject
-import content.global.skill.smithing.items.Bar
+import content.global.skill.smithing.bar.BarItem
 import content.minigame.blastfurnace.plugin.BlastFurnace
 import content.minigame.blastfurnace.plugin.BlastFurnacePlugin
 import content.minigame.blastfurnace.plugin.BlastUtils
@@ -126,7 +126,7 @@ class BlastFurnaceAreaTests {
             state.container.addOre(Items.PERFECT_GOLD_ORE_446, 5)
             state.container.addCoal(10)
             Assertions.assertEquals(true, state.processOresIntoBars())
-            Assertions.assertEquals(5, state.container.getBarAmount(Bar.PERFECT_GOLD))
+            Assertions.assertEquals(5, state.container.getBarAmount(BarItem.PERFECT_GOLD))
         }
     }
 

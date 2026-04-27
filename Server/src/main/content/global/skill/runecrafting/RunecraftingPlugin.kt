@@ -1,5 +1,7 @@
 package content.global.skill.runecrafting
 
+import content.global.skill.runecrafting.item.RunePouchPlugin
+import content.global.skill.runecrafting.item.Talisman
 import content.global.travel.EssenceTeleport.home
 import content.global.travel.EssenceTeleport.teleport
 import core.api.*

@@ -2,8 +2,8 @@ package content.global.skill.magic.spells.modern
 
 import content.global.skill.magic.SpellListener
 import content.global.skill.magic.spells.ModernSpells
-import content.global.skill.smithing.items.Bar
-import content.global.skill.smithing.smelting.SmeltingPulse
+import content.global.skill.smithing.bar.BarItem
+import content.global.skill.smithing.smelt.SmeltingPulse
 import core.api.*
 import core.game.node.entity.impl.PulseType
 import core.game.node.entity.player.Player
@@ -43,8 +43,8 @@ class SuperHeatSpell : SpellListener("modern") {
                 return@onCast
             }
 
-            fun returnBar(player: Player, item: Item): Bar? {
-                for (potentialBar in Bar.values().reversed()) {
+            fun returnBar(player: Player, item: Item): BarItem? {
+                for (potentialBar in BarItem.values().reversed()) {
                     val inputOreInBar = potentialBar.ores.map { it.id }.contains(item.id)
                     val playerHasNecessaryOres =
                         potentialBar.ores.all { ore -> inInventory(player, ore.id, ore.amount) }

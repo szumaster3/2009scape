@@ -1,6 +1,6 @@
 package content.region.misthalin.varrock.quest.dragon.npc
 
-import content.region.misthalin.varrock.quest.dragon.DragonSlayer
+import core.api.produceGroundItem
 import core.game.node.entity.Entity
 import core.game.node.entity.combat.*
 import core.game.node.entity.combat.equipment.ArmourSet
@@ -43,7 +43,9 @@ class MelzarTheMadNPC : AbstractNPC {
 
     override fun finalizeDeath(killer: Entity) {
         super.finalizeDeath(killer)
-        GroundItemManager.create(DragonSlayer.PURPLE_KEY, getLocation(), (killer as Player))
+        if (killer is Player) {
+            produceGroundItem(killer, Items.KEY_1547, 1, getLocation())
+        }
     }
 
     override fun getSwingHandler(swing: Boolean): CombatSwingHandler = combatHandler

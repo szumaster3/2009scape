@@ -9,7 +9,6 @@ import content.region.misthalin.varrock.quest.dragon.dialogue.OziachDialogue
 import content.region.misthalin.varrock.quest.dragon.dialogue.WormbrainDialogue
 import content.region.misthalin.varrock.quest.dragon.npc.*
 import content.region.misthalin.varrock.quest.dragon.plugin.DragonSlayerPlugin
-import content.region.misthalin.varrock.quest.dragon.plugin.MagicDoorPlugin
 import core.api.*
 import core.game.event.EventHook
 import core.game.event.PickUpEvent
@@ -197,12 +196,8 @@ class DragonSlayer : Quest(Quests.DRAGON_SLAYER, 18, 17, 2, Vars.VARP_QUEST_DRAG
     override fun newInstance(`object`: Any?): Quest {
         definePlugins(
             DragonSlayerPlugin(),
-            MagicDoorPlugin(),
             DragonSlayerCutscene(),
-            MazeDemonNPC(),
-            MazeGhostNPC(),
-            MazeSkeletonNPC(),
-            MazeZombieNPC(),
+            MazeKeyNPC(),
             MelzarTheMadNPC(),
             WormbrainNPC(),
             ZombieRatNPC(),
@@ -224,7 +219,7 @@ class DragonSlayer : Quest(Quests.DRAGON_SLAYER, 18, 17, 2, Vars.VARP_QUEST_DRAG
         drawReward(player, "18,650 Strength XP", ln++)
         drawReward(player, "18,650 Defence XP", ln++)
         drawReward(player, "You have completed the Dragon Slayer Quest!", ln)
-        sendItemZoomOnInterface(player, Components.QUEST_COMPLETE_SCROLL_277, 5, ELVARG_HEAD.id, 230)
+        displayQuestItem(player, Items.ELVARGS_HEAD_11279)
         rewardXP(player, Skills.STRENGTH, 18650.0)
         rewardXP(player, Skills.DEFENCE, 18650.0)
         player.unhook(spellCastHook)
@@ -264,12 +259,6 @@ class DragonSlayer : Quest(Quests.DRAGON_SLAYER, 18, 17, 2, Vars.VARP_QUEST_DRAG
 
     companion object {
         val MAZE_KEY = Item(Items.MAZE_KEY_1542)
-        val RED_KEY = Item(Items.KEY_1543)
-        val ORANGE_KEY = Item(Items.KEY_1544)
-        val YELLOW_KEY = Item(Items.KEY_1545)
-        val BLUE_KEY = Item(Items.KEY_1546)
-        val PURPLE_KEY = Item(Items.KEY_1547)
-        val GREEN_KEY = Item(Items.KEY_1548)
         val MAZE_PIECE = Item(Items.MAP_PART_1535)
         val MAGIC_PIECE = Item(Items.MAP_PART_1537)
         val WORMBRAIN_PIECE = Item(Items.MAP_PART_1536)

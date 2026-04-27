@@ -3,9 +3,11 @@ package content.region.misthalin.varrock.quest.dragon.plugin
 import content.region.misthalin.varrock.quest.dragon.DragonSlayer
 import core.api.*
 import core.game.global.action.ClimbActionHandler
+import core.game.global.action.DoorActionHandler
 import core.game.interaction.IntType
 import core.game.interaction.InteractionListener
 import core.game.node.entity.player.link.diary.DiaryType
+import core.game.node.item.GroundItemManager
 import core.game.world.map.Location
 import core.game.world.map.RegionManager
 import core.game.world.update.flag.context.Animation
@@ -151,9 +153,157 @@ class DragonSlayerListener : InteractionListener {
             return@on true
         }
 
+        /*
+         * Handles repair the lady lumbridge gaping hole.
+         */
+
+        on(Scenery.HOLE_2589, IntType.SCENERY, "repair", "fix", "use") { player, _ ->
+
+            val memorized = player.getSavedData().questData.getDragonSlayerAttribute("memorized")
+            if (memorized) {
+                sendDialogueLines(player,
+                    "You don't need to mess about with broken ships now that you have",
+                    "found the secret passage from Karamja."
+                )
+                return@on true
+            }
+
+            when {
+                !player.inventory.containsItem(DragonSlayer.NAILS) -> sendDialogue(
+                    player,
+                    "You need 30 steel nails to attach the plank with."
+                )
+
+                !player.inventory.containsItem(DragonSlayer.PLANK) -> sendDialogue(
+                    player,
+                    "You'll need to use wooden planks on this hole to patch it up."
+                )
+
+                !player.inventory.containsItem(DragonSlayer.HAMMER) -> sendDialogue(
+                    player,
+                    "You need a hammer to force the nails in with."
+                )
+
+                else -> {
+                    player.inventory.remove(DragonSlayer.NAILS)
+                    player.inventory.remove(DragonSlayer.PLANK)
+                    player.animate(Animation(Animations.BUILD_WITH_HAMMER_3676))
+                    player.getSavedData().questData.dragonSlayerPlanks++
+
+                    if (player.getSavedData().questData.dragonSlayerPlanks < 3) {
+                        player.dialogueInterpreter.sendDialogue(
+                            "You nail a plank over the hole, but you still need more planks to",
+                            "close the hole completely."
+                        )
+                    } else {
+                        player.getSavedData().questData.setDragonSlayerAttribute("repaired", true)
+                        setVarbit(player, 1837, 1)
+                        player.dialogueInterpreter.sendDialogue(
+                            "You nail a final plank over the hole. You have successfully patched",
+                            "the hole in the ship."
+                        )
+                    }
+                }
+            }
+            return@on true
+        }
+
+        /*
+         * Handles opening the sealed entrance door.
+         */
+
+        onUseWith(IntType.SCENERY, magicDoorRequiredItemIds, Scenery.MAGIC_DOOR_25115) { player, used, _ ->
+            if (getQuestStage(player, Quests.DRAGON_SLAYER) < 20) {
+                return@onUseWith true
+            }
+            if (!removeItem(player, used)) {
+                return@onUseWith true
+            }
+            sendMessage(player, "You put ${used.name.lowercase()} into the opening in the door.")
+            val index = magicDoorRequiredItemIds.indexOf(used.id).takeIf { it >= 0 } ?: 0
+            player.savedData.questData.dragonSlayerItems[index] = true
+            DragonSlayer.handleMagicDoor(player, false)
+            return@onUseWith true
+        }
+
+        keyDoors.forEach { (doorId, keyItemId) ->
+            on(doorId, IntType.SCENERY, "open") { player, node ->
+                if (!removeItem(player, keyItemId)) {
+                    sendMessage(player, "This door is securely locked.")
+                } else {
+                    sendMessage(player, "The key disintegrates as it unlocks the door.")
+                    DoorActionHandler.handleAutowalkDoor(player, node.asScenery())
+                }
+                return@on true
+            }
+        }
+
+        on(Scenery.DOOR_2595, IntType.SCENERY, "open") { player, node ->
+            val isFreePass = player.location.x == 2940 && player.location.y == 3248
+
+            if (isFreePass) {
+                DoorActionHandler.handleAutowalkDoor(player, node.asScenery())
+                return@on true
+            }
+
+            if (player.inventory.containsItem(DragonSlayer.MAZE_KEY)) {
+
+                sendMessage(player, "You use the key and the door opens.")
+
+                if (!player.musicPlayer.hasUnlocked(Music.MELZARS_MAZE_365)) {
+                    player.musicPlayer.unlock(Music.MELZARS_MAZE_365)
+                }
+
+                DoorActionHandler.handleAutowalkDoor(player, node.asScenery())
+                return@on true
+            }
+
+            sendMessage(player, "This door is securely locked.")
+            return@on true
+        }
+
+        /*
+         * Handles search & close interaction with end melzar basement chest.
+         */
+
+        on(Scenery.CHEST_2603, IntType.SCENERY, "open") { player, node ->
+            player.packetDispatch.sendMessage("You open the chest.")
+            replaceScenery(node.asScenery(), 2604, -1)
+            playAudio(player, Sounds.CHEST_OPEN_52)
+            return@on true
+        }
+
+        on(Scenery.CHEST_2604, IntType.SCENERY, "search") { player, _ ->
+            if (!player.inventory.containsItem(DragonSlayer.MAZE_PIECE)) {
+                if (!player.inventory.add(DragonSlayer.MAZE_PIECE))
+                    GroundItemManager.create(DragonSlayer.MAZE_PIECE, player)
+                player.dialogueInterpreter.sendItemMessage(
+                    DragonSlayer.MAZE_PIECE.id, "You find a map piece in the chest."
+                )
+            } else {
+                sendMessage(player, "You find nothing in the chest.")
+            }
+            return@on true
+        }
+
+        on(Scenery.CHEST_2604, IntType.SCENERY, "close") { player, node ->
+            sendMessage(player, "You shut the chest.")
+            replaceScenery(node.asScenery(), 2603, -1)
+            playAudio(player, Sounds.CHEST_CLOSE_51)
+            return@on true
+        }
     }
 
     companion object {
         val mapPieces = intArrayOf(Items.MAP_PART_1537, Items.MAP_PART_1536, Items.MAP_PART_1535)
+        private val magicDoorRequiredItemIds = intArrayOf(Items.LOBSTER_POT_301, Items.UNFIRED_BOWL_1791, Items.SILK_950, Items.WIZARDS_MIND_BOMB_1907)
+        val keyDoors = mapOf(
+            2601 to Items.KEY_1548,
+            2600 to Items.KEY_1547,
+            2609 to Items.KEY_1546,
+            2598 to Items.KEY_1545,
+            2596 to Items.KEY_1543,
+            2597 to Items.KEY_1544
+        )
     }
 }

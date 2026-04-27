@@ -3108,7 +3108,7 @@
     "ids": "2585"
   },
   {
-    "examine": "This ship's not getting far with that.",
+    "examine": "This ship isn't much use with that there.",
     "ids": "2589"
   },
   {
@@ -15530,6 +15530,10 @@
   {
     "examine": "Like his father's machine, but different.",
     "ids": "26788"
+  },
+  {
+    "examine": "This ship's not getting far with that..",
+    "ids": "25036,25037"
   },
   {
     "examine": "Why can't it just have an ON switch?",

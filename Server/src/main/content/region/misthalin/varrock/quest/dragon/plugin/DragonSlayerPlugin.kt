@@ -1,6 +1,7 @@
 package content.region.misthalin.varrock.quest.dragon.plugin
 
 import content.region.misthalin.varrock.quest.dragon.DragonSlayer
+import core.api.removeItem
 import core.cache.def.impl.NPCDefinition
 import core.cache.def.impl.SceneryDefinition
 import core.game.global.action.ClimbActionHandler.climb
@@ -20,6 +21,7 @@ import core.game.world.map.Location
 import core.game.world.map.RegionManager.getLocalNpcs
 import core.game.world.update.flag.context.Animation
 import core.plugin.Plugin
+import shared.consts.Items
 import shared.consts.Quests
 
 /**
@@ -242,19 +244,17 @@ class DragonSlayerPlugin : OptionHandler() {
                 return true
             }
             2596 ->
-                if (!player.inventory.containsItem(DragonSlayer.RED_KEY)) {
+                if (!removeItem(player, Items.KEY_1543)) {
                     player.packetDispatch.sendMessage("This door is securely locked.")
                 } else {
-                    player.inventory.remove(DragonSlayer.RED_KEY)
                     player.packetDispatch.sendMessage("The key disintegrates as it unlocks the door.")
                     handleAutowalkDoor(player, (node as Scenery))
                     return true
                 }
             2597 -> {
-                if (!player.inventory.containsItem(DragonSlayer.ORANGE_KEY)) {
+                if (!removeItem(player, Items.KEY_1544)) {
                     player.packetDispatch.sendMessage("This door is securely locked.")
                 } else {
-                    player.inventory.remove(DragonSlayer.ORANGE_KEY)
                     player.packetDispatch.sendMessage("The key disintegrates as it unlocks the door.")
                     handleAutowalkDoor(player, (node as Scenery))
                     return true

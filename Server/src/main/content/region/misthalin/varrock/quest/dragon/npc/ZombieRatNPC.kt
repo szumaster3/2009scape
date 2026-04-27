@@ -1,11 +1,9 @@
 package content.region.misthalin.varrock.quest.dragon.npc
 
-import content.region.misthalin.varrock.quest.dragon.DragonSlayer
+import core.api.produceGroundItem
 import core.game.node.entity.Entity
 import core.game.node.entity.npc.AbstractNPC
 import core.game.node.entity.player.Player
-import core.game.node.item.GroundItemManager
-import core.game.node.item.Item
 import core.game.world.map.Location
 import core.tools.RandomFunction
 import shared.consts.Items
@@ -21,24 +19,26 @@ class ZombieRatNPC : AbstractNPC {
 
     override fun finalizeDeath(killer: Entity) {
         super.finalizeDeath(killer)
-        if (killer is Player) {
-            val p = killer
-            var quest = p.getQuestRepository().getQuest(Quests.DRAGON_SLAYER)
-            if (RandomFunction.random(0, 4) == 2) {
-                GroundItemManager.create(DragonSlayer.RED_KEY, getLocation(), killer)
+
+        if (killer !is Player) return
+
+        val questRepo = killer.questRepository
+        val ds = questRepo.getQuest(Quests.DRAGON_SLAYER)
+        if (ds.getStage(killer) in 1..99) {
+            if (RandomFunction.random(5) == 2) {
+                produceGroundItem(killer, Items.KEY_1543, 1, getLocation())
             }
-            quest = p.getQuestRepository().getQuest(Quests.WITCHS_POTION)
-            if (quest.getStage(p) in 1..99) {
-                GroundItemManager.create(RAT_TAIL, getLocation(), p)
-            }
-            GroundItemManager.create(Item(526), getLocation(), p)
         }
+        val wp = questRepo.getQuest(Quests.WITCHS_POTION)
+        if (wp.getStage(killer) in 1..99) {
+            produceGroundItem(killer, Items.RATS_TAIL_300, 1, getLocation())
+        }
+        produceGroundItem(killer, Items.BONES_526, 1, getLocation())
     }
 
     override fun getIds(): IntArray = ID
 
     companion object {
         private val ID = intArrayOf(NPCs.ZOMBIE_RAT_6088, NPCs.ZOMBIE_RAT_6089, NPCs.ZOMBIE_RAT_6090)
-        private val RAT_TAIL = Item(Items.RATS_TAIL_300, 1)
     }
 }

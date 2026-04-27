@@ -259,7 +259,7 @@ class WomDeliveryDialogue : DialogueFile() {
             1 -> {
                 npcl(
                     FaceAnim.HALF_GUILTY,
-                    if (task.itemId != null) "I need you to bring me $amount × $itemName."
+                    if (task.itemId != null) "I need you to bring me ${amount}x $itemName."
                     else "Please deliver the Old Man's message for me."
                 )
                 setAttribute(player!!, "/save:${WomDeliveryListener.TASK_START}", true)
@@ -340,7 +340,7 @@ class WomDeliveryListener : InteractionListener {
 
             for (reward in rewards) {
                 if (addItem(player, reward.id, reward.amount)) {
-                    sendItemDialogue(player, reward.id, "You received: ${reward.amount} × ${getItemName(reward.id)}!")
+                    sendItemDialogue(player, reward.id, "You received: ${reward.amount}x ${getItemName(reward.id)}!")
                 } else {
                     GroundItemManager.create(GroundItem(reward, player.location, player))
                     sendItemDialogue(player, reward.id, "You couldn't carry your reward, so it has been dropped on the ground.")

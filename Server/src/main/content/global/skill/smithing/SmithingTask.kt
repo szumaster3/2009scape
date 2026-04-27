@@ -62,7 +62,7 @@ class SmithingTask(
         }
 
         if (getDynLevel(player, Skills.SMITHING) < bar.level) {
-            sendDialogue(
+            sendMessage(
                 player,
                 "You need a Smithing level of ${bar.level} to make a ${getItemName(bar.product)}."
             )
@@ -70,7 +70,7 @@ class SmithingTask(
         }
 
         if (!anyInInventory(player, bar.barType.barType, bar.smithingType.required)) {
-            sendDialogue(
+            sendMessage(
                 player,
                 "You don't have enough ${
                     getItemName(bar.barType.barType).lowercase()

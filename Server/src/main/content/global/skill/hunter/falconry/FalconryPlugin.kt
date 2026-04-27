@@ -176,16 +176,6 @@ private enum class FalconCatch(val npc: Int, val level: Int, val experience: Dou
 
     companion object {
         @JvmStatic
-        fun forItem(item: Item): FalconCatch? {
-            for (falconCatch in values()) {
-                if (item.id == falconCatch.item.id) {
-                    return falconCatch
-                }
-            }
-            return null
-        }
-
-        @JvmStatic
         fun forNPC(npc: NPC): FalconCatch? {
             for (falconCatch in values()) {
                 if (npc.id == falconCatch.npc) {

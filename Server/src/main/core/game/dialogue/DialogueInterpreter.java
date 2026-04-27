@@ -324,10 +324,10 @@ public final class DialogueInterpreter {
                     .getConfiguration(ItemConfigParser.DESTROY_MESSAGE,
                             "Are you sure you want to destroy this object?");
         }
+        player.getInterfaceManager().openChatbox(Components.CONFIRM_DESTROY_94);
         player.getPacketDispatch().sendString(message, Components.CONFIRM_DESTROY_94, 7);
         player.getPacketDispatch().sendString(ItemDefinition.forId(id).getName(), Components.CONFIRM_DESTROY_94, 8);
         player.getPacketDispatch().sendItemOnInterface(id, 1, Components.CONFIRM_DESTROY_94, 9);
-        player.getInterfaceManager().openChatbox(Components.CONFIRM_DESTROY_94);
         return player.getInterfaceManager().chatbox;
     }
 
@@ -572,6 +572,7 @@ public final class DialogueInterpreter {
         if (expression == -1) {
             expression = FaceAnim.HALF_GUILTY.getAnimationId();
         }
+        player.getInterfaceManager().openChatbox(interfaceId);
         player.getPacketDispatch().sendAnimationInterface(expression, interfaceId, 2);
         if (npc) {
             player.getPacketDispatch().sendNpcOnInterface(npcId, interfaceId, 2);
@@ -583,7 +584,6 @@ public final class DialogueInterpreter {
         for (int i = 0; i < messages.length; i++) {
             player.getPacketDispatch().sendString(doSubstitutions(player, messages[i]), interfaceId, (i + 4));
         }
-        player.getInterfaceManager().openChatbox(interfaceId);
         return player.getInterfaceManager().chatbox;
     }
 
@@ -621,13 +621,13 @@ public final class DialogueInterpreter {
         if (options.length < 2 || options.length > 5) {
             return null;
         }
+        player.getInterfaceManager().openChatbox(interfaceId);
         if (title != null) {
             player.getPacketDispatch().sendString(title.toString(), interfaceId, 1);
         }
         for (int i = 0; i < options.length; i++) {
             player.getPacketDispatch().sendString(options[i].toString(), interfaceId, i + 2);
         }
-        player.getInterfaceManager().openChatbox(interfaceId);
         return player.getInterfaceManager().chatbox;
     }
 

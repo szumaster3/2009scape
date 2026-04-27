@@ -2,6 +2,7 @@ package content.region.misthalin.varrock.quest.dragon.plugin
 
 import content.region.misthalin.varrock.quest.dragon.DragonSlayer
 import core.api.removeItem
+import core.api.sendMessage
 import core.cache.def.impl.NPCDefinition
 import core.cache.def.impl.SceneryDefinition
 import core.game.global.action.ClimbActionHandler.climb
@@ -32,7 +33,8 @@ import shared.consts.Quests
 class DragonSlayerPlugin : OptionHandler() {
     @Throws(Throwable::class)
     override fun newInstance(arg: Any?): Plugin<Any> {
-        // door.
+        // magic door.
+        SceneryDefinition.forId(25115).handlers["option:open"] = this;
         NPCDefinition.forId(747).handlers["option:trade"] = this
         SceneryDefinition.forId(2595).handlers["option:open"] = this
         // main
@@ -40,6 +42,9 @@ class DragonSlayerPlugin : OptionHandler() {
         // maze first floor.
         SceneryDefinition.forId(32968).handlers["option:open"] = this
         SceneryDefinition.forId(2602).handlers["option:open"] = this
+
+        // maze second floor.
+        SceneryDefinition.forId(2597).handlers["option:open"] = this
         // door.
         SceneryDefinition.forId(1752).handlers["option:climb-up"] = this
         SceneryDefinition.forId(25038).handlers["option:climb-up"] = this
@@ -85,12 +90,12 @@ class DragonSlayerPlugin : OptionHandler() {
                     player.getQuestRepository().getQuest(Quests.DRAGON_SLAYER).getStage(player) == 40 &&
                     (player.inventory.containsItem(DragonSlayer.ELVARG_HEAD))
                 ) {
-                    player.packetDispatch.sendMessage("You have already slain the dragon. Now you just need to return to Oziach for")
-                    player.packetDispatch.sendMessage("your reward!")
+                    sendMessage(player, "You have already slain the dragon. Now you just need to return to Oziach for")
+                    sendMessage(player, "your reward!")
                     return true
                 }
                 if (player.getQuestRepository().getQuest(Quests.DRAGON_SLAYER).getStage(player) > 40) {
-                    player.packetDispatch.sendMessage("You have already slain Elvarg the dragon.")
+                    sendMessage(player, "You have already slain Elvarg the dragon.")
                     return true
                 }
                 player.properties.combatPulse.attack(node)
@@ -112,12 +117,12 @@ class DragonSlayerPlugin : OptionHandler() {
                     player.getQuestRepository().getQuest(Quests.DRAGON_SLAYER).getStage(player) == 40 &&
                     (player.inventory.containsItem(DragonSlayer.ELVARG_HEAD))
                 ) {
-                    player.packetDispatch.sendMessage("You have already slain the dragon. Now you just need to return to Oziach for")
-                    player.packetDispatch.sendMessage("your reward!")
+                    sendMessage(player, "You have already slain the dragon. Now you just need to return to Oziach for")
+                    sendMessage(player, "your reward!")
                     return true
                 }
                 if (player.getQuestRepository().getQuest(Quests.DRAGON_SLAYER).getStage(player) > 40) {
-                    player.packetDispatch.sendMessage("You have already slain the dragon.")
+                    sendMessage(player, "You have already slain the dragon.")
                     return true
                 }
                 if (
@@ -153,11 +158,11 @@ class DragonSlayerPlugin : OptionHandler() {
                     !player.getSavedData().questData.getDragonSlayerAttribute("memorized") &&
                     player.getQuestRepository().getQuest(Quests.DRAGON_SLAYER).getStage(player) != 100
                 ) {
-                    player.packetDispatch.sendMessage("The door is securely locked.")
+                    sendMessage(player, "The door is securely locked.")
                 } else {
                     if (!player.getSavedData().questData.getDragonSlayerAttribute("memorized")) {
-                        player.packetDispatch.sendMessage("You found a secret door.")
-                        player.packetDispatch.sendMessage("You remember where the secret door is for future reference.")
+                        sendMessage(player, "You found a secret door.")
+                        sendMessage(player, "You remember where the secret door is for future reference.")
                     }
                     player.achievementDiaryManager.finishTask(player, DiaryType.KARAMJA, 1, 1)
                     player.getSavedData().questData.setDragonSlayerAttribute("memorized", true)
@@ -175,7 +180,7 @@ class DragonSlayerPlugin : OptionHandler() {
                 if (!player.inventory.containsItem(DragonSlayer.MAGIC_PIECE) && !player.bank.containsItem(DragonSlayer.MAGIC_PIECE)) {
                     player.dialogueInterpreter.open(3802875)
                 } else {
-                    player.packetDispatch.sendMessage("You already have the map piece.")
+                    sendMessage(player, "You already have the map piece.")
                 }
             25115 -> {
                 DragonSlayer.handleMagicDoor(player, true)
@@ -219,75 +224,65 @@ class DragonSlayerPlugin : OptionHandler() {
             }
             1747 -> {
                 if (player.location.getDistance(Location(2940, 3256, 1)) < 3) {
-                    climb(player, Animation(828), Location.create(2940, 3256, 2))
+                    climb(player, Animation(828), Location(2940, 3256, 2))
                     return true
                 }
                 climbLadder(player, node as Scenery, option)
                 return true
             }
-            25214 -> player.packetDispatch.sendMessage("The trapdoor can only be opened from below.")
+            25214 -> sendMessage(player, "The trapdoor can only be opened from below.")
             25038 -> {
                 climbLadder(player, node as Scenery, option)
                 return true
             }
-            1752 -> player.packetDispatch.sendMessage("The ladder is broken, I can't climb it.")
+            1752 -> sendMessage(player, "The ladder is broken, I can't climb it.")
             1746 -> {
-                if (player.location.getDistance(Location.create(2923, 3241, 1)) < 3) {
+                if (player.location.getDistance(Location(2923, 3241, 1)) < 3) {
                     climb(player, Animation(828), Location.create(2923, 3241, 0))
                     return true
                 }
-                if (player.location.getDistance(Location.create(2932, 3245, 2)) < 3) {
-                    climb(player, Animation(828), Location.create(2932, 3245, 1))
+                if (player.location.getDistance(Location(2932, 3245, 2)) < 3) {
+                    climb(player, Animation(828), Location(2932, 3245, 1))
                     return true
                 }
                 climbLadder(player, node as Scenery, option)
                 return true
             }
-            2596 ->
-                if (!removeItem(player, Items.KEY_1543)) {
-                    player.packetDispatch.sendMessage("This door is securely locked.")
-                } else {
-                    player.packetDispatch.sendMessage("The key disintegrates as it unlocks the door.")
-                    handleAutowalkDoor(player, (node as Scenery))
-                    return true
-                }
             2597 -> {
+
+                val freeLocations = setOf(
+                    Location(2931, 9640, 0),
+                    Location(2927, 9649, 0),
+                    Location(2924, 9654, 0),
+                    Location(2938, 3252, 0)
+                )
+
+                val scenery = node as Scenery
+                if (player.location in freeLocations) {
+                    handleAutowalkDoor(player, scenery)
+                    return true
+                }
                 if (!removeItem(player, Items.KEY_1544)) {
-                    player.packetDispatch.sendMessage("This door is securely locked.")
-                } else {
-                    player.packetDispatch.sendMessage("The key disintegrates as it unlocks the door.")
-                    handleAutowalkDoor(player, (node as Scenery))
+                    sendMessage(player, "This door is securely locked.")
                     return true
                 }
-                if (player.location == Location(2931, 9640, 0)) {
-                    handleAutowalkDoor(player, (node as Scenery))
-                    return true
-                }
-                if (player.location == Location(2927, 9649, 0)) {
-                    handleAutowalkDoor(player, (node as Scenery))
-                    return true
-                }
-                if (player.location == Location.create(2924, 9654, 0) || player.location == Location.create(2938, 3252, 0)) {
-                    handleAutowalkDoor(player, (node as Scenery))
-                    return true
-                }
-                player.packetDispatch.sendMessage("The door is locked.")
+                sendMessage(player, "The key disintegrates as it unlocks the door.")
+                handleAutowalkDoor(player, scenery)
+                return true
             }
             32968,
             2602 -> {
-                if (player.location == Location(2931, 9640, 0)) {
-                    handleAutowalkDoor(player, (node as Scenery))
-                    return true
+                val allowedLocations = setOf(
+                    Location(2931, 9640, 0),
+                    Location(2927, 9649, 0),
+                    Location(2924, 9654, 0),
+                    Location(2938, 3252, 0)
+                )
+                if (player.location in allowedLocations) {
+                    handleAutowalkDoor(player, node as Scenery)
+                } else {
+                    sendMessage(player, "The door is locked.")
                 }
-                if (player.location == Location(2927, 9649, 0)) {
-                    handleAutowalkDoor(player, (node as Scenery))
-                    return true
-                }
-                if (player.location == Location.create(2924, 9654, 0) || player.location == Location.create(2938, 3252, 0)) {
-                    handleAutowalkDoor(player, (node as Scenery))
-                    return true
-                }
-                player.packetDispatch.sendMessage("The door is locked.")
             }
             2595 -> {
                 if (player.location == Location.create(2940, 3248, 0)) {
@@ -295,11 +290,11 @@ class DragonSlayerPlugin : OptionHandler() {
                     return true
                 }
                 if (player.inventory.containsItem(DragonSlayer.MAZE_KEY)) {
-                    player.packetDispatch.sendMessage("You use the key and the door opens.")
+                    sendMessage(player, "You use the key and the door opens.")
                     handleAutowalkDoor(player, (node as Scenery))
                     return true
                 } else {
-                    player.packetDispatch.sendMessage("This door is securely locked.")
+                    sendMessage(player, "This door is securely locked.")
                 }
             }
         }

@@ -303,7 +303,6 @@ class DragonSlayerListener : InteractionListener {
             2609 to Items.KEY_1546,
             2598 to Items.KEY_1545,
             2596 to Items.KEY_1543,
-            2597 to Items.KEY_1544
         )
     }
 }

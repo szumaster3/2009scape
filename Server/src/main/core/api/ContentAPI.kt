@@ -720,7 +720,7 @@ fun replaceScenery(
 fun getItemName(id: Int): String = ItemDefinition.forId(id).name
 
 /**
- * Checks if the player has space in their inventory for a item.
+ * Checks if the player has space in their inventory for an item.
  *
  * @param player The player to check.
  * @param item The item to check space for.
@@ -730,6 +730,32 @@ fun hasSpaceFor(
     player: Player,
     item: Item,
 ): Boolean = player.inventory.hasSpaceFor(item)
+
+/**
+ * Checks if the player has space in their inventory for an item.
+ *
+ * @param player The player to check.
+ * @param itemId The item id to check space for.
+ * @return True if there is space for at least one of the item in the player's inventory.
+ */
+fun hasSpaceFor(
+    player: Player,
+    itemId: Int
+): Boolean = player.inventory.hasSpaceFor(Item(itemId, 1))
+
+/**
+ * Checks if the player has space in their inventory for an item.
+ *
+ * @param player The player to check.
+ * @param itemId The item id to check space for.
+ * @param amount The amount of the item to check space for.
+ * @return True if there is space for the specified amount of the item in the player's inventory.
+ */
+fun hasSpaceFor(
+    player: Player,
+    itemId: Int,
+    amount: Int
+): Boolean = player.inventory.hasSpaceFor(Item(itemId, amount))
 
 /**
  * Gets the current number of world ticks.
